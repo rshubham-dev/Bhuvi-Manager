@@ -9,8 +9,8 @@ const TeamSection = () => {
     const getEmployees = async () => {
       try {
         const employeesData = await axios.get('/api/v1/employee');
-        setTeams(employeesData.data);
         console.log(employeesData.data);
+        setTeams(employeesData.data);
       } catch (error) {
         toast.error(error);
       }
