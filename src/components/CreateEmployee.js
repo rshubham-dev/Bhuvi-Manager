@@ -67,6 +67,7 @@ const Register = () => {
             navigate('/dashboard');
         } catch (error) {
             console.error('Error submitting form:', error);
+            toast.error(error.message)
             toast.error('An error occurred while registering. Please try again.');
         }
     };

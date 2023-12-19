@@ -33,7 +33,7 @@ const CreateSite = () => {
         const employeesData = await axios.get('/api/v1/employee');
         setEmployee(employeesData.data);
       } catch (error) {
-        toast.error(error.error)
+        toast.error(error.message)
       }
     }
     getemployees();

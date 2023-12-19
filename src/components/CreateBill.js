@@ -12,9 +12,8 @@ const CreateBill = () => {
       try {
         const sitesData = await axios.get('/api/v1/site');
         setSite(sitesData.data);
-
       } catch (error) {
-        toast.error(error.error)
+        toast.error(error.message)
       }
     }
     const getcontractors = async () => {
@@ -22,7 +21,7 @@ const CreateBill = () => {
         const contractorsData = await axios.get('/api/v1/contractor');
         setContractor(contractorsData.data);
       } catch (error) {
-        toast.error(error.error)
+        toast.error(error.message)
       }
     }
     const getemployees = async () => {
@@ -30,7 +29,7 @@ const CreateBill = () => {
         const employeesData = await axios.get('/api/v1/employee');
         setEmployee(employeesData.data);
       } catch (error) {
-        toast.error(error.error)
+        toast.error(error.message)
       }
     }
 

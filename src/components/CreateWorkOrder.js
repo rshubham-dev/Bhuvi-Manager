@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+
+
 
 const WorkOrderForm = () => {
   const [formData, setFormData] = useState({
@@ -97,6 +100,7 @@ const WorkOrderForm = () => {
       console.log('Work order submitted successfully!');
     } catch (error) {
       console.error('Error submitting work order:', error.message);
+      toast.error(error.message)
     }
   };
   return (
@@ -295,6 +299,7 @@ const WorkOrderForm = () => {
           Submit Work Order
         </button>
       </form>
+      <Toaster position="top-right" reverseOrder={false} />
     </div>
   );
 };

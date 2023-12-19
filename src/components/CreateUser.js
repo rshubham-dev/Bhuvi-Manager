@@ -26,7 +26,7 @@ const CreateUser = () => {
       toast.success('User created successfuly');
       navigate('/users');
     } catch (error) {
-      toast.error(error)
+      toast.error(error.message)
     }
   };
 

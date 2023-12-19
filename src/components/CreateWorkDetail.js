@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 function WorkDetailsForm() {
   const [workDetail, setWorkDetail] = useState({
@@ -69,6 +70,7 @@ function WorkDetailsForm() {
       navigate('/work-order');
     } catch (error) {
       console.error('Error creating work details:', error.message);
+      toast.error(error.message)
     }
   };
   
@@ -134,6 +136,10 @@ function WorkDetailsForm() {
           Create Work Detail
         </button>
       </form>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
     </section>
   );
 }
