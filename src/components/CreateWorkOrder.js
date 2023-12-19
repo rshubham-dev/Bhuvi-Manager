@@ -1,0 +1,302 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const WorkOrderForm = () => {
+  const [formData, setFormData] = useState({
+    workOrderName: '',
+    workOrderNo: '',
+    contractorName: '',
+    siteName: '',
+    date: new Date().toISOString().split('T')[0],
+    work: [
+      {
+        title: '',
+        workDetail: '', // Now it's a dropdown, so it stores the _id of the selected Work-Detail
+        rate: '',
+        area: '',
+        unit: '',
+        amount: '',
+      },
+    ],
+  });
+
+  const [workDetails, setWorkDetails] = useState([]);
+  useEffect(() => {
+    // Fetch Work-Detail options from your backend and set the state
+    const fetchWorkDetails = async () => {
+      try {
+        const response = await axios.get('/api/v1/work-details')
+          let works = [];
+          for (let i = 0; i < response.data.length; i++) {
+            works = works.concat(response.data[i].description);
+          }
+          setWorkDetails(works)
+      } catch (error) {
+        console.error('Error fetching work details:', error.message);
+      }
+    };
+    const fetchSite = async () => {};
+    const fetchContractor = async () =>{};
+
+    fetchSite();
+    fetchContractor();
+    fetchWorkDetails();
+  }, []); // Run only once on component mount
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleAddWork = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      work: [
+        ...prevData.work,
+        {
+          title: '',
+          workDetail: '', // Now it's a dropdown, so it stores the _id of the selected Work-Detail
+          rate: '',
+          area: '',
+          unit: '',
+          amount: '',
+        },
+      ],
+    }));
+  };
+  const handleRemoveWork = (index) => {
+    setFormData((prevData) => {
+      const updatedWork = [...prevData.work];
+      updatedWork.splice(index, 1);
+      return {
+        ...prevData,
+        work: updatedWork,
+      };
+    });
+  };
+
+  const handleWorkChange = (index, field, value) => {
+    setFormData((prevData) => {
+      const updatedWork = [...prevData.work];
+      updatedWork[index][field] = value;
+      return {
+        ...prevData,
+        work: updatedWork,
+      };
+    });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData)
+    try {
+      // Make a POST request to your backend to save the work order
+      await axios.post('/api/v1/work-order/create', formData);
+      console.log('Work order submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting work order:', error.message);
+    }
+  };
+  return (
+    <div className="container mx-auto mt-8">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <label htmlFor="workOrderName" className="block text-sm font-semibold text-gray-600">
+            Work Order Name
+          </label>
+          <input
+            type="text"
+            id="workOrderName"
+            name="workOrderName"
+            value={formData.workOrderName}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="workOrderNo" className="block text-sm font-semibold text-gray-600">
+            Work Order No
+          </label>
+          <input
+            type="text"
+            id="workOrderNo"
+            name="workOrderNo"
+            value={formData.workOrderNo}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="contractorName" className="block text-sm font-semibold text-gray-600">
+            Contractor Name
+          </label>
+          <input
+            type="text"
+            id="contractorName"
+            name="contractorName"
+            value={formData.contractorName}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="siteName" className="block text-sm font-semibold text-gray-600">
+            Site Name
+          </label>
+          <input
+            type="text"
+            id="siteName"
+            name="siteName"
+            value={formData.siteName}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="date" className="block text-sm font-semibold text-gray-600">
+            Date
+          </label>
+          <input
+            type="date"
+            id="date"
+            name="date"
+            value={formData.date}
+            onChange={handleChange}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold mb-2">Work Details</h2>
+          {formData.work.map((workItem, index) => (
+            <div key={index} className="mb-4 p-4 border rounded">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor={`work[${index}].title`} className="block text-sm font-semibold text-gray-600">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    id={`work[${index}].title`}
+                    name={`work[${index}].title`}
+                    value={workItem.title}
+                    onChange={(e) => handleWorkChange(index, 'title', e.target.value)}
+                    placeholder="Title"
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor={`work[${index}].workDetail`}
+                    className="block text-sm font-semibold text-gray-600"
+                  >
+                    Work Detail
+                  </label>
+                  <select
+                    id={`work[${index}].workDetail`}
+                    name={`work[${index}].workDetail`}
+                    value={workItem.workDetail}
+                    onChange={(e) => handleWorkChange(index, 'workDetail', e.target.value)}
+                    className="border p-2 rounded w-full"
+                  >
+                    <option disabled>
+                      Select Work Detail
+                    </option>
+                    {workDetails.map((workDetail) => (
+                      <option key={workDetail._id} value={workDetail._id}>
+                        {workDetail.work}
+                      </option>
+                    ))}
+
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor={`work[${index}].rate`} className="block text-sm font-semibold text-gray-600">
+                    Rate
+                  </label>
+                  <input
+                    type="number"
+                    name={`work[${index}].rate`}
+                    value={workItem.rate}
+                    onChange={(e) => handleWorkChange(index, 'rate', e.target.value)}
+                    placeholder="Rate"
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label htmlFor={`work[${index}].area`} className="block text-sm font-semibold text-gray-600">
+                    Area
+                  </label>
+                  <input
+                    type="number"
+                    name={`work[${index}].area`}
+                    value={workItem.area}
+                    onChange={(e) => handleWorkChange(index, 'area', e.target.value)}
+                    placeholder="Area"
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label htmlFor={`work[${index}].unit`} className="block text-sm font-semibold text-gray-600">
+                    Unit
+                  </label>
+                  <input
+                    type="text"
+                    name={`work[${index}].unit`}
+                    value={workItem.unit}
+                    onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
+                    placeholder="Unit"
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
+                    Amount
+                  </label>
+                  <input
+                    type="number"
+                    name={`work[${index}].amount`}
+                    value={workItem.amount}
+                    onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
+                    placeholder="Amount"
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                {formData.work.length > 1 && (
+                  <div className="flex">
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveWork(index)}
+                      className="bg-red-500 text-white p-2 rounded"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddWork}
+            className="bg-blue-500 text-white p-2 rounded"
+          >
+            Add Work
+          </button>
+        </div>
+
+        <button type="submit" className="bg-green-500 text-white p-2 rounded mt-4">
+          Submit Work Order
+        </button>
+      </form>
+    </div>
+  );
+};
+
+export default WorkOrderForm;
