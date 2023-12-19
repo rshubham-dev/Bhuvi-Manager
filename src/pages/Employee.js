@@ -26,7 +26,7 @@ const TeamSection = () => {
           <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our Team</h1>
         </div>
         <div className="flex flex-wrap -m-2">
-          {teams.length > 0 ? (
+          {
             teams.map((team, index) => (
               <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={index}>
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
@@ -37,10 +37,7 @@ const TeamSection = () => {
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
-            <p>Loading...</p>
-          )}
+            ))}
         </div>
       </div>
       <Toaster position="top-right" reverseOrder={false} />
