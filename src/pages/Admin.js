@@ -1,7 +1,7 @@
 import React from 'react';
-import UserProfile from '../components/ProfileCard';
+import UserProfile from '../components/ProfileCard.js';
 import All from './All';
-import TeamSection from './Employee';
+import TeamSection from './Employee.js';
 
 const Admin = () => {
   return (
