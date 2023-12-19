@@ -12,7 +12,7 @@ const TeamSection = () => {
         console.log(employeesData.data);
         setTeams(employeesData.data);
       } catch (error) {
-        toast.error(error);
+        console.log(error);
       }
     };
 
