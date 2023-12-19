@@ -11,7 +11,6 @@ root.render(
     <BrowserRouter>
     <Layout/>
     <App />
-    <SpeedInsights />
     </BrowserRouter>
   </React.StrictMode>
 );
