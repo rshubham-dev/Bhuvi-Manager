@@ -15,8 +15,6 @@ import CreatePaymentSchedule from './components/CreatePaymentSchedule';
 import CreateBill from './components/CreateBill';
 import Admin from './pages/Admin';
 
-export const Server_URI = 'https://bhuvi-management-server.onrender.com';
-console.log(Server_URI)
 const App = () => {
   return (
     <>
