@@ -15,6 +15,9 @@ import CreatePaymentSchedule from './components/CreatePaymentSchedule';
 import CreateBill from './components/CreateBill';
 import Admin from './pages/Admin';
 
+export const SERVER_URI = process.env.URI;
+console.log(SERVER_URI);
+
 const App = () => {
   return (
     <>
