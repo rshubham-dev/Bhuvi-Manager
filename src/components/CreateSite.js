@@ -30,7 +30,7 @@ const CreateSite = () => {
   useEffect(() => {
     const getemployees = async () => {
       try {
-        const employeesData = await axios.get('api/v1/employee');
+        const employeesData = await axios.get('/api/v1/employee');
         setEmployee(employeesData.data);
       } catch (error) {
         toast.error(error.message)

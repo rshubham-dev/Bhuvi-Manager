@@ -1,8 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "private": false,
-  "proxy": "https://bhuvi-management-server.onrender.com",
+  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -48,6 +47,7 @@
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "postcss.config.js",
-  "author": "",
-  "license": "MIT"
+  "author": "Shubham Kumar",
+  "license": "MIT",
+  "proxy": "https://bhuvi-management-server.onrender.com"
 }
