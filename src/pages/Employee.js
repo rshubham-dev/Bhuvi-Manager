@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import {Server_URI} from '../App';
 
 const TeamSection = () => {
   const [teams, setTeams] = useState([]);
@@ -8,7 +9,7 @@ const TeamSection = () => {
   useEffect(() => {
     const getEmployees = async () => {
       try {
-        const employeesData = await axios.get(`/api/v1/employee`);
+        const employeesData = await axios.get(`${Server_URI}/api/v1/employee`);
         console.log(employeesData.data);
         setTeams(employeesData.data);
       } catch (error) {
