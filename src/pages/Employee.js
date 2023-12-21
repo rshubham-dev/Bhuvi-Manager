@@ -8,7 +8,7 @@ const TeamSection = () => {
   useEffect(() => {
     const getEmployees = async () => {
       try {
-        const employeesData = await axios.get('/api/v1/employee');
+        const employeesData = await axios.get('https://bhuvi-management-server.onrender.com/api/v1/employee');
         console.log(employeesData.data);
         setTeams(employeesData.data);
       } catch (error) {
