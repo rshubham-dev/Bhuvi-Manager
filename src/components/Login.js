@@ -29,8 +29,8 @@ const LoginForm = () => {
       .then(response =>{
         console.log('Login submitted with data:', response.data);
         toast.success(response.data.message);
-        setRole(response.data.user[role]);
-        console.log(role)
+        setRole(response.data.user.role);
+        console.log(response.data.user.role)
         switch (role) {
           case 'Admin':
             navigate('/admin')
