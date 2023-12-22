@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import property from '../config';
+import toast, { Toaster } from 'react-hot-toast';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -11,11 +12,6 @@ const LoginForm = () => {
   });
 
   const [role, setRole] = useState('');
-  useEffect(() => {
-    const getUserData = async () => {
-      const userRole = await axios.get()
-    };
-  }, [])
   
   const handleChange = (e) => {
     setFormData({
@@ -28,27 +24,42 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('1')
-    const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData);
-  // Add logic to handle login (e.g., send data to the server)
-   console.log('Login submitted with data:', response.data);
-   console.log('2')
-  //  switch (role) {
-  //   case 'Admin':
-  //     navigate('/admin')
-  //     break;
-  //     case 'Ceo':
-  //       navigate('/ceo')
-  //       break;
-  //       case 'Client':
-  //         navigate('/client')
-  //         break;
-  //         case 'Employee':
-  //           navigate('/employee')
-  //           break;
-  //   default:
-  //     navigate('/login')
-  //     break;
-  // }
+    try {
+      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData)
+      .then(response =>{
+        console.log('Login submitted with data:', response.data);
+        toast.success(response.data.message);
+        setRole(response.data.user[role]);
+        console.log(role)
+        switch (role) {
+          case 'Admin':
+            navigate('/admin')
+            break;
+          case 'Ceo':
+            navigate('/ceo')
+            break;
+          case 'Client':
+            navigate('/client')
+            break;
+          case 'Employee':
+            navigate('/employee')
+            break;
+          default:
+            navigate('/login')
+            break;
+        }
+      })
+      .catch(error=>{
+        console.log(error)
+        toast.error(response.data.error)
+      })
+       console.log('2')
+
+    } catch (error) {
+      console.log(error)
+      toast.error(error.message)
+    }
+
   };
 
   return (
@@ -95,6 +106,10 @@ const LoginForm = () => {
           Login
         </button>
       </form>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
     </div>
   );
 };

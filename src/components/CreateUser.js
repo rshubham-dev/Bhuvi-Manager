@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import property from '../config';
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -22,11 +23,12 @@ const CreateUser = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(' http://localhost:8080/api/v1/user/create', userData);
+      const response = await axios.post(`${property.BASE_URL}/api/v1/user/create`, userData);
       if (response.error) return toast.error(response.error);
       toast.success('User created successfuly');
-      navigate('/users');
+      navigate('/login');
     } catch (error) {
+      console.log(error)
       toast.error(error.message)
     }
   };
@@ -106,7 +108,7 @@ const CreateUser = () => {
         </div>
         <div className="mb-4">
           <label htmlFor="access" className="block text-gray-700 text-sm font-bold mb-2">
-            Role
+          Department
           </label>
           <input
             type="text"
