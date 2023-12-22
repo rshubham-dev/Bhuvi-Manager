@@ -1,9 +1,9 @@
 import React from 'react'
 
-const PaymentSchedule = () => {
+const PaymentSchedules = () => {
   return (
     <div>PaymentSchedule</div>
   )
 }
 
-export default PaymentSchedule
+export default PaymentSchedules

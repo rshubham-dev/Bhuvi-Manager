@@ -23,7 +23,7 @@ const initialUsers = [
     // Add more users as needed
 ];
 
-const UserList = () => {
+const UserManagement = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState(initialUsers);
 
@@ -90,4 +90,4 @@ const UserList = () => {
     );
 };
 
-export default UserList;
+export default UserManagement;

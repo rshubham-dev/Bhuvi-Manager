@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Site = () => {
+const Sites = () => {
   return (
-    <div>Site</div>
+<></>
   )
 }
 
-export default Site
+export default Sites
