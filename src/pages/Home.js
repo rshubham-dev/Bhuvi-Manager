@@ -37,7 +37,7 @@ const Home = () => {
   
   return (
     <>
-    <form className="max-w-md mx-auto mt-8 p-6 bg-white rounded-md shadow-md"
+    {/* <form className="max-w-md mx-auto mt-8 p-6 bg-white rounded-md shadow-md"
     onSubmit={handleSubmit}
     > 
     <label className="block mb-2">
@@ -57,7 +57,8 @@ const Home = () => {
         >
           Login
         </button>
-    </form>
+    </form> */}
+    <Login/>
     </>
   )
 }

@@ -1,14 +1,22 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-
+import property from '../config';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     userMail: '',
     password: '',
+    employeeId: '',
   });
 
+  const [role, setRole] = useState('');
+  useEffect(() => {
+    const getUserData = async () => {
+      const userRole = await axios.get()
+    };
+  }, [])
+  
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -19,10 +27,28 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // await axios.post("/api/v1/user/login", formData);
+    console.log('1')
+    const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData);
   // Add logic to handle login (e.g., send data to the server)
-   console.log('Login submitted with data:', formData);
-    navigate('/register')
+   console.log('Login submitted with data:', response.data);
+   console.log('2')
+  //  switch (role) {
+  //   case 'Admin':
+  //     navigate('/admin')
+  //     break;
+  //     case 'Ceo':
+  //       navigate('/ceo')
+  //       break;
+  //       case 'Client':
+  //         navigate('/client')
+  //         break;
+  //         case 'Employee':
+  //           navigate('/employee')
+  //           break;
+  //   default:
+  //     navigate('/login')
+  //     break;
+  // }
   };
 
   return (
@@ -35,6 +61,17 @@ const LoginForm = () => {
             type="email"
             name="userMail"
             value={formData.userMail}
+            onChange={handleChange}
+            className="w-full p-2 border rounded-md"
+            required
+          />
+        </label>
+        <label className="block mb-2">
+          EmployeeId:
+          <input
+            type="text"
+            name="employeeId"
+            value={formData.employeeId}
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
             required

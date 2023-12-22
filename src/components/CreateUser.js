@@ -9,7 +9,8 @@ const CreateUser = () => {
     userMail: '',
     password: '',
     phone: '',
-    access: '',
+    role: '',
+    department:'',
     employeeId: '',
   });
  const navigate = useNavigate();
@@ -92,13 +93,26 @@ const CreateUser = () => {
         {/* Make access field selectable */}
         <div className="mb-4">
           <label htmlFor="access" className="block text-gray-700 text-sm font-bold mb-2">
-            Access
+            Role
           </label>
           <input
             type="text"
-            name='access'
-            placeholder='Access'
-            value={userData.access}
+            name='role'
+            placeholder='Role'
+            value={userData.role}
+            onChange={handleChange}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="access" className="block text-gray-700 text-sm font-bold mb-2">
+            Role
+          </label>
+          <input
+            type="text"
+            name='department'
+            placeholder='Department'
+            value={userData.department}
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
