@@ -25,8 +25,7 @@ const LoginForm = () => {
     e.preventDefault();
     console.log('1')
     try {
-      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData, { withCredentials: true })
-        .then(response => {
+      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData)
           console.log('Login submitted with data:', response.data);
           toast.success(response.data.message);
           setRole(response.data.user.role);
@@ -52,11 +51,6 @@ const LoginForm = () => {
           //     console.log("Page not found")
           //     break;
           // }
-        })
-        .catch(error => {
-          console.log(error)
-          toast.error(response.data.error)
-        })
       console.log('2')
     } catch (error) {
       console.log(error)
