@@ -31,30 +31,33 @@ const LoginForm = () => {
         toast.success(response.data.message);
         setRole(response.data.user.role);
         console.log(response.data.user.role)
-        switch (role) {
-          case 'Admin':
-            navigate('/admin')
-            break;
-          case 'Ceo':
-            navigate('/ceo')
-            break;
-          case 'Client':
-            navigate('/client')
-            break;
-          case 'Employee':
-            navigate('/employee')
-            break;
-          default:
-            navigate('/login')
-            break;
-        }
+        if(role==='Admin') return navigate('/admin')
+        if(role==='Ceo') return navigate('/ceo')
+        if(role==='Client') return navigate('/client')
+        if(role==='Employee') return navigate('/employee')
+        // switch (role) {
+        //   case 'Admin':
+        //     navigate('/admin')
+        //     break;
+        //   case 'Ceo':
+        //     navigate('/ceo')
+        //     break;
+        //   case 'Client':
+        //     navigate('/client')
+        //     break;
+        //   case 'Employee':
+        //     navigate('/employee')
+        //     break;
+        //   default:
+        //     console.log("Page not found")
+        //     break;
+        // }
       })
       .catch(error=>{
         console.log(error)
         toast.error(response.data.error)
       })
        console.log('2')
-
     } catch (error) {
       console.log(error)
       toast.error(error.message)
