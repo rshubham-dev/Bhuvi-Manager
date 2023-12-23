@@ -33,16 +33,16 @@ const LoginForm = () => {
       console.log(response.data.user.role)
 
       switch (role) {
-        case Admin:
+        case 'Admin':
           return navigate('/admin');
           break;
-        case Client:
+        case 'Client':
           return navigate('/client')
           break;
-        case Ceo:
+        case 'Ceo':
           return navigate('/ceo');
           break;
-        case Employee:
+        case 'Employee':
           return navigate('/employee')
           break;
         default:
