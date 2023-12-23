@@ -12,7 +12,7 @@ const LoginForm = () => {
   });
 
   const [role, setRole] = useState('');
-  
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -25,39 +25,39 @@ const LoginForm = () => {
     e.preventDefault();
     console.log('1')
     try {
-      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData)
-      .then(response =>{
-        console.log('Login submitted with data:', response.data);
-        toast.success(response.data.message);
-        setRole(response.data.user.role);
-        console.log(response.data.user.role)
-        if(role==='Admin') return navigate('/admin')
-        if(role==='Ceo') return navigate('/ceo')
-        if(role==='Client') return navigate('/client')
-        if(role==='Employee') return navigate('/employee')
-        // switch (role) {
-        //   case 'Admin':
-        //     navigate('/admin')
-        //     break;
-        //   case 'Ceo':
-        //     navigate('/ceo')
-        //     break;
-        //   case 'Client':
-        //     navigate('/client')
-        //     break;
-        //   case 'Employee':
-        //     navigate('/employee')
-        //     break;
-        //   default:
-        //     console.log("Page not found")
-        //     break;
-        // }
-      })
-      .catch(error=>{
-        console.log(error)
-        toast.error(response.data.error)
-      })
-       console.log('2')
+      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData, { withCredentials: true })
+        .then(response => {
+          console.log('Login submitted with data:', response.data);
+          toast.success(response.data.message);
+          setRole(response.data.user.role);
+          console.log(response.data.user.role)
+          if (role === 'Admin') return navigate('/admin')
+          if (role === 'Ceo') return navigate('/ceo')
+          if (role === 'Client') return navigate('/client')
+          if (role === 'Employee') return navigate('/employee')
+          // switch (role) {
+          //   case 'Admin':
+          //     navigate('/admin')
+          //     break;
+          //   case 'Ceo':
+          //     navigate('/ceo')
+          //     break;
+          //   case 'Client':
+          //     navigate('/client')
+          //     break;
+          //   case 'Employee':
+          //     navigate('/employee')
+          //     break;
+          //   default:
+          //     console.log("Page not found")
+          //     break;
+          // }
+        })
+        .catch(error => {
+          console.log(error)
+          toast.error(response.data.error)
+        })
+      console.log('2')
     } catch (error) {
       console.log(error)
       toast.error(error.message)
