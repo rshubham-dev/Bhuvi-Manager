@@ -12,6 +12,8 @@ const LoginForm = () => {
   });
 
   const [role, setRole] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate()
 
   const handleChange = (e) => {
     setFormData({
@@ -19,43 +21,45 @@ const LoginForm = () => {
       [e.target.name]: e.target.value,
     });
   };
-  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('1')
     try {
-
-      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData)
+      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData);
       console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
       setRole(response.data.user.role);
-      console.log(response.data.user.role)
-
+    } catch (error) {
+      console.error(error);
+      toast.error('Login failed. Please check your credentials.');
+      setError('Login failed. Please check your credentials.');
+    }
+  };
+  useEffect(() => {
+    const handleNavigation = () => {
       switch (role) {
         case 'Admin':
-          return navigate('/admin');
+          navigate('/admin');
           break;
         case 'Client':
-          return navigate('/client')
+          navigate('/client');
           break;
         case 'Ceo':
-          return navigate('/ceo');
+          navigate('/ceo');
           break;
         case 'Employee':
-          return navigate('/employee')
+          navigate('/employee');
           break;
         default:
-          console.log("Not exists")
+          console.log("Not exists");
           break;
       }
-      console.log('2')
-    } catch (error) {
-      console.log(error)
-      toast.error(error.message)
+    };
+    if (role) {
+      handleNavigation();
     }
+  }, [role, navigate]);
 
-  };
 
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-md shadow-md">
@@ -101,6 +105,7 @@ const LoginForm = () => {
           Login
         </button>
       </form>
+      {error && <p className="text-red-500">{error}</p>}
       <Toaster
         position="top-right"
         reverseOrder={false}
