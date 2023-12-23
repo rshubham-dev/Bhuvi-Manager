@@ -25,24 +25,30 @@ const LoginForm = () => {
     e.preventDefault();
     console.log('1')
     try {
-      
+
       const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData)
-          console.log('Login submitted with data:', response.data);
-          toast.success(response.data.message);
-          setRole(response.data.user.role);
-          console.log(response.data.user.role)
-          
-          if (role === 'Admin') {
-            return navigate('/admin');
-          }else if (role === 'Ceo') {
-            return navigate('/ceo');
-          } else if (role === 'Client'){
-             return navigate('/client')
-          }else if (role === 'Employee'){
-             return navigate('/employee')
-          } else{
-            console.log("Not exists")
-          }
+      console.log('Login submitted with data:', response.data);
+      toast.success(response.data.message);
+      setRole(response.data.user.role);
+      console.log(response.data.user.role)
+
+      switch (role) {
+        case Admin:
+          return navigate('/admin');
+          break;
+        case Client:
+          return navigate('/client')
+          break;
+        case Ceo:
+          return navigate('/ceo');
+          break;
+        case Employee:
+          return navigate('/employee')
+          break;
+        default:
+          console.log("Not exists")
+          break;
+      }
       console.log('2')
     } catch (error) {
       console.log(error)
