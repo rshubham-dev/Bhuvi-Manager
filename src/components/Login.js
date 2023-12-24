@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import property from '../config';
 import toast, { Toaster } from 'react-hot-toast';
+import Cookies from 'js-cookie';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -27,6 +28,8 @@ const LoginForm = () => {
     try {
       const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData);
       console.log('Login submitted with data:', response.data);
+      Cookies.set('accessToken', response.data.accessToken);
+      Cookies.set('refreshToken', response.data.refreshToken);
       toast.success(response.data.message);
       setRole(response.data.user.role);
     } catch (error) {
