@@ -27,7 +27,7 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData, {
-        credentials: "include"
+        withCredentials: true
       });
       console.log('Login submitted with data:', response.data);
       Cookies.set('accessToken', response.data.accessToken);
