@@ -9,7 +9,6 @@ const LoginForm = () => {
   const [formData, setFormData] = useState({
     userMail: '',
     password: '',
-    userId: '',
   });
 
   const [role, setRole] = useState('');
@@ -78,17 +77,6 @@ const LoginForm = () => {
             type="email"
             name="userMail"
             value={formData.userMail}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-md"
-            required
-          />
-        </label>
-        <label className="block mb-2">
-          EmployeeId:
-          <input
-            type="text"
-            name="userId"
-            value={formData.userId}
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
             required
