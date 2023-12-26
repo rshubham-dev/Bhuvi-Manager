@@ -27,11 +27,11 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData, {
-        credentials: "include"
+        withCredentials: "include"
       });
       console.log('Login submitted with data:', response.data);
-      // Cookies.set('accessToken', response.data.accessToken);
-      // Cookies.set('refreshToken', response.data.refreshToken);
+      Cookies.set('accessToken', response.data.accessToken);
+      Cookies.set('refreshToken', response.data.refreshToken);
       toast.success(response.data.message);
       setRole(response.data.user.role);
     } catch (error) {
