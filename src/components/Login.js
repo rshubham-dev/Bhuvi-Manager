@@ -9,7 +9,7 @@ const LoginForm = () => {
   const [formData, setFormData] = useState({
     userMail: '',
     password: '',
-    employeeId: '',
+    userId: '',
   });
 
   const [role, setRole] = useState('');
@@ -87,8 +87,8 @@ const LoginForm = () => {
           EmployeeId:
           <input
             type="text"
-            name="employeeId"
-            value={formData.employeeId}
+            name="userId"
+            value={formData.userId}
             onChange={handleChange}
             className="w-full p-2 border rounded-md"
             required
