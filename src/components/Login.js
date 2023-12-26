@@ -26,9 +26,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData, {
-        withCredentials: true
-      });
+      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData);
       console.log('Login submitted with data:', response.data);
       Cookies.set('accessToken', response.data.accessToken);
       Cookies.set('refreshToken', response.data.refreshToken);
