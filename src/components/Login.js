@@ -24,12 +24,12 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const apiClient = axios.create({
-        baseURL: 'https://bhuvi-management-server.onrender.com',
-        withCredentials: true,
-        timeout: 120000,
-      });
-      const response = await apiClient.post('/api/v1/user/login', formData);
+      // const apiClient = axios.create({
+      //   baseURL: 'https://bhuvi-management-server.onrender.com',
+      //   withCredentials: true,
+      //   timeout: 120000,
+      // });
+      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData);
       console.log('Login submitted with data:', response.data);
       Cookies.set('accessToken', response.data.accessToken);
       Cookies.set('refreshToken', response.data.refreshToken);
