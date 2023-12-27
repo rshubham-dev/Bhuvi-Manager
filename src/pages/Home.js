@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Login from '../components/Login'
 import Register from '../components/Register'
@@ -9,6 +9,10 @@ const Home = () => {
 
   const [role, setRole] = useState('');
   
+  useEffect(() => {
+  console.log('logged in')
+  }, [])
+
   const handleChange = (data)=>{
     setRole(data.target.value);
   };
