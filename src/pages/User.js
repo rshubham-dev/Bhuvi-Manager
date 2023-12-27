@@ -1,31 +1,26 @@
-// UserList.js
-
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-
-const initialUsers = [
-    {
-        id: 1,
-        userName: 'John Doe',
-        email: 'john@example.com',
-        phone: '123-456-7890',
-        access: 'Admin',
-        employeeId: 'E12345',
-    },
-    {
-        id: 2,
-        userName: 'Jane Doe',
-        email: 'jane@example.com',
-        phone: '987-654-3210',
-        access: 'User',
-        employeeId: 'E67890',
-    },
-    // Add more users as needed
-];
+import toast, { Toaster } from 'react-hot-toast';
+import property from '../config';
 
 const UserManagement = () => {
     const navigate = useNavigate();
-    const [users, setUsers] = useState(initialUsers);
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const getUsers = async () => {
+            try {
+                const userData = await axios.get(`${property.BASE_URL}/api/v1/user/lists`);
+                setUsers(userData.data);
+            } catch (error) {
+                toast.error(error.message)
+            }
+        }
+        getUsers();
+    }, [])
+
 
     const handleEdit = (userId) => {
         // Add your edit logic here
@@ -86,6 +81,11 @@ const UserManagement = () => {
                     ))}
                 </tbody>
             </table>
+            {error && <p className="text-red-500">{error}</p>}
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
         </div>
     );
 };

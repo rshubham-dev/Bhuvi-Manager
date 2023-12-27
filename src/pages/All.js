@@ -13,7 +13,7 @@ const All = () => {
         { to: '/design', text: 'Design', icon: <MdDesignServices /> },
         { to: '/bill', text: 'Bill', icon: <MdReceipt /> },
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
-        { to: '/contractor', text: 'Contractor', icon: <MdConstruction /> },
+        { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
         { to: '/material', text: 'Material', icon: <MdBuild /> },
         { to: '/expenses', text: 'Expenses', icon: <MdMoney /> },
         { to: '/work-details', text: 'WorkDetails', icon: <MdAssignment /> },

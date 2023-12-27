@@ -12,7 +12,7 @@ const MobileBar = () => {
                 <GoForward />
             </div>
             <div className='flex justify-around bg-blue-500 p-2 mt-2'>
-                <NavLink to='/' className='text-white flex flex-col items-center'>
+                <NavLink to='/dashboard' className='text-white flex flex-col items-center'>
                     <MdDashboard className='text-xl mb-1 lg:text-2xl' />
                     Dashboard
                 </NavLink>
