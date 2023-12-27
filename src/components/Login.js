@@ -29,7 +29,7 @@ const LoginForm = () => {
         withCredentials: true,
         timeout: 120000,
       });
-      const response = await apiClient.post(`${property.BASE_URL}/api/v1/user/login`, formData);
+      const response = await apiClient.post('/api/v1/user/login', formData);
       console.log('Login submitted with data:', response.data);
       Cookies.set('accessToken', response.data.accessToken);
       Cookies.set('refreshToken', response.data.refreshToken);
