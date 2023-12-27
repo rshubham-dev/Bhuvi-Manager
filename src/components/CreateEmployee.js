@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import property from '../config';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 
-const Register = () => {
-    const navigate = useNavigate();
+const CreateEmployee = () => {
     const [employee, setEmployee] = useState({
         name: "",
         email: "",
@@ -28,7 +27,7 @@ const Register = () => {
         certificates: [],
         joinDate: "",
         department: "",
-        coverImage: "",
+        avatar: "",
         birthdate: "",
         salary: "",
         site: "",
@@ -59,12 +58,9 @@ const Register = () => {
     const formSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/v1/employee/register', employee);
+            const response = await axios.post(`${property.BASE_URL}/api/v1/employee/create`, employee);
             console.log(response.data);
-            // Assuming your server returns some success message
             toast.success('Registration successful!');
-            // Optionally, you can navigate to another page after successful registration
-            navigate('/dashboard');
         } catch (error) {
             console.error('Error submitting form:', error);
             toast.error(error.message)
@@ -79,7 +75,7 @@ const Register = () => {
                     className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md'
                     onSubmit={formSubmit}
                 >
-                    <h2 className='text-2xl font-bold mb-6 text-center'>Register</h2>
+                    <h2 className='text-2xl font-bold mb-6 text-center'>Create Employee</h2>
 
                     {/* Group Personal Information */}
                     <div className='mb-4'>
@@ -182,71 +178,57 @@ const Register = () => {
                             onChange={inputData}
                         />
                     </div>
-                    <div className="mb-4">
-          <h4 className="text-lg font-semibold mb-2">Address</h4>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="street" className="block text-sm font-medium text-gray-600">
-                Street
-              </label>
-              <input
-                type="text"
-                id="street"
-                name="street"
-                placeholder="Street"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="city" className="block text-sm font-medium text-gray-600">
-                City
-              </label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                placeholder="City"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="district" className="block text-sm font-medium text-gray-600">
-                District
-              </label>
-              <input
-                type="text"
-                id="district"
-                name="district"
-                placeholder="District"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="state" className="block text-sm font-medium text-gray-600">
-                State
-              </label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                placeholder="State"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="pincode" className="block text-sm font-medium text-gray-600">
-                Pincode
-              </label>
-              <input
-                type="number"
-                id="pincode"
-                name="pincode"
-                placeholder="Pin code"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-          </div>
-        </div>
+                    {/* <div>
+                        <h4>Address</h4>
+                        <div>
+                            <label htmlFor="street" className='block text-gray-700 text-sm font-bold mb-2'>Street:</label>
+                            <input
+                                type="text"
+                                id="street"
+                                name="street"
+                                value={employee.address.street}
+                                onChange={inputData}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="city" className='block text-gray-700 text-sm font-bold mb-2'>City:</label>
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                onChange={inputData}
+                                value={employee.address.city}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="district" className='block text-gray-700 text-sm font-bold mb-2'>District:</label>
+                            <input
+                                type="text"
+                                id="district"
+                                name="district"
+                                placeholder='Enter District here'
+                                value={employee.address.district}
+                                onChange={inputData}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor="state" className='block text-gray-700 text-sm font-bold mb-2'>State:</label>
+                            <select onChange={inputData}>
+                                <option>Select your State</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label htmlFor="pincode" className='block text-gray-700 text-sm font-bold mb-2'>Pincode:</label>
+                            <input
+                                type="number"
+                                id="pincode"
+                                name="pincode"
+                                placeholder='Enter Pin code here'
+                                value={employee.address.pincode}
+                                onChange={inputData}
+                            />
+                        </div>
+                    </div> */}
                     <div className='mb-4'>
                         <h4>Document Name</h4>
                         <div>
@@ -291,13 +273,13 @@ const Register = () => {
                             onChange={inputData}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <label htmlFor='department' className='block text-gray-700 text-sm font-bold mb-2'>Department</label>
                         <select onChange={inputData} value={employee.department} name='department'>
                             <option value='site'>Site</option>
                             <option value='design'>Design</option>
                         </select>
-                    </div>
+                    </div> */}
                     <div className='mb-4'>
                         <label htmlFor='birthdate' className='block text-gray-700 text-sm font-bold mb-2'>DOB</label>
                         <input
@@ -315,7 +297,7 @@ const Register = () => {
                     type='submit'
                     className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
                     >
-                        Register Now</button>
+                        Create</button>
                 </form>
                 <Toaster
                     position="top-right"
@@ -327,4 +309,4 @@ const Register = () => {
 }
 
 
-export default Register
+export default CreateEmployee

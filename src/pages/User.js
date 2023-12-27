@@ -3,33 +3,99 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import property from '../config';
+import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
+
 
 const UserManagement = () => {
     const navigate = useNavigate();
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
+    const [editableFields, setEditableFields] = useState({});
+    const [editedData, setEditedData] = useState({
+        userName:'',
+        userMail:'',
+        phone:'',
+        role:'',
+        department:'',
+    });
 
     useEffect(() => {
         const getUsers = async () => {
             try {
                 const userData = await axios.get(`${property.BASE_URL}/api/v1/user/lists`);
                 setUsers(userData.data);
+                console.log(userData.data)
             } catch (error) {
-                toast.error(error.message)
+                toast.error(error.message);
+                setError(error.message);
             }
         }
         getUsers();
     }, [])
 
 
-    const handleEdit = (userId) => {
-        // Add your edit logic here
-        console.log(`Edit user with ID ${userId}`);
-    };
+    // const handleEdit = async (id) => {
+    //     try {
+    //         const editUser= await axios.put(`${property.BASE_URL}/api/v1/user/update/${id}`);
+    //         // Add your edit logic here
+    //         console.log(id)
+    //         console.log(editUser)
+    //     } catch (error) {
+    //         toast.error(error.message)
+    //     }
+    // };
+    const handleEdit = (id) => {
+        // Toggle the editable state for the fields
+        setEditableFields((prevFields) => ({ ...prevFields, [id]: true }));
+      };
+    
+      const handleSave = async (id) => {
+        try {
+          // Make a PUT request with the updated data
+          const updatedUser = await axios.put(`${property.BASE_URL}/api/v1/user/update/${id}`, {
+            ...editedData[id], // Send only the fields that were edited
+          });
+    
+          // Handle the updated user data as needed
+          console.log(updatedUser);
+    
+          // Update the state with the updated user data
+          setUsers((prevUsers) => {
+            const updatedUsers = prevUsers.map((user) =>
+              user._id === id ? updatedUser.data : user
+            );
+            return updatedUsers;
+          });
+    
+          // Reset editable state
+          setEditableFields((prevFields) => ({ ...prevFields, [id]: false }));
+        } catch (error) {
+          toast.error(error.message);
+        }
+      };
+    
+      const handleCancelEdit = (id) => {
+        // Reset editable state without saving changes
+        setEditableFields((prevFields) => ({ ...prevFields, [id]: false }));
+        setEditedData((prevData) => ({ ...prevData, [id]: {} }));
+      };
 
-    const handleDelete = (userId) => {
-        // Add your delete logic here
-        setUsers(users.filter((user) => user.id !== userId));
+      const handleInputChange = (id, field, value) => {
+        // Update the edited data
+        setEditedData((prevData) => ({
+          ...prevData,
+          [id]: { ...prevData[id], [field]: value },
+        }));
+      };
+      
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`${property.BASE_URL}/api/v1/user/delete/${id}`);
+            setUsers(users.filter((user) => user._id !== id));
+        } catch (error) {
+            toast.error(error.message)
+        }
     };
 
     const handleAdd = () => {
@@ -38,8 +104,9 @@ const UserManagement = () => {
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <h1 className="text-2xl font-bold text-center">User List</h1>
-            <div className=" mb-4 mr-20 text-right">
+            <h1 className="text-3xl font-bold text-blue-500 text-center">User List</h1>
+            <div className=" mb-4 mr-20 text-right flex justify-between align-center">
+                <h2 className="text-xl text-green-600 ml-8">Total Users: {users.length}</h2>
                 <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
                     Add User
                 </button>
@@ -50,28 +117,100 @@ const UserManagement = () => {
                         <th scope="col" className="px-6 py-3">User Name</th>
                         <th scope="col" className="px-6 py-3">Email</th>
                         <th scope="col" className="px-6 py-3">Phone</th>
-                        <th scope="col" className="px-6 py-3">Access</th>
-                        <th scope="col" className="px-6 py-3">Employee ID</th>
+                        <th scope="col" className="px-6 py-3">Role</th>
+                        <th scope="col" className="px-6 py-3">Department</th>
                         <th scope="col" className="px-6 py-3">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {users.map((user) => (
-                        <tr key={user.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td className="px-6 py-4">{user.userName}</td>
-                            <td className="px-6 py-4">{user.email}</td>
-                            <td className="px-6 py-4">{user.phone}</td>
-                            <td className="px-6 py-4">{user.access}</td>
-                            <td className="px-6 py-4">{user.employeeId}</td>
+                         <tr key={user._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                         <td className="px-6 py-4">
+                           {editableFields[user._id] ? (
+                             <input
+                               type="text"
+                               className='w-full p-2 border rounded-md'
+                               value={editedData[user._id]?.userName || user.userName}
+                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                             />
+                           ) : (
+                             user.userName
+                           )}
+                         </td>
+                         <td className="px-6 py-4">
+                           {editableFields[user._id] ? (
+                             <input
+                               type="email"
+                               className='w-full p-2 border rounded-md'
+                               value={editedData[user._id]?.userMail || user.userMail}
+                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                             />
+                           ) : (
+                             user.userMail
+                           )}
+                         </td>
+                         <td className="px-6 py-4">
+                           {editableFields[user._id] ? (
+                             <input
+                               type="text"
+                               className='w-full p-2 border rounded-md'
+                               value={editedData[user._id]?.phone || user.phone}
+                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                             />
+                           ) : (
+                             user.phone
+                           )}
+                         </td>
+                         <td className="px-6 py-4">
+                           {editableFields[user._id] ? (
+                             <input
+                               type="text"
+                               className='w-full p-2 border rounded-md'
+                               value={editedData[user._id]?.role || user.role}
+                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                             />
+                           ) : (
+                             user.role
+                           )}
+                         </td>
+                         <td className="px-6 py-4">
+                           {editableFields[user._id] ? (
+                             <input
+                               type="text"
+                               className='w-full p-2 border rounded-md'
+                               value={editedData[user._id]?.department || user.department}
+                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                             />
+                           ) : (
+                             user.department
+                           )}
+                         </td>
                             <td className="px-6 py-4">
+                            {editableFields[user._id] ? (
+                <button
+                  className="bg-green-500 text-white px-2 py-1 mr-2"
+                  onClick={() => handleSave(user._id)}
+                >
+                  <MdOutlineAddCircle />
+                </button>
+              ) : (
+                <button
+                  className="bg-blue-500 text-white px-2 py-1 mr-2"
+                  onClick={() => handleEdit(user._id)}
+                >
+                  Edit
+                </button>
+              )}
+              {editableFields[user._id] && (
+                <button
+                  className="bg-red-500 text-white px-2 py-1"
+                  onClick={() => handleCancelEdit(user._id)}
+                >
+                 <MdOutlineRemoveCircle />
+                </button>
+              )}
                                 <button
-                                    onClick={() => handleEdit(user.id)}
-                                    className="bg-blue-500 text-white px-2 py-1 mr-2"
-                                >
-                                    Edit
-                                </button>
-                                <button
-                                    onClick={() => handleDelete(user.id)}
+                                    onClick={() => handleDelete(user._id)}
                                     className="bg-red-500 text-white px-2 py-1 mr-2"
                                 >
                                     Delete

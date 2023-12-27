@@ -9,7 +9,6 @@ const All = () => {
         { to: '/payment-schedule', text: 'Payment Schedule', icon: <MdPayment /> },
         { to: '/site', text: 'Site', icon: <MdLocationOn /> },
         { to: '/client', text: 'Client', icon: <MdBusiness /> },
-        { to: '/employee', text: 'Employee', icon: <MdPeople /> },
         { to: '/design', text: 'Design', icon: <MdDesignServices /> },
         { to: '/bill', text: 'Bill', icon: <MdReceipt /> },
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },

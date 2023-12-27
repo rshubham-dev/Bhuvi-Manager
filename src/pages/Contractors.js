@@ -47,10 +47,7 @@ const Contractors = () => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" className="px-6 py-3">contractor Name</th>
-                <th scope="col" className="px-6 py-3">Email</th>
                 <th scope="col" className="px-6 py-3">Phone</th>
-                <th scope="col" className="px-6 py-3">Access</th>
-                <th scope="col" className="px-6 py-3">Employee ID</th>
                 <th scope="col" className="px-6 py-3">Actions</th>
             </tr>
         </thead>
@@ -59,8 +56,6 @@ const Contractors = () => {
                 <tr key={contractor.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="px-6 py-4">{contractor.name}</td>
                     <td className="px-6 py-4">{contractor.phone}</td>
-                    {/* <td className="px-6 py-4">{contractor.access}</td>
-                    <td className="px-6 py-4">{contractor.employeeId}</td> */}
                     <td className="px-6 py-4">
                         <button
                             onClick={() => handleEdit(contractor._id)}
