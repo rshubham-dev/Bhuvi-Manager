@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
-import property from '../config';
 
 
 const Contractors = () => {
@@ -13,7 +12,7 @@ const Contractors = () => {
     useEffect(() => {
       const getContractors = async () => {
           try {
-              const contractorData = await axios.get(`${property.BASE_URL}/api/v1/contractor`);
+              const contractorData = await axios.get('/api/v1/contractor');
               setContractor(contractorData.data);
           } catch (error) {
               toast.error(error.message)

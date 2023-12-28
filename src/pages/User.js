@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
-import property from '../config';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 
 
@@ -22,7 +21,7 @@ const UserManagement = () => {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const userData = await axios.get(`${property.BASE_URL}/api/v1/user/lists`);
+                const userData = await axios.get('/api/v1/user/lists');
                 setUsers(userData.data);
                 console.log(userData.data)
             } catch (error) {
@@ -52,7 +51,7 @@ const UserManagement = () => {
       const handleSave = async (id) => {
         try {
           // Make a PUT request with the updated data
-          const updatedUser = await axios.put(`${property.BASE_URL}/api/v1/user/update/${id}`, {
+          const updatedUser = await axios.put(`/api/v1/user/update/${id}`, {
             ...editedData[id], // Send only the fields that were edited
           });
     
@@ -91,7 +90,7 @@ const UserManagement = () => {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`${property.BASE_URL}/api/v1/user/delete/${id}`);
+            await axios.delete(`/api/v1/user/delete/${id}`);
             setUsers(users.filter((user) => user._id !== id));
         } catch (error) {
             toast.error(error.message)

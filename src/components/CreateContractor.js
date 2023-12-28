@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
-import property from '../config';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 
@@ -75,7 +74,7 @@ const CreateContractor = () => {
         phone: [...contact],
       }));
       console.log(contractor);
-      const response = await axios.post(`${property.BASE_URL}/api/v1/contractor`, {
+      const response = await axios.post('/api/v1/contractor', {
         name: contractor.name,
         phone: [...contact],
         address: {

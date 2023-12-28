@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import property from '../config.js';
 
 const CreateBill = () => {
   const [sites, setSite] = useState([]);
@@ -12,7 +11,7 @@ const CreateBill = () => {
   useEffect(() => {
     const getsites = async ()=>{
       try {
-        const sitesData = await axios.get(`${property.BASE_URL}/api/v1/site`);
+        const sitesData = await axios.get('/api/v1/site');
         setSite(sitesData.data);
       } catch (error) {
         toast.error(error.message)
@@ -20,7 +19,7 @@ const CreateBill = () => {
     }
     const getcontractors = async () => {
       try {
-        const contractorsData = await axios.get(`${property.BASE_URL}/api/v1/contractor`);
+        const contractorsData = await axios.get('/api/v1/contractor');
         setContractor(contractorsData.data);
       } catch (error) {
         toast.error(error.message)
@@ -28,7 +27,7 @@ const CreateBill = () => {
     }
     const getemployees = async () => {
       try {
-        const employeesData = await axios.get(`${property.BASE_URL}/api/v1/employee`);
+        const employeesData = await axios.get('/api/v1/employee');
         setEmployee(employeesData.data);
       } catch (error) {
         toast.error(error.message)

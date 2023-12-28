@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
-import property from '../config';
 
 
 const Clients = () => {
@@ -13,7 +12,7 @@ const Clients = () => {
   useEffect(() => {
     const getClients = async () => {
       try {
-        const clientData = await axios.get(`${property.BASE_URL}/api/v1/client`);
+        const clientData = await axios.get('/api/v1/client');
         setClient(clientData.data.clients);
         console.log(clients)
       } catch (error) {
@@ -31,7 +30,7 @@ const Clients = () => {
 
   const handleDelete = async (id) => {
     try {
-      const deleteClient = await axios.delete(`${property.BASE_URL}/api/v1/client/${id}`);
+      const deleteClient = await axios.delete(`/api/v1/client/${id}`);
       setClient(clients.filter((client) => client._id !== id));
     } catch (error) {
       toast.error(error.message)

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import property from '../config';
+import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 
@@ -33,6 +33,9 @@ const CreateEmployee = () => {
         site: "",
         role: "",
     });
+    const [department, setDepartment] = useState('');
+    const navigate = useNavigate();
+    const [error, setError] = useState(null);
 
     const inputData = (data, index) => {
         const { name, value } = data.target;
@@ -58,18 +61,40 @@ const CreateEmployee = () => {
     const formSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${property.BASE_URL}/api/v1/employee/create`, employee);
+            const response = await axios.post('/api/v1/employee/create', employee);
             console.log(response.data);
             toast.success('Registration successful!');
+            setDepartment(response.data.user.department);
         } catch (error) {
             console.error('Error submitting form:', error);
             toast.error(error.message)
             toast.error('An error occurred while registering. Please try again.');
         }
     };
+    useEffect(() => {
+        const handleNavigation = () => {
+            switch (department) {
+                case 'Admin':
+                    navigate('/admin');
+                    break;
+                case 'Client':
+                    navigate('/client');
+                    break;
+                case 'Employee':
+                    navigate('/create-employee');
+                    break;
+                default:
+                    console.log("Not exists");
+                    break;
+            }
+        };
+        if (department) {
+            handleNavigation();
+        }
+    }, [department, navigate]);
 
     return (
-<main>
+        <main>
             <section className='flex justify-center items-center '>
                 <form
                     className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md'
@@ -114,7 +139,7 @@ const CreateEmployee = () => {
                         {employee.phone.map((tel, index) => (
                             <div key={index} className='mb-4 w-full'>
                                 <input
-                                className='appearance-none border rounded w-800 py-2 px-3 mr-2 text-gray-600 leading-tight focus:outline-none focus:shadow-outline'
+                                    className='appearance-none border rounded w-800 py-2 px-3 mr-2 text-gray-600 leading-tight focus:outline-none focus:shadow-outline'
                                     type='text'
                                     name='phone'
                                     placeholder='Enter Your Phone Number'
@@ -124,18 +149,18 @@ const CreateEmployee = () => {
                                     onChange={(e) => inputData(e, index)}
                                 />
                                 {employee.phone.length > 1 && (
-                                <button
-                                className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 mr-0" 
-                                type="button" 
-                                onClick={() => removePhone(index)}>
-                                    <MdOutlineRemoveCircle />
-                                </button>)}
+                                    <button
+                                        className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 mr-0"
+                                        type="button"
+                                        onClick={() => removePhone(index)}>
+                                        <MdOutlineRemoveCircle />
+                                    </button>)}
                             </div>
                         ))}
-                        <button 
-                        className="w-400 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-                        type="button" 
-                        onClick={addPhone}>
+                        <button
+                            className="w-400 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+                            type="button"
+                            onClick={addPhone}>
                             <MdOutlineAddCircle />
                         </button>
                     </div>
@@ -155,7 +180,7 @@ const CreateEmployee = () => {
                     <div className='mb-4'>
                         <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Password</label>
                         <input
-                        className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             type='password'
                             name='password'
                             placeholder='Enter Your Password here'
@@ -168,7 +193,7 @@ const CreateEmployee = () => {
                     <div className='mb-4'>
                         <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Confirm Password</label>
                         <input
-                        className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             type='password'
                             name='confirmPassword'
                             placeholder='Confirm Your Password'
@@ -234,7 +259,7 @@ const CreateEmployee = () => {
                         <div>
                             <label htmlFor='addhar' className='block text-gray-700 text-sm font-bold mb-2'>Addhar Card:</label>
                             <input
-                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 type='file'
                                 name='addhar'
                                 onChange={inputData}
@@ -242,11 +267,11 @@ const CreateEmployee = () => {
                         </div>
                         <div className='mb-4'>
                             <label htmlFor='certificates' className='block text-gray-700 text-sm font-bold mb-2'>Certificates:</label>
-                            <input 
-                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            type='file' 
-                            name='certificates' 
-                            onChange={inputData} />
+                            <input
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                type='file'
+                                name='certificates'
+                                onChange={inputData} />
                             {/* store the document in seprate state and asign valuse of that array to orignal one */}
                             {employee.certificates.map((certificate, index) => (
                                 <div key={index}>
@@ -257,13 +282,13 @@ const CreateEmployee = () => {
                         </div>
                     </div>
                     <div className='mb-4'>
-                        <label 
-                        htmlFor='joining' 
-                        className='block text-gray-700 text-sm font-bold mb-2'>
+                        <label
+                            htmlFor='joining'
+                            className='block text-gray-700 text-sm font-bold mb-2'>
                             Joining Date
-                            </label>
+                        </label>
                         <input
-                        className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             type='date'
                             name='joinDate'
                             placeholder='Enter Your Joining Date'
@@ -283,7 +308,7 @@ const CreateEmployee = () => {
                     <div className='mb-4'>
                         <label htmlFor='birthdate' className='block text-gray-700 text-sm font-bold mb-2'>DOB</label>
                         <input
-                        className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             type='date'
                             name='birthdate'
                             placeholder='Enter Your Date of Birth'
@@ -293,12 +318,13 @@ const CreateEmployee = () => {
                             onChange={inputData}
                         />
                     </div>
-                    <button 
-                    type='submit'
-                    className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+                    <button
+                        type='submit'
+                        className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
                     >
                         Create</button>
                 </form>
+                {error && <p className="text-red-500">{error}</p>}
                 <Toaster
                     position="top-right"
                     reverseOrder={false}

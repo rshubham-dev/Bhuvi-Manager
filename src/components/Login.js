@@ -43,7 +43,7 @@ const LoginForm = () => {
           navigate('/client');
           break;
         case 'Employee':
-          navigate('/employee');
+          navigate('/create-employee');
           break;
         default:
           console.log("Not exists");

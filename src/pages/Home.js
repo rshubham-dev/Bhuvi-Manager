@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Login from '../components/Login'
-import Register from '../components/Register'
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate()
@@ -41,7 +38,8 @@ const Home = () => {
   
   return (
     <>
-    <Login/>
+    <NavLink to={'/register'} className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 m-4">Register</NavLink>
+    <NavLink to={'login'} className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 m-4">Login</NavLink>
     </>
   )
 }
