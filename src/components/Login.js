@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import property from '../config';
 import toast, { Toaster } from 'react-hot-toast';
-import Cookies from 'js-cookie';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
@@ -24,22 +22,14 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // const apiClient = axios.create({
-      //   baseURL: 'https://bhuvi-management-server.onrender.com',
-      //   withCredentials: true,
-      //   timeout: 120000,
-      // });
       const response = await axios.post('/api/v1/user/login', formData);
       console.log('Login submitted with data:', response.data);
-      // Cookies.set('access', response.data.accessToken);
-      // Cookies.set('refresh', response.data.refreshToken);
       toast.success(response.data.message);
       setRole(response.data.user.role);
     } catch (error) {
       console.error(error.response.data);
-      console.log(error.message);
       console.log(error)
-      toast.error('Login failed. Please check your credentials.');
+      toast.error(error.message);
       setError('Login failed. Please check your credentials.');
     }
   };
