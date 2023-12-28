@@ -29,10 +29,10 @@ const LoginForm = () => {
       //   withCredentials: true,
       //   timeout: 120000,
       // });
-      const response = await axios.post(`${property.BASE_URL}/api/v1/user/login`, formData);
+      const response = await axios.post('/api/v1/user/login', formData);
       console.log('Login submitted with data:', response.data);
-      Cookies.set('accessToken', response.data.accessToken);
-      Cookies.set('refreshToken', response.data.refreshToken);
+      Cookies.set('access', response.data.accessToken);
+      Cookies.set('refresh', response.data.refreshToken);
       toast.success(response.data.message);
       setRole(response.data.user.role);
     } catch (error) {
@@ -49,9 +49,6 @@ const LoginForm = () => {
           break;
         case 'Client':
           navigate('/client');
-          break;
-        case 'Ceo':
-          navigate('/ceo');
           break;
         case 'Employee':
           navigate('/employee');

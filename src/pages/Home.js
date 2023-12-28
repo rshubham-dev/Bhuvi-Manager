@@ -41,27 +41,6 @@ const Home = () => {
   
   return (
     <>
-    {/* <form className="max-w-md mx-auto mt-8 p-6 bg-white rounded-md shadow-md"
-    onSubmit={handleSubmit}
-    > 
-    <label className="block mb-2">
-          Role:
-          <input
-            type="text"
-            name="role"
-            value={role}
-            onChange={handleChange}
-            className="w-full p-2 border rounded-md"
-            required
-          />
-        </label>
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-        >
-          Login
-        </button>
-    </form> */}
     <Login/>
     </>
   )
