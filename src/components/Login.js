@@ -31,12 +31,14 @@ const LoginForm = () => {
       // });
       const response = await axios.post('/api/v1/user/login', formData);
       console.log('Login submitted with data:', response.data);
-      Cookies.set('access', response.data.accessToken);
-      Cookies.set('refresh', response.data.refreshToken);
+      // Cookies.set('access', response.data.accessToken);
+      // Cookies.set('refresh', response.data.refreshToken);
       toast.success(response.data.message);
       setRole(response.data.user.role);
     } catch (error) {
-      console.error(error);
+      console.error(error.response.data);
+      console.log(error.message);
+      console.log(error)
       toast.error('Login failed. Please check your credentials.');
       setError('Login failed. Please check your credentials.');
     }
