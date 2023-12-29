@@ -4,15 +4,20 @@ import { MdOutlineDarkMode, MdLogout, MdSearch } from "react-icons/md";
 import logo from '../asset/logo.png';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
-
+  const navigate = useNavigate();
   const logout = async () => {
     try {
-      const response = await axios.post('/api/v1/user/logout');
-      console.log('User Logged Out');
-      console.log(response.data)
-      toast.success(response.data.message);
+      const response = await axios.post('/api/v1/user/logout')
+      .then(res => {
+        if(res.ok){
+          toast.success(response.data.message);
+          console.log(response.data)
+          navigate('/login');
+        }
+      })
     } catch (error) {
       toast.error(error.message);
     }
