@@ -2,8 +2,20 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineDarkMode, MdLogout, MdSearch } from "react-icons/md";
 import logo from '../asset/logo.png';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Navbar = () => {
+
+  const logout = async () => {
+    try {
+      const response = await axios.post('/api/v1/user/logout');
+      console.log('User Logged Out');
+      toast.success(response.data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
   return (
     <header className='mb-6'>
       <nav className="bg-gradient-to-r from-green-300 via-green-400 to-green-500 p-4 md:px-8 lg:px-12">
@@ -25,13 +37,17 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-4">
               <MdOutlineDarkMode className="text-white text-lg md:text-xl lg:text-2xl" />
-              <NavLink to="/login" className="text-white text-lg md:text-xl lg:text-2xl">
+              <NavLink onClick={logout} className="text-white text-lg md:text-xl lg:text-2xl">
                 <MdLogout />
               </NavLink>
             </div>
           </div>
         </div>
       </nav>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
     </header>
   );
 };
