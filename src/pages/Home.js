@@ -38,8 +38,13 @@ const Home = () => {
   
   return (
     <>
-    <NavLink to={'/register'} className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 m-4">Register</NavLink>
-    <NavLink to={'login'} className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 m-4">Login</NavLink>
+    <section className="max-w-md mx-auto mt-8 p-8 flex justify-center align-center flex-col">
+      <h1 className="text-2xl text-center font-semibold mb-4">Bhuvi Consultants</h1>
+      <div className='flex'>
+    <NavLink to={'/register'} className="w-full bg-blue-500 text-center text-white p-2 rounded-md hover:bg-blue-600">Register</NavLink>
+    <NavLink to={'login'} className="w-full bg-blue-500 text-center text-white p-2 rounded-md hover:bg-blue-600">Login</NavLink>
+      </div>
+    </section>
     </>
   )
 }
