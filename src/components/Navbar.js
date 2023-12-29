@@ -12,11 +12,9 @@ const Navbar = () => {
     try {
       const response = await axios.post('/api/v1/user/logout')
       .then((response) => {
-        if(response.ok){
           toast.success(response.data.message);
           console.log(response.data)
           navigate('/login');
-        }
       })
     } catch (error) {
       toast.error(error.message);
