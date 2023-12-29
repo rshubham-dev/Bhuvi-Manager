@@ -34,7 +34,7 @@ const LoginForm = () => {
         name: response.data.user.userName,
         email: response.data.user.userMail,
         role: response.data.user.role,
-        designation: response.data.user.departement
+        designation: response.data.user.department,
       }))
     } catch (error) {
       console.log(error)
