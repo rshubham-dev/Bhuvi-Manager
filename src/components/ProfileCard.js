@@ -1,19 +1,9 @@
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
 import { UserContext } from '../context/AuthContext';
 
 const UserProfile = () => {
   const {user} = useContext(UserContext);
-  if(!user) return <div>Please Login</div>
-  console.log(user.name)
     console.log(user)
-  const users = {
-        name: 'Praveen Kumar Singh',
-        email: 'pravinlostboy@gmail.com',
-        role:'Admin',
-        designation:'CEO',
-        image: 'https://via.placeholder.com/24',
-     };
  return (
     <div>
     <div className="container mx-auto py-8">
