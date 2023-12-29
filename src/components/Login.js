@@ -27,10 +27,10 @@ const LoginForm = () => {
       const response = await axios.post('/api/v1/user/login', formData);
       console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
-      setRole(response.data.user.role);
       setUser({
         user: response.data.user,
       })
+      setRole(response.data.user.role);
       console.log(user);
     } catch (error) {
       console.log(error)
