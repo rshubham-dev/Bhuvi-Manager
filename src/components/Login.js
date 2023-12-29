@@ -9,7 +9,7 @@ const LoginForm = () => {
     userMail: '',
     password: '',
   });
-  const [user, setUser] = useContext(UserContext);
+  const {setUser} = useContext(UserContext);
 
   const [role, setRole] = useState('');
   const [error, setError] = useState(null);
