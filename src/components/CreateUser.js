@@ -11,18 +11,23 @@ const CreateUser = () => {
     phone: '',
     role: '',
     department:'',
-    employeeId: '',
   });
  const navigate = useNavigate();
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/v1/user/create', userData);
+      const response = await axios.post('/api/v1/user/create', {
+        userName: userData.userName,
+        userMail: userData.userMail,
+        password: userData.password,
+        phone: userData.phone,
+        role: userData.role,
+        department: userData.department,
+      });
       if (response.error) return toast.error(response.error);
       toast.success('User created successfuly');
       navigate('/login');
@@ -114,19 +119,6 @@ const CreateUser = () => {
             name='department'
             placeholder='Department'
             value={userData.department}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="employeeId" className="block text-gray-700 text-sm font-bold mb-2">
-            Employee_Id
-          </label>
-          <input
-            type="text"
-            name='employeeId'
-            placeholder='Employee_Id'
-            value={userData.employeeId}
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
