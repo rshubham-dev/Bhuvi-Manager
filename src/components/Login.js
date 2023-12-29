@@ -9,7 +9,7 @@ const LoginForm = () => {
     userMail: '',
     password: '',
   });
-  const {setUser} = useContext(UserContext);
+  const {user, setUser} = useContext(UserContext);
 
   const [role, setRole] = useState('');
   const [error, setError] = useState(null);
@@ -32,6 +32,7 @@ const LoginForm = () => {
         isLoggedIn: true,
         user: response.data.user,
       })
+      console.log(user);
     } catch (error) {
       console.error(error.response.data);
       console.log(error)
