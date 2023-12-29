@@ -11,6 +11,7 @@ const Navbar = () => {
     try {
       const response = await axios.post('/api/v1/user/logout');
       console.log('User Logged Out');
+      console.log(response.data)
       toast.success(response.data.message);
     } catch (error) {
       toast.error(error.message);
