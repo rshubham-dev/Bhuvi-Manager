@@ -28,7 +28,9 @@ const LoginForm = () => {
       console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
       setRole(response.data.user.role);
-      setUser({role})
+      setUser({
+        user: response.data.user,
+      })
       console.log(user);
     } catch (error) {
       console.log(error)
