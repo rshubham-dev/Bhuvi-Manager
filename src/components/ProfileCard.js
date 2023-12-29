@@ -4,6 +4,7 @@ import { UserContext } from '../context/AuthContext';
 
 const UserProfile = () => {
   const {user} = useContext(UserContext);
+  if(!user) return <div>Please Login</div>
     
   const users = {
         name: 'Praveen Kumar Singh',

@@ -30,7 +30,7 @@ const LoginForm = () => {
       setRole(response.data.user.role);
       setUser({
         isLoggedIn: true,
-        user: response.data.user,
+        user: response.data,
       })
       console.log(user);
     } catch (error) {
