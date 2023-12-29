@@ -10,7 +10,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const logout = async () => {
     try {
-      const response = await axios.post('/api/v1/user/logout')
+      await axios.post('/api/v1/user/logout')
       .then((response) => {
           toast.success(response.data.message);
           console.log(response.data)

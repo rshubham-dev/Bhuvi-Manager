@@ -28,10 +28,9 @@ const LoginForm = () => {
       console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
       setRole(response.data.user.role);
-      setUser(response.data)
+      setUser({role})
       console.log(user);
     } catch (error) {
-      console.error(error.response.data);
       console.log(error)
       toast.error(error.message);
       setError('Login failed. Please check your credentials.');
