@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -12,7 +11,6 @@ const CreateUser = () => {
     role: '',
     department:'',
   });
- const navigate = useNavigate();
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
@@ -28,12 +26,11 @@ const CreateUser = () => {
         role: userData.role,
         department: userData.department,
       });
-      if (response.error) return toast.error(response.error);
       toast.success('User created successfuly');
-      navigate('/login');
+      if (response.error) return toast.error(response.error);
     } catch (error) {
       console.log(error)
-      toast.error(error.message)
+      toast.error(error.response?.data?.message || 'An error occurred');
     }
   };
 
