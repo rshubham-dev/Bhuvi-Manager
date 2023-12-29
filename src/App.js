@@ -26,10 +26,11 @@ import CreateContractor from './components/CreateContractor';
 import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Ceo from './pages/Ceo';
+import {UserContextProvider} from './context/AuthContext';
 
 const App = () => {
   return (
-    <>
+    <UserContextProvider>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/admin' element={<Admin/>}/>
@@ -59,7 +60,7 @@ const App = () => {
         <Route path='/create-contractors' element={<CreateContractor />} />
         <Route path='/setting' element={<Profile/>} />
       </Routes>
-    </>
+    </UserContextProvider>
   )
 }
 

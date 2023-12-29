@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineDarkMode, MdLogout, MdSearch } from "react-icons/md";
 import logo from '../asset/logo.png';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import {UserContext} from '../context/AuthContext';
 
 const Navbar = () => {
+  const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
   const logout = async () => {
     try {
@@ -52,6 +54,9 @@ const Navbar = () => {
         position="top-right"
         reverseOrder={false}
       />
+      <h4>
+        {JSON.stringify(user)}
+      </h4>
     </header>
   );
 };

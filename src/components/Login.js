@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
+import {UserContext} from '../context/AuthContext';
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     userMail: '',
     password: '',
   });
+  const [user, setUser] = useContext(UserContext);
 
   const [role, setRole] = useState('');
   const [error, setError] = useState(null);
@@ -26,6 +28,10 @@ const LoginForm = () => {
       console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
       setRole(response.data.user.role);
+      setUser({
+        isLoggedIn: true,
+        user: response.data.user,
+      })
     } catch (error) {
       console.error(error.response.data);
       console.log(error)
