@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { UserContext } from '../context/AuthContext';
 
 const UserProfile = () => {
-    const user = {
+  const {user} = useContext(UserContext);
+    
+  const users = {
         name: 'Praveen Kumar Singh',
         email: 'pravinlostboy@gmail.com',
         role:'Admin',
