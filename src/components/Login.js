@@ -36,7 +36,6 @@ const LoginForm = () => {
         role: response.data.user.role,
         designation: response.data.user.department,
       }))
-      window.location.reload();
     } catch (error) {
       console.log(error)
       toast.error(error.message);
