@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 
@@ -9,32 +8,33 @@ const CreateEmployee = () => {
         name: "",
         email: "",
         password: "",
-        confirmPassword: "",
         phone: [""],
         employeeId: "",
-        address: {
-            street: "",
-            city: "",
-            district: "",
-            state: "",
-            pincode: "",
-        },
-        addhar: "",
-        pan: "",
-        cv: "",
-        offerletter: "",
-        bank: "",
-        certificates: [],
+        // address: {
+        //     street: "",
+        //     city: "",
+        //     district: "",
+        //     state: "",
+        //     pincode: "",
+        // },
+        // addhar: "",
+        // pan: "",
+        // cv: "",
+        // offerletter: "",
+        // bank: "",
+        // certificates: [],
+        // avatar: "",
         joinDate: "",
-        department: "",
-        avatar: "",
         birthdate: "",
-        salary: "",
-        site: "",
-        role: "",
     });
-    const [department, setDepartment] = useState('');
-    const navigate = useNavigate();
+    // const [location, setLocation] = useState({
+    //     street: "",
+    //     city: "",
+    //     district: "",
+    //     state: "",
+    //     pincode: "",
+    // });
+    // const [phone, setPhone] = useState([]);
     const [error, setError] = useState(null);
 
     const inputData = (data, index) => {
@@ -45,6 +45,7 @@ const CreateEmployee = () => {
             setEmployee((prevEmployee) => ({ ...prevEmployee, phone: updatedPhones }));
         } else {
             setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
+            // setLocation((prevAddress) => ({ ...prevAddress, [name]: value }));
         }
     }
 
@@ -61,47 +62,62 @@ const CreateEmployee = () => {
     const formSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/v1/employee/create', employee);
+            console.log(employee)
+            const response = await axios.post('/api/v1/employee/create', {
+                name: employee.name,
+                email: employee.email,
+                password: employee.password,
+                phone: [...employee.phone],
+                employeeId: employee.employeeId,
+                // address: {
+                //     street: location.street,
+                //     city: location.city,
+                //     district: location.district,
+                //     state: location.state,
+                //     pincode: location.pincode,
+                // },
+                // addhar: employee.addhar,
+                // pan: employee.pan,
+                // cv: employee.cv,
+                // offerletter: employee.offerletter,
+                // bank: employee.bank,
+                // avatar: employee.avatar,
+                // certificates,
+                joinDate: employee.joinDate,
+                birthdate: employee.birthdate,
+            });
             console.log(response.data);
             toast.success('Registration successful!');
-            setDepartment(response.data.user.department);
         } catch (error) {
             toast.error(error.message)
+            setError(error.message);
             toast.error('An error occurred while registering. Please try again.');
         }
     };
     // useEffect(() => {
-    //     const handleNavigation = () => {
-    //         switch (department) {
-    //             case 'Admin':
-    //                 navigate('/admin');
-    //                 break;
-    //             case 'Client':
-    //                 navigate('/client');
-    //                 break;
-    //             case 'Employee':
-    //                 navigate('/create-employee');
-    //                 break;
-    //             default:
-    //                 console.log("Not exists");
-    //                 break;
-    //         }
-    //     };
-    //     if (department) {
-    //         handleNavigation();
-    //     }
-    // }, [department, navigate]);
+
+    // }, [department]);
 
     return (
         <main>
-            <section className='flex justify-center items-center '>
+            <section className='flex justify-center items-center mb-12'>
                 <form
-                    className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md'
+                    className='bg-white shadow-md rounded px-8 pt-4 pb-4 mb-12 w-full max-w-md'
                     onSubmit={formSubmit}
                 >
                     <h2 className='text-2xl font-bold mb-6 text-center'>Create Employee</h2>
 
                     {/* Group Personal Information */}
+                    {/* <div className='mb-4'>
+                        <label htmlFor='avatar'
+                            className='block text-gray-700 text-sm font-bold mb-2'>Avatar:</label>
+                        <input
+                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            type='file'
+                            name='avatar'
+                            onChange={inputData}
+                        />
+                    </div> */}
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>
                             Full Name
@@ -189,78 +205,122 @@ const CreateEmployee = () => {
                             onChange={inputData}
                         />
                     </div>
-                    <div className='mb-4'>
-                        <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Confirm Password</label>
-                        <input
-                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            type='password'
-                            name='confirmPassword'
-                            placeholder='Confirm Your Password'
-                            required
-                            autoComplete='off'
-                            value={employee.confirmPassword}
-                            onChange={inputData}
-                        />
-                    </div>
-                    {/* <div>
-                        <h4>Address</h4>
-                        <div>
-                            <label htmlFor="street" className='block text-gray-700 text-sm font-bold mb-2'>Street:</label>
+                    {/* <div className='mb-4'> 
+                        <h4 className='mb-2'>Address</h4>
+                        <div className='mb-4'>
+                            <label htmlFor="street" 
+                            className='block text-gray-700 text-sm font-bold mb-2'>Street:</label>
                             <input
                                 type="text"
                                 id="street"
                                 name="street"
-                                value={employee.address.street}
+                                placeholder='Enter Street here'
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                value={location.street}
                                 onChange={inputData}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="city" className='block text-gray-700 text-sm font-bold mb-2'>City:</label>
+                        <div className='mb-4'>
+                            <label htmlFor="city"
+                             className='block text-gray-700 text-sm font-bold mb-2'>City:</label>
                             <input
                                 type="text"
                                 id="city"
                                 name="city"
+                                placeholder='Enter Your City here'
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                value={location.city}
                                 onChange={inputData}
-                                value={employee.address.city}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="district" className='block text-gray-700 text-sm font-bold mb-2'>District:</label>
+                        <div className='mb-4'>
+                            <label htmlFor="district" 
+                            className='block text-gray-700 text-sm font-bold mb-2'>District:</label>
                             <input
                                 type="text"
                                 id="district"
                                 name="district"
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 placeholder='Enter District here'
-                                value={employee.address.district}
+                                value={location.district}
                                 onChange={inputData}
                             />
                         </div>
-                        <div>
-                            <label htmlFor="state" className='block text-gray-700 text-sm font-bold mb-2'>State:</label>
-                            <select onChange={inputData}>
-                                <option>Select your State</option>
-                            </select>
+                        <div className='mb-4'>
+                            <label htmlFor="state" 
+                            className='block text-gray-700 text-sm font-bold mb-2'>State:</label>
+                            <input
+                                type="text"
+                                id="state"
+                                name="state"
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                placeholder='Enter Your State here'
+                                value={location.state}
+                                onChange={inputData}
+                            />
                         </div>
-                        <div>
+                        <div className='mb-4'>
                             <label htmlFor="pincode" className='block text-gray-700 text-sm font-bold mb-2'>Pincode:</label>
                             <input
                                 type="number"
                                 id="pincode"
                                 name="pincode"
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 placeholder='Enter Pin code here'
-                                value={employee.address.pincode}
+                                value={location.pincode}
                                 onChange={inputData}
                             />
                         </div>
                     </div> */}
-                    <div className='mb-4'>
-                        <h4>Document Name</h4>
-                        <div>
-                            <label htmlFor='addhar' className='block text-gray-700 text-sm font-bold mb-2'>Addhar Card:</label>
+                    {/* <div className='mb-4'>
+                        <h4 className='mb-2'>Document Name</h4>
+                        <div className='mb-4'>
+                            <label htmlFor='addhar' 
+                            className='block text-gray-700 text-sm font-bold mb-2'>Addhar Card:</label>
                             <input
                                 className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 type='file'
                                 name='addhar'
+                                onChange={inputData}
+                            />
+                        </div>
+                        <div className='mb-4'>
+                            <label htmlFor='pan' 
+                            className='block text-gray-700 text-sm font-bold mb-2'>Pan Card:</label>
+                            <input
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                type='file'
+                                name='pan'
+                                onChange={inputData}
+                            />
+                        </div>
+                        <div className='mb-4'>
+                            <label htmlFor='cv' 
+                            className='block text-gray-700 text-sm font-bold mb-2'>CV:</label>
+                            <input
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                type='file'
+                                name='cv'
+                                onChange={inputData}
+                            />
+                        </div>
+                        <div className='mb-4'>
+                            <label htmlFor='offerletter' 
+                            className='block text-gray-700 text-sm font-bold mb-2'>Offer Letter:</label>
+                            <input
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                type='file'
+                                name='offerletter'
+                                onChange={inputData}
+                            />
+                        </div>
+                        <div className='mb-4'>
+                            <label htmlFor='account' 
+                            className='block text-gray-700 text-sm font-bold mb-2'>Bank Detail:</label>
+                            <input
+                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                                type='file'
+                                name='bank'
                                 onChange={inputData}
                             />
                         </div>
@@ -271,15 +331,13 @@ const CreateEmployee = () => {
                                 type='file'
                                 name='certificates'
                                 onChange={inputData} />
-                            {/* store the document in seprate state and asign valuse of that array to orignal one */}
-                            {employee.certificates.map((certificate, index) => (
+                             {employee.certificates.map((certificate, index) => (
                                 <div key={index}>
                                     Certificate {index + 1}: {certificate ? certificate.name : ''}
                                 </div>
-                            ))}
-
-                        </div>
-                    </div>
+                            ))} 
+                        </div> 
+                    </div> */}
                     <div className='mb-4'>
                         <label
                             htmlFor='joining'
@@ -297,13 +355,6 @@ const CreateEmployee = () => {
                             onChange={inputData}
                         />
                     </div>
-                    {/* <div>
-                        <label htmlFor='department' className='block text-gray-700 text-sm font-bold mb-2'>Department</label>
-                        <select onChange={inputData} value={employee.department} name='department'>
-                            <option value='site'>Site</option>
-                            <option value='design'>Design</option>
-                        </select>
-                    </div> */}
                     <div className='mb-4'>
                         <label htmlFor='birthdate' className='block text-gray-700 text-sm font-bold mb-2'>DOB</label>
                         <input
@@ -322,12 +373,12 @@ const CreateEmployee = () => {
                         className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
                     >
                         Create</button>
+                {error && <p className="text-red-500 mt-4">{error}</p>}
                 </form>
-                {error && <p className="text-red-500">{error}</p>}
                 <Toaster
                     position="top-right"
                     reverseOrder={false}
-                />
+                    />
             </section>
         </main>
     )
