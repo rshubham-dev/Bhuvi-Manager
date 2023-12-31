@@ -66,7 +66,6 @@ const CreateEmployee = () => {
             toast.success('Registration successful!');
             setDepartment(response.data.user.department);
         } catch (error) {
-            console.error('Error submitting form:', error);
             toast.error(error.message)
             toast.error('An error occurred while registering. Please try again.');
         }
