@@ -87,6 +87,7 @@ const CreateEmployee = () => {
                 birthdate: employee.birthdate,
             });
             console.log(response.data);
+            console.log(response.data.error)
             toast.success('Registration successful!');
         } catch (error) {
             toast.error(error.message)
