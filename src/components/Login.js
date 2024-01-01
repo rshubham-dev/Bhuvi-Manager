@@ -1,19 +1,25 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import {UserContext} from '../context/AuthContext';
+// import {UserContext} from '../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../features/auth/authSlice';
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
+
 
 const LoginForm = () => {
   const [formData, setFormData] = useState({
     userMail: '',
     password: '',
   });
-  const {user, setUser} = useContext(UserContext);
+  // const {user, setUser} = useContext(UserContext);
 
-  const [role, setRole] = useState('');
+  // const [role, setRole] = useState('');
   const [error, setError] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     setFormData({
@@ -27,24 +33,31 @@ const LoginForm = () => {
       const response = await axios.post('/api/v1/user/login', formData);
       console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
-      setRole(response.data.user.role);
-      setUser(prevUser => ({
-        ...prevUser,
-        isLoggedIn: true,
-        name: response.data.user.userName,
-        email: response.data.user.userMail,
-        role: response.data.user.role,
-        designation: response.data.user.department,
-      }))
+      dispatch(login(response.data))
+      // setRole(response.data.user.role);
+      // setUser(prevUser => ({
+      //   ...prevUser,
+      //   isLoggedIn: true,
+      //   name: response.data.user.userName,
+      //   email: response.data.user.userMail,
+      //   role: response.data.user.role,
+      //   designation: response.data.user.department,
+      // }))
+      setFormData({
+        userMail: '',
+        password: '',
+      })
     } catch (error) {
       console.log(error)
       toast.error(error.message);
       setError('Login failed. Please check your credentials.');
     }
   };
+  const user = useSelector((state) => state.user);
+  console.log(user.role)
   useEffect(() => {
     const handleNavigation = () => {
-      switch (role) {
+      switch (user.role) {
         case 'Admin':
           navigate('/admin');
           break;
@@ -59,10 +72,10 @@ const LoginForm = () => {
           break;
       }
     };
-    if (role) {
+    if (user.role) {
       handleNavigation();
     }
-  }, [role, navigate]);
+  }, [user.role, navigate]);
 
 
   return (

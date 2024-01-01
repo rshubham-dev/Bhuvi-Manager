@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../context/AuthContext';
+import React from 'react';
+// import { UserContext } from '../context/AuthContext';
+import { useSelector } from 'react-redux'
 
 const UserProfile = () => {
-  const {user} = useContext(UserContext);
-    console.log(user)
+  // const {user} = useContext(UserContext);
+  //   console.log(user)
+  const user = useSelector((state)=> state.user)
  return (
     <div>
     <div className="container mx-auto py-8">
