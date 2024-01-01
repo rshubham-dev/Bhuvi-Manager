@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 // import {UserContext} from '../context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../features/auth/authSlice';
+import { login, logout } from '../features/auth/authSlice';
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
 
@@ -37,7 +37,7 @@ const LoginForm = () => {
         dispatch(logout())
       }
       else{
-        dispatch(l(...response.data.user))
+        dispatch(login(...response.data.user))
       }
       setFormData({
         userMail: '',
