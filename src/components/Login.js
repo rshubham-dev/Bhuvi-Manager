@@ -20,10 +20,10 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const {user} = useSelector((state) => {
+  const { user } = useSelector((state) => {
     return state.auth
   });
-  
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -39,8 +39,9 @@ const LoginForm = () => {
       if (!response.data.user) {
         dispatch(logout())
       }
-      else{
+      else {
         dispatch(login(response.data.user))
+        sessionStorage.setItem("token", response.data.accessToken);
       }
       setFormData({
         userMail: '',
@@ -74,10 +75,10 @@ const LoginForm = () => {
         }
       }
     };
-  
+
     handleNavigation();
   }, [role, navigate]);
-  
+
 
 
   return (
