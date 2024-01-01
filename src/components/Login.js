@@ -54,7 +54,8 @@ const LoginForm = () => {
     }
   };
   const user = useSelector((state) => state.user);
-  console.log(user.role)
+  console.log(user); // Check if user is defined
+  
   useEffect(() => {
     const handleNavigation = () => {
       switch (user.role) {
