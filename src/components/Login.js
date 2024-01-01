@@ -51,30 +51,29 @@ const LoginForm = () => {
   };
   const user = useSelector((state) => state.user);
   console.log(user); // Check if user is defined
-  const role = user.role
 
-  useEffect(() => {
-    const handleNavigation = () => {
-      if (role) {
-        switch (role) {
-          case 'Admin':
-            navigate('/admin');
-            break;
-          case 'Client':
-            navigate('/client');
-            break;
-          case 'Employee':
-            navigate('/create-employee');
-            break;
-          default:
-            console.log("Not exists");
-            break;
-        }
-      }
-    };
+  // useEffect(() => {
+  //   const handleNavigation = () => {
+  //     if (role) {
+  //       switch (role) {
+  //         case 'Admin':
+  //           navigate('/admin');
+  //           break;
+  //         case 'Client':
+  //           navigate('/client');
+  //           break;
+  //         case 'Employee':
+  //           navigate('/create-employee');
+  //           break;
+  //         default:
+  //           console.log("Not exists");
+  //           break;
+  //       }
+  //     }
+  //   };
   
-    handleNavigation();
-  }, [role, navigate]);
+  //   handleNavigation();
+  // }, [role, navigate]);
   
 
 
