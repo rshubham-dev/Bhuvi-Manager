@@ -10,11 +10,13 @@ import { useSelector } from 'react-redux'
 const Navbar = () => {
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState(false)
-  const loggedIn = useSelector((state) => state.isLoggedIn);
-  useEffect(() => {
-    setIsLogged(loggedIn)
-    console.log(loggedIn);
-  }, [loggedIn])
+  // const loggedIn = useSelector((state) => {
+  //   return state.loggedIn
+  // });
+  // useEffect(() => {
+  //   setIsLogged(loggedIn)
+  //   console.log(loggedIn);
+  // }, [loggedIn])
   
   const logout = async () => {
     try {

@@ -49,7 +49,9 @@ const LoginForm = () => {
       setError('Login failed. Please check your credentials.');
     }
   };
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => {
+    return state.user
+  });
   console.log(user); // Check if user is defined
 
   // useEffect(() => {
