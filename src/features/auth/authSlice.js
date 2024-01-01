@@ -7,7 +7,7 @@ console.log(token); // Check if the token is correctly retrieved
 
 
 const initialState = token
-? { isLoggedIn: true, user: {} }
+? { isLoggedIn: true, user: {}}
 : { isLoggedIn: false, user: null };
 
 export const authSlice = createSlice({
@@ -15,7 +15,7 @@ export const authSlice = createSlice({
     initialState,
     reducers:{
         login:(state, action)=>{
-            state.user = action.payload.user;
+            state.user = action.payload;
             state.isLoggedIn = true;
         },
         logout: (state) => {
