@@ -20,7 +20,10 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const {user} = useSelector((state) => {
+    return state.auth
+  });
+  
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -49,9 +52,6 @@ const LoginForm = () => {
       setError('Login failed. Please check your credentials.');
     }
   };
-  const user = useSelector((state) => {
-    return state.user.role
-  });
     console.log(user)
 
   // useEffect(() => {
