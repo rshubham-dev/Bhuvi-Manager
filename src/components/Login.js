@@ -50,11 +50,9 @@ const LoginForm = () => {
     }
   };
   const user = useSelector((state) => {
-    return state.user
+    return state.user.role
   });
-  useEffect(()=>{
     console.log(user)
-  }, [user])
 
   // useEffect(() => {
   //   const handleNavigation = () => {
