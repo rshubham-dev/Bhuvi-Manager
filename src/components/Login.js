@@ -54,9 +54,7 @@ const LoginForm = () => {
   });
   useEffect(()=>{
     console.log(user)
-    console.log(user.userName)
   }, [user])
-  console.log(user); // Check if user is defined
 
   // useEffect(() => {
   //   const handleNavigation = () => {
