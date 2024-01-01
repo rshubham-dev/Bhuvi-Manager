@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Cookies } from 'react-cookie';
 
-const token = Cookies.get('accessToken');
+const cookies = Cookies();
+const token = cookies.get('accessToken');
+console.log(token); // Check if the token is correctly retrieved
+
 
 
 const initialState = token
