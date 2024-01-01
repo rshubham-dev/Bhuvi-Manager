@@ -47,7 +47,7 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-4">
               <MdOutlineDarkMode className="text-white text-lg md:text-xl lg:text-2xl" />
-              {loggedIn ? (
+              {isLogged ? (
                 <NavLink onClick={logout} className="text-white text-lg md:text-xl lg:text-2xl">
                   <MdLogout />
                 </NavLink>
