@@ -9,21 +9,18 @@ import { useSelector, useDispatch } from 'react-redux'
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [isLogged, setIsLogged] = useState(false)
-  const {loggedIn} = useSelector((state) => {
+  const {isLoggedIn} = useSelector((state) => {
     return state.auth
   });
-    setIsLogged(loggedIn)
-    console.log(loggedIn);
   const dispatch = useDispatch()
   
   const logout = async () => {
     try {
       await axios.post('/api/v1/user/logout').then((response) => {
+        dispatch(logout());
         toast.success(response.data.message);
         console.log(response.data);
         navigate('/login');
-        dispatch(logout());
       });
     } catch (error) {
       toast.error(error.message);
@@ -52,7 +49,7 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-4">
               <MdOutlineDarkMode className="text-white text-lg md:text-xl lg:text-2xl" />
-              {isLogged ? (
+              {isLoggedIn ? (
                 <NavLink onClick={logout} className="text-white text-lg md:text-xl lg:text-2xl">
                   <MdLogout />
                 </NavLink>
