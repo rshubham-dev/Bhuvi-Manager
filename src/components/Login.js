@@ -33,16 +33,12 @@ const LoginForm = () => {
       const response = await axios.post('/api/v1/user/login', formData);
       console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
-      dispatch(login(response.data.user))
-      // setRole(response.data.user.role);
-      // setUser(prevUser => ({
-      //   ...prevUser,
-      //   isLoggedIn: true,
-      //   name: response.data.user.userName,
-      //   email: response.data.user.userMail,
-      //   role: response.data.user.role,
-      //   designation: response.data.user.department,
-      // }))
+      if (response.data.user) {
+        dispatch(logout())
+      }
+      else{
+        dispatch(l(...response.data.user))
+      }
       setFormData({
         userMail: '',
         password: '',
@@ -55,11 +51,12 @@ const LoginForm = () => {
   };
   const user = useSelector((state) => state.user);
   console.log(user); // Check if user is defined
-  
+  const role = user.role
+
   useEffect(() => {
     const handleNavigation = () => {
-      if (user && user.role) {
-        switch (user.role) {
+      if (role) {
+        switch (role) {
           case 'Admin':
             navigate('/admin');
             break;
@@ -77,7 +74,7 @@ const LoginForm = () => {
     };
   
     handleNavigation();
-  }, [user, navigate]);
+  }, [role, navigate]);
   
 
 

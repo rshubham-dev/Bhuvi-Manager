@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineDarkMode, MdLogout, MdSearch, MdLogin } from "react-icons/md";
 import logo from '../asset/logo.png';
@@ -9,9 +9,9 @@ import { useSelector } from 'react-redux'
 
 const Navbar = () => {
   const navigate = useNavigate();
-
-  const loggedIn = useSelector((state) => state.loggedIn);
-
+  const [isLogged, setIsLogged] = useState(false)
+  const loggedIn = useSelector((state) => state.isLoggedIn);
+  setIsLogged(loggedIn)
   console.log(loggedIn);
   const logout = async () => {
     try {
