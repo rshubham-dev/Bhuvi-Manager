@@ -5,7 +5,7 @@ import logo from '../asset/logo.png';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -13,10 +13,9 @@ const Navbar = () => {
   const {loggedIn} = useSelector((state) => {
     return state.auth
   });
-  useEffect(() => {
     setIsLogged(loggedIn)
     console.log(loggedIn);
-  }, [loggedIn])
+  const dispatch = useDispatch()
   
   const logout = async () => {
     try {
@@ -24,6 +23,7 @@ const Navbar = () => {
         toast.success(response.data.message);
         console.log(response.data);
         navigate('/login');
+        dispatch(logout());
       });
     } catch (error) {
       toast.error(error.message);
