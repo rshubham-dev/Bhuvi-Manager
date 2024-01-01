@@ -52,30 +52,31 @@ const LoginForm = () => {
       setError('Login failed. Please check your credentials.');
     }
   };
-    console.log(user)
+  console.log(user)
+  const role = user.role;
 
-  // useEffect(() => {
-  //   const handleNavigation = () => {
-  //     if (role) {
-  //       switch (role) {
-  //         case 'Admin':
-  //           navigate('/admin');
-  //           break;
-  //         case 'Client':
-  //           navigate('/client');
-  //           break;
-  //         case 'Employee':
-  //           navigate('/create-employee');
-  //           break;
-  //         default:
-  //           console.log("Not exists");
-  //           break;
-  //       }
-  //     }
-  //   };
+  useEffect(() => {
+    const handleNavigation = () => {
+      if (role) {
+        switch (role) {
+          case 'Admin':
+            navigate('/admin');
+            break;
+          case 'Client':
+            navigate('/client');
+            break;
+          case 'Employee':
+            navigate('/create-employee');
+            break;
+          default:
+            console.log("Not exists");
+            break;
+        }
+      }
+    };
   
-  //   handleNavigation();
-  // }, [role, navigate]);
+    handleNavigation();
+  }, [role, navigate]);
   
 
 
