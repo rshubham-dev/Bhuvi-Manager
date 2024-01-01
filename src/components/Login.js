@@ -58,25 +58,27 @@ const LoginForm = () => {
   
   useEffect(() => {
     const handleNavigation = () => {
-      switch (user.role) {
-        case 'Admin':
-          navigate('/admin');
-          break;
-        case 'Client':
-          navigate('/client');
-          break;
-        case 'Employee':
-          navigate('/create-employee');
-          break;
-        default:
-          console.log("Not exists");
-          break;
+      if (user && user.role) {
+        switch (user.role) {
+          case 'Admin':
+            navigate('/admin');
+            break;
+          case 'Client':
+            navigate('/client');
+            break;
+          case 'Employee':
+            navigate('/create-employee');
+            break;
+          default:
+            console.log("Not exists");
+            break;
+        }
       }
     };
-    if (user.role) {
-      handleNavigation();
-    }
-  }, [user.role, navigate]);
+  
+    handleNavigation();
+  }, [user, navigate]);
+  
 
 
   return (
