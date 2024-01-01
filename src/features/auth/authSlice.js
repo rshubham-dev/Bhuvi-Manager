@@ -6,7 +6,6 @@ const token = cookies.get('accessToken');
 console.log(token); // Check if the token is correctly retrieved
 
 
-
 const initialState = token
 ? { isLoggedIn: true, user: {} }
 : { isLoggedIn: false, user: null };
