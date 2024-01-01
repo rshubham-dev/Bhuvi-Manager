@@ -37,7 +37,7 @@ const LoginForm = () => {
         dispatch(logout())
       }
       else{
-        dispatch(login(...response.data.user))
+        dispatch(login(response.data.user))
       }
       setFormData({
         userMail: '',
