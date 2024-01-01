@@ -27,7 +27,6 @@ const Navbar = () => {
     }
   };
 
-
   return (
     <header className='mb-6'>
       <nav className="bg-gradient-to-r from-green-300 via-green-400 to-green-500 p-4 md:px-8 lg:px-12">
