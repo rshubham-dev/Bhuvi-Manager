@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineDarkMode, MdLogout, MdSearch, MdLogin } from "react-icons/md";
 import logo from '../asset/logo.png';
@@ -11,8 +11,11 @@ const Navbar = () => {
   const navigate = useNavigate();
   const [isLogged, setIsLogged] = useState(false)
   const loggedIn = useSelector((state) => state.isLoggedIn);
-  setIsLogged(loggedIn)
-  console.log(loggedIn);
+  useEffect(() => {
+    setIsLogged(loggedIn)
+    console.log(loggedIn);
+  }, [loggedIn])
+  
   const logout = async () => {
     try {
       await axios.post('/api/v1/user/logout').then((response) => {
