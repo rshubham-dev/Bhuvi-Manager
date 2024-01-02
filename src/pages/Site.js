@@ -82,8 +82,8 @@ const Sites = () => {
             </tr>
           ))}
         </tbody>
-      {error && <p className="text-red-500">{error}</p>}
       </table>
+      {error && <p className="text-red-500">{error}</p>}
       <Toaster
         position="top-right"
         reverseOrder={false}
