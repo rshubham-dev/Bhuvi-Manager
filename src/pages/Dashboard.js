@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import Ceo from './pages/Ceo';
-import Accountant from './pages/Accountant';
-import Design_Head from './pages/Design_Head';
-import SiteIncharge from './pages/SiteIncharge';
-import SiteSupervisour from './pages/SiteSupervisour';
-import Quality_Engineer from './pages/Quality_Engineer';
-import Design_Engineer from './pages/Design_Engineer';
-import Marketing from './pages/Marketing';
-import Admin from './pages/Admin';
-import Client from './pages/Client';
+import Ceo from './Ceo.js';
+import Accountant from './Accountant';
+import Design_Head from './Design_Head';
+import SiteIncharge from './SiteIncharge';
+import SiteSupervisour from './SiteSupervisour';
+import Quality_Engineer from './Quality_Engineer';
+import Design_Engineer from './Design_Engineer';
+import Marketing from './Marketing';
+import Admin from './Admin';
+import Client from './Client';
 import UserProfile from '../components/ProfileCard.js';
-import { ProtectedRoute } from './components/ProtectedPages';
+import { ProtectedRoute } from '../components/ProtectedPages';
 
 
 const Dashboard = () => {
