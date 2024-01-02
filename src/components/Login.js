@@ -55,7 +55,7 @@ const LoginForm = () => {
   useEffect(() => {
     const handleNavigation = () => {
       if (isLoggedIn) {
-        switch (role) {
+        switch (user.role) {
           case 'Admin':
             navigate('/admin');
             break;
