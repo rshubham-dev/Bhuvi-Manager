@@ -44,7 +44,7 @@ const App = () => {
     });
   
     return isLoggedIn ? (
-      <Route path={path} element={element} />
+      <Route {...rest} element={element} />
     ) : (
       <Navigate to="/login" replace />
     );
