@@ -13,7 +13,7 @@ const Clients = () => {
     const getClients = async () => {
       try {
         const clientData = await axios.get('/api/v1/client');
-        setClient(clientData.data.clients);
+        setClient(clientData.data);
         console.log(clients)
       } catch (error) {
         toast.error(error.message)

@@ -12,7 +12,7 @@ const Sites = () => {
     const getSites = async () => {
       try {
         const siteData = await axios.get('/api/v1/site');
-        setSite(siteData.data.sites);
+        setSite(siteData.data);
         console.log(sites)
       } catch (error) {
         toast.error(error.message)
