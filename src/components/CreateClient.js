@@ -1,6 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
-
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const CreateClient = () => {
   const [client, setClient] = useState({
@@ -39,6 +42,13 @@ const CreateClient = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post('/api/v1/client', client);
+      toast(response.data.message)
+      console.log(response.data)
+    } catch (error) {
+      toast.error(error.message)
+    }
 
     console.log('Form data submitted:', client);
   };
@@ -194,6 +204,10 @@ const CreateClient = () => {
           Create Client
         </button>
       </form>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
     </section>
   );
 };

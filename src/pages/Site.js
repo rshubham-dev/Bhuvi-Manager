@@ -82,8 +82,8 @@ const Sites = () => {
             </tr>
           ))}
         </tbody>
-      </table>
       {error && <p className="text-red-500">{error}</p>}
+      </table>
       <Toaster
         position="top-right"
         reverseOrder={false}
