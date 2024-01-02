@@ -18,7 +18,8 @@ export const authSlice = createSlice({
             state.user = action.payload;
             state.isLoggedIn = true;
         },
-        logout: (state) => {
+        logout: (state, action) => {
+            sessionStorage.clear();
             state.user = {};
             state.isLoggedIn = action.payload;
         }
