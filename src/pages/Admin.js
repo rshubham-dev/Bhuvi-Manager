@@ -24,6 +24,7 @@ const Admin = () => {
 ];
 
   return (
+    <>
     <Dashboard>
       <section>
         <div className="container mx-auto p-10">
@@ -43,6 +44,7 @@ const Admin = () => {
       </section>
       <TeamSection />
     </Dashboard>
+    </>
   )
 }
 
