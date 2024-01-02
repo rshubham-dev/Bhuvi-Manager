@@ -4,7 +4,6 @@ import All from './All';
 import { NavLink } from 'react-router-dom';
 import { MdPerson, MdDateRange, MdPayment, MdLocationOn, MdBusiness, MdPeople, MdDesignServices, MdReceipt, MdPlaylistAddCheck, MdConstruction, MdBuild, MdMoney, MdAssignment, MdWork } from "react-icons/md";
 import TeamSection from './Team.js';
-import Dashboard from './Dashboard.js';
 
 const Admin = () => {
   const adminItems = [
@@ -25,7 +24,7 @@ const Admin = () => {
 
   return (
     <>
-    <Dashboard>
+    <UserProfile />
       <section>
         <div className="container mx-auto p-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5">
@@ -43,7 +42,6 @@ const Admin = () => {
         </div>
       </section>
       <TeamSection />
-    </Dashboard>
     </>
   )
 }
