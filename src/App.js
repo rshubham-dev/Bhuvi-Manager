@@ -36,7 +36,9 @@ import Marketing from './pages/Marketing';
 import Dashboard from './pages/Dashboard';
 import Client from './pages/Client';
 import { ProtectedRoute } from './components/ProtectedPages';
-
+import SiteScreen from './screen/SiteScreen';
+import ClientScreen from './screen/ClientScreen';
+import WorkOrderScreen from './screen/WorkOrderScreen'
 
 const App = () => {
 
@@ -65,24 +67,36 @@ const App = () => {
         <Route path='/clients' element={<Clients />} />
         <Route path='/employee-profile' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
+        <Route path='/edit-contractors' element={<CreateContractor />} />
+        <Route path='/create-contractors' element={<CreateContractor />} />
         <Route path='/user' element={<UserManagement />} />
         <Route path='/account' element={<Profile />} />
         <Route path='/create-user' element={<CreateUser />} />
-        <Route path='/site' element={<Sites />} />
+        <Route path='/edit-user' element={<CreateUser />} />
+        <Route path='/sites' element={<Sites />} />
+        <Route path='/site' element={<SiteScreen />} />
+        <Route path='/edit-site' element={<CreateSite />} />
         <Route path='/create-site' element={<CreateSite />} />
+        <Route path='/edit-client' element={<CreateClient />} />
+        <Route path='/client' element={<ClientScreen />} />
         <Route path='/create-client' element={<CreateClient />} />
         <Route path='/team' element={<TeamSection />} />
+        <Route path='/edit-work-order' element={<CreateWorkOrder />} />
         <Route path='/create-work-order' element={<CreateWorkOrder />} />
-        <Route path='/work-order' element={<WorkOrders />} />
+        <Route path='/work-orders' element={<WorkOrders />} />
+        <Route path='/work-order' element={<WorkOrderScreen />} />
+        <Route path='/edit-work-details' element={<CreateWorkDetails />} />
         <Route path='/create-work-details' element={<CreateWorkDetails />} />
+        <Route path='/edit-project-schedule' element={<CreateProjectSchedule />} />
         <Route path='/create-project-schedule' element={<CreateProjectSchedule />} />
-        <Route path='/project-schedule' element={<ProjectSchedules />} />
-        <Route path='/payment-schedule' element={<PaymentSchedules />} />
+        <Route path='/project-schedules' element={<ProjectSchedules />} />
+        <Route path='/payment-schedules' element={<PaymentSchedules />} />
+        <Route path='/edit-project-schedule' element={<CreatePaymentSchedule />} />
         <Route path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
-        <Route path='/bill' element={<Bills />} />
+        <Route path='/bills' element={<Bills />} />
+        <Route path='/edit-bill' element={<CreateBill />} />
         <Route path='/create-bill' element={<CreateBill />} />
-        <Route path='/checklist' element={<CheckList />} />
-        <Route path='/create-contractors' element={<CreateContractor />} />
+        <Route path='/checklists' element={<CheckList />} />
         <Route path='/setting' element={<Profile />} />
         {/* </ProtectedRoute> */}
       </Routes>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate, useLocation} from 'react-router-dom';
 
 const CreateSite = () => {
   const [site, setSite] = useState({
@@ -26,6 +27,8 @@ const CreateSite = () => {
     agreement: '',
   })
   const [employees, setEmployee] = useState([]);
+  const location = useLocation();
+  const [siteIdToEdit, setSiteIdToEdit] = useState(null);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM']
   useEffect(() => {
     const getemployees = async () => {

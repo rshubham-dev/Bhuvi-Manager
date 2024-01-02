@@ -47,64 +47,10 @@ const UserManagement = () => {
         getUsers();
     }, [])
 
-    const handleChange = (e) => {
-      setEditedData({ ...editedData, [e.target.name]: e.target.value });
-    };
-
-    // const handleEdit = async (id) => {
-    //     try {
-    //         const editUser= await axios.put(`${property.BASE_URL}/api/v1/user/update/${id}`);
-    //         // Add your edit logic here
-    //         console.log(id)
-    //         console.log(editUser)
-    //     } catch (error) {
-    //         toast.error(error.message)
-    //     }
-    // };
     const handleEdit = (id) => {
-        // Toggle the editable state for the fields
-        setEditableFields((prevFields) => ({ ...prevFields, [id]: true }));
-      };
-    
-      const handleSave = async (id) => {
-        try {
-          // Make a PUT request with the updated data
-          const updatedUser = await axios.put(`/api/v1/user/update/${id}`, {
-            ...editedData[id], // Send only the fields that were edited
-          });
-    
-          // Handle the updated user data as needed
-          console.log(updatedUser);
-    
-          // Update the state with the updated user data
-          setUsers((prevUsers) => {
-            const updatedUsers = prevUsers.map((user) =>
-              user._id === id ? updatedUser.data : user
-            );
-            return updatedUsers;
-          });
-    
-          // Reset editable state
-          setEditableFields((prevFields) => ({ ...prevFields, [id]: false }));
-        } catch (error) {
-          toast.error(error.message);
-        }
-      };
-    
-      const handleCancelEdit = (id) => {
-        // Reset editable state without saving changes
-        setEditableFields((prevFields) => ({ ...prevFields, [id]: false }));
-        setEditedData((prevData) => ({ ...prevData, [id]: {} }));
+      navigate(`/edit-user?userId=${userId}`);
       };
 
-      const handleInputChange = (id, field, value) => {
-        // Update the edited data
-        setEditedData((prevData) => ({
-          ...prevData,
-          [id]: { ...prevData[id], [field]: value },
-        }));
-      };
-      
 
     const handleDelete = async (id) => {
         try {

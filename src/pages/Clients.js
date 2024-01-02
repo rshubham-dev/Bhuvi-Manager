@@ -25,7 +25,7 @@ const Clients = () => {
 
   const handleEdit = (clientId) => {
     // Add your edit logic here
-    console.log(`Edit client with ID ${clientId}`);
+    navigate(`/edit-client?clientId=${clientId}`);
   };
 
   const handleDelete = async (id) => {
