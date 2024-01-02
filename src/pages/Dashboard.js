@@ -70,8 +70,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <UserProfile />
       <Routes>
+      <UserProfile />
         <ProtectedRoute LoggedIn={isLoggedIn}>
         <Route path='/ceo' element={<Ceo />} />
         <Route path='/admin' element={<Admin />} />
