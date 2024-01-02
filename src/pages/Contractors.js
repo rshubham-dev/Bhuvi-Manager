@@ -2,7 +2,8 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
-
+import { GrEdit } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
 
 const Contractors = () => {
   const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Contractors = () => {
 
     const handleEdit = (contractorId) => {
         // Add your edit logic here
+        navigate(`/edit-contractor?contractorId=${contractorId}`)
         console.log(`Edit contractor with ID ${contractorId}`);
     };
 
@@ -60,13 +62,13 @@ const Contractors = () => {
                             onClick={() => handleEdit(contractor._id)}
                             className="bg-blue-500 text-white px-2 py-1 mr-2"
                         >
-                            Edit
+                            <GrEdit />
                         </button>
                         <button
                             onClick={() => handleDelete(contractor.id)}
                             className="bg-red-500 text-white px-2 py-1 mr-2"
                         >
-                            Delete
+                            <MdDelete />
                         </button>
                     </td>
                 </tr>

@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
-import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 
 axios.defaults.withCredentials = true;
@@ -39,7 +39,7 @@ const Sites = () => {
   }
   const handleDelete = async (id) => {
     try {
-      const deleteSite = await axios.delete(`/api/v1/client/${id}`);
+      await axios.delete(`/api/v1/client/${id}`);
       setSite(sites.filter((site) => site._id !== id));
     } catch (error) {
       toast.error(error.message)
