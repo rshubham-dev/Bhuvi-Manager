@@ -1,18 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Routes, useNavigate } from 'react-router-dom';
-import Ceo from './Ceo.js';
-import Accountant from './Accountant';
-import Design_Head from './Design_Head';
-import SiteIncharge from './SiteIncharge';
-import SiteSupervisour from './SiteSupervisour';
-import Quality_Engineer from './Quality_Engineer';
-import Design_Engineer from './Design_Engineer';
-import Marketing from './Marketing';
-import Admin from './Admin';
-import Client from './Client';
+import { useNavigate, Outlet} from 'react-router-dom';
 import UserProfile from '../components/ProfileCard.js';
-import { ProtectedRoute } from '../components/ProtectedPages';
 
 
 const Dashboard = () => {
@@ -70,21 +59,8 @@ const Dashboard = () => {
 
   return (
     <>
-      <Routes>
       <UserProfile />
-        <ProtectedRoute LoggedIn={isLoggedIn}>
-        <Route path='/ceo' element={<Ceo />} />
-        <Route path='/admin' element={<Admin />} />
-        <Route path='/client' element={<Client />} />
-        <Route path='/design-head' element={<Design_Head />} />
-        <Route path='/site-incharge' element={<SiteIncharge />} />
-        <Route path='/site-supervisour' element={<SiteSupervisour />} />
-        <Route path='/marketing' element={<Marketing />} />
-        <Route path='/quality-engineer' element={<Quality_Engineer />} />
-        <Route path='/design-engineer' element={<Design_Engineer />} />
-        <Route path='/accountant' element={<Accountant />} />
-        </ProtectedRoute>
-      </Routes>
+      <Outlet/>
     </>
   )
 }

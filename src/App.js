@@ -53,7 +53,8 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />
-        {/* <Route path='/ceo' element={<Ceo />} />
+      <ProtectedRoute LoggedIn={isLoggedIn}>
+      <Route path='/ceo' element={<Ceo />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/client' element={<Client />} />
         <Route path='/design-head' element={<Design_Head />} />
@@ -62,8 +63,7 @@ const App = () => {
         <Route path='/marketing' element={<Marketing />} />
         <Route path='/quality-engineer' element={<Quality_Engineer />} />
         <Route path='/design-engineer' element={<Design_Engineer />} />
-      <Route path='/accountant' element={<Accountant />} /> */}
-      <ProtectedRoute LoggedIn={isLoggedIn}>
+        <Route path='/accountant' element={<Accountant />} />
         <Route path='/clients' element={<Clients />} />
       <Route path='/employee-profile' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
