@@ -18,6 +18,21 @@ const UserManagement = () => {
         department:'',
     });
 
+    const [roles, setRoles] = useState(['Admin', 'Client', 'Employee']);
+
+    const [departments, setDepartment] = useState(['Admin', 
+    'Company', 
+    'Client', 
+    'Accountant', 
+    'Marketing', 
+    'Ceo', 
+    'Site Incharge', 
+    'Site Supervisor', 
+    'Design Head', 
+    'Design Engineer', 
+    'Quality Head', 
+    'Quality Engineer']);
+
     useEffect(() => {
         const getUsers = async () => {
             try {
@@ -32,6 +47,9 @@ const UserManagement = () => {
         getUsers();
     }, [])
 
+    const handleChange = (e) => {
+      setEditedData({ ...editedData, [e.target.name]: e.target.value });
+    };
 
     // const handleEdit = async (id) => {
     //     try {
@@ -129,8 +147,10 @@ const UserManagement = () => {
                              <input
                                type="text"
                                className='w-full p-2 border rounded-md'
+                               name='userName'
+                               onChange={handleChange}
                                value={editedData[user._id]?.userName || user.userName}
-                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                              //  onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
                              />
                            ) : (
                              user.userName
@@ -141,8 +161,10 @@ const UserManagement = () => {
                              <input
                                type="email"
                                className='w-full p-2 border rounded-md'
+                               name='userMail'
+                               onChange={handleChange}
                                value={editedData[user._id]?.userMail || user.userMail}
-                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                              //  onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
                              />
                            ) : (
                              user.userMail
@@ -153,8 +175,10 @@ const UserManagement = () => {
                              <input
                                type="text"
                                className='w-full p-2 border rounded-md'
+                               name='phone'
+                               onChange={handleChange}
                                value={editedData[user._id]?.phone || user.phone}
-                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                              //  onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
                              />
                            ) : (
                              user.phone
@@ -165,8 +189,10 @@ const UserManagement = () => {
                              <input
                                type="text"
                                className='w-full p-2 border rounded-md'
+                               name='role'
+                               onChange={handleChange}
                                value={editedData[user._id]?.role || user.role}
-                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                              //  onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
                              />
                            ) : (
                              user.role
@@ -177,8 +203,10 @@ const UserManagement = () => {
                              <input
                                type="text"
                                className='w-full p-2 border rounded-md'
+                               name='department'
+                               onChange={handleChange}
                                value={editedData[user._id]?.department || user.department}
-                               onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
+                              //  onChange={(e) => handleInputChange(user._id, 'userName', e.target.value)}
                              />
                            ) : (
                              user.department

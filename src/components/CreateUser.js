@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate} from 'react-router-dom';
+
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({
@@ -25,7 +27,7 @@ const CreateUser = () => {
   'Design Engineer', 
   'Quality Head', 
   'Quality Engineer']);
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
@@ -43,6 +45,7 @@ const CreateUser = () => {
         department: userData.department,
       });
       toast.success('User created successfuly');
+      navigate('/user')
       console.log(roles, departments)
       if (response.error) return toast.error(response.error);
     } catch (error) {
@@ -121,7 +124,7 @@ const CreateUser = () => {
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option>Role</option>
+              <option disabled>Role</option>
               {roles.map((role, index) => (
                 <option key={index} value={role}>
                   {role}
@@ -148,7 +151,7 @@ const CreateUser = () => {
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option>Department</option>
+              <option disabled>Department</option>
               {departments.map((department, index) => (
                 <option key={index} value={department}>
                   {department}

@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
 
-
-const Dashboard = () => {
+ const Dashboard = () => {
   const { user, isLoggedIn } = useSelector((state) => {
     return state.auth
   });
@@ -58,4 +57,4 @@ const Dashboard = () => {
 
 }
 
-export default Dashboard
+export default Dashboard;
