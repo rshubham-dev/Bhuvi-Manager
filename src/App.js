@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UserManagement from './pages/User';
 import CreateUser from './components/CreateUser';
@@ -36,20 +36,16 @@ import Design_Engineer from './pages/Design_Engineer';
 import Marketing from './pages/Marketing';
 import Dashboard from './pages/Dashboard';
 import Client from './pages/Client';
+import { ProtectedRoute } from './components/ProtectedPages'; 
+
+
 
 const App = () => {
-  // const navigate = useNavigate()
-  // const PrivateRoute = ({ element, ...rest }) => {
-  //   const { isLoggedIn } = useSelector((state) => {
-  //     return state.auth
-  //   });
-  
-  //   return isLoggedIn ? (
-  //     <Route {...rest} element={element} />
-  //   ) : (
-  //     <Navigate to="/login" replace />
-  //   );
-  // };
+
+    const { isLoggedIn } = useSelector((state) => {
+      return state.auth
+    });
+
   return (
     <>
       <Routes>
@@ -67,6 +63,7 @@ const App = () => {
         <Route path='/quality-engineer' element={<Quality_Engineer />} />
         <Route path='/design-engineer' element={<Design_Engineer />} />
       <Route path='/accountant' element={<Accountant />} /> */}
+      <ProtectedRoute LoggedIn={isLoggedIn}>
         <Route path='/clients' element={<Clients />} />
       <Route path='/employee-profile' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
@@ -89,6 +86,7 @@ const App = () => {
         <Route path='/checklist' element={<CheckList />} />
         <Route path='/create-contractors' element={<CreateContractor />} />
         <Route path='/setting' element={<Profile />} />
+      </ProtectedRoute>
       </Routes>
     </>
   )

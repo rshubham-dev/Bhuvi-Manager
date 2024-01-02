@@ -12,7 +12,7 @@ import Marketing from './pages/Marketing';
 import Admin from './pages/Admin';
 import Client from './pages/Client';
 import UserProfile from '../components/ProfileCard.js';
-
+import { ProtectedRoute } from './components/ProtectedPages';
 
 
 const Dashboard = () => {
@@ -67,10 +67,12 @@ const Dashboard = () => {
     };
     handleNavigation();
   }, [isLoggedIn, navigate]);
+
   return (
     <>
       <UserProfile />
       <Routes>
+        <ProtectedRoute LoggedIn={isLoggedIn}>
         <Route path='/ceo' element={<Ceo />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/client' element={<Client />} />
@@ -81,6 +83,7 @@ const Dashboard = () => {
         <Route path='/quality-engineer' element={<Quality_Engineer />} />
         <Route path='/design-engineer' element={<Design_Engineer />} />
         <Route path='/accountant' element={<Accountant />} />
+        </ProtectedRoute>
       </Routes>
     </>
   )
