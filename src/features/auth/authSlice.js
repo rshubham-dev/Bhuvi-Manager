@@ -18,10 +18,10 @@ export const authSlice = createSlice({
             state.user = action.payload;
             state.isLoggedIn = true;
         },
-        logout: (state, action) => {
-            sessionStorage.clear();
+        logout: (state) => {
+            sessionStorage.removeItem('token');
             state.user = {};
-            state.isLoggedIn = action.payload;
+            state.isLoggedIn = false;
         }
     },
 })

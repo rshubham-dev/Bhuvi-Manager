@@ -17,8 +17,8 @@ const Navbar = () => {
   const logout = async () => {
     try {
       await axios.post('/api/v1/user/logout').then((response) => {
-        dispatch(logout(false));
-        sessionStorage.clear();
+        dispatch(logout());
+        sessionStorage.removeItem('token');
         toast.success(response.data.message);
         console.log(response.data);
         navigate('/login');
