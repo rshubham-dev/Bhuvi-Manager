@@ -33,6 +33,7 @@ import SiteSupervisour from './pages/SiteSupervisour';
 import Quality_Engineer from './pages/Quality_Engineer';
 import Design_Engineer from './pages/Design_Engineer';
 import Marketing from './pages/Marketing';
+import Dashboard from './pages/Dashboard';
 
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
     <>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin/>}/>
         <Route path='/ceo' element={<Ceo/>}/>
         <Route path='/user' element={<UserManagement />} />

@@ -55,7 +55,7 @@ const LoginForm = () => {
   useEffect(() => {
     const handleNavigation = () => {
       if (isLoggedIn) {
-        navigate('/')
+        navigate('/dashboard')
       }
     };
 
