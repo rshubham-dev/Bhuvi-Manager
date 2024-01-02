@@ -5,7 +5,10 @@ import logo from '../asset/logo.png';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux';
+
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -16,13 +19,12 @@ const Navbar = () => {
   
   const logout = async () => {
     try {
-      await axios.post('/api/v1/user/logout').then((response) => {
+      const response = await axios.post('/api/v1/user/logout');
         dispatch(logout());
         sessionStorage.removeItem('token');
         toast.success(response.data.message);
         console.log(response.data);
         navigate('/login');
-      });
     } catch (error) {
       toast.error(error.message);
     }
