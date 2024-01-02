@@ -36,15 +36,14 @@ import Design_Engineer from './pages/Design_Engineer';
 import Marketing from './pages/Marketing';
 import Dashboard from './pages/Dashboard';
 import Client from './pages/Client';
-import { ProtectedRoute } from './components/ProtectedPages'; 
-
+import { ProtectedRoute } from './components/ProtectedPages';
 
 
 const App = () => {
 
-    const { isLoggedIn } = useSelector((state) => {
-      return state.auth
-    });
+  const { isLoggedIn } = useSelector((state) => {
+    return state.auth
+  });
 
   return (
     <>
@@ -53,8 +52,8 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />
-      <ProtectedRoute LoggedIn={isLoggedIn}>
-      <Route path='/ceo' element={<Ceo />} />
+        {/* <ProtectedRoute LoggedIn={isLoggedIn}> */}
+        <Route path='/ceo' element={<Ceo />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/client' element={<Client />} />
         <Route path='/design-head' element={<Design_Head />} />
@@ -65,7 +64,7 @@ const App = () => {
         <Route path='/design-engineer' element={<Design_Engineer />} />
         <Route path='/accountant' element={<Accountant />} />
         <Route path='/clients' element={<Clients />} />
-      <Route path='/employee-profile' element={<CreateEmployee />} />
+        <Route path='/employee-profile' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
         <Route path='/user' element={<UserManagement />} />
         <Route path='/account' element={<Profile />} />
@@ -86,7 +85,7 @@ const App = () => {
         <Route path='/checklist' element={<CheckList />} />
         <Route path='/create-contractors' element={<CreateContractor />} />
         <Route path='/setting' element={<Profile />} />
-      </ProtectedRoute>
+        {/* </ProtectedRoute> */}
       </Routes>
     </>
   )
