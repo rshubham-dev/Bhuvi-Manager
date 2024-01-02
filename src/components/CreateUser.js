@@ -26,11 +26,10 @@ const CreateUser = () => {
   'Quality Head', 
   'Quality Engineer']);
 
-  console.log(roles, departments)
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(userData)
@@ -44,6 +43,7 @@ const CreateUser = () => {
         department: userData.department,
       });
       toast.success('User created successfuly');
+      console.log(roles, departments)
       if (response.error) return toast.error(response.error);
     } catch (error) {
       console.log(error)
