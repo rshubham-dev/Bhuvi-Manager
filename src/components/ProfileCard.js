@@ -15,7 +15,7 @@ const UserProfile = () => {
       <p className="text-center mt-2">{user.userMail}</p>
       <p className="text-center mt-2">{user.phone}</p>
       <p className="text-center mt-2">{user.role}</p>
-      <p className="text-center mt-2">{user.department} Department</p>
+      <p className="text-center mt-2">{user.department}</p>
     </div>
     </div>
   </div>

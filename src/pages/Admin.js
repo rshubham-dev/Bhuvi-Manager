@@ -6,7 +6,6 @@ import TeamSection from './Team.js';
 const Admin = () => {
   return (
     <>
-      <UserProfile />
       <All />
       <TeamSection />
     </>
