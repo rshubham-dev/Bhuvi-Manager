@@ -104,7 +104,7 @@ const CreateClient = () => {
                 required
                 autoComplete='off'
                 value={tel}
-                onChange={(e) => inputData(e, index)}
+                onChange={(e) => handleChange(e, index)}
               />
               {client.phone.length > 1 && (
                 <button
