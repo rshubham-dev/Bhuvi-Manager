@@ -5,7 +5,7 @@ import UserManagement from './pages/User';
 import CreateUser from './components/CreateUser';
 import Sites from './pages/Site';
 import CreateSite from './components/CreateSite';
-import Clients from './pages/Client';
+import Clients from './pages/Clients';
 import CreateClient from './components/CreateClient';
 import TeamSection from './pages/Team';
 import CreateEmployee from './components/CreateEmployee';
@@ -35,6 +35,7 @@ import Quality_Engineer from './pages/Quality_Engineer';
 import Design_Engineer from './pages/Design_Engineer';
 import Marketing from './pages/Marketing';
 import Dashboard from './pages/Dashboard';
+import Client from './pages/Client';
 
 const App = () => {
   const navigate = useNavigate()
@@ -58,7 +59,8 @@ const App = () => {
         <PrivateRoute path='/dashboard' element={<Dashboard />} />
         <PrivateRoute path='/ceo' element={<Ceo />} />
         <PrivateRoute path='/admin' element={<Admin />} />
-        <PrivateRoute path='/client' element={<Clients />} />
+        <PrivateRoute path='/clients' element={<Clients />} />
+        <PrivateRoute path='/client' element={<Client />} />
         <PrivateRoute path='/design-head' element={<Design_Head />} />
         <PrivateRoute path='/site-incharge' element={<SiteIncharge />} />
         <PrivateRoute path='/site-supervisour' element={<SiteSupervisour />} />

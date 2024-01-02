@@ -56,6 +56,9 @@ const Dashboard = () => {
     };
     handleNavigation();
   }, [isLoggedIn, navigate]);
+  return(
+    <UserProfile/>
+  )
 }
 
 export default Dashboard
