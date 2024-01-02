@@ -20,7 +20,7 @@ const Navbar = () => {
   const logout = async () => {
     try {
       const response = await axios.post('/api/v1/user/logout');
-        dispatch(logout());
+      dispatch(logout());
         sessionStorage.removeItem('token');
         toast.success(response.data.message);
         console.log(response.data);
