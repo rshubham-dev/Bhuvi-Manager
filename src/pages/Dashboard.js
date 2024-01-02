@@ -9,7 +9,6 @@ const Dashboard = () => {
     return state.auth
   });
   const navigate = useNavigate();
-  useEffect(() => {
     const handleNavigation = () => {
       if (isLoggedIn) {
         switch (user.department) {
@@ -54,13 +53,11 @@ const Dashboard = () => {
         navigate('/login')
       }
     };
-    handleNavigation();
-  }, [isLoggedIn, navigate]);
 
   return (
     <>
       <UserProfile />
-      <Outlet/>
+      <handleNavigation/>
     </>
   )
 }
