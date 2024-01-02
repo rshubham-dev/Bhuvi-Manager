@@ -17,7 +17,7 @@ const CreateClient = () => {
     },
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e, index) => {
     const [name, value] = e.target;
     if (name === "phone") {
       const updatedPhones = [...client.phone];
