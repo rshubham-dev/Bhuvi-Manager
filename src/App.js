@@ -37,44 +37,56 @@ import Dashboard from './pages/Dashboard';
 import { useSelector } from 'react-redux';
 
 const App = () => {
+  
+  const PrivateRoute = ({ element, ...rest }) => {
+    const { isLoggedIn } = useSelector((state) => {
+      return state.auth
+    });
+  
+    return isLoggedIn ? (
+      <Route {...rest} element={element} />
+    ) : (
+      <Navigate to="/login" replace />
+    );
+  };
   return (
     <>
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/admin' element={<Admin />} />
-        <Route path='/ceo' element={<Ceo />} />
-        <Route path='/user' element={<UserManagement />} />
-        <Route path='/create-user' element={<CreateUser />} />
-        <Route path='/site' element={<Sites />} />
-        <Route path='/create-site' element={<CreateSite />} />
-        <Route path='/client' element={<Clients />} />
-        <Route path='/create-client' element={<CreateClient />} />
-        <Route path='/team' element={<TeamSection />} />
-        <Route path='/design-head' element={<Design_Head />} />
-        <Route path='/site-incharge' element={<SiteIncharge />} />
-        <Route path='/site-supervisour' element={<SiteSupervisour />} />
-        <Route path='/marketing' element={<Marketing />} />
-        <Route path='/quality-engineer' element={<Quality_Engineer />} />
-        <Route path='/design-engineer' element={<Design_Engineer />} />
-        <Route path='/employee-profile' element={<CreateEmployee />} />
-        <Route path='/account' element={<Profile />} />
-        <Route path='/accountant' element={<Accountant />} />
-        <Route path='/create-work-order' element={<CreateWorkOrder />} />
-        <Route path='/work-order' element={<WorkOrders />} />
-        <Route path='/create-work-details' element={<CreateWorkDetails />} />
-        <Route path='/create-project-schedule' element={<CreateProjectSchedule />} />
-        <Route path='/project-schedule' element={<ProjectSchedules />} />
-        <Route path='/payment-schedule' element={<PaymentSchedules />} />
-        <Route path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
-        <Route path='/bill' element={<Bills />} />
-        <Route path='/create-bill' element={<CreateBill />} />
-        <Route path='/checklist' element={<CheckList />} />
-        <Route path='/contractors' element={<Contractors />} />
-        <Route path='/create-contractors' element={<CreateContractor />} />
-        <Route path='/setting' element={<Profile />} />
+        <PrivateRoute path='/dashboard' element={<Dashboard />} />
+        <PrivateRoute path='/ceo' element={<Ceo />} />
+        <PrivateRoute path='/admin' element={<Admin />} />
+        <PrivateRoute path='/client' element={<Clients />} />
+        <PrivateRoute path='/design-head' element={<Design_Head />} />
+        <PrivateRoute path='/site-incharge' element={<SiteIncharge />} />
+        <PrivateRoute path='/site-supervisour' element={<SiteSupervisour />} />
+        <PrivateRoute path='/marketing' element={<Marketing />} />
+        <PrivateRoute path='/quality-engineer' element={<Quality_Engineer />} />
+        <PrivateRoute path='/design-engineer' element={<Design_Engineer />} />
+        <PrivateRoute path='/employee-profile' element={<CreateEmployee />} />
+        <PrivateRoute path='/accountant' element={<Accountant />} />
+        <PrivateRoute path='/contractors' element={<Contractors />} />
+        <PrivateRoute path='/user' element={<UserManagement />} />
+        <PrivateRoute path='/account' element={<Profile />} />
+        <PrivateRoute path='/create-user' element={<CreateUser />} />
+        <PrivateRoute path='/site' element={<Sites />} />
+        <PrivateRoute path='/create-site' element={<CreateSite />} />
+        <PrivateRoute path='/create-client' element={<CreateClient />} />
+        <PrivateRoute path='/team' element={<TeamSection />} />
+        <PrivateRoute path='/create-work-order' element={<CreateWorkOrder />} />
+        <PrivateRoute path='/work-order' element={<WorkOrders />} />
+        <PrivateRoute path='/create-work-details' element={<CreateWorkDetails />} />
+        <PrivateRoute path='/create-project-schedule' element={<CreateProjectSchedule />} />
+        <PrivateRoute path='/project-schedule' element={<ProjectSchedules />} />
+        <PrivateRoute path='/payment-schedule' element={<PaymentSchedules />} />
+        <PrivateRoute path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
+        <PrivateRoute path='/bill' element={<Bills />} />
+        <PrivateRoute path='/create-bill' element={<CreateBill />} />
+        <PrivateRoute path='/checklist' element={<CheckList />} />
+        <PrivateRoute path='/create-contractors' element={<CreateContractor />} />
+        <PrivateRoute path='/setting' element={<Profile />} />
       </Routes>
     </>
   )
