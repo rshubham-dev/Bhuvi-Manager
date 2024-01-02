@@ -55,20 +55,7 @@ const LoginForm = () => {
   useEffect(() => {
     const handleNavigation = () => {
       if (isLoggedIn) {
-        switch (user.role) {
-          case 'Admin':
-            navigate('/admin');
-            break;
-          case 'Client':
-            navigate('/client');
-            break;
-          case 'Employee':
-            navigate('/create-employee');
-            break;
-          default:
-            console.log("Not exists");
-            break;
-        }
+        navigate('/')
       }
     };
 

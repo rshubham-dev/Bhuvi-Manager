@@ -26,6 +26,14 @@ import CreateContractor from './components/CreateContractor';
 import Admin from './pages/Admin';
 import Home from './pages/Home';
 import Ceo from './pages/Ceo';
+import Accountant from './pages/Accountant';
+import Design_Head from './pages/Design_Head';
+import SiteIncharge from './pages/SiteIncharge';
+import SiteSupervisour from './pages/SiteSupervisour';
+import Quality_Engineer from './pages/Quality_Engineer';
+import Design_Engineer from './pages/Design_Engineer';
+import Marketing from './pages/Marketing';
+
 
 const App = () => {
   return (
@@ -41,8 +49,15 @@ const App = () => {
         <Route path='/client' element={<Clients />} />
         <Route path='/create-client' element={<CreateClient />} />
         <Route path='/team' element={<TeamSection />} />
-        <Route path='/create-employee' element={<CreateEmployee />} />
+        <Route path='/design-head' element={<Design_Head />} />
+        <Route path='/site-incharge' element={<SiteIncharge />} />
+        <Route path='/site-supervisour' element={<SiteSupervisour />} />
+        <Route path='/marketing' element={<Marketing />} />
+        <Route path='/quality-engineer' element={<Quality_Engineer />} />
+        <Route path='/design-engineer' element={<Design_Engineer />} />
+        <Route path='/employee-profile' element={<CreateEmployee />} />
         <Route path='/account' element={<Profile />} />
+        <Route path='/accountant' element={<Accountant />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/create-work-order' element={<CreateWorkOrder />} />
