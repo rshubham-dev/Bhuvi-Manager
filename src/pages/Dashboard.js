@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const Dashboard = () => {
-  const {user} = useSelector((state)=>{
+  const { user, isLoggedIn } = useSelector((state) => {
     return state.auth
-  })
-
+  });
+  const navigate = useNavigate();
   useEffect(() => {
     const handleNavigation = () => {
       if (isLoggedIn) {
