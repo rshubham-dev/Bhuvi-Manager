@@ -53,6 +53,7 @@ const Dashboard = () => {
         navigate('/login')
       }
     };
+    handleNavigation();
 
   return (
     <>
