@@ -8,7 +8,7 @@ const All = () => {
         { to: '/project-schedule', text: 'Project Schedule', icon: <MdDateRange /> },
         { to: '/payment-schedule', text: 'Payment Schedule', icon: <MdPayment /> },
         { to: '/site', text: 'Site', icon: <MdLocationOn /> },
-        { to: '/client', text: 'Client', icon: <MdBusiness /> },
+        { to: '/clients', text: 'Client', icon: <MdBusiness /> },
         { to: '/design', text: 'Design', icon: <MdDesignServices /> },
         { to: '/bill', text: 'Bill', icon: <MdReceipt /> },
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
