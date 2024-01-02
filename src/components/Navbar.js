@@ -6,6 +6,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../features/auth/authSlice';
 
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
@@ -17,7 +18,7 @@ const Navbar = () => {
   });
   const dispatch = useDispatch()
   
-  const logout = async () => {
+  const logOut = async () => {
     try {
       const response = await axios.post('/api/v1/user/logout');
       dispatch(logout());
@@ -52,7 +53,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
               <MdOutlineDarkMode className="text-white text-lg md:text-xl lg:text-2xl" />
               {isLoggedIn ? (
-                <NavLink onClick={logout} className="text-white text-lg md:text-xl lg:text-2xl">
+                <NavLink onClick={logOut} className="text-white text-lg md:text-xl lg:text-2xl">
                   <MdLogout />
                 </NavLink>
               ) : (
