@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UserManagement from './pages/User';
 import CreateUser from './components/CreateUser';
@@ -44,9 +44,9 @@ const App = () => {
     });
   
     return isLoggedIn ? (
-      <Route {...rest} element={element} />
+      <Route path={path} element={element} />
     ) : (
-      navigate('/login')
+      <Navigate to="/login" replace />
     );
   };
   return (
