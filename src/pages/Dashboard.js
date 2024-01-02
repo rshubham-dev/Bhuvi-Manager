@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,6 +14,9 @@ const Dashboard = () => {
       if (isLoggedIn) {
         switch (user.department) {
           case 'Admin':
+            navigate('/admin');
+            break;
+          case 'Company':
             navigate('/admin');
             break;
           case 'Client':
@@ -49,13 +52,8 @@ const Dashboard = () => {
         }
       }
     };
-
     handleNavigation();
   }, [isLoggedIn, navigate]);
-  return (
-    <>
-    </>
-  )
 }
 
 export default Dashboard

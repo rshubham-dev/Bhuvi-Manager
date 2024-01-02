@@ -34,16 +34,18 @@ import Quality_Engineer from './pages/Quality_Engineer';
 import Design_Engineer from './pages/Design_Engineer';
 import Marketing from './pages/Marketing';
 import Dashboard from './pages/Dashboard';
-
+import { useSelector } from 'react-redux';
 
 const App = () => {
   return (
     <>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/admin' element={<Admin/>}/>
-        <Route path='/ceo' element={<Ceo/>}/>
+        <Route path='/admin' element={<Admin />} />
+        <Route path='/ceo' element={<Ceo />} />
         <Route path='/user' element={<UserManagement />} />
         <Route path='/create-user' element={<CreateUser />} />
         <Route path='/site' element={<Sites />} />
@@ -60,8 +62,6 @@ const App = () => {
         <Route path='/employee-profile' element={<CreateEmployee />} />
         <Route path='/account' element={<Profile />} />
         <Route path='/accountant' element={<Accountant />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
         <Route path='/create-work-order' element={<CreateWorkOrder />} />
         <Route path='/work-order' element={<WorkOrders />} />
         <Route path='/create-work-details' element={<CreateWorkDetails />} />
@@ -74,7 +74,7 @@ const App = () => {
         <Route path='/checklist' element={<CheckList />} />
         <Route path='/contractors' element={<Contractors />} />
         <Route path='/create-contractors' element={<CreateContractor />} />
-        <Route path='/setting' element={<Profile/>} />
+        <Route path='/setting' element={<Profile />} />
       </Routes>
     </>
   )
