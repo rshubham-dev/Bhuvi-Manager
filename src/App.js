@@ -26,7 +26,6 @@ import Contractors from './pages/Contractors';
 import CreateContractor from './components/CreateContractor';
 import Admin from './pages/Admin';
 import Home from './pages/Home';
-import Ceo from './pages/Ceo';
 import Accountant from './pages/Accountant';
 import Design_Head from './pages/Design_Head';
 import SiteIncharge from './pages/SiteIncharge';
@@ -53,7 +52,7 @@ const App = () => {
         <Route path='/register' element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />
         {/* <ProtectedRoute LoggedIn={isLoggedIn}> */}
-        <Route path='/ceo' element={<Ceo />} />
+        <Route path='/ceo' element={<Admin />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/client' element={<Client />} />
         <Route path='/design-head' element={<Design_Head />} />

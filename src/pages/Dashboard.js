@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, Outlet} from 'react-router-dom';
-import UserProfile from '../components/ProfileCard.js';
+import { useNavigate} from 'react-router-dom';
 
 
 const Dashboard = () => {
@@ -29,7 +28,7 @@ const Dashboard = () => {
             navigate('/marketing');
             break;
           case 'Ceo':
-            navigate('/ceo');
+            navigate('/admin');
             break;
           case 'Site Incharge':
             navigate('/site-incharge');

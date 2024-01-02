@@ -1,8 +1,11 @@
 import React from 'react'
+import UserProfile from '../components/ProfileCard.js';
 
 const Quality_Engineer = () => {
   return (
-    <div>Quality-Engineer</div>
+    <>
+    <UserProfile />
+    </>
   )
 }
 

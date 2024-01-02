@@ -1,8 +1,12 @@
 import React from 'react'
+import UserProfile from '../components/ProfileCard.js';
+
 
 const Design_Head = () => {
   return (
-    <div>Design_Head</div>
+    <>
+    <UserProfile />
+    </>
   )
 }
 
