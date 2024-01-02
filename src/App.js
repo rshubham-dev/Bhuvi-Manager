@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UserManagement from './pages/User';
 import CreateUser from './components/CreateUser';
@@ -37,7 +37,7 @@ import Marketing from './pages/Marketing';
 import Dashboard from './pages/Dashboard';
 
 const App = () => {
-  
+  const navigate = useNavigate()
   const PrivateRoute = ({ element, ...rest }) => {
     const { isLoggedIn } = useSelector((state) => {
       return state.auth
@@ -46,7 +46,7 @@ const App = () => {
     return isLoggedIn ? (
       <Route {...rest} element={element} />
     ) : (
-      <Navigate to="/login" replace />
+      navigate('/login')
     );
   };
   return (
