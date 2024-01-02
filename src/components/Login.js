@@ -17,7 +17,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => {
+  const { user, isLoggedIn } = useSelector((state) => {
     return state.auth
   });
 
@@ -51,30 +51,29 @@ const LoginForm = () => {
     }
   };
   console.log(user)
-  // const role = user.role;
 
-  // useEffect(() => {
-  //   const handleNavigation = () => {
-  //     if (role) {
-  //       switch (role) {
-  //         case 'Admin':
-  //           navigate('/admin');
-  //           break;
-  //         case 'Client':
-  //           navigate('/client');
-  //           break;
-  //         case 'Employee':
-  //           navigate('/create-employee');
-  //           break;
-  //         default:
-  //           console.log("Not exists");
-  //           break;
-  //       }
-  //     }
-  //   };
+  useEffect(() => {
+    const handleNavigation = () => {
+      if (isLoggedIn) {
+        switch (role) {
+          case 'Admin':
+            navigate('/admin');
+            break;
+          case 'Client':
+            navigate('/client');
+            break;
+          case 'Employee':
+            navigate('/create-employee');
+            break;
+          default:
+            console.log("Not exists");
+            break;
+        }
+      }
+    };
 
-  //   handleNavigation();
-  // }, [role, navigate]);
+    handleNavigation();
+  }, [isLoggedIn, navigate]);
 
 
 
