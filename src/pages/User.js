@@ -9,7 +9,7 @@ const UserManagement = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     const getUsers = async () => {
       try {
@@ -24,7 +24,7 @@ const UserManagement = () => {
     getUsers();
   }, [])
 
-  const handleEdit = (id) => {
+  const handleEdit = (userId) => {
     navigate(`/edit-user?userId=${userId}`);
   };
 
