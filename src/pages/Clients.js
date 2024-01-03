@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
@@ -76,7 +76,7 @@ const Clients = () => {
               <td className="px-6 py-4">{client.address}</td>
               <td className="px-6 py-4">
               <button
-                  onClick={() => handleRedirect(site._id)}
+                  onClick={() => handleRedirect(client._id)}
                   className="bg-blue-500 text-white px-2 py-1 mr-2"
                 >
                   <FaExternalLinkAlt />
