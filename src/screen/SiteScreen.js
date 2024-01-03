@@ -9,17 +9,17 @@ const SiteScreen = () => {
 
   useEffect(() => {
     console.log('location.search:', location.search);
-    const siteId = new URLSearchParams(location.search).get('siteId');
-    console.log('siteId:', siteId);
-    if (siteId) {
-      fetchSiteDetails(siteId);
+    const id = new URLSearchParams(location.search).get('siteId');
+    console.log('siteId:', id);
+    if (id) {
+      fetchSiteDetails(id);
     }
   }, [location.search]);
 
-  const fetchSiteDetails = async (siteId) => {
+  const fetchSiteDetails = async (id) => {
     try {
-      console.log(`before res: ${siteId}`)
-      const response = await axios.get(`/api/v1/site/${siteId}`);
+      console.log(`before res: ${id}`)
+      const response = await axios.get(`/api/v1/site/${id}`);
       console.log(response.data.site);
       console.log(response.data)
       setSiteData(response.data.site);
