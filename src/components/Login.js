@@ -50,7 +50,6 @@ const LoginForm = () => {
       setError('Login failed. Please check your credentials.');
     }
   };
-  console.log(user)
 
   useEffect(() => {
     const handleNavigation = () => {

@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const token = sessionStorage.getItem("token");
 
-console.log(token); // Check if the token is correctly retrieved
 
 const initialState = token
 ? { isLoggedIn: true, user: {}}
