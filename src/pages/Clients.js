@@ -42,7 +42,7 @@ const Clients = () => {
   };
 
   return (
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold text-center">client List</h1>
       <div className=" mb-4 mr-20 text-right">
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
