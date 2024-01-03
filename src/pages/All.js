@@ -7,7 +7,7 @@ const All = () => {
         { to: '/user', text: 'User', icon: <MdPerson /> },
         { to: '/project-schedule', text: 'Project Schedule', icon: <MdDateRange /> },
         { to: '/payment-schedule', text: 'Payment Schedule', icon: <MdPayment /> },
-        { to: '/site', text: 'Site', icon: <MdLocationOn /> },
+        { to: '/sites', text: 'Site', icon: <MdLocationOn /> },
         { to: '/clients', text: 'Client', icon: <MdBusiness /> },
         { to: '/design', text: 'Design', icon: <MdDesignServices /> },
         { to: '/bill', text: 'Bill', icon: <MdReceipt /> },
