@@ -67,7 +67,6 @@ const App = () => {
         <Route path='/quality-engineer' element={<Quality_Engineer />} />
         <Route path='/design-engineer' element={<Design_Engineer />} />
         <Route path='/accountant' element={<Accountant />} />
-        <Route path='/clients' element={<Clients />} />
         <Route path='/employee-profile' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
         <Route path='/edit-contractor' element={<CreateContractor />} />
@@ -78,11 +77,12 @@ const App = () => {
         <Route path='/edit-user' element={<CreateUser />} />
         <Route path='/sites' element={<Sites />} />
         <Route path='/site' element={<SiteScreen />} />
-        <Route path='/edit-site' element={<CreateSite />} />
         <Route path='/create-site' element={<CreateSite />} />
-        <Route path='/edit-client' element={<CreateClient />} />
+        <Route path='/edit-site' element={<CreateSite />} />
+        <Route path='/clients' element={<Clients />} />
         <Route path='/client' element={<ClientScreen />} />
         <Route path='/create-client' element={<CreateClient />} />
+        <Route path='/edit-client' element={<CreateClient />} />
         <Route path='/team' element={<TeamSection />} />
         <Route path='/edit-work-order' element={<CreateWorkOrder />} />
         <Route path='/create-work-order' element={<CreateWorkOrder />} />

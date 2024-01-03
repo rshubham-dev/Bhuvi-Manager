@@ -70,9 +70,7 @@ const Sites = () => {
           {sites.map((site) => (
             <tr key={site._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">
-                <NavLink>
                   {site.name}
-                </NavLink>
               </td>
               <td className="px-6 py-4">{site.siteId}</td>
               <td className="px-6 py-4">{site.client}</td>
