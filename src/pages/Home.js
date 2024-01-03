@@ -2,15 +2,19 @@ import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Dashboard from './Dashboard'
-
+import { Cookies } from 'react-cookie';
 const Home = () => {
-  const { user, isLoggedIn } = useSelector((state) => {
+  const { isLoggedIn } = useSelector((state) => {
     return state.auth
   });
 
+const cookies = new Cookies();
+const token = cookies.get('accessToken');
+console.log(token)
+
   return (
     <>
-      {isLoggedIn ?
+      {isLoggedIn && token ?
         <Dashboard />
         :
         <section className="max-w-md mx-auto mt-10 flex justify-center align-center flex-col">
