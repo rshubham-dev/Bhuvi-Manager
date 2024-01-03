@@ -5,18 +5,18 @@ import { MdPerson, MdDateRange, MdPayment, MdLocationOn, MdBusiness, MdPeople, M
 const All = () => {
     const navItems = [
         { to: '/user', text: 'User', icon: <MdPerson /> },
-        { to: '/project-schedule', text: 'Project Schedule', icon: <MdDateRange /> },
-        { to: '/payment-schedule', text: 'Payment Schedule', icon: <MdPayment /> },
+        { to: '/project-schedules', text: 'Project Schedule', icon: <MdDateRange /> },
+        { to: '/payment-schedules', text: 'Payment Schedule', icon: <MdPayment /> },
         { to: '/sites', text: 'Site', icon: <MdLocationOn /> },
         { to: '/clients', text: 'Client', icon: <MdBusiness /> },
         { to: '/design', text: 'Design', icon: <MdDesignServices /> },
-        { to: '/bill', text: 'Bill', icon: <MdReceipt /> },
+        { to: '/bills', text: 'Bill', icon: <MdReceipt /> },
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
         { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
         { to: '/material', text: 'Material', icon: <MdBuild /> },
         { to: '/expenses', text: 'Expenses', icon: <MdMoney /> },
         { to: '/work-details', text: 'WorkDetails', icon: <MdAssignment /> },
-        { to: '/work-order', text: 'WorkOrder', icon: <MdWork /> },
+        { to: '/work-orders', text: 'WorkOrder', icon: <MdWork /> },
     ];
 
     return (
