@@ -48,6 +48,7 @@ const Sites = () => {
   const handleAdd = () => {
     navigate('/create-site');
   };
+  
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold text-center">Site List</h1>

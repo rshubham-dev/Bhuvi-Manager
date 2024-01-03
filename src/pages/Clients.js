@@ -1,7 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
+import { GrEdit } from "react-icons/gr";
+import { MdDelete } from "react-icons/md";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 
 const Clients = () => {
@@ -27,6 +30,9 @@ const Clients = () => {
     // Add your edit logic here
     navigate(`/edit-client?clientId=${clientId}`);
   };
+  const handleRedirect = (clientId) => {
+    navigate(`/client?clientId=${clientId}`);
+  }
 
   const handleDelete = async (id) => {
     try {
@@ -69,17 +75,23 @@ const Clients = () => {
               })}
               <td className="px-6 py-4">{client.address}</td>
               <td className="px-6 py-4">
+              <button
+                  onClick={() => handleRedirect(site._id)}
+                  className="bg-blue-500 text-white px-2 py-1 mr-2"
+                >
+                  <FaExternalLinkAlt />
+                </button>
                 <button
                   onClick={() => handleEdit(client._id)}
                   className="bg-blue-500 text-white px-2 py-1 mr-2"
                 >
-                  Edit
+                 <GrEdit />
                 </button>
                 <button
                   onClick={() => handleDelete(client._id)}
                   className="bg-red-500 text-white px-2 py-1 mr-2"
                 >
-                  Delete
+                 <MdDelete />
                 </button>
               </td>
             </tr>

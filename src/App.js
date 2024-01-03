@@ -39,6 +39,9 @@ import { ProtectedRoute } from './components/ProtectedPages';
 import SiteScreen from './screen/SiteScreen';
 import ClientScreen from './screen/ClientScreen';
 import WorkOrderScreen from './screen/WorkOrderScreen'
+import BillScreen from './screen/BillScreen';
+import Payment_SchedulScreen from './screen/Payment_SchedulScreen';
+import Project_ScheduleScreen from './screen/Project_ScheduleScreen';
 
 const App = () => {
 
@@ -87,13 +90,16 @@ const App = () => {
         <Route path='/work-order' element={<WorkOrderScreen />} />
         <Route path='/edit-work-details' element={<CreateWorkDetails />} />
         <Route path='/create-work-details' element={<CreateWorkDetails />} />
+        <Route path='/project-schedules' element={<ProjectSchedules />} />
+        <Route path='/project-schedule' element={<Project_ScheduleScreen />} />
         <Route path='/edit-project-schedule' element={<CreateProjectSchedule />} />
         <Route path='/create-project-schedule' element={<CreateProjectSchedule />} />
-        <Route path='/project-schedules' element={<ProjectSchedules />} />
         <Route path='/payment-schedules' element={<PaymentSchedules />} />
-        <Route path='/edit-project-schedule' element={<CreatePaymentSchedule />} />
+        <Route path='/payment-schedule' element={<Payment_SchedulScreen />} />
+        <Route path='/edit-payment-schedule' element={<CreatePaymentSchedule />} />
         <Route path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
         <Route path='/bills' element={<Bills />} />
+        <Route path='/bill' element={<BillScreen />} />
         <Route path='/edit-bill' element={<CreateBill />} />
         <Route path='/create-bill' element={<CreateBill />} />
         <Route path='/checklists' element={<CheckList />} />
