@@ -20,9 +20,8 @@ const SiteScreen = () => {
     try {
       console.log(`before res: ${id}`)
       const response = await axios.get(`/api/v1/site/${id}`);
-      console.log(response.data.site);
       console.log(response.data)
-      setSiteData(response.data.site);
+      setSiteData(response.data);
     } catch (error) {
       console.log('Error fetching user details:', error);
     }
