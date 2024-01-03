@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const CreateSite = () => {
   const [site, setSite] = useState({
@@ -27,6 +27,8 @@ const CreateSite = () => {
     agreement: '',
   })
   const [employees, setEmployee] = useState([]);
+  const [clients, setClient] = useState([]);
+  const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6']
   const location = useLocation();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM']
@@ -39,12 +41,20 @@ const CreateSite = () => {
         toast.error(error.message)
       }
     }
+    const getClients = async () => {
+      try {
+        const clientsData = await axios.get('/api/v1/client');
+        setClient(clientsData.data);
+      } catch (error) {
+        toast.error(error.message)
+      }
+    }
     getemployees();
   }, [])
 
 
   return (
-<section className="container mx-auto mt-6 mb-24">
+    <section className="container mx-auto mt-6 mb-24">
       <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-4 text-center">Create Site</h2>
         {/* Site Name */}
@@ -66,7 +76,12 @@ const CreateSite = () => {
             Choose Client
           </label>
           <select name="client" required className="mt-1 p-2 w-full border rounded-md">
-            <option>Client</option>
+            <option value='' disabled>Client</option>
+            {clients.map((client) => {
+              <option key={client._id} value={client._id}>
+                {client.name}
+              </option>
+            })}
           </select>
         </div>
 
@@ -89,7 +104,12 @@ const CreateSite = () => {
             Total Floor
           </label>
           <select name="floor" className="mt-1 p-2 w-full border rounded-md">
-            <option>Select a Floor</option>
+            <option value='' disabled>Select a Floor</option>
+            {floors.map((floor, index) => {
+              <option key={index} value={floor}>
+                {floor}
+              </option>
+            })}
           </select>
         </div>
 
