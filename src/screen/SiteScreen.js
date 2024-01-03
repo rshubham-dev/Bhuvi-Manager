@@ -19,8 +19,8 @@ const SiteScreen = () => {
   const fetchUserDetails = async (siteId) => {
     try {
       const response = await axios.get(`/api/v1/site/${siteId}`);
-      console.log(response.data)
-      setSiteData(response.data);
+      console.log(response.data.site)
+      setSiteData(response.data.site);
     } catch (error) {
       console.error('Error fetching user details:', error);
     }
