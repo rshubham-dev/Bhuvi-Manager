@@ -49,6 +49,7 @@ const CreateSite = () => {
         toast.error(error.message)
       }
     }
+    getClients();
     getemployees();
   }, [])
 
