@@ -76,7 +76,7 @@ const CreateSite = () => {
             Choose Client
           </label>
           <select name="client" required className="mt-1 p-2 w-full border rounded-md">
-            <option value='' disabled>Client</option>
+            <option value=''>Client</option>
             {clients.map((client) => {
               <option key={client._id} value={client._id}>
                 {client.name}
@@ -104,7 +104,7 @@ const CreateSite = () => {
             Total Floor
           </label>
           <select name="floor" className="mt-1 p-2 w-full border rounded-md">
-            <option value='' disabled>Select a Floor</option>
+            <option value=''>Select a Floor</option>
             {floors.map((floor, index) => {
               <option key={index} value={floor}>
                 {floor}

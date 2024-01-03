@@ -12,17 +12,19 @@ const SiteScreen = () => {
     const siteId = new URLSearchParams(location.search).get('siteId');
     console.log('siteId:', siteId);
     if (siteId) {
-      fetchUserDetails(siteId);
+      fetchSiteDetails(siteId);
     }
   }, [location.search]);
 
-  const fetchUserDetails = async (siteId) => {
+  const fetchSiteDetails = async (siteId) => {
     try {
+      console.log(`before res: ${siteId}`)
       const response = await axios.get(`/api/v1/site/${siteId}`);
-      console.log(response.data.site)
+      console.log(response.data.site);
+      console.log(response.data)
       setSiteData(response.data.site);
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      console.log('Error fetching user details:', error);
     }
   };
   return (
