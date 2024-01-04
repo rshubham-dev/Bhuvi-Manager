@@ -103,6 +103,7 @@ const CreateSite = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(site)
     try {
       if (siteIdToEdit) {
         await axios.put(`/api/v1/site/${siteIdToEdit}`, site);
@@ -115,7 +116,7 @@ const CreateSite = () => {
         navigate('/sites');
       }
     } catch (error) {
-      console.error('Error submitting user data:', error);
+      console.log('Error submitting user data:', error.message);
       toast.error(error.message || 'An error occurred');
     }
   };
