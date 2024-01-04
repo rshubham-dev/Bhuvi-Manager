@@ -21,8 +21,7 @@ const CreateClient = () => {
   });
 
   const handleChange = (e) => {
-    const [name, value] = e.target;
-    setClient({ ...client, [name]: value });
+    setClient({ ...client, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
