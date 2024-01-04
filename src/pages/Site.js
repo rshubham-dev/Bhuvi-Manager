@@ -79,8 +79,8 @@ const Sites = () => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">Name</th>
-            <th scope="col" className="px-6 py-3">Site Id</th>
             <th scope="col" className="px-6 py-3">Client</th>
+            <th scope="col" className="px-6 py-3">Project Type</th>
             <th scope="col" className="px-6 py-3">Actions</th>
           </tr>
         </thead>
@@ -90,8 +90,8 @@ const Sites = () => {
               <td className="px-6 py-4">
                   {site.name}
               </td>
-              <td className="px-6 py-4">{site.siteId}</td>
               <td className="px-6 py-4">{client.name}</td>
+              <td className="px-6 py-4">{site.projectType}</td>
               <td className="px-6 py-4">
                 <button
                   onClick={() => handleRedirect(site._id)}
