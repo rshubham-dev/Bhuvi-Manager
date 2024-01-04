@@ -6,12 +6,9 @@ const SiteScreen = () => {
   const [site, setSiteData] = useState({});
   const [client, setClient] = useState([]);
   const location = useLocation();
-  console.log(location);
 
   useEffect(() => {
-    console.log('location.search:', location.search);
     const id = new URLSearchParams(location.search).get('siteId');
-    console.log('siteId:', id);
     if (id) {
       fetchSiteDetails(id);
     }
@@ -19,18 +16,18 @@ const SiteScreen = () => {
 
   const fetchSiteDetails = async (id) => {
     try {
-      console.log(`before res: ${id}`)
       const response = await axios.get(`/api/v1/site/${id}`);
-      console.log(response.data)
       setSiteData(response.data);
-      const clientsData = await axios.get(`/api/v1/client/${site.client}`);
-      console.log(clientsData)
-      console.log(clientsData.data)
-      setClient(clientsData.data);
+      if(response.data){
+        const clientData = await axios.get(`/api/v1/client/${site.client}`);
+        console.log(clientData.data)
+        setClient(clientData.data);
+      }
     } catch (error) {
-      console.log('Error fetching user details:', error);
+      console.log('Error fetching site details:', error);
     }
   };
+
   return (
     <>
       <section className='bg-white shadow-md rounded px-14 py-12 mb-16 h-full'>
