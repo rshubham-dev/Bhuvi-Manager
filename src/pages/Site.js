@@ -6,7 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
 
 
@@ -14,6 +14,7 @@ const Sites = () => {
   const navigate = useNavigate();
   const [sites, setSite] = useState([]);
   const [error, setError] = useState(null);
+  const [client, setClient] = useState([]);
 
   useEffect(() => {
     const getSites = async () => {
@@ -48,6 +49,23 @@ const Sites = () => {
   const handleAdd = () => {
     navigate('/create-site');
   };
+
+  const fetchClientDetail = async () => {
+    try {
+      let clientId;
+      {sites.map((site)=>{
+        clientId = site.client;
+        console.log(site.client);
+      })}
+      const clientData = await axios.get(`/api/v1/client/${clientId}`);
+      console.log(clientData.data)
+      console.log(clientData)
+      setClient(clientData.data);
+    } catch (error) {
+      console.log('Error fetching site details:', error);
+    }
+  };
+  fetchClientDetail();
   
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
@@ -73,7 +91,7 @@ const Sites = () => {
                   {site.name}
               </td>
               <td className="px-6 py-4">{site.siteId}</td>
-              <td className="px-6 py-4">{site.client}</td>
+              <td className="px-6 py-4">{client.name}</td>
               <td className="px-6 py-4">
                 <button
                   onClick={() => handleRedirect(site._id)}

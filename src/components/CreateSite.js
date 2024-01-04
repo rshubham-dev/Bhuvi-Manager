@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useLocation } from 'react-router-dom';
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const CreateSite = () => {
   const [site, setSite] = useState({
@@ -9,23 +11,23 @@ const CreateSite = () => {
     client: '',
     siteId: '',
     floor: '',
-    // value: [{
-    //   work: '',
-    //   area: '',
-    //   rate: '',
-    //   unit: '',
-    // }],
     incharge: '',
     supervisor: '',
     projectType: '',
-    address: {
-      street: '',
-      city: '',
-      district: '',
-      state: '',
-    },
     agreement: '',
   })
+  // value: [{
+  //   work: '',
+  //   area: '',
+  //   rate: '',
+  //   unit: '',
+  // }],
+  // address: {
+  //   street: '',
+  //   city: '',
+  //   district: '',
+  //   state: '',
+  // },
   const [employees, setEmployee] = useState([]);
   const [clients, setClient] = useState([]);
   const projectType = ['Residential', 'Commercial', 'Instutional', 'Government'];
@@ -73,10 +75,11 @@ const CreateSite = () => {
         await axios.put(`/api/v1/site/${siteIdToEdit}`, site);
         toast.success('User edited successfully');
       } else {
+        console.log(site)
         await axios.post('/api/v1/site', site);
         toast.success('User created successfully');
+        navigate('/sites');
       }
-      navigate('/sites');
     } catch (error) {
       console.error('Error submitting user data:', error);
       toast.error(error.response?.data?.message || 'An error occurred');
