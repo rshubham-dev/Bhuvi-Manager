@@ -18,18 +18,23 @@ const SiteScreen = () => {
     try {
       const response = await axios.get(`/api/v1/site/${id}`);
       setSiteData(response.data);
-      if(response.data){
-        const clientId = site.client
-        console.log(site.client)
-        const clientData = await axios.get(`/api/v1/client/${clientId}`);
-        console.log(clientData.data)
-        console.log(clientData)
-        setClient(clientData.data);
-      }
     } catch (error) {
       console.log('Error fetching site details:', error);
     }
   };
+  const fetchClientDetail = async () => {
+    try {
+      const clientId = site.client
+      console.log(site.client)
+      const clientData = await axios.get(`/api/v1/client/${clientId}`);
+      console.log(clientData.data)
+      console.log(clientData)
+      setClient(clientData.data);
+    } catch (error) {
+      console.log('Error fetching site details:', error);
+    }
+  }
+  fetchClientDetail();
 
   return (
     <>

@@ -30,6 +30,7 @@ const CreateSite = () => {
   const [clients, setClient] = useState([]);
   const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6']
   const location = useLocation();
+  const navigate = useNavigate();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
