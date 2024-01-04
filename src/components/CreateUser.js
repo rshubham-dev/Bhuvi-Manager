@@ -41,6 +41,7 @@ const CreateUser = () => {
       fetchUserDetails(userId);
     }
   }, [location.search]);
+
   const fetchUserDetails = async (userId) => {
     try {
       const response = await axios.get(`/api/v1/user/${userId}`);
@@ -55,7 +56,7 @@ const CreateUser = () => {
         department: user.department,
       });
     } catch (error) {
-      console.error('Error fetching user details:', error);
+      console.log('Error fetching user details:', error);
     }
   };
 

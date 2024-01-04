@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
 
@@ -10,20 +11,23 @@ const SiteScreen = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const id = new URLSearchParams(location.search).get('siteId');
-    if (id) {
-      fetchSiteDetails(id);
+    const siteId = new URLSearchParams(location.search).get('siteId');
+    if (siteId) {
+      fetchSiteDetails(siteId);
     }
   }, [location.search]);
 
-  const fetchSiteDetails = async (id) => {
+  const fetchSiteDetails = async (siteId) => {
     try {
-      const response = await axios.get(`/api/v1/site/${id}`);
+      const response = await axios.get(`/api/v1/site/${siteId}`);
+      console.log(response)
       setSiteData(response.data);
     } catch (error) {
       console.log('Error fetching site details:', error);
     }
   };
+  console.log('site:', site)
+
   const fetchClientDetail = async () => {
     try {
       const clientId = site.client;
@@ -88,6 +92,36 @@ const SiteScreen = () => {
                 </ul>
               </dd>
             </div>
+
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Payment Schedules</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Project Schedule</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Quality Check Schedule</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Work Order</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Bills</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Purchase Order</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-sm font-medium leading-6 text-gray-900">Extra Work</dt>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+            </div>
+
           </dl>
         </div>
       </section>

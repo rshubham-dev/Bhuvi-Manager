@@ -11,6 +11,7 @@ const CreateSite = () => {
     client: '',
     siteId: '',
     floors: '',
+    area: '',
     incharge: '',
     supervisor: '',
     projectType: '',
@@ -37,15 +38,46 @@ const CreateSite = () => {
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
+  useEffect(() => {
+    const siteId = new URLSearchParams(location.search).get('siteId');
+    console.log('siteId:', siteId);
+  
+    if (siteId) {
+      setSiteIdToEdit(siteId);
+      fetchSiteDetails(siteId);
+    }
+  }, [location.search]);
+
+  const fetchSiteDetails = async(siteId)=>{
+    try {
+      const response = await axios.get(`/api/v1/site/${siteId}`);
+      const site = response.data;
+      setSite({
+        name: site.name,
+        client: site.client,
+        siteId: site.siteId,
+        floors: site.floors,
+        area: site.area,
+        incharge: site.incharge,
+        supervisor: site.supervisor,
+        projectType: site.projectType,
+        agreement: site.agreement,
+      })
+    } catch (error) {
+      toast.error(error.message)
+    }
+
+  }
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
     setSite((prevSite) => ({
       ...prevSite,
-      [name]: value,
+      [e.target.name]: e.target.value,
     }));
   };
 
   useEffect(() => {
+
     const getemployees = async () => {
       try {
         const employeesData = await axios.get('/api/v1/employee');
@@ -54,6 +86,7 @@ const CreateSite = () => {
         toast.error(error.message)
       }
     }
+
     const getClients = async () => {
       try {
         const clientsData = await axios.get('/api/v1/client');
@@ -64,6 +97,7 @@ const CreateSite = () => {
         toast.error(error.message)
       }
     }
+
     getClients();
     getemployees();
   }, [])
@@ -76,7 +110,7 @@ const CreateSite = () => {
         toast.success('User edited successfully');
       } else {
         console.log(site)
-        await axios.post('/api/v1/site', site);
+        const siteData = await axios.post('/api/v1/site', site);
         toast.success('User created successfully');
         navigate('/sites');
       }
@@ -115,7 +149,6 @@ const CreateSite = () => {
             required
             className="mt-1 p-2 w-full border rounded-md"
             onChange={handleChange}
-            value={site.client}
           >
             <option value=''>Client</option>
             {clients.map((client) => (
@@ -136,6 +169,7 @@ const CreateSite = () => {
             type="text"
             name="siteId"
             required
+            value={site.siteId}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
@@ -148,7 +182,6 @@ const CreateSite = () => {
           </label>
           <select
             name="floors"
-            value={site.floors}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
             <option value=''>Select a Floor</option>
@@ -160,6 +193,21 @@ const CreateSite = () => {
           </select>
         </div>
 
+        {/* Area */}
+        <div className="mb-4">
+          <label htmlFor="area" className="block text-sm font-medium text-gray-600">
+            Site ID
+          </label>
+          <input
+            type="text"
+            name="area"
+            value={site.area}
+            required
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
         {/* PROJECT TYPE */}
         <div className="mb-4">
           <label htmlFor="floor" className="block text-sm font-medium text-gray-600">
@@ -167,7 +215,7 @@ const CreateSite = () => {
           </label>
           <select
             name="projectType"
-            value={site.projectType}
+            required
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
             <option>Select a Floor</option>
