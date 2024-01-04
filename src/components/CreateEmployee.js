@@ -38,7 +38,7 @@ const CreateEmployee = () => {
     // const [phone, setPhone] = useState([]);
     const [error, setError] = useState(null);
 
-    const inputData = (data, index) => {
+    const inputData = (data) => {
         const { name, value } = data.target;
         setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
     }
@@ -151,7 +151,7 @@ const CreateEmployee = () => {
                             required
                             autoComplete='off'
                             value={employee.contactNo}
-                            onChange={handleChange}
+                            onChange={inputData}
                         />
                     </div>
 
@@ -170,7 +170,7 @@ const CreateEmployee = () => {
                             required
                             autoComplete='off'
                             value={employee.whatsapp}
-                            onChange={handleChange}
+                            onChange={inputData}
                         />
                     </div>
 
