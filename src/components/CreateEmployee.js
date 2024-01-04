@@ -11,23 +11,24 @@ const CreateEmployee = () => {
         contactNo: '',
         whatsapp: '',
         employeeId: "",
-        // address: {
-        //     street: "",
-        //     city: "",
-        //     district: "",
-        //     state: "",
-        //     pincode: "",
-        // },
-        // addhar: "",
-        // pan: "",
-        // cv: "",
-        // offerletter: "",
-        // bank: "",
-        // certificates: [],
         avatar: "",
         joinDate: "",
         birthdate: "",
     });
+    // address: {
+    //     street: "",
+    //     city: "",
+    //     district: "",
+    //     state: "",
+    //     pincode: "",
+    // },
+    // addhar: "",
+    // pan: "",
+    // cv: "",
+    // offerletter: "",
+    // bank: "",
+    // certificates: [],
+
     // const [location, setLocation] = useState({
     //     street: "",
     //     city: "",
@@ -35,7 +36,7 @@ const CreateEmployee = () => {
     //     state: "",
     //     pincode: "",
     // });
-    // const [phone, setPhone] = useState([]);
+
     const [error, setError] = useState(null);
 
     const inputData = (data) => {
@@ -47,30 +48,31 @@ const CreateEmployee = () => {
         e.preventDefault();
         try {
             console.log(employee)
-            const response = await axios.post('/api/v1/employee/create', {
-                name: employee.name,
-                email: employee.email,
-                password: employee.password,
-                contactNo: employee.contactNo,
-                whatsapp: employee.whatsapp,
-                employeeId: employee.employeeId,
-                // address: {
-                //     street: location.street,
-                //     city: location.city,
-                //     district: location.district,
-                //     state: location.state,
-                //     pincode: location.pincode,
-                // },
-                // addhar: employee.addhar,
-                // pan: employee.pan,
-                // cv: employee.cv,
-                // offerletter: employee.offerletter,
-                // bank: employee.bank,
-                // certificates,
-                avatar: employee.avatar,
-                joinDate: employee.joinDate,
-                birthdate: employee.birthdate,
-            });
+             const response = await axios.post('/api/v1/employee/create', employee);
+             // {
+            //     name: employee.name,
+            //     email: employee.email,
+            //     password: employee.password,
+            //     contactNo: employee.contactNo,
+            //     whatsapp: employee.whatsapp,
+            //     employeeId: employee.employeeId,
+            //     // address: {
+            //     //     street: location.street,
+            //     //     city: location.city,
+            //     //     district: location.district,
+            //     //     state: location.state,
+            //     //     pincode: location.pincode,
+            //     // },
+            //     // addhar: employee.addhar,
+            //     // pan: employee.pan,
+            //     // cv: employee.cv,
+            //     // offerletter: employee.offerletter,
+            //     // bank: employee.bank,
+            //     // certificates,
+            //     avatar: employee.avatar,
+            //     joinDate: employee.joinDate,
+            //     birthdate: employee.birthdate,
+            // });
             console.log(response.data);
             console.log(response.data.error)
             toast.success('Registration successful!');
