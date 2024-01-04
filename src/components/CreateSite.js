@@ -40,8 +40,6 @@ const CreateSite = () => {
 
   useEffect(() => {
     const siteId = new URLSearchParams(location.search).get('siteId');
-    console.log('siteId:', siteId);
-  
     if (siteId) {
       setSiteIdToEdit(siteId);
       fetchSiteDetails(siteId);
@@ -90,7 +88,6 @@ const CreateSite = () => {
     const getClients = async () => {
       try {
         const clientsData = await axios.get('/api/v1/client');
-        console.log(clientsData.data)
         setClient(clientsData.data);
       } catch (error) {
         toast.error(error.message)
@@ -103,7 +100,6 @@ const CreateSite = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(site)
     try {
       if (siteIdToEdit) {
         await axios.put(`/api/v1/site/${siteIdToEdit}`, site);

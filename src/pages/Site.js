@@ -21,7 +21,6 @@ const Sites = () => {
       try {
         const siteData = await axios.get('/api/v1/site');
         setSite(siteData.data);
-        console.log(sites)
       } catch (error) {
         toast.error(error.message)
         setError(error.message);
@@ -55,11 +54,8 @@ const Sites = () => {
       let clientId;
       {sites.map((site)=>{
         clientId = site.client;
-        console.log(site.client);
       })}
       const clientData = await axios.get(`/api/v1/client/${clientId}`);
-      console.log(clientData.data)
-      console.log(clientData)
       setClient(clientData.data);
     } catch (error) {
       console.log('Error fetching site details:', error);
