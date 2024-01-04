@@ -165,10 +165,11 @@ const CreateSite = () => {
             Project Type
           </label>
           <select
-            name="floor"
+            name="projectType"
+            value={site.projectType}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
-            <option value=''>Select a Floor</option>
+            <option>Select a Floor</option>
             {projectType.map((type, index) => (
               <option key={index} value={type}>
                 {type}
