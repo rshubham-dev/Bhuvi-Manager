@@ -17,6 +17,7 @@ const CreateSite = () => {
     // }],
     incharge: '',
     supervisor: '',
+    projectType: '',
     address: {
       street: '',
       city: '',
@@ -27,7 +28,8 @@ const CreateSite = () => {
   })
   const [employees, setEmployee] = useState([]);
   const [clients, setClient] = useState([]);
-  const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6']
+  const projectType = ['Residential', 'Commercial', 'Instutional', 'Government'];
+  const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6'];
   const location = useLocation();
   const navigate = useNavigate();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
@@ -149,6 +151,24 @@ const CreateSite = () => {
             {floors.map((floor, index) => (
               <option key={index} value={floor}>
                 {floor}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* PROJECT TYPE */}
+        <div className="mb-4">
+          <label htmlFor="floor" className="block text-sm font-medium text-gray-600">
+            Project Type
+          </label>
+          <select
+            name="floor"
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md">
+            <option value=''>Select a Floor</option>
+            {projectType.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
               </option>
             ))}
           </select>
