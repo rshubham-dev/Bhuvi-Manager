@@ -10,7 +10,8 @@ const CreateClient = () => {
     name: '',
     email: '',
     password: '',
-    phone: [''],
+    contactNo: '',
+    whatsapp: '',
     address: {
       street: "",
       city: "",
@@ -22,24 +23,9 @@ const CreateClient = () => {
 
   const handleChange = (e, index) => {
     const [name, value] = e.target;
-    if (name === "phone") {
-      const updatedPhones = [...client.phone];
-      updatedPhones[index] = value;
-      setClient((prevClient) => ({ ...prevClient, phone: updatedPhones }));
-    } else {
-      setClient({ ...client, [name]: value });
-    }
+    setClient({ ...client, [name]: value });
   };
 
-  const addPhone = () => {
-    setClient((client) => ({ ...client, phone: [...client.phone, ""] }));
-  };
-
-  const removePhone = (index) => {
-    const updatedPhones = [...client.phone];
-    updatedPhones.splice(index, 1);
-    setClient((client) => ({ ...client, phone: updatedPhones }));
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -102,36 +88,46 @@ const CreateClient = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
+
+
         <div className='mb-4'>
-          <label htmlFor='phone' className='block text-gray-900 text-sm font-bold mb-2'>Contact Number</label>
-          {client.phone.map((tel, index) => (
-            <div key={index} className='mb-4 w-full'>
-              <input
-                className='appearance-none border rounded w-800 py-2 px-3 mr-2 text-gray-600 leading-tight focus:outline-none focus:shadow-outline'
-                type='text'
-                name='phone'
-                placeholder='Enter Your Phone Number'
-                required
-                autoComplete='off'
-                value={tel}
-                onChange={(e) => handleChange(e, index)}
-              />
-              {client.phone.length > 1 && (
-                <button
-                  className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 mr-0"
-                  type="button"
-                  onClick={() => removePhone(index)}>
-                  <MdOutlineRemoveCircle />
-                </button>)}
-            </div>
-          ))}
-          <button
-            className="w-400 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-            type="button"
-            onClick={addPhone}>
-            <MdOutlineAddCircle />
-          </button>
+          <label htmlFor='phone'
+            className='block text-sm font-medium text-gray-600'>
+            Contact Number:
+          </label>
+          <input
+            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+            type='text'
+            name='contactNo'
+            id='contactNo'
+            placeholder='Enter Your Contact Number'
+            required
+            autoComplete='off'
+            value={client.contactNo}
+            onChange={handleChange}
+          />
         </div>
+
+
+        <div className='mb-4'>
+          <label htmlFor='whatsapp'
+            className='block text-sm font-medium text-gray-600'>
+            Whatsapp Number:
+          </label>
+          <input
+            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+            type='text'
+            name='whatsapp'
+            id='whatsapp'
+            placeholder='Enter Your Whatsapp Number'
+            required
+            autoComplete='off'
+            value={client.whatsapp}
+            onChange={handleChange}
+          />
+        </div>
+
+
         <div className="mb-4">
           <h4 className="text-lg font-semibold mb-2">Address</h4>
           <div className="grid grid-cols-2 gap-4">
@@ -197,6 +193,8 @@ const CreateClient = () => {
             </div>
           </div>
         </div>
+
+        
         <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"

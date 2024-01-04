@@ -8,7 +8,8 @@ const CreateEmployee = () => {
         name: "",
         email: "",
         password: "",
-        phone: [""],
+        contactNo: '',
+        whatsapp: '',
         employeeId: "",
         // address: {
         //     street: "",
@@ -39,25 +40,8 @@ const CreateEmployee = () => {
 
     const inputData = (data, index) => {
         const { name, value } = data.target;
-        if (name === "phone") {
-            const updatedPhones = [...employee.phone];
-            updatedPhones[index] = value;
-            setEmployee((prevEmployee) => ({ ...prevEmployee, phone: updatedPhones }));
-        } else {
-            setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
-            // setLocation((prevAddress) => ({ ...prevAddress, [name]: value }));
-        }
+        setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
     }
-
-    const addPhone = () => {
-        setEmployee((prevEmployee) => ({ ...prevEmployee, phone: [...prevEmployee.phone, ""] }));
-    };
-
-    const removePhone = (index) => {
-        const updatedPhones = [...employee.phone];
-        updatedPhones.splice(index, 1);
-        setEmployee((prevEmployee) => ({ ...prevEmployee, phone: updatedPhones }));
-    };
 
     const formSubmit = async (e) => {
         e.preventDefault();
@@ -67,7 +51,8 @@ const CreateEmployee = () => {
                 name: employee.name,
                 email: employee.email,
                 password: employee.password,
-                phone: [...employee.phone],
+                contactNo: employee.contactNo,
+                whatsapp: employee.whatsapp,
                 employeeId: employee.employeeId,
                 // address: {
                 //     street: location.street,
@@ -116,6 +101,8 @@ const CreateEmployee = () => {
                             onChange={inputData}
                         />
                     </div>
+
+                    
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>
                             Full Name
@@ -132,6 +119,7 @@ const CreateEmployee = () => {
                         />
                     </div>
 
+
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='email'>
                             Email
@@ -147,36 +135,46 @@ const CreateEmployee = () => {
                             onChange={inputData}
                         />
                     </div>
+
+                    {/* Contact no */}
                     <div className='mb-4'>
-                        <label htmlFor='phone' className='block text-gray-900 text-sm font-bold mb-2'>Contact Number</label>
-                        {employee.phone.map((tel, index) => (
-                            <div key={index} className='mb-4 w-full'>
-                                <input
-                                    className='appearance-none border rounded w-800 py-2 px-3 mr-2 text-gray-600 leading-tight focus:outline-none focus:shadow-outline'
-                                    type='text'
-                                    name='phone'
-                                    placeholder='Enter Your Phone Number'
-                                    required
-                                    autoComplete='off'
-                                    value={tel}
-                                    onChange={(e) => inputData(e, index)}
-                                />
-                                {employee.phone.length > 1 && (
-                                    <button
-                                        className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600 mr-0"
-                                        type="button"
-                                        onClick={() => removePhone(index)}>
-                                        <MdOutlineRemoveCircle />
-                                    </button>)}
-                            </div>
-                        ))}
-                        <button
-                            className="w-400 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-                            type="button"
-                            onClick={addPhone}>
-                            <MdOutlineAddCircle />
-                        </button>
+                        <label htmlFor='phone'
+                            className='block text-sm font-medium text-gray-600'>
+                            Contact Number:
+                        </label>
+                        <input
+                            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+                            type='text'
+                            name='contactNo'
+                            id='contactNo'
+                            placeholder='Enter Your Contact Number'
+                            required
+                            autoComplete='off'
+                            value={employee.contactNo}
+                            onChange={handleChange}
+                        />
                     </div>
+
+                    {/* Whatsapp No */}
+                    <div className='mb-4'>
+                        <label htmlFor='whatsapp'
+                            className='block text-sm font-medium text-gray-600'>
+                            Whatsapp Number:
+                        </label>
+                        <input
+                            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+                            type='text'
+                            name='whatsapp'
+                            id='whatsapp'
+                            placeholder='Enter Your Whatsapp Number'
+                            required
+                            autoComplete='off'
+                            value={employee.whatsapp}
+                            onChange={handleChange}
+                        />
+                    </div>
+
+
                     <div className='mb-4'>
                         <label htmlFor='employeeId' className='block text-gray-700 text-sm font-bold mb-2'>Employee ID</label>
                         <input
@@ -190,6 +188,8 @@ const CreateEmployee = () => {
                             onChange={inputData}
                         />
                     </div>
+
+
                     <div className='mb-4'>
                         <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Password</label>
                         <input
@@ -203,6 +203,8 @@ const CreateEmployee = () => {
                             onChange={inputData}
                         />
                     </div>
+
+
                     {/* <div className='mb-4'> 
                         <h4 className='mb-2'>Address</h4>
                         <div className='mb-4'>
@@ -371,12 +373,12 @@ const CreateEmployee = () => {
                         className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
                     >
                         Create</button>
-                {error && <p className="text-red-500 mt-4">{error}</p>}
+                    {error && <p className="text-red-500 mt-4">{error}</p>}
                 </form>
                 <Toaster
                     position="top-right"
                     reverseOrder={false}
-                    />
+                />
             </section>
         </main>
     )

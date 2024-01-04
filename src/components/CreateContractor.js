@@ -6,7 +6,8 @@ import axios from 'axios';
 const CreateContractor = () => {
   const [contractor, setContractor] = useState({
     name: '',
-    phone: [],
+    contactNo: '',
+    whatsapp: '',
     address: {
       street: "",
       city: "",
@@ -20,17 +21,11 @@ const CreateContractor = () => {
       bank: '',
     },
   });
-  const [contact, setContact] = useState(['']);
-
   const [error, setError] = useState(null);
 
-  const handleChange = (e, index) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'phone') {
-      const updatedContact = [...contact];
-      updatedContact[index] = value;
-      setContact(updatedContact);
-    } else if (name.startsWith('address.')) {
+    if (name.startsWith('address.')) {
       const addressField = name.split('.')[1];
       setContractor((prevContractor) => ({
         ...prevContractor,
@@ -56,27 +51,13 @@ const CreateContractor = () => {
     }
   };
 
-  const addPhone = () => {
-    setContact((prevContact) => [...prevContact, '']);
-  };
-
-  const removePhone = (index) => {
-    const updatedContact = [...contact];
-    updatedContact.splice(index, 1);
-    setContact(updatedContact);
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setContractor((prevContractor)=>({
-        ...prevContractor,
-        phone: [...contact],
-      }));
-      console.log(contractor);
       const response = await axios.post('/api/v1/contractor', {
         name: contractor.name,
-        phone: [...contact],
+        contactNo: contractor.contactNo,
+        whatsapp: contractor.whatsapp,
         address: {
           street: contractor.address.street,
           city: contractor.address.city,
@@ -118,36 +99,38 @@ const CreateContractor = () => {
           />
         </div>
         <div className='mb-4'>
-          <label htmlFor='phone' className='block text-gray-900 text-sm font-bold mb-2'>Contact Number</label>
-          {contact.map((phone, index) => (
-            <div key={index} className='mb-4 w-full'>
-              <input
-                className='appearance-none border rounded w-800 py-2 px-3 mr-2 text-gray-600 leading-tight focus:outline-none focus:shadow-outline'
-                type='text'
-                name='phone'
-                placeholder='Enter Phone Number'
-                required
-                autoComplete='off'
-                value={phone}
-                onChange={(e) => handleChange(e, index)}
-              />
-              {contact.length > 1 && (
-                <button
-                  className='bg-red-500 text-white p-2 rounded-md hover:bg-red-600 mr-0'
-                  type='button'
-                  onClick={() => removePhone(index)}
-                >
-                  <MdOutlineRemoveCircle />
-                </button>
-              )}
-            </div>
-          ))}
-          <button
-            className="w-400 bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
-            type="button"
-            onClick={addPhone}>
-            <MdOutlineAddCircle />
-          </button>
+          <label htmlFor='phone'
+            className='block text-sm font-medium text-gray-600'>
+            Contact Number:
+          </label>
+          <input
+            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+            type='text'
+            name='contactNo'
+            id='contactNo'
+            placeholder='Enter Your Contact Number'
+            required
+            autoComplete='off'
+            value={contractor.contactNo}
+            onChange={handleChange}
+          />
+        </div>
+        <div className='mb-4'>
+          <label htmlFor='whatsapp'
+            className='block text-sm font-medium text-gray-600'>
+            Whatsapp Number:
+          </label>
+          <input
+            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+            type='text'
+            name='whatsapp'
+            id='whatsapp'
+            placeholder='Enter Your Whatsapp Number'
+            required
+            autoComplete='off'
+            value={contractor.whatsapp}
+            onChange={handleChange}
+          />
         </div>
         <div className="mb-4">
           <h4 className="text-lg font-semibold mb-2">Address</h4>

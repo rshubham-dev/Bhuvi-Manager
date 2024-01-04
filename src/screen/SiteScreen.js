@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const SiteScreen = () => {
   const [site, setSiteData] = useState({});
-  const [client, setClient] = useState([]);
+  const [client, setClient] = useState({});
   const location = useLocation();
 
   useEffect(() => {
@@ -33,7 +35,7 @@ const SiteScreen = () => {
     } catch (error) {
       console.log('Error fetching site details:', error);
     }
-  }
+  };
   fetchClientDetail();
 
   return (
@@ -48,7 +50,7 @@ const SiteScreen = () => {
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Client</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{client}</dd>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{client.name}</dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Project Type</dt>
