@@ -14,7 +14,6 @@ const Sites = () => {
   const navigate = useNavigate();
   const [sites, setSite] = useState([]);
   const [error, setError] = useState(null);
-  const [client, setClient] = useState([]);
 
   useEffect(() => {
     const getSites = async () => {
@@ -62,7 +61,9 @@ const Sites = () => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">Name</th>
+            <th scope="col" className="px-6 py-3">Client</th>
             <th scope="col" className="px-6 py-3">Total Floor</th>
+            <th scope="col" className="px-6 py-3">Area</th>
             <th scope="col" className="px-6 py-3">Project Type</th>
             <th scope="col" className="px-6 py-3">Actions</th>
           </tr>

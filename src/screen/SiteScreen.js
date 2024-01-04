@@ -7,9 +7,6 @@ axios.defaults.withCredentials = true;
 
 const SiteScreen = () => {
   const [site, setSiteData] = useState({});
-  const [client, setClient] = useState({});
-  const [incharge, setIncharge] = useState({});
-  const [supervisor, setSupervisor] = useState({});
   const location = useLocation();
 
   useEffect(() => {
