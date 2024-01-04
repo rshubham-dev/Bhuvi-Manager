@@ -73,20 +73,22 @@ const CreateClient = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600">
-            Password:
+          <label
+            htmlFor="Password"
+            className="block text-sm font-medium text-gray-600"
+          >
+            Password
           </label>
-          <input
-            type="password"
-            name="password"
-            value={client.password}
-            onChange={handleChange}
-            required
-            minLength={8}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-          />
+        <input
+          type="password"
+          name="password"
+          value={client.password}
+          onChange={handleChange}
+          required
+          minLength={8}
+          className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+        />
         </div>
-
 
         <div className='mb-4'>
           <label htmlFor='phone'
@@ -100,7 +102,6 @@ const CreateClient = () => {
             id='contactNo'
             placeholder='Enter Your Contact Number'
             required
-            autoComplete='off'
             value={client.contactNo}
             onChange={handleChange}
           />
@@ -180,7 +181,7 @@ const CreateClient = () => {
           </div>
         </div> */}
 
-        
+
         <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
