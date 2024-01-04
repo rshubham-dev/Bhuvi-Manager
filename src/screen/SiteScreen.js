@@ -28,11 +28,11 @@ const SiteScreen = () => {
       console.log('Error fetching site details:', error);
     }
   };
-  console.log(site)
-  // setClient(site.client);
+  console.log(site.client)
+  setClient(site.client);
   // setIncharge(site.incharge);
   // setSupervisor(site.supervisor);
-  // console.log('client:', client);
+  console.log('client:', client);
   // console.log('incharge:', incharge);
   // console.log('supervisor:', supervisor);
 
@@ -49,7 +49,7 @@ const SiteScreen = () => {
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Client</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.client.name}</dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Project Type</dt>

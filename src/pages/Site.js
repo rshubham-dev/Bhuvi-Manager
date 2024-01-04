@@ -49,13 +49,7 @@ const Sites = () => {
     navigate('/create-site');
   };
 
-  let clientData = sites.map((site) => {
-    return site.client;
-  })
-  setClient(clientData);
-  console.log(client)
-  console.log(clientData)
-
+  
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold text-center">Site List</h1>
@@ -68,7 +62,7 @@ const Sites = () => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">Name</th>
-            <th scope="col" className="px-6 py-3">Client</th>
+            <th scope="col" className="px-6 py-3">Total Floor</th>
             <th scope="col" className="px-6 py-3">Project Type</th>
             <th scope="col" className="px-6 py-3">Actions</th>
           </tr>
@@ -77,9 +71,10 @@ const Sites = () => {
           {sites.map((site) => (
             <tr key={site._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">
-                {site.name}
+                  {site.name}
               </td>
-              <td className="px-6 py-4">{client.name}</td>
+              <td className="px-6 py-4">{site.floors}</td>
+              <td className="px-6 py-4">{site.client.name}</td>
               <td className="px-6 py-4">{site.projectType}</td>
               <td className="px-6 py-4">
                 <button
