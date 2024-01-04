@@ -8,6 +8,8 @@ axios.defaults.withCredentials = true;
 const SiteScreen = () => {
   const [site, setSiteData] = useState({});
   const [client, setClient] = useState({});
+  const [incharge, setIncharge] = useState({});
+  const [supervisor, setSupervisor] = useState({});
   const location = useLocation();
 
   useEffect(() => {
@@ -20,28 +22,15 @@ const SiteScreen = () => {
   const fetchSiteDetails = async (siteId) => {
     try {
       const response = await axios.get(`/api/v1/site/${siteId}`);
-      console.log(response)
       setSiteData(response.data);
     } catch (error) {
       console.log('Error fetching site details:', error);
     }
+    setClient(site.client);
+    setIncharge(site.incharge);
+    setSupervisor(site.supervisor);
   };
-  console.log('site:', site)
 
-  const fetchClientDetail = async () => {
-    try {
-      const clientId = site.client;
-      console.log(site.client);
-      
-      const clientData = await axios.get(`/api/v1/client/${clientId}`);
-      console.log(clientData.data)
-      console.log(clientData)
-      setClient(clientData.data);
-    } catch (error) {
-      console.log('Error fetching site details:', error);
-    }
-  };
-  fetchClientDetail();
 
   return (
     <>
@@ -67,11 +56,11 @@ const SiteScreen = () => {
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Site Incharge</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.incharge}</dd>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{incharge.name}</dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Site Supervisor</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.supervisor}</dd>
+              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{supervisor.name}</dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt className="text-sm font-medium leading-6 text-gray-900">Agreement</dt>

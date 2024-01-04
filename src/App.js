@@ -59,7 +59,7 @@ const App = () => {
         {/* <ProtectedRoute LoggedIn={isLoggedIn}> */}
         <Route path='/ceo' element={<Admin />} />
         <Route path='/admin' element={<Admin />} />
-        <Route path='/client' element={<Client />} />
+        <Route path='/Client' element={<Client />} />
         <Route path='/design-head' element={<Design_Head />} />
         <Route path='/site-incharge' element={<SiteIncharge />} />
         <Route path='/site-supervisour' element={<SiteSupervisour />} />

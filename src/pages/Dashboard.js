@@ -18,7 +18,7 @@ import { useNavigate} from 'react-router-dom';
             navigate('/admin');
             break;
           case 'Client':
-            navigate('/client');
+            navigate('/Client');
             break;
           case 'Accountant':
             navigate('/accountant');

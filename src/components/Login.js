@@ -17,7 +17,7 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user, isLoggedIn } = useSelector((state) => {
+  const { isLoggedIn } = useSelector((state) => {
     return state.auth
   });
 
