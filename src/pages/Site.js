@@ -49,20 +49,13 @@ const Sites = () => {
     navigate('/create-site');
   };
 
-  const fetchClientDetail = () => {
-    try {
-      let clientData;
-      {sites.map((site)=>{
-        clientData = site.client;
-      })}
-      setClient(clientData);
-      console.log(clientData)
-    } catch (error) {
-      console.log('Error fetching site details:', error);
-    }
-  };
+  let clientData = sites.map((site) => {
+    return site.client;
+  })
+  setClient(clientData);
   console.log(client)
-  
+  console.log(clientData)
+
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold text-center">Site List</h1>
@@ -84,7 +77,7 @@ const Sites = () => {
           {sites.map((site) => (
             <tr key={site._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">
-                  {site.name}
+                {site.name}
               </td>
               <td className="px-6 py-4">{client.name}</td>
               <td className="px-6 py-4">{site.projectType}</td>
