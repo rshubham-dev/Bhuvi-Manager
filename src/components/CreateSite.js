@@ -9,12 +9,12 @@ const CreateSite = () => {
     client: '',
     siteId: '',
     floor: '',
-    value: [{
-      floorNo: '',
-      area: '',
-      rate: '',
-      unit: '',
-    }],
+    // value: [{
+    //   work: '',
+    //   area: '',
+    //   rate: '',
+    //   unit: '',
+    // }],
     incharge: '',
     supervisor: '',
     address: {
@@ -31,7 +31,8 @@ const CreateSite = () => {
   const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6']
   const location = useLocation();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
-  const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM']
+  const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
+
   useEffect(() => {
     const getemployees = async () => {
       try {
@@ -114,8 +115,8 @@ const CreateSite = () => {
           </select>
         </div>
 
-        {/* Floor No */}
-        <div className="mb-4">
+        {/* Value */}
+        {/* <div className="mb-4">
           <label htmlFor="floorNo" className="block text-sm font-medium text-gray-600">
             Floor No
           </label>
@@ -126,8 +127,6 @@ const CreateSite = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
-
-        {/* Unit */}
         <div className="mb-4">
           <label htmlFor="unit" className="block text-sm font-medium text-gray-600">
             Unit
@@ -141,8 +140,6 @@ const CreateSite = () => {
             ))}
           </select>
         </div>
-
-        {/* Area */}
         <div className="mb-4">
           <label htmlFor="area" className="block text-sm font-medium text-gray-600">
             Area
@@ -154,8 +151,6 @@ const CreateSite = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
-
-        {/* Rate */}
         <div className="mb-4">
           <label htmlFor="rate" className="block text-sm font-medium text-gray-600">
             Rate
@@ -166,7 +161,7 @@ const CreateSite = () => {
             required
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
-        </div>
+        </div> */}
 
         {/* Site Incharge */}
         <div className="mb-4">
