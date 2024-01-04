@@ -56,11 +56,11 @@ const Sites = () => {
         clientData = site.client;
       })}
       setClient(clientData);
+      console.log(clientData)
     } catch (error) {
       console.log('Error fetching site details:', error);
     }
   };
-  fetchClientDetail();
   console.log(client)
   
   return (
