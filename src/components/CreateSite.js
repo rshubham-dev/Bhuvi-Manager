@@ -147,7 +147,8 @@ const CreateSite = () => {
             Total Floor
           </label>
           <select
-            name="floor"
+            name="floors"
+            value={site.floors}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
             <option value=''>Select a Floor</option>
