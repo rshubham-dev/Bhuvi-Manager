@@ -14,6 +14,7 @@ const All = () => {
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
         { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
         { to: '/material', text: 'Material', icon: <MdBuild /> },
+        { to: '/employee', text: 'Employee' },
         { to: '/expenses', text: 'Expenses', icon: <MdMoney /> },
         { to: '/work-details', text: 'WorkDetails', icon: <MdAssignment /> },
         { to: '/work-orders', text: 'WorkOrder', icon: <MdWork /> },
