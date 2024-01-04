@@ -17,7 +17,6 @@ const CreateClient = () => {
       city: "",
       district: "",
       state: "",
-      pincode: "",
     },
   });
 
@@ -176,18 +175,6 @@ const CreateClient = () => {
                 id="state"
                 name="state"
                 placeholder="State"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="pincode" className="block text-sm font-medium text-gray-600">
-                Pincode
-              </label>
-              <input
-                type="number"
-                id="pincode"
-                name="pincode"
-                placeholder="Pin code"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
