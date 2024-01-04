@@ -49,37 +49,12 @@ const CreateEmployee = () => {
         try {
             console.log(employee)
              const response = await axios.post('/api/v1/employee/create', employee);
-             // {
-            //     name: employee.name,
-            //     email: employee.email,
-            //     password: employee.password,
-            //     contactNo: employee.contactNo,
-            //     whatsapp: employee.whatsapp,
-            //     employeeId: employee.employeeId,
-            //     // address: {
-            //     //     street: location.street,
-            //     //     city: location.city,
-            //     //     district: location.district,
-            //     //     state: location.state,
-            //     //     pincode: location.pincode,
-            //     // },
-            //     // addhar: employee.addhar,
-            //     // pan: employee.pan,
-            //     // cv: employee.cv,
-            //     // offerletter: employee.offerletter,
-            //     // bank: employee.bank,
-            //     // certificates,
-            //     avatar: employee.avatar,
-            //     joinDate: employee.joinDate,
-            //     birthdate: employee.birthdate,
-            // });
             console.log(response.data);
-            console.log(response.data.error)
-            toast.success('Registration successful!');
+            console.log(response.data.error);
+            toast.success('Employee Created successful!');
         } catch (error) {
             toast.error(error.message)
             setError(error.message);
-            toast.error('An error occurred while registering. Please try again.');
         }
     };
 
