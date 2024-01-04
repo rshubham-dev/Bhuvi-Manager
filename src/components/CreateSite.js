@@ -54,10 +54,26 @@ const CreateSite = () => {
     getemployees();
   }, [])
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (siteIdToEdit) {
+        await axios.put(`/api/v1/site/${siteIdToEdit}`, site);
+        toast.success('User edited successfully');
+      } else {
+        await axios.post('/api/v1/site', site);
+        toast.success('User created successfully');
+      }
+      navigate('/sites');
+    } catch (error) {
+      console.error('Error submitting user data:', error);
+      toast.error(error.response?.data?.message || 'An error occurred');
+    }
+  };
 
   return (
     <section className="container mx-auto mt-6 mb-24">
-      <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+      <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
         <h2 className="text-2xl font-semibold mb-4 text-center">Create Site</h2>
         {/* Site Name */}
         <div className="mb-4">

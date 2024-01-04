@@ -19,8 +19,11 @@ const SiteScreen = () => {
       const response = await axios.get(`/api/v1/site/${id}`);
       setSiteData(response.data);
       if(response.data){
-        const clientData = await axios.get(`/api/v1/client/${site.client}`);
+        const clientId = site.client
+        console.log(site.client)
+        const clientData = await axios.get(`/api/v1/client/${clientId}`);
         console.log(clientData.data)
+        console.log(clientData)
         setClient(clientData.data);
       }
     } catch (error) {
