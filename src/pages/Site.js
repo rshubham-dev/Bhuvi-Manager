@@ -73,8 +73,9 @@ const Sites = () => {
               <td className="px-6 py-4">
                   {site.name}
               </td>
-              <td className="px-6 py-4">{site.floors}</td>
               <td className="px-6 py-4">{site.client.name}</td>
+              <td className="px-6 py-4">{site.floors}</td>
+              <td className="px-6 py-4">{site.area}</td>
               <td className="px-6 py-4">{site.projectType}</td>
               <td className="px-6 py-4">
                 <button
