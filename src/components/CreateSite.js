@@ -91,7 +91,6 @@ const CreateSite = () => {
       try {
         const clientsData = await axios.get('/api/v1/client');
         console.log(clientsData.data)
-        console.log(clientsData)
         setClient(clientsData.data);
       } catch (error) {
         toast.error(error.message)
@@ -111,12 +110,13 @@ const CreateSite = () => {
       } else {
         console.log(site)
         const siteData = await axios.post('/api/v1/site', site);
+        console.log(siteData);
         toast.success('User created successfully');
         navigate('/sites');
       }
     } catch (error) {
       console.error('Error submitting user data:', error);
-      toast.error(error.response?.data?.message || 'An error occurred');
+      toast.error(error.message || 'An error occurred');
     }
   };
 
