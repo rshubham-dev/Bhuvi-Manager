@@ -10,7 +10,7 @@ const CreateSite = () => {
     name: '',
     client: '',
     siteId: '',
-    floor: '',
+    floors: '',
     incharge: '',
     supervisor: '',
     projectType: '',
