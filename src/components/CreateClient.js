@@ -20,7 +20,7 @@ const CreateClient = () => {
     },
   });
 
-  const handleChange = (e, index) => {
+  const handleChange = (e) => {
     const [name, value] = e.target;
     setClient({ ...client, [name]: value });
   };

@@ -94,6 +94,7 @@ const CreateSite = () => {
             type="text"
             name="name"
             required
+            value={site.name}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
@@ -140,7 +141,8 @@ const CreateSite = () => {
           <label htmlFor="floor" className="block text-sm font-medium text-gray-600">
             Total Floor
           </label>
-          <select name="floor"
+          <select 
+          name="floor"
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
             <option value=''>Select a Floor</option>
