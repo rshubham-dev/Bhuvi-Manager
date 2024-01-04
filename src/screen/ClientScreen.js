@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation} from 'react-router-dom';
 
 const ClientScreen = () => {
@@ -7,9 +7,10 @@ const ClientScreen = () => {
   useEffect(() => {
     const clientId = new URLSearchParams(location.search).get('siteId');
     if (clientId) {
-      fetchSiteDetails(clientId);
+      fetchClientDetails(clientId);
     }
   }, [location.search]);
+  const fetchClientDetails = async ()=>{}
   return (
     <div>ClientScreen</div>
   )
