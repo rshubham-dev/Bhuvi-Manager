@@ -24,6 +24,8 @@ const SiteScreen = () => {
       console.log(response.data)
       setSiteData(response.data);
       const clientsData = await axios.get(`/api/v1/client/${site.client}`);
+      console.log(clientsData)
+      console.log(clientsData.data)
       setClient(clientsData.data);
     } catch (error) {
       console.log('Error fetching user details:', error);
