@@ -22,7 +22,6 @@ const CreateSite = () => {
       city: '',
       district: '',
       state: '',
-      pincode: '',
     },
     agreement: '',
   })
@@ -33,6 +32,14 @@ const CreateSite = () => {
   const navigate = useNavigate();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setSite((prevSite) => ({
+      ...prevSite,
+      [name]: value,
+    }));
+  };
 
   useEffect(() => {
     const getemployees = async () => {
@@ -46,6 +53,8 @@ const CreateSite = () => {
     const getClients = async () => {
       try {
         const clientsData = await axios.get('/api/v1/client');
+        console.log(clientsData.data)
+        console.log(clientsData)
         setClient(clientsData.data);
       } catch (error) {
         toast.error(error.message)
@@ -85,6 +94,7 @@ const CreateSite = () => {
             type="text"
             name="name"
             required
+            onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -94,15 +104,22 @@ const CreateSite = () => {
           <label htmlFor="client" className="block text-sm font-medium text-gray-600">
             Choose Client
           </label>
-          <select name="client" required className="mt-1 p-2 w-full border rounded-md">
+          <select
+            name="client"
+            required
+            className="mt-1 p-2 w-full border rounded-md"
+            onChange={handleChange}
+            value={site.client}
+          >
             <option value=''>Client</option>
-            {clients.map((client) => {
+            {clients.map((client) => (
               <option key={client._id} value={client._id}>
                 {client.name}
               </option>
-            })}
+            ))}
           </select>
         </div>
+
 
         {/* Site ID */}
         <div className="mb-4">
@@ -113,6 +130,7 @@ const CreateSite = () => {
             type="text"
             name="siteId"
             required
+            onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -122,7 +140,9 @@ const CreateSite = () => {
           <label htmlFor="floor" className="block text-sm font-medium text-gray-600">
             Total Floor
           </label>
-          <select name="floor" className="mt-1 p-2 w-full border rounded-md">
+          <select name="floor"
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md">
             <option value=''>Select a Floor</option>
             {floors.map((floor, index) => {
               <option key={index} value={floor}>
@@ -185,7 +205,9 @@ const CreateSite = () => {
           <label htmlFor="incharge" className="block text-sm font-medium text-gray-600">
             Site Incharge
           </label>
-          <select name="incharge" className="mt-1 p-2 w-full border rounded-md">
+          <select name="incharge"
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md">
             <option>Assign an incharge</option>
             {employees.map((employee) => (
               <option key={employee._id} value={employee._id}>
@@ -200,7 +222,9 @@ const CreateSite = () => {
           <label htmlFor="supervisor" className="block text-sm font-medium text-gray-600">
             Site Supervisor
           </label>
-          <select name="supervisor" className="mt-1 p-2 w-full border rounded-md">
+          <select name="supervisor"
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md">
             <option>Assign a supervisor</option>
             {employees.map((employee) => (
               <option key={employee._id} value={employee._id}>
@@ -211,7 +235,7 @@ const CreateSite = () => {
         </div>
 
         {/* Address */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h4 className="text-lg font-semibold mb-2">Address</h4>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -223,6 +247,7 @@ const CreateSite = () => {
                 id="street"
                 name="street"
                 placeholder="Street"
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -235,6 +260,7 @@ const CreateSite = () => {
                 id="city"
                 name="city"
                 placeholder="City"
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -247,6 +273,7 @@ const CreateSite = () => {
                 id="district"
                 name="district"
                 placeholder="District"
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -259,31 +286,20 @@ const CreateSite = () => {
                 id="state"
                 name="state"
                 placeholder="State"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="pincode" className="block text-sm font-medium text-gray-600">
-                Pincode
-              </label>
-              <input
-                type="number"
-                id="pincode"
-                name="pincode"
-                placeholder="Pin code"
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Agreement */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="agreement" className="block text-sm font-medium text-gray-600">
             Agreement
           </label>
           <input type="file" name="agreement" className="mt-1 p-2 w-full border rounded-md" />
-        </div>
+        </div> */}
 
         {/* Submit Button */}
         <div className="text-center">

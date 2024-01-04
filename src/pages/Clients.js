@@ -70,10 +70,9 @@ const Clients = () => {
             <tr key={client._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">{client.name}</td>
               <td className="px-6 py-4">{client.email}</td>
-              {client.contactNo.map((no, index) => {
-                <td key={index} className="px-6 py-4">{no}</td>
-              })}
-              <td className="px-6 py-4">{client.address}</td>
+                <td className="px-6 py-4">{client.contactNo}</td>
+                <td className="px-6 py-4">{client.whatsapp}</td>
+              <td className="px-6 py-4"></td>
               <td className="px-6 py-4">
               <button
                   onClick={() => handleRedirect(client._id)}

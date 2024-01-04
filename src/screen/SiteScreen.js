@@ -26,8 +26,9 @@ const SiteScreen = () => {
   };
   const fetchClientDetail = async () => {
     try {
-      const clientId = site.client
-      console.log(site.client)
+      const clientId = site.client;
+      console.log(site.client);
+      
       const clientData = await axios.get(`/api/v1/client/${clientId}`);
       console.log(clientData.data)
       console.log(clientData)

@@ -127,7 +127,7 @@ const CreateClient = () => {
         </div>
 
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <h4 className="text-lg font-semibold mb-2">Address</h4>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -179,7 +179,7 @@ const CreateClient = () => {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         
         <button
