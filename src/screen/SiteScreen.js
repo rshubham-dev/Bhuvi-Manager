@@ -29,12 +29,12 @@ const SiteScreen = () => {
     }
   };
   console.log(site)
-  setClient(site.client);
-  setIncharge(site.incharge);
-  setSupervisor(site.supervisor);
-  console.log('client:', client);
-  console.log('incharge:', incharge);
-  console.log('supervisor:', supervisor);
+  // setClient(site.client);
+  // setIncharge(site.incharge);
+  // setSupervisor(site.supervisor);
+  // console.log('client:', client);
+  // console.log('incharge:', incharge);
+  // console.log('supervisor:', supervisor);
 
 
   return (

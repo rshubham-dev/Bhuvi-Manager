@@ -49,19 +49,19 @@ const Sites = () => {
     navigate('/create-site');
   };
 
-  const fetchClientDetail = async () => {
+  const fetchClientDetail = () => {
     try {
-      let clientId;
+      let clientData;
       {sites.map((site)=>{
-        clientId = site.client;
+        clientData = site.client;
       })}
-      const clientData = await axios.get(`/api/v1/client/${clientId}`);
-      setClient(clientData.data);
+      setClient(clientData);
     } catch (error) {
       console.log('Error fetching site details:', error);
     }
   };
   fetchClientDetail();
+  console.log(client)
   
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
