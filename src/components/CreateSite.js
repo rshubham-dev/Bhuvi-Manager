@@ -141,16 +141,16 @@ const CreateSite = () => {
           <label htmlFor="floor" className="block text-sm font-medium text-gray-600">
             Total Floor
           </label>
-          <select 
-          name="floor"
+          <select
+            name="floor"
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
             <option value=''>Select a Floor</option>
-            {floors.map((floor, index) => {
+            {floors.map((floor, index) => (
               <option key={index} value={floor}>
                 {floor}
               </option>
-            })}
+            ))}
           </select>
         </div>
 
