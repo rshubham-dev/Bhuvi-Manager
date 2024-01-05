@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
+import './screen.css';
 
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
@@ -28,92 +29,152 @@ const SiteScreen = () => {
 
 
   return (
-    <>
-      <section className='bg-white shadow-md rounded px-14 py-12 mb-16 h-full'>
-        <h3 className="text-2xl font-semibold text-gray-800 mb-6">{site.name} Site Details</h3>
-        <div className="mt-6 border-t border-gray-100">
-          <dl className="divide-y divide-gray-100">
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Site Id</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.siteId}</dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Client</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.client?.name}</dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Project Type</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.projectType}</dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Total Floor</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.floors}</dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Total Area</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.area}</dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Site Incharge</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.incharge?.name}</dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Site Supervisor</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{site.supervisor?.name}</dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Agreement</dt>
-              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                <ul role="list" className="divide-y divide-gray-100 rounded-md border border-gray-200">
-                  <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
-                    <div className="flex w-0 flex-1 items-center">
-                      <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                        <span className="truncate font-medium">{site.agreement}</span>
-                      </div>
-                    </div>
-                    <div className="ml-4 flex-shrink-0">
-                      <Link to={'#'} className="font-medium text-indigo-600 hover:text-indigo-500">
-                        Download
-                      </Link>
-                    </div>
-                  </li>
-                </ul>
-              </dd>
-            </div>
+      <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
+        <h1 className="text-3xl font-semibold text-gray-800"> Site Details</h1>
+        <div className="mt-6 w-full">
 
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Payment Schedules</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Project Schedule</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Quality Check Schedule</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Work Order</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Bills</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Purchase Order</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-            </div>
-            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-sm font-medium leading-6 text-gray-900">Extra Work</dt>
-              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"></dd>
-            </div>
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                Site Info
+              </summary>
 
-          </dl>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'>Name</dt>
+                <dd className='text-color-title mx-5 my-1.5'>{site.name}</dd>
+              </div>
+
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'>Site Id</dt>
+                <dd className='text-color-title mx-5 my-1.5'>{site.siteId}</dd>
+              </div>
+
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'>Client</dt>
+                <dd className='text-color-title mx-5 my-1.5'>{site.client?.name}</dd>
+              </div>
+
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'>Project Type</dt>
+                <dd className='text-color-title mx-5 my-1.5'>{site.projectType}</dd>
+              </div>
+
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'>Total Floor</dt>
+                <dd className='text-color-title mx-5 my-1.5'>{site.floors}</dd>
+              </div>
+
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'>Site Incharge</dt>
+                <dd className='text-color-title mx-5 my-1.5'>{site.incharge?.name}</dd>
+              </div>
+
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'>Site Supervisor</dt>
+                <dd className='text-color-title mx-5 my-1.5'>{site.supervisor?.name}</dd>
+              </div>
+
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              Agreement
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              Payment Schedules
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              Project Schedules
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              Quality Check Schedule
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              Work Order
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              Bills
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                Purchase Order
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
+          <div className="card ">
+            <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+              <summary className='text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                Extra Work
+              </summary>
+              <div className='flex justify-between flex-row my-1.5'>
+                <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
+                <dd className='text-color-title mx-5 my-1.5'></dd>
+              </div>
+            </details>
+          </div>
+
         </div>
       </section>
-    </>
   )
 }
 
