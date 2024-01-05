@@ -19,7 +19,7 @@ const SiteScreen = () => {
   const fetchSiteDetails = async (siteId) => {
     try {
       const response = await axios.get(`/api/v1/site/${siteId}`);
-      console.log(response.data.site)
+      console.log(response.data)
       setSiteData(response.data);
     } catch (error) {
       console.log('Error fetching site details:', error);
