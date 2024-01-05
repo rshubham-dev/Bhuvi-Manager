@@ -10,10 +10,8 @@ const WorkOrderForm = () => {
     workOrderNo: '',
     contractorName: '',
     siteName: '',
-    date: new Date().toISOString().split('T')[0],
     work: [
       {
-        title: '',
         workDetail: '', // Now it's a dropdown, so it stores the _id of the selected Work-Detail
         rate: '',
         area: '',
@@ -24,6 +22,8 @@ const WorkOrderForm = () => {
   });
 
   const [workDetails, setWorkDetails] = useState([]);
+  const [site, setSite] = useState([]);
+  const [contractors, setContractor] = useState([]);
   useEffect(() => {
     // Fetch Work-Detail options from your backend and set the state
     const fetchWorkDetails = async () => {
@@ -36,10 +36,26 @@ const WorkOrderForm = () => {
           setWorkDetails(works)
       } catch (error) {
         console.error('Error fetching work details:', error.message);
+        toast.error(error.message)
       }
     };
-    const fetchSite = async () => {};
-    const fetchContractor = async () =>{};
+    const fetchSite = async()=>{
+      try {
+        const response = await axios.get('/api/v1/site');
+        setSite(response.data)
+      } catch (error) {
+        toast.error(error.message)
+      }
+  
+    }
+    const fetchContractor = async () =>{
+      try {
+      const contractorsData = await axios.get('/api/v1/contractor');
+      setContractor(contractorsData.data);
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
 
     fetchSite();
     fetchContractor();
@@ -60,8 +76,7 @@ const WorkOrderForm = () => {
       work: [
         ...prevData.work,
         {
-          title: '',
-          workDetail: '', // Now it's a dropdown, so it stores the _id of the selected Work-Detail
+          workDetail: '', 
           rate: '',
           area: '',
           unit: '',
@@ -91,6 +106,7 @@ const WorkOrderForm = () => {
       };
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(formData)
@@ -162,39 +178,12 @@ const WorkOrderForm = () => {
           />
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="date" className="block text-sm font-semibold text-gray-600">
-            Date
-          </label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            className="border p-2 rounded w-full"
-          />
-        </div>
 
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Work Details</h2>
           {formData.work.map((workItem, index) => (
             <div key={index} className="mb-4 p-4 border rounded">
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor={`work[${index}].title`} className="block text-sm font-semibold text-gray-600">
-                    Title
-                  </label>
-                  <input
-                    type="text"
-                    id={`work[${index}].title`}
-                    name={`work[${index}].title`}
-                    value={workItem.title}
-                    onChange={(e) => handleWorkChange(index, 'title', e.target.value)}
-                    placeholder="Title"
-                    className="border p-2 rounded w-full"
-                  />
-                </div>
                 <div>
                   <label
                     htmlFor={`work[${index}].workDetail`}
