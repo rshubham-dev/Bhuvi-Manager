@@ -34,10 +34,10 @@ const SiteScreen = () => {
     }
   };
 
-  const street = site?.address?.street || '';
-  const city = site?.address?.city || '';
-  const district = site?.address?.district || '';
-  const state = site?.address?.state || '';
+  const street = site.address?.street;
+  const city = site?.address?.city;
+  const district = site?.address?.district;
+  const state = site.address?.state;
 
   const addressString = `${street}, ${city}, ${district}, ${state}`;
 
