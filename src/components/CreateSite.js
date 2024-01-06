@@ -60,6 +60,12 @@ const CreateSite = () => {
         supervisor: site.supervisor,
         projectType: site.projectType,
         agreement: site.agreement,
+        address: {
+          street: site.address.street,
+          city: site.address.city,
+          district: site.address.district,
+          state: site.address.state,
+        }
       })
     } catch (error) {
       toast.error(error.message)
@@ -68,7 +74,7 @@ const CreateSite = () => {
   }
 
   const handleChange = (e) => {
-    const [name, value] = e.target;
+    const {name, value} = e.target;
     if (name.startsWith('address.')) {
       const addressField = name.split('.')[1];
       setSite((prevSite) => ({
@@ -81,7 +87,7 @@ const CreateSite = () => {
     }else{
       setSite((prevSite) => ({
         ...prevSite,
-        [e.target.name]: e.target.value,
+        [name]: value,
       }));
     }
   };
@@ -118,7 +124,23 @@ const CreateSite = () => {
         toast.success('User edited successfully');
       } else {
         console.log(site)
-        const siteData = await axios.post('/api/v1/site', site);
+        const siteData = await axios.post('/api/v1/site', {
+          name: site.name,
+          client: site.client,
+          siteId: site.siteId,
+          floors: site.floors,
+          area: site.area,
+          incharge: site.incharge,
+          supervisor: site.supervisor,
+          projectType: site.projectType,
+          agreement: site.agreement,
+          address: {
+            street: site.address.street,
+            city: site.address.city,
+            district: site.address.district,
+            state: site.address.state,
+          }
+        });
         console.log(siteData);
         toast.success('User created successfully');
         navigate('/sites');
@@ -382,12 +404,15 @@ const CreateSite = () => {
         </div>
 
         {/* Agreement */}
-        {/* <div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="agreement" className="block text-sm font-medium text-gray-600">
             Agreement
           </label>
-          <input type="file" name="agreement" className="mt-1 p-2 w-full border rounded-md" />
-        </div> */}
+          <input 
+          type="file" 
+          name="agreement" 
+          className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
+        </div>
 
         {/* Submit Button */}
         <div className="text-center">
