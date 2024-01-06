@@ -34,12 +34,12 @@ const SiteScreen = () => {
     }
   };
 
-  // const street = site?.address?.street || '';
-  // const city = site?.address?.city || '';
-  // const district = site?.address?.district || '';
-  // const state = site?.address?.state || '';
+  const street = site?.address?.street || '';
+  const city = site?.address?.city || '';
+  const district = site?.address?.district || '';
+  const state = site?.address?.state || '';
 
-  const addressString = `${site?.address?.street}, ${site?.address?.city}, ${site?.address?.district}, ${site?.address?.state}`;
+  const addressString = `${street}, ${city}, ${district}, ${state}`;
 
   return (
     <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
@@ -89,7 +89,7 @@ const SiteScreen = () => {
 
             <div className='flex justify-between flex-row my-1.5'>
               <dt className='font-medium text-color-title mx-5 my-1.5'>Address</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{addressString}</dd>
+              <dd className='text-color-title mx-5 my-1.5'>{}</dd>
             </div>
 
           </details>
