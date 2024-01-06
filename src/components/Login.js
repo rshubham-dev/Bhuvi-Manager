@@ -31,7 +31,6 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post('/api/v1/user/login', formData);
-      console.log('Login submitted with data:', response.data);
       toast.success(response.data.message);
       if (!response.data.user) {
         dispatch(logout())
