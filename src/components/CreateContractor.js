@@ -13,7 +13,6 @@ const CreateContractor = () => {
       city: "",
       district: "",
       state: "",
-      pincode: "",
     },
     documents: {
       addhar: '',
@@ -188,20 +187,6 @@ const CreateContractor = () => {
                 value={contractor.address.state}
                 onChange={handleChange}
                 placeholder="State"
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="pincode" className="block text-sm font-medium text-gray-600">
-                Pincode
-              </label>
-              <input
-                type="number"
-                id="pincode"
-                name="address.pincode"
-                value={contractor.address.pincode}
-                onChange={handleChange}
-                placeholder="Pin code"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>

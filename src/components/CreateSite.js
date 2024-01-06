@@ -16,6 +16,12 @@ const CreateSite = () => {
     supervisor: '',
     projectType: '',
     agreement: '',
+    address: {
+      street: '',
+      city: '',
+      district: '',
+      state: '',
+    },
   })
   // value: [{
   //   work: '',
@@ -23,12 +29,6 @@ const CreateSite = () => {
   //   rate: '',
   //   unit: '',
   // }],
-  // address: {
-  //   street: '',
-  //   city: '',
-  //   district: '',
-  //   state: '',
-  // },
   const [employees, setEmployee] = useState([]);
   const [clients, setClient] = useState([]);
   const projectType = ['Residential', 'Commercial', 'Instutional', 'Government'];
