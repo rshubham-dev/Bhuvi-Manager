@@ -21,11 +21,24 @@ const CreateClient = () => {
   });
 
   const handleChange = (e) => {
-    setClient({ ...client, [e.target.name]: e.target.value });
+    const{name, value} = e.target;
+    if (name.startsWith('address.')) {
+      const addressField = name.split('.')[1];
+      setClient((prevclient) => ({
+        ...prevclient,
+        address: {
+          ...prevclient.address,
+          [addressField]: value,
+        },
+      }));
+    }else{
+    setClient({ ...client, [name]: value });
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Before data submitted:', client);
     try {
       const response = await axios.post('/api/v1/client', client);
       toast(response.data.message)
@@ -33,8 +46,8 @@ const CreateClient = () => {
     } catch (error) {
       toast.error(error.message)
     }
-
     console.log('Form data submitted:', client);
+
   };
 
   return (
@@ -126,8 +139,8 @@ const CreateClient = () => {
           />
         </div>
 
-
-        {/* <div className="mb-4">
+        {/* Address */}
+        <div className="mb-4">
           <h4 className="text-lg font-semibold mb-2">Address</h4>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -136,9 +149,11 @@ const CreateClient = () => {
               </label>
               <input
                 type="text"
-                id="street"
-                name="street"
+                id="address.street"
+                name="address.street"
                 placeholder="Street"
+                value={client.address.street}
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -148,9 +163,11 @@ const CreateClient = () => {
               </label>
               <input
                 type="text"
-                id="city"
-                name="city"
+                id="address.city"
+                name="address.city"
+                value={client.address.city}
                 placeholder="City"
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -160,9 +177,11 @@ const CreateClient = () => {
               </label>
               <input
                 type="text"
-                id="district"
-                name="district"
+                id="address.district"
+                name="address.district"
+                value={client.address.district}
                 placeholder="District"
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -172,14 +191,16 @@ const CreateClient = () => {
               </label>
               <input
                 type="text"
-                id="state"
-                name="state"
+                id="address.state"
+                name="address.state"
+                value={client.address.state}
                 placeholder="State"
+                onChange={handleChange}
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
           </div>
-        </div> */}
+        </div>
 
 
         <button
