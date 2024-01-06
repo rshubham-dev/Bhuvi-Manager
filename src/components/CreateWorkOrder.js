@@ -48,6 +48,7 @@ const WorkOrderForm = () => {
     const fetchSite = async()=>{
       try {
         const response = await axios.get('/api/v1/site');
+        console.log('sites:', response.data)
         setSite(response.data)
       } catch (error) {
         toast.error(error.message)
@@ -189,7 +190,7 @@ const WorkOrderForm = () => {
             className="mt-1 p-2 w-full border rounded-md"
             onChange={handleAddWork}
           >
-            <option value=''>Site</option>
+            <option>Site</option>
             {sites.map((site) => (
               <option key={site._id} value={site._id}>
                 {site.name}
