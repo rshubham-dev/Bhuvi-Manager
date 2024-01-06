@@ -131,6 +131,7 @@ const WorkOrderForm = () => {
   return (
     <div className="container mx-auto mt-6 mb-24">
       <form onSubmit={handleSubmit}>
+
         <div className="mb-4">
           <label htmlFor="workOrderName" className="block text-sm font-semibold text-gray-600">
             Work Order Name
@@ -244,6 +245,7 @@ const WorkOrderForm = () => {
                     className="border p-2 rounded w-full"
                   />
                 </div>
+
                 <div>
                   <label htmlFor={`work[${index}].area`} className="block text-sm font-semibold text-gray-600">
                     Area
@@ -257,6 +259,7 @@ const WorkOrderForm = () => {
                     className="border p-2 rounded w-full"
                   />
                 </div>
+
                 <div>
                   <label htmlFor={`work[${index}].unit`} className="block text-sm font-semibold text-gray-600">
                     Unit
@@ -270,6 +273,7 @@ const WorkOrderForm = () => {
                     className="border p-2 rounded w-full"
                   />
                 </div>
+
                 <div>
                   <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
                     Amount
@@ -283,30 +287,33 @@ const WorkOrderForm = () => {
                     className="border p-2 rounded w-full"
                   />
                 </div>
+
                 <div>
-                  <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
+                  <label htmlFor={`work[${index}].startdate`} className="block text-sm font-semibold text-gray-600">
                     Starting Date
                   </label>
                   <input
                     type="date"
                     name={`work[${index}].startdate`}
                     value={workItem.startdate}
-                    onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
+                    onChange={(e) => handleWorkChange(index, 'startdate', e.target.value)}
                     className="border p-2 rounded w-full"
                   />
                 </div>
+
                 <div>
-                  <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
+                  <label htmlFor={`work[${index}].duration`} className="block text-sm font-semibold text-gray-600">
                     Project Duration
                   </label>
                   <input
                     type="date"
                     name={`work[${index}].duration`}
                     value={workItem.duration}
-                    onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
+                    onChange={(e) => handleWorkChange(index, 'duration', e.target.value)}
                     className="border p-2 rounded w-full"
                   />
                 </div>
+
                 {formData.work.length > 1 && (
                   <div className='mt-5'>
                     <button
@@ -318,15 +325,17 @@ const WorkOrderForm = () => {
                     </button>
                   </div>
                 )}
+                
               </div>
             </div>
           ))}
+
           <button
             type="button"
             onClick={handleAddWork}
             className="bg-blue-500 text-white p-2 rounded"
           >
-            Add Work
+            Add Work Order
           </button>
         </div>
 

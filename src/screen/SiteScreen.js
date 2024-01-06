@@ -89,7 +89,9 @@ const SiteScreen = () => {
 
             <div className='flex justify-between flex-row my-1.5'>
               <dt className='font-medium text-color-title mx-5 my-1.5'>Address</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{}</dd>
+              <dd className='text-color-title mx-5 my-1.5'>
+              {site.length !== 0 ? addressString : ''}
+                </dd>
             </div>
 
           </details>

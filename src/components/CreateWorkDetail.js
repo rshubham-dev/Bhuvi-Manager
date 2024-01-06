@@ -46,7 +46,7 @@ function WorkDetailsForm() {
       ],
     }));
   };
-  
+
   const removeWork = (index) => {
     setWorkDetail((prevWorkDetail) => {
       const updatedDescription = [...prevWorkDetail.description];
@@ -79,6 +79,7 @@ function WorkDetailsForm() {
   return (
     <section className="container mx-auto mt-8">
       <form>
+
         <div className="mb-4">
           <label htmlFor='title' className="block text-sm font-semibold text-gray-600">
             Work Title
@@ -92,6 +93,7 @@ function WorkDetailsForm() {
             className="border p-2 rounded w-full"
           />
         </div>
+
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Work Description</h2>
           {workDetail.description.map((works, index) => (
@@ -108,6 +110,7 @@ function WorkDetailsForm() {
                   onChange={(e) => handelChange(e, index)}
                   className="border p-2 rounded w-full"
                 />
+
                 {workDetail.description.length > 1 && (
                   <button
                     type="button"
@@ -117,6 +120,7 @@ function WorkDetailsForm() {
                     Remove
                   </button>
                 )}
+
               </div>
             </div>
 
@@ -130,6 +134,7 @@ function WorkDetailsForm() {
             Add More
           </button>
         </div>
+
         <button
           type="button"
           onClick={createWorkDetails}
@@ -137,6 +142,7 @@ function WorkDetailsForm() {
         >
           Create Work Detail
         </button>
+        
       </form>
       <Toaster
         position="top-right"
