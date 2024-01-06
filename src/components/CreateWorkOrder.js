@@ -17,6 +17,8 @@ const WorkOrderForm = () => {
         area: '',
         unit: '',
         amount: '',
+        startdate: '',
+        duration:'',
       },
     ],
   });
@@ -85,6 +87,8 @@ const WorkOrderForm = () => {
           area: '',
           unit: '',
           amount: '',
+          startdate: '',
+          duration:'',
         },
       ],
     }));
@@ -274,6 +278,30 @@ const WorkOrderForm = () => {
                     value={workItem.amount}
                     onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
                     placeholder="Amount"
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
+                    Starting Date
+                  </label>
+                  <input
+                    type="date"
+                    name={`work[${index}].startdate`}
+                    value={workItem.startdate}
+                    onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
+                    className="border p-2 rounded w-full"
+                  />
+                </div>
+                <div>
+                  <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
+                    Project Duration
+                  </label>
+                  <input
+                    type="date"
+                    name={`work[${index}].duration`}
+                    value={workItem.duration}
+                    onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
                     className="border p-2 rounded w-full"
                   />
                 </div>

@@ -205,7 +205,7 @@ const CreateSite = () => {
         {/* Area */}
         <div className="mb-4">
           <label htmlFor="area" className="block text-sm font-medium text-gray-600">
-            Site ID
+            Area
           </label>
           <input
             type="text"
