@@ -78,7 +78,7 @@ function WorkDetailsForm() {
   
   return (
     <section className="container mx-auto mt-8">
-      <form>
+      <form className='max-w-md mx-auto bg-white p-6 rounded-md shadow-md' onSubmit={createWorkDetails}>
 
         <div className="mb-4">
           <label htmlFor='title' className="block text-sm font-semibold text-gray-600">
@@ -142,7 +142,7 @@ function WorkDetailsForm() {
         >
           Create Work Detail
         </button>
-        
+
       </form>
       <Toaster
         position="top-right"

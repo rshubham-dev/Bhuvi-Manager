@@ -56,7 +56,7 @@ const CreateProjectSchedule = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
-        
+
         <div className="text-center">
           <button
             type="submit"
