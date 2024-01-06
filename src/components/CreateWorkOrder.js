@@ -18,7 +18,7 @@ const WorkOrderForm = () => {
         unit: '',
         amount: '',
         startdate: '',
-        duration:'',
+        duration: '',
       },
     ],
   });
@@ -27,6 +27,7 @@ const WorkOrderForm = () => {
   const [workName, setWorkName] = useState([]);
   const [sites, setSite] = useState([]);
   const [contractors, setContractor] = useState([]);
+  const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
   useEffect(() => {
     // Fetch Work-Detail options from your backend and set the state
@@ -34,18 +35,18 @@ const WorkOrderForm = () => {
       try {
         const response = await axios.get('/api/v1/work-details')
         console.log(response.data)
-          let works = [];
-          for (let i = 0; i < response.data.length; i++) {
-            works = works.concat(response.data[i].description);
-          }
-          setWorkDetails(works)
-          console.log('work', workDetails)
+        let works = [];
+        for (let i = 0; i < response.data.length; i++) {
+          works = works.concat(response.data[i].description);
+        }
+        setWorkDetails(works)
+        console.log('work', workDetails)
       } catch (error) {
         console.error('Error fetching work details:', error.message);
         toast.error(error.message)
       }
     };
-    const fetchSite = async()=>{
+    const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
         console.log('sites:', response.data)
@@ -53,16 +54,16 @@ const WorkOrderForm = () => {
       } catch (error) {
         toast.error(error.message)
       }
-  
+
     }
-    const fetchContractor = async () =>{
+    const fetchContractor = async () => {
       try {
-      const contractorsData = await axios.get('/api/v1/contractor');
-      setContractor(contractorsData.data);
-    } catch (error) {
-      toast.error(error.message)
+        const contractorsData = await axios.get('/api/v1/contractor');
+        setContractor(contractorsData.data);
+      } catch (error) {
+        toast.error(error.message)
+      }
     }
-  }
 
     fetchSite();
     fetchContractor();
@@ -83,17 +84,18 @@ const WorkOrderForm = () => {
       work: [
         ...prevData.work,
         {
-          workDetail: '', 
+          workDetail: '',
           rate: '',
           area: '',
           unit: '',
           amount: '',
           startdate: '',
-          duration:'',
+          duration: '',
         },
       ],
     }));
   };
+  
   const handleRemoveWork = (index) => {
     setFormData((prevData) => {
       const updatedWork = [...prevData.work];
@@ -163,7 +165,7 @@ const WorkOrderForm = () => {
 
         <div className="mb-4">
           <label htmlFor="contractorName" className="block text-sm font-semibold text-gray-600">
-            Contractor 
+            Contractor
           </label>
           <select
             type="text"
@@ -174,7 +176,7 @@ const WorkOrderForm = () => {
             className="border p-2 rounded w-full"
           >
             <option value=''>Client</option>
-            {contractors?.map((contractor)=> (
+            {contractors?.map((contractor) => (
               <option key={contractor._id} value={contractor._id}>
                 {contractor.name}
               </option>
@@ -264,14 +266,18 @@ const WorkOrderForm = () => {
                   <label htmlFor={`work[${index}].unit`} className="block text-sm font-semibold text-gray-600">
                     Unit
                   </label>
-                  <input
-                    type="text"
-                    name={`work[${index}].unit`}
-                    value={workItem.unit}
-                    onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
-                    placeholder="Unit"
-                    className="border p-2 rounded w-full"
-                  />
+                  <select 
+                  name={`work[${index}].unit`}
+                  onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
+                  className="border p-2 rounded w-full">
+
+                    <option>Select a Unit</option>
+                    {units.map((unit, index) => (
+                      <option key={index} value={unit}>
+                        {unit}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* <div>
@@ -306,7 +312,7 @@ const WorkOrderForm = () => {
                     Project Duration
                   </label>
                   <input
-                    type="date"
+                    type='date'
                     name={`work[${index}].duration`}
                     value={workItem.duration}
                     onChange={(e) => handleWorkChange(index, 'duration', e.target.value)}
@@ -323,9 +329,9 @@ const WorkOrderForm = () => {
                     >
                       Remove
                     </button>
-                    </div>
+                  </div>
                 )}
-                
+
               </div>
             </div>
           ))}

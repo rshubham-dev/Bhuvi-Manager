@@ -254,6 +254,7 @@ const CreateSite = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
+
         <div className="mb-4">
           <label htmlFor="unit" className="block text-sm font-medium text-gray-600">
             Unit
@@ -267,6 +268,7 @@ const CreateSite = () => {
             ))}
           </select>
         </div>
+        
         <div className="mb-4">
           <label htmlFor="area" className="block text-sm font-medium text-gray-600">
             Area
