@@ -69,8 +69,9 @@ const WorkOrders = () => {
               <td className="px-6 py-4">
                   {workOrder.name}
               </td>
-              <td className="px-6 py-4"></td>
-              <td className="px-6 py-4"></td>
+              <td className="px-6 py-4">{workOrder.workOrderId}</td>
+              <td className="px-6 py-4">{workOrder.site}</td>
+              <td className="px-6 py-4">{workOrder.contractor}</td>
               <td className="px-6 py-4">
                 <button
                   onClick={() => handleRedirect(workOrder._id)}

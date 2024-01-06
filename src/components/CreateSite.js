@@ -155,6 +155,7 @@ const CreateSite = () => {
     <section className="container mx-auto mt-6 mb-24">
       <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
         <h2 className="text-2xl font-semibold mb-4 text-center">Create Site</h2>
+        
         {/* Site Name */}
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm font-medium text-gray-600">
@@ -310,9 +311,9 @@ const CreateSite = () => {
           <label htmlFor="incharge" className="block text-sm font-medium text-gray-600">
             Site Incharge
           </label>
-          <select name="incharge"
+          <select 
+          name="incharge"
             onChange={handleChange}
-            
             className="mt-1 p-2 w-full border rounded-md">
             <option>Assign an incharge</option>
             {employees.map((employee) => (

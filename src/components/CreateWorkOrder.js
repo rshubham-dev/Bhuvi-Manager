@@ -161,7 +161,7 @@ const WorkOrderForm = () => {
 
         <div className="mb-4">
           <label htmlFor="contractorName" className="block text-sm font-semibold text-gray-600">
-            Contractor Name
+            Contractor 
           </label>
           <select
             type="text"
@@ -182,7 +182,7 @@ const WorkOrderForm = () => {
 
         <div className="mb-4">
           <label htmlFor="siteName" className="block text-sm font-semibold text-gray-600">
-            Site Name
+            Site
           </label>
           <select
             name="siteName"

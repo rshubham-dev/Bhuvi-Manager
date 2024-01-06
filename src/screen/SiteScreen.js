@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './screen.css';
 import { GrEdit } from "react-icons/gr";
+import { MdAdd, MdDownload } from "react-icons/md";
 
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
@@ -95,8 +96,10 @@ const SiteScreen = () => {
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
               <dt className='font-medium text-color-title mx-5 my-1.5'>{site.agreement}</dt>
-              <dd className='text-color-title mx-5 my-1.5'>
-                <Link>Download</Link>
+              <dd className='text-color-title mx-5 my-1.5 self-end bg-green-500 p-1 rounded-2xl'>
+                <Link>
+                <MdDownload className="text-xl text-white" />
+                </Link>
               </dd>
             </div>
           </details>
@@ -106,8 +109,8 @@ const SiteScreen = () => {
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Payment Schedules
-              <button onClick={handleAdd} className="bg-green-500 rounded-lg text-white shadow self-end">
-              Add site
+              <button onClick={handleAdd} className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              <MdAdd className="text-xl text-white" />
             </button>
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
@@ -121,8 +124,8 @@ const SiteScreen = () => {
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Project Schedules
-              <button onClick={handleAdd} className="bg-green-500 rounded-lg text-white shadow self-end">
-              Add site
+              <button onClick={handleAdd} className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              <MdAdd className="text-xl text-white" />
             </button>
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
@@ -136,8 +139,8 @@ const SiteScreen = () => {
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Quality Check Schedule
-              <button onClick={handleAdd} className="bg-green-500 rounded-lg text-white shadow self-end">
-              Add site
+              <button onClick={handleAdd} className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              <MdAdd className="text-xl text-white" />
             </button>
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
@@ -151,8 +154,8 @@ const SiteScreen = () => {
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Work Order
-              <button onClick={handleAdd} className="bg-green-500 rounded-lg text-white shadow self-end">
-              Add site
+              <button onClick={handleAdd} className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              <MdAdd className="text-xl text-white" />
             </button>
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
@@ -166,8 +169,8 @@ const SiteScreen = () => {
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Bills
-              <button onClick={handleAdd} className="bg-green-500 rounded-lg text-white shadow self-end">
-              Add site
+              <button onClick={handleAdd} className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              <MdAdd className="text-xl text-white" />
             </button>
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
@@ -181,8 +184,8 @@ const SiteScreen = () => {
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Purchase Order
-              <button onClick={handleAdd} className="bg-green-500 rounded-lg text-white shadow self-end">
-              Add site
+              <button onClick={handleAdd} className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              <MdAdd className="text-xl text-white" />
             </button>
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
@@ -196,8 +199,8 @@ const SiteScreen = () => {
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Extra Work
-              <button onClick={handleAdd} className="bg-green-500 rounded-lg text-white shadow self-end">
-              Add site
+              <button onClick={handleAdd} className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              <MdAdd className="text-xl text-white" />
             </button>
             </summary>
             <div className='flex justify-between flex-row my-1.5'>
