@@ -8,12 +8,7 @@ const CreateContractor = () => {
     name: '',
     contactNo: '',
     whatsapp: '',
-    address: {
-      street: "",
-      city: "",
-      district: "",
-      state: "",
-    },
+    address: '',
     documents: {
       addhar: '',
       pan: '',
@@ -52,6 +47,7 @@ const CreateContractor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(contractor)
     try {
       const response = await axios.post('/api/v1/contractor', {
         name: contractor.name,

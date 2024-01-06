@@ -129,7 +129,7 @@ const WorkOrderForm = () => {
     }
   };
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-6 mb-24">
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="workOrderName" className="block text-sm font-semibold text-gray-600">
@@ -307,7 +307,7 @@ const WorkOrderForm = () => {
                   />
                 </div>
                 {formData.work.length > 1 && (
-                  <div className="flex">
+                  <div className='mt-5'>
                     <button
                       type="button"
                       onClick={() => handleRemoveWork(index)}
