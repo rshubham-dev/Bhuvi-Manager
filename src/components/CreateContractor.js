@@ -188,6 +188,7 @@ const CreateContractor = () => {
             </div>
           </div>
         </div>
+
         <div className="mb-4">
           <h4 className="text-lg font-semibold mb-2">Documents</h4>
           <div className="grid grid-cols-2 gap-4">
@@ -235,6 +236,7 @@ const CreateContractor = () => {
             </div>
           </div>
         </div>
+        
         <button
           type="submit"
           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"

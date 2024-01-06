@@ -142,11 +142,11 @@ const CreateSite = () => {
           }
         });
         console.log(siteData);
-        toast.success('User created successfully');
+        toast.success('Site created successfully');
         navigate('/sites');
       }
     } catch (error) {
-      console.log('Error submitting user data:', error.message);
+      console.log('Error submitting site data:', error.message);
       toast.error(error.message || 'An error occurred');
     }
   };
@@ -177,7 +177,6 @@ const CreateSite = () => {
           </label>
           <select
             name="client"
-            required
             className="mt-1 p-2 w-full border rounded-md"
             onChange={handleChange}
           >
@@ -313,6 +312,7 @@ const CreateSite = () => {
           </label>
           <select name="incharge"
             onChange={handleChange}
+            
             className="mt-1 p-2 w-full border rounded-md">
             <option>Assign an incharge</option>
             {employees.map((employee) => (
@@ -411,6 +411,7 @@ const CreateSite = () => {
           <input 
           type="file" 
           name="agreement" 
+          onChange={handleChange}
           className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
         </div>
 
@@ -423,6 +424,7 @@ const CreateSite = () => {
             Submit
           </button>
         </div>
+
       </form>
       <Toaster position="top-right" reverseOrder={false} />
     </section>

@@ -16,14 +16,13 @@ const CreateEmployee = () => {
         avatar: "",
         joinDate: "",
         birthdate: "",
+        address: {
+            street: "",
+            city: "",
+            district: "",
+            state: "",
+        },
     });
-    // address: {
-    //     street: "",
-    //     city: "",
-    //     district: "",
-    //     state: "",
-    //     pincode: "",
-    // },
     // addhar: "",
     // pan: "",
     // cv: "",
@@ -43,14 +42,25 @@ const CreateEmployee = () => {
 
     const inputData = (data) => {
         const { name, value } = data.target;
-        setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
+        if (name.startsWith('address.')) {
+            const addressField = name.split('.')[1];
+            setEmployee((prevEmployee) => ({
+                ...prevEmployee,
+                address: {
+                    ...prevEmployee.address,
+                    [addressField]: value,
+                },
+            }));
+        } else {
+            setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
+        }
     }
 
     const formSubmit = async (e) => {
         e.preventDefault();
         try {
             console.log(employee)
-             const response = await axios.post('/api/v1/employee/create', employee);
+            const response = await axios.post('/api/v1/employee/create', employee);
             console.log(response.data);
             console.log(response.data.error);
             toast.success('Employee Created successful!');
@@ -81,7 +91,7 @@ const CreateEmployee = () => {
                         />
                     </div>
 
-                    
+
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>
                             Full Name
@@ -184,73 +194,69 @@ const CreateEmployee = () => {
                     </div>
 
 
-                    {/* <div className='mb-4'> 
-                        <h4 className='mb-2'>Address</h4>
-                        <div className='mb-4'>
-                            <label htmlFor="street" 
-                            className='block text-gray-700 text-sm font-bold mb-2'>Street:</label>
-                            <input
-                                type="text"
-                                id="street"
-                                name="street"
-                                placeholder='Enter Street here'
-                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                                value={location.street}
-                                onChange={inputData}
-                            />
+                    {/* Address */}
+                    <div className="mb-4">
+                        <h4 className="text-lg font-semibold mb-2">Address</h4>
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label htmlFor="street" className="block text-sm font-medium text-gray-600">
+                                    Street
+                                </label>
+                                <input
+                                    type="text"
+                                    id="address.street"
+                                    name="address.street"
+                                    placeholder="Street"
+                                    value={employee.address.street}
+                                    onChange={inputData}
+                                    className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="city" className="block text-sm font-medium text-gray-600">
+                                    City
+                                </label>
+                                <input
+                                    type="text"
+                                    id="address.city"
+                                    name="address.city"
+                                    value={employee.address.city}
+                                    placeholder="City"
+                                    onChange={inputData}
+                                    className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="district" className="block text-sm font-medium text-gray-600">
+                                    District
+                                </label>
+                                <input
+                                    type="text"
+                                    id="address.district"
+                                    name="address.district"
+                                    value={employee.address.district}
+                                    placeholder="District"
+                                    onChange={inputData}
+                                    className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="state" className="block text-sm font-medium text-gray-600">
+                                    State
+                                </label>
+                                <input
+                                    type="text"
+                                    id="address.state"
+                                    name="address.state"
+                                    value={employee.address.state}
+                                    placeholder="State"
+                                    onChange={inputData}
+                                    className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                                />
+                            </div>
                         </div>
-                        <div className='mb-4'>
-                            <label htmlFor="city"
-                             className='block text-gray-700 text-sm font-bold mb-2'>City:</label>
-                            <input
-                                type="text"
-                                id="city"
-                                name="city"
-                                placeholder='Enter Your City here'
-                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                                value={location.city}
-                                onChange={inputData}
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <label htmlFor="district" 
-                            className='block text-gray-700 text-sm font-bold mb-2'>District:</label>
-                            <input
-                                type="text"
-                                id="district"
-                                name="district"
-                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                                placeholder='Enter District here'
-                                value={location.district}
-                                onChange={inputData}
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <label htmlFor="state" 
-                            className='block text-gray-700 text-sm font-bold mb-2'>State:</label>
-                            <input
-                                type="text"
-                                id="state"
-                                name="state"
-                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                                placeholder='Enter Your State here'
-                                value={location.state}
-                                onChange={inputData}
-                            />
-                        </div>
-                        <div className='mb-4'>
-                            <label htmlFor="pincode" className='block text-gray-700 text-sm font-bold mb-2'>Pincode:</label>
-                            <input
-                                type="number"
-                                id="pincode"
-                                name="pincode"
-                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                                placeholder='Enter Pin code here'
-                                value={location.pincode}
-                                onChange={inputData}
-                            />
-                        </div>
-                    </div> */}
+                    </div>
+
                     {/* <div className='mb-4'>
                         <h4 className='mb-2'>Document Name</h4>
                         <div className='mb-4'>

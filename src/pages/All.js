@@ -13,11 +13,12 @@ const All = () => {
         { to: '/bills', text: 'Bill', icon: <MdReceipt /> },
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
         { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
-        { to: '/material', text: 'Material', icon: <MdBuild /> },
+        { to: '/purchase-order', text: 'Purchase-Order', icon: <MdBuild /> },
         { to: '/employee', text: 'Employee' },
+        { to: '/extra-works', text: 'Extra-Work' },
         { to: '/expenses', text: 'Expenses', icon: <MdMoney /> },
-        { to: '/work-details', text: 'WorkDetails', icon: <MdAssignment /> },
-        { to: '/work-orders', text: 'WorkOrder', icon: <MdWork /> },
+        { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
+        { to: '/work-orders', text: 'Work-Order', icon: <MdWork /> },
     ];
 
     return (
