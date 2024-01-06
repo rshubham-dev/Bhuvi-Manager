@@ -71,7 +71,7 @@ const CreateSite = () => {
     const [name, value] = e.target;
     if (name.startsWith('address.')) {
       const addressField = name.split('.')[1];
-      setContractor((prevSite) => ({
+      setSite((prevSite) => ({
         ...prevSite,
         address: {
           ...prevSite.address,

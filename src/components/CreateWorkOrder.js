@@ -22,18 +22,22 @@ const WorkOrderForm = () => {
   });
 
   const [workDetails, setWorkDetails] = useState([]);
+  const [workName, setWorkName] = useState([]);
   const [sites, setSite] = useState([]);
   const [contractors, setContractor] = useState([]);
+
   useEffect(() => {
     // Fetch Work-Detail options from your backend and set the state
     const fetchWorkDetails = async () => {
       try {
         const response = await axios.get('/api/v1/work-details')
+        console.log(response.data)
           let works = [];
           for (let i = 0; i < response.data.length; i++) {
             works = works.concat(response.data[i].description);
           }
           setWorkDetails(works)
+          console.log('work', workDetails)
       } catch (error) {
         console.error('Error fetching work details:', error.message);
         toast.error(error.message)

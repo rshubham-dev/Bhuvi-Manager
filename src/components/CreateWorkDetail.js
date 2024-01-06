@@ -34,6 +34,7 @@ function WorkDetailsForm() {
       });
     }
   };
+
   const moreWork = () => {
     setWorkDetail((workDetail) => ({
       ...workDetail,
@@ -45,6 +46,7 @@ function WorkDetailsForm() {
       ],
     }));
   };
+  
   const removeWork = (index) => {
     setWorkDetail((prevWorkDetail) => {
       const updatedDescription = [...prevWorkDetail.description];
