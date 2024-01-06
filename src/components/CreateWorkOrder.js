@@ -22,7 +22,7 @@ const WorkOrderForm = () => {
   });
 
   const [workDetails, setWorkDetails] = useState([]);
-  const [site, setSite] = useState([]);
+  const [sites, setSite] = useState([]);
   const [contractors, setContractor] = useState([]);
   useEffect(() => {
     // Fetch Work-Detail options from your backend and set the state
@@ -154,28 +154,40 @@ const WorkOrderForm = () => {
           <label htmlFor="contractorName" className="block text-sm font-semibold text-gray-600">
             Contractor Name
           </label>
-          <input
+          <select
             type="text"
             id="contractorName"
             name="contractorName"
             value={formData.contractorName}
             onChange={handleChange}
             className="border p-2 rounded w-full"
-          />
+          >
+            <option value=''>Client</option>
+            {contractors?.map((contractor)=> (
+              <option key={contractor._id} value={contractor._id}>
+                {contractor.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-4">
           <label htmlFor="siteName" className="block text-sm font-semibold text-gray-600">
             Site Name
           </label>
-          <input
-            type="text"
-            id="siteName"
+          <select
             name="siteName"
-            value={formData.siteName}
-            onChange={handleChange}
-            className="border p-2 rounded w-full"
-          />
+            required
+            className="mt-1 p-2 w-full border rounded-md"
+            onChange={handleAddWork}
+          >
+            <option value=''>Site</option>
+            {sites.map((site) => (
+              <option key={site._id} value={site._id}>
+                {site.name}
+              </option>
+            ))}
+          </select>
         </div>
 
 
