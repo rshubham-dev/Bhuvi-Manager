@@ -13,19 +13,20 @@ const CreateUser = () => {
     role: '',
     department:'',
   });
-  const [roles, setRoles] = useState(['Admin', 'Client', 'Employee']);
-  const [departments, setDepartment] = useState(['Admin', 
+  const roles = ['Admin', 'Client', 'Supplier', 'Employee'];
+  const departments = ['Admin', 
   'Company', 
   'Client', 
   'Accountant', 
   'Marketing', 
   'Ceo', 
+  'Supplier',
   'Site Incharge', 
   'Site Supervisor', 
   'Design Head', 
   'Design Engineer', 
   'Quality Head', 
-  'Quality Engineer']);
+  'Quality Engineer'];
   const navigate = useNavigate();
   const location = useLocation();
   const [userIdToEdit, setUserIdToEdit] = useState(null);

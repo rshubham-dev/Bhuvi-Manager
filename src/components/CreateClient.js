@@ -46,8 +46,6 @@ const CreateClient = () => {
     } catch (error) {
       toast.error(error.message)
     }
-    console.log('Form data submitted:', client);
-
   };
 
   return (

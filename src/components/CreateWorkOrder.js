@@ -135,14 +135,15 @@ const WorkOrderForm = () => {
           <label htmlFor="workOrderName" className="block text-sm font-semibold text-gray-600">
             Work Order Name
           </label>
-          <input
-            type="text"
+          <select
             id="workOrderName"
             name="workOrderName"
             value={formData.workOrderName}
             onChange={handleChange}
             className="border p-2 rounded w-full"
-          />
+          >
+            <option value=''>Work Order Name</option>
+          </select>
         </div>
 
         <div className="mb-4">

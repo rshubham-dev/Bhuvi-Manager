@@ -124,23 +124,7 @@ const CreateSite = () => {
         toast.success('User edited successfully');
       } else {
         console.log(site)
-        const siteData = await axios.post('/api/v1/site', {
-          name: site.name,
-          client: site.client,
-          siteId: site.siteId,
-          floors: site.floors,
-          area: site.area,
-          incharge: site.incharge,
-          supervisor: site.supervisor,
-          projectType: site.projectType,
-          agreement: site.agreement,
-          address: {
-            street: site.address.street,
-            city: site.address.city,
-            district: site.address.district,
-            state: site.address.state,
-          }
-        });
+        const siteData = await axios.post('/api/v1/site', site);
         console.log(siteData);
         toast.success('Site created successfully');
         navigate('/sites');
@@ -155,7 +139,7 @@ const CreateSite = () => {
     <section className="container mx-auto mt-6 mb-24">
       <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
         <h2 className="text-2xl font-semibold mb-4 text-center">Create Site</h2>
-        
+
         {/* Site Name */}
         <div className="mb-4">
           <label htmlFor="name" className="block text-sm font-medium text-gray-600">
