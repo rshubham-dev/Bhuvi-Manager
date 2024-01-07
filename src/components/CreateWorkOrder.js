@@ -178,7 +178,7 @@ const WorkOrderForm = () => {
             onChange={handleChange}
             className="border p-2 rounded w-full"
           >
-            <option value=''>Client</option>
+            <option>Contractor</option>
             {contractors?.map((contractor) => (
               <option key={contractor._id} value={contractor._id}>
                 {contractor.name}
