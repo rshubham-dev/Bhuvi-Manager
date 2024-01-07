@@ -95,11 +95,11 @@ const CreatePaymentSchedule = () => {
 
   const handleRemoveWork = (index) => {
     setFormData((prevData) => {
-      const updatedWork = [...prevData.work];
+      const updatedWork = [...prevData.paymentDetails];
       updatedWork.splice(index, 1);
       return {
         ...prevData,
-        work: updatedWork,
+        paymentDetails: updatedWork,
       };
     });
   };
