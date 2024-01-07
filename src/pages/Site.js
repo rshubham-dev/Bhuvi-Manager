@@ -29,7 +29,6 @@ const Sites = () => {
   }, [])
 
   const handleEdit = (siteId) => {
-    // Add your edit logic here
     navigate(`/edit-site?siteId=${siteId}`);
   };
 
@@ -38,7 +37,7 @@ const Sites = () => {
   }
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/v1/client/${id}`);
+      await axios.delete(`/api/v1/site/${id}`);
       setSite(sites.filter((site) => site._id !== id));
     } catch (error) {
       toast.error(error.message)

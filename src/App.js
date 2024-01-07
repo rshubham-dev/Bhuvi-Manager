@@ -42,6 +42,7 @@ import WorkOrderScreen from './screen/WorkOrderScreen'
 import BillScreen from './screen/BillScreen';
 import Payment_SchedulScreen from './screen/Payment_SchedulScreen';
 import Project_ScheduleScreen from './screen/Project_ScheduleScreen';
+import ContractorScreen from './screen/ContractorScreen';
 
 const App = () => {
 
@@ -69,6 +70,7 @@ const App = () => {
         <Route path='/accountant' element={<Accountant />} />
         <Route path='/employee' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
+        <Route path='/contractor' element={<ContractorScreen />} />
         <Route path='/edit-contractor' element={<CreateContractor />} />
         <Route path='/create-contractors' element={<CreateContractor />} />
         <Route path='/user' element={<UserManagement />} />
