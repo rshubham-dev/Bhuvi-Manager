@@ -14,63 +14,63 @@ const CreatePaymentSchedule = () => {
         rate: '',
         area: '',
         unit: '',
-        amount:'',
+        amount: '',
         paymentDate: '',
-        billNo:'',
-        billCleared:'',
-        amountPaid:'',
-        amountdue:'',
-        status:'',
+        billNo: '',
+        billCleared: '',
+        amountPaid: '',
+        amountdue: '',
+        status: '',
       },
     ],
   });
 
   const [workDetails, setWorkDetails] = useState([]);
-  const [client, setClient] = useState([]);
+  const [clients, setClient] = useState([]);
   const [sites, setSite] = useState([]);
   const [contractors, setContractor] = useState([]);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
-  useEffect(() => {
-    // Fetch Work-Detail options from your backend and set the state
-    const fetchWorkDetails = async () => {
-      try {
-        const response = await axios.get('/api/v1/work-details')
-        console.log(response.data)
-        let works = [];
-        for (let i = 0; i < response.data.length; i++) {
-          works = works.concat(response.data[i].description);
-        }
-        setWorkDetails(works)
-        console.log('work', workDetails)
-      } catch (error) {
-        console.error('Error fetching work details:', error.message);
-        toast.error(error.message)
-      }
-    };
-    const fetchSite = async () => {
-      try {
-        const response = await axios.get('/api/v1/site');
-        console.log('sites:', response.data)
-        setSite(response.data)
-      } catch (error) {
-        toast.error(error.message)
-      }
+  // useEffect(() => {
+  //   // Fetch Work-Detail options from your backend and set the state
+  //   const fetchWorkDetails = async () => {
+  //     try {
+  //       const response = await axios.get('/api/v1/work-details')
+  //       console.log(response.data)
+  //       let works = [];
+  //       for (let i = 0; i < response.data.length; i++) {
+  //         works = works.concat(response.data[i].description);
+  //       }
+  //       setWorkDetails(works)
+  //       console.log('work', workDetails)
+  //     } catch (error) {
+  //       console.error('Error fetching work details:', error.message);
+  //       toast.error(error.message)
+  //     }
+  //   };
+  //   const fetchSite = async () => {
+  //     try {
+  //       const response = await axios.get('/api/v1/site');
+  //       console.log('sites:', response.data)
+  //       setSite(response.data)
+  //     } catch (error) {
+  //       toast.error(error.message)
+  //     }
 
-    }
-    const fetchContractor = async () => {
-      try {
-        const contractorsData = await axios.get('/api/v1/contractor');
-        setContractor(contractorsData.data);
-      } catch (error) {
-        toast.error(error.message)
-      }
-    }
+  //   }
+  //   const fetchContractor = async () => {
+  //     try {
+  //       const contractorsData = await axios.get('/api/v1/contractor');
+  //       setContractor(contractorsData.data);
+  //     } catch (error) {
+  //       toast.error(error.message)
+  //     }
+  //   }
 
-    fetchSite();
-    fetchContractor();
-    fetchWorkDetails();
-  }, []);
+  //   fetchSite();
+  //   fetchContractor();
+  //   fetchWorkDetails();
+  // }, []);
 
   const handleAddWork = () => {
     setFormData((prevData) => ({
@@ -83,11 +83,12 @@ const CreatePaymentSchedule = () => {
           area: '',
           unit: '',
           paymentDate: '',
-          billNo:'',
-          billCleared:'',
-          amountPaid:'',
-          amountdue:'',
-          status:'',
+          billNo: '',
+          amount: '',
+          billCleared: '',
+          amountPaid: '',
+          amountdue: '',
+          status: '',
         },
       ],
     }));
@@ -105,6 +106,7 @@ const CreatePaymentSchedule = () => {
   };
 
   const handleWorkChange = (index, field, value) => {
+
     setFormData((prevData) => {
       const updatedWork = [...prevData.paymentDetails];
       updatedWork[index][field] = value;
@@ -115,9 +117,35 @@ const CreatePaymentSchedule = () => {
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    const updatedFormData = {
+      ...formData,
+      paymentDetails: formData.paymentDetails.map((detail) => {
+        const amount = parseFloat(detail.area) * parseFloat(detail.rate);
+        return {
+          ...detail,
+          amount: isNaN(amount) ? '' : amount.toFixed(2),
+        };
+      }),
+    };
+    
+    try {
+      setFormData(updatedFormData);
+  
+      console.log(updatedFormData);
+    } catch (error) {
+      console.error('Error submitting work order:', error.message);
+      toast.error(error.message);
+    }
+  };
+  
+
+
   return (
     <section className="container mx-auto mt-6 mb-24">
-      <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+      <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
         <h2 className="text-2xl font-semibold mb-4 text-center">Create Payment Schedule</h2>
 
         <div className="mb-4">
@@ -130,6 +158,11 @@ const CreatePaymentSchedule = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           >
             <option>Site</option>
+            {sites.map((site) => {
+              <option key={site._id} value={site._id}>
+                {site.name}
+              </option>
+            })}
           </select>
         </div>
 
@@ -139,6 +172,11 @@ const CreatePaymentSchedule = () => {
           </label>
           <select name="client" required className="mt-1 p-2 w-full border rounded-md">
             <option>Client</option>
+            {clients.map((client) => {
+              <option key={client._id} value={client._id}>
+                {client.name}
+              </option>
+            })}
           </select>
         </div>
 
@@ -146,8 +184,13 @@ const CreatePaymentSchedule = () => {
           <label htmlFor="contractor" className="block text-sm font-medium text-gray-600">
             Choose Contractor
           </label>
-          <select name="client" required className="mt-1 p-2 w-full border rounded-md">
+          <select name="contractor" required className="mt-1 p-2 w-full border rounded-md">
             <option>Contractor</option>
+            {contractors.map((contractor) => {
+              <option key={contractor._id} value={contractor._id}>
+                {contractor.name}
+              </option>
+            })}
           </select>
         </div>
 
@@ -251,21 +294,9 @@ const CreatePaymentSchedule = () => {
                     className="border p-2 rounded w-full"
                   />
                 </div>
-                <div>
-                  <label htmlFor={`work[${index}].billNo`} className="block text-sm font-semibold text-gray-600">
-                    Bill No
-                  </label>
-                  <input
-                    type="text"
-                    name={`work[${index}].billNo`}
-                    value={work.billNo}
-                    onChange={(e) => handleWorkChange(index, 'billNo', e.target.value)}
-                    className="border p-2 rounded w-full"
-                  />
-                </div>
 
                 {formData.paymentDetails.length > 1 && (
-                  <div>
+                  <div className='mt-5'>
                     <button
                       type="button"
                       onClick={() => handleRemoveWork(index)}
