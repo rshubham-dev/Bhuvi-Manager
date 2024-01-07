@@ -52,6 +52,7 @@ const WorkOrderForm = () => {
       try {
         const response = await axios.get('/api/v1/site');
         console.log('sites:', response.data)
+        console.log('sites:', response)
         setSite(response.data)
       } catch (error) {
         toast.error(error.message)
