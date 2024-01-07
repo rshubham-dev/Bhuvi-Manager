@@ -31,46 +31,46 @@ const CreatePaymentSchedule = () => {
   const [contractors, setContractor] = useState([]);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
-  // useEffect(() => {
-  //   // Fetch Work-Detail options from your backend and set the state
-  //   const fetchWorkDetails = async () => {
-  //     try {
-  //       const response = await axios.get('/api/v1/work-details')
-  //       console.log(response.data)
-  //       let works = [];
-  //       for (let i = 0; i < response.data.length; i++) {
-  //         works = works.concat(response.data[i].description);
-  //       }
-  //       setWorkDetails(works)
-  //       console.log('work', workDetails)
-  //     } catch (error) {
-  //       console.error('Error fetching work details:', error.message);
-  //       toast.error(error.message)
-  //     }
-  //   };
-  //   const fetchSite = async () => {
-  //     try {
-  //       const response = await axios.get('/api/v1/site');
-  //       console.log('sites:', response.data)
-  //       setSite(response.data)
-  //     } catch (error) {
-  //       toast.error(error.message)
-  //     }
+  useEffect(() => {
+    // Fetch Work-Detail options from your backend and set the state
+    const fetchWorkDetails = async () => {
+      try {
+        const response = await axios.get('/api/v1/work-details')
+        console.log(response.data)
+        let works = [];
+        for (let i = 0; i < response.data.length; i++) {
+          works = works.concat(response.data[i].description);
+        }
+        setWorkDetails(works)
+        console.log('work', workDetails)
+      } catch (error) {
+        console.error('Error fetching work details:', error.message);
+        toast.error(error.message)
+      }
+    };
+    const fetchSite = async () => {
+      try {
+        const response = await axios.get('/api/v1/site');
+        console.log('sites:', response.data)
+        setSite(response.data)
+      } catch (error) {
+        toast.error(error.message)
+      }
 
-  //   }
-  //   const fetchContractor = async () => {
-  //     try {
-  //       const contractorsData = await axios.get('/api/v1/contractor');
-  //       setContractor(contractorsData.data);
-  //     } catch (error) {
-  //       toast.error(error.message)
-  //     }
-  //   }
+    }
+    const fetchContractor = async () => {
+      try {
+        const contractorsData = await axios.get('/api/v1/contractor');
+        setContractor(contractorsData.data);
+      } catch (error) {
+        toast.error(error.message)
+      }
+    }
 
-  //   fetchSite();
-  //   fetchContractor();
-  //   fetchWorkDetails();
-  // }, []);
+    fetchSite();
+    fetchContractor();
+    fetchWorkDetails();
+  }, []);
 
   const handleAddWork = () => {
     setFormData((prevData) => ({
@@ -130,11 +130,11 @@ const CreatePaymentSchedule = () => {
         };
       }),
     };
+    setFormData(updatedFormData);
     
     try {
-      setFormData(updatedFormData);
-  
       console.log(updatedFormData);
+      const response = await axios.post('/api/v1/')
     } catch (error) {
       console.error('Error submitting work order:', error.message);
       toast.error(error.message);
