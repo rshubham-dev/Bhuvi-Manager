@@ -37,11 +37,12 @@ const WorkOrderForm = () => {
       try {
         const response = await axios.get('/api/v1/work-details')
         console.log(response.data)
+        setWorkDetails(response.data);
         let works = [];
         for (let i = 0; i < response.data.length; i++) {
           works = works.concat(response.data[i].description);
         }
-        setWorkDetails(works)
+        setWorkName(works);
         console.log('work', workDetails)
       } catch (error) {
         console.error('Error fetching work details:', error.message);
@@ -58,8 +59,8 @@ const WorkOrderForm = () => {
         toast.error(error.message)
       }
     };
-    
-    const fetchContractor = async ()=>{
+
+    const fetchContractor = async () => {
       try {
         const contractorData = await axios.get('/api/v1/contractor');
         console.log(contractorData.data)
@@ -68,7 +69,7 @@ const WorkOrderForm = () => {
         toast.error(error.message)
       }
     }
-    
+
     fetchWorkDetails();
     fetchSite();
     fetchContractor();
@@ -144,6 +145,11 @@ const WorkOrderForm = () => {
             className="border p-2 rounded w-full"
           >
             <option value=''>Work Order Name</option>
+            {workDetails.map((workDetail) => (
+              <option key={workDetail._id} value={workDetail._id}>
+                {workDetail.title}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -228,7 +234,6 @@ const WorkOrderForm = () => {
                         {workDetail.work}
                       </option>
                     ))}
-
                   </select>
                 </div>
 
