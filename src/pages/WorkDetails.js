@@ -12,10 +12,10 @@ const WorkDetails = () => {
 
   useEffect(()=>{
     const fetchWorkDetails = async () => {
-      // const response = await axios.get('/api/v1/work-details');
-      // console.log(response.data)
-      // setWorkDetail(response.data);
-      // toast.success(response.data.message)
+      const response = await axios.get('/api/v1/work-details');
+      console.log(response.data)
+      setWorkDetail(response.data);
+      toast.success(response.data.message)
     };
     fetchWorkDetails();
   },[]);
