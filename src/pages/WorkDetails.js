@@ -5,6 +5,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const WorkDetails = () => {
   const [workDetails, setWorkDetail] = useState([]);
@@ -33,7 +35,7 @@ const WorkDetails = () => {
     </div>
 
     {workDetails.map((workDetail)=>(
-      <div key={workDetail._id} className="card ">
+      <div key={workDetail._id} className="card w-md">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               {workDetail.title}
