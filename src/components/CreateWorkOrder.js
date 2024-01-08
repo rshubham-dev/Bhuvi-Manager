@@ -53,19 +53,25 @@ const WorkOrderForm = () => {
       try {
         const response = await axios.get('/api/v1/site');
         console.log('sites:', response.data)
-        console.log('sites:', response)
         setSite(response.data)
       } catch (error) {
         toast.error(error.message)
       }
     };
-
+    const fetchContractor = async ()=>{
+      try {
+        const contractorData = await axios.get('/api/v1/contractor');
+        console.log(contractorData.data)
+        setContractor(contractorData.data);
+      } catch (error) {
+        toast.error(error.message)
+      }
+    }
+    
     fetchWorkDetails();
     fetchSite();
-    const contractorData = sites.map((site) => site.contractor);
-    setContractor(contractorData);
+    fetchContractor();
   }, []);
-
 
   const handleChange = (field, value) => {
     setFormData({
@@ -73,7 +79,6 @@ const WorkOrderForm = () => {
       [field]: value,
     });
   };
-
 
   const handleAddWork = () => {
     setFormData({
@@ -115,7 +120,6 @@ const WorkOrderForm = () => {
     e.preventDefault();
     console.log(formData)
     try {
-      // Make a POST request to your backend to save the work order
       await axios.post('/api/v1/work-order/create', formData);
       console.log('Work order submitted successfully!');
     } catch (error) {
