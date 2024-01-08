@@ -64,22 +64,22 @@ const WorkOrderForm = () => {
     fetchSite();
     const contractorData = sites.map((site) => site.contractor);
     setContractor(contractorData);
-  }, []); 
-  
+  }, []);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+  const handleChange = (field, value) => {
+    setFormData({
+      ...formData,
+      [field]: value,
+    });
   };
 
+
   const handleAddWork = () => {
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData({
+      ...formData,
       work: [
-        ...prevData.work,
+        ...formData.work,
         {
           workDetail: '',
           rate: '',
@@ -90,28 +90,24 @@ const WorkOrderForm = () => {
           duration: '',
         },
       ],
-    }));
+    });
   };
-  
+
   const handleRemoveWork = (index) => {
-    setFormData((prevData) => {
-      const updatedWork = [...prevData.work];
-      updatedWork.splice(index, 1);
-      return {
-        ...prevData,
-        work: updatedWork,
-      };
+    const updatedWork = [...formData.work];
+    updatedWork.splice(index, 1);
+    setFormData({
+      ...formData,
+      work: updatedWork,
     });
   };
 
   const handleWorkChange = (index, field, value) => {
-    setFormData((prevData) => {
-      const updatedWork = [...prevData.work];
-      updatedWork[index][field] = value;
-      return {
-        ...prevData,
-        work: updatedWork,
-      };
+    const updatedWork = [...formData.work];
+    updatedWork[index][field] = value;
+    setFormData({
+      ...formData,
+      work: updatedWork,
     });
   };
 
@@ -137,9 +133,8 @@ const WorkOrderForm = () => {
           </label>
           <select
             id="workOrderName"
-            name="workOrderName"
             value={formData.workOrderName}
-            onChange={handleChange}
+            onChange={(e) => handleChange('workOrderName', e.target.value)}
             className="border p-2 rounded w-full"
           >
             <option value=''>Work Order Name</option>
@@ -153,9 +148,8 @@ const WorkOrderForm = () => {
           <input
             type="text"
             id="workOrderNo"
-            name="workOrderNo"
             value={formData.workOrderNo}
-            onChange={handleChange}
+            onChange={(e) => handleChange('workOrderNo', e.target.value)}
             className="border p-2 rounded w-full"
           />
         </div>
@@ -169,7 +163,7 @@ const WorkOrderForm = () => {
             id="contractor"
             name="contractor"
             value={formData.contractor}
-            onChange={handleChange}
+            onChange={(e) => handleChange('contractor', e.target.value)}
             className="border p-2 rounded w-full"
           >
             <option>Contractor</option>
@@ -190,7 +184,7 @@ const WorkOrderForm = () => {
             value={formData.site}
             required
             className="mt-1 p-2 w-full border rounded-md"
-            onChange={handleChange}
+            onChange={(e) => handleChange('site', e.target.value)}
           >
             <option>Site</option>
             {sites.map((site) => (
@@ -207,6 +201,7 @@ const WorkOrderForm = () => {
           {formData.work.map((workItem, index) => (
             <div key={index} className="mb-4 p-4 border rounded">
               <div className="grid grid-cols-2 gap-4">
+
                 <div>
                   <label
                     htmlFor={`work[${index}].workDetail`}
@@ -215,8 +210,6 @@ const WorkOrderForm = () => {
                     Work Detail
                   </label>
                   <select
-                    id={`work[${index}].workDetail`}
-                    name={`work[${index}].workDetail`}
                     value={workItem.workDetail}
                     onChange={(e) => handleWorkChange(index, 'workDetail', e.target.value)}
                     className="border p-2 rounded w-full"
@@ -232,13 +225,13 @@ const WorkOrderForm = () => {
 
                   </select>
                 </div>
+
                 <div>
                   <label htmlFor={`work[${index}].rate`} className="block text-sm font-semibold text-gray-600">
                     Rate
                   </label>
                   <input
                     type="number"
-                    name={`work[${index}].rate`}
                     value={workItem.rate}
                     onChange={(e) => handleWorkChange(index, 'rate', e.target.value)}
                     placeholder="Rate"
@@ -252,7 +245,6 @@ const WorkOrderForm = () => {
                   </label>
                   <input
                     type="number"
-                    name={`work[${index}].area`}
                     value={workItem.area}
                     onChange={(e) => handleWorkChange(index, 'area', e.target.value)}
                     placeholder="Area"
@@ -264,10 +256,10 @@ const WorkOrderForm = () => {
                   <label htmlFor={`work[${index}].unit`} className="block text-sm font-semibold text-gray-600">
                     Unit
                   </label>
-                  <select 
-                  name={`work[${index}].unit`}
-                  onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
-                  className="border p-2 rounded w-full">
+                  <select
+                    value={workItem.unit}
+                    onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
+                    className="border p-2 rounded w-full">
 
                     <option>Select a Unit</option>
                     {units.map((unit, index) => (
@@ -298,7 +290,6 @@ const WorkOrderForm = () => {
                   </label>
                   <input
                     type="date"
-                    name={`work[${index}].startdate`}
                     value={workItem.startdate}
                     onChange={(e) => handleWorkChange(index, 'startdate', e.target.value)}
                     className="border p-2 rounded w-full"
@@ -311,7 +302,6 @@ const WorkOrderForm = () => {
                   </label>
                   <input
                     type='date'
-                    name={`work[${index}].duration`}
                     value={workItem.duration}
                     onChange={(e) => handleWorkChange(index, 'duration', e.target.value)}
                     className="border p-2 rounded w-full"
