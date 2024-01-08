@@ -8,17 +8,27 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 
 const WorkDetails = () => {
   const [workDetails, setWorkDetail] = useState([]);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    const fetchWorkDetails = async () => {
+      // const response = await axios.get('/api/v1/work-details');
+      // console.log(response.data)
+      // setWorkDetail(response.data);
+      // toast.success(response.data.message)
+    };
+    fetchWorkDetails();
+  },[]);
+
   const handleAdd = () => {
     navigate('/create-work-details');
   };
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded-lg">
-    <h1 className="text-2xl font-bold text-center">Work Details</h1>
+    <div className="overflow-x-auto shadow-md sm:rounded-lg h-full">
+    <h1 className="text-2xl font-bold text-center mt-5">Work Details</h1>
     <div className=" mb-4 mr-20 text-right">
       <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
-        Add Work-Details
+        Add Work Details
       </button>
     </div>
 
@@ -59,7 +69,6 @@ const WorkDetails = () => {
                 <MdDelete />
               </button>
             </td> */}
-      {error && <p className="text-red-500">{error}</p>}
     <Toaster
       position="top-right"
       reverseOrder={false}
