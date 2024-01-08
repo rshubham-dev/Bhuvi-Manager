@@ -64,16 +64,11 @@ function WorkDetailsForm() {
     e.preventDefault();
     console.log('Submitting form...', workDetail);
     try {
-      // API call to create work details
       const response = await axios.post('/api/v1/work-details/create', workDetail);
-      console.log('Work details created:', response);
-  
-      // Log the updated workDetail state after the API call
-      console.log('Updated workDetail:', workDetail);
-  
+      console.log('Work details created:', response.data);
       navigate('/work-order');
     } catch (error) {
-      console.error('Error creating work details:', error.message);
+      console.log('Error creating work details:', error.message);
       toast.error(error.message)
     }
   };
