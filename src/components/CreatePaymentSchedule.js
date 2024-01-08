@@ -28,9 +28,9 @@ const CreatePaymentSchedule = () => {
   });
 
   const [workDetails, setWorkDetails] = useState([]);
-  const [clients, setClient] = useState([]);
+  // const [clients, setClient] = useState([]);
   const [sites, setSite] = useState([]);
-  const [contractors, setContractor] = useState([]);
+  // const [contractors, setContractor] = useState([]);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
   useEffect(() => {
@@ -58,19 +58,9 @@ const CreatePaymentSchedule = () => {
       } catch (error) {
         toast.error(error.message)
       }
-
-    }
-    const fetchContractor = async () => {
-      try {
-        const contractorsData = await axios.get('/api/v1/contractor');
-        setContractor(contractorsData.data);
-      } catch (error) {
-        toast.error(error.message)
-      }
     }
 
     fetchSite();
-    fetchContractor();
     fetchWorkDetails();
   }, []);
 
@@ -108,7 +98,6 @@ const CreatePaymentSchedule = () => {
   };
 
   const handleWorkChange = (index, field, value) => {
-
     setFormData((prevData) => {
       const updatedWork = [...prevData.paymentDetails];
       updatedWork[index][field] = value;
@@ -174,11 +163,11 @@ const CreatePaymentSchedule = () => {
           </label>
           <select name="client" required className="mt-1 p-2 w-full border rounded-md">
             <option>Client</option>
-            {clients.map((client) => {
-              <option key={client._id} value={client._id}>
-                {client.name}
+            {sites.map((site) => (
+              <option key={site._id} value={site._id}>
+                {site.name}
               </option>
-            })}
+            ))}
           </select>
         </div>
 
@@ -188,9 +177,9 @@ const CreatePaymentSchedule = () => {
           </label>
           <select name="contractor" required className="mt-1 p-2 w-full border rounded-md">
             <option>Contractor</option>
-            {contractors.map((contractor) => {
-              <option key={contractor._id} value={contractor._id}>
-                {contractor.name}
+            {sites.map((site) => {
+              <option key={site._id} value={site._id}>
+                {site.name}
               </option>
             })}
           </select>

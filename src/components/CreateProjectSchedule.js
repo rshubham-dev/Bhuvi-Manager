@@ -1,6 +1,30 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const CreateProjectSchedule = () => {
+  const[formData, setFormData] = useState({
+    site: '',
+    projectScheduleId: '',
+    projectDetail: [{
+        workDetail: '',
+        toStart: '',
+    }]
+  })
+  const [sites, setSite] = useState([])
+  useEffect(() => {
+    const fetchSiteDetails = async()=>{
+      try {
+        const response = await axios.get('/api/v1/site');
+        setSite(response.data)
+      } catch (error) {
+        toast.error(error.message)
+      }
+    }
+    fetchSiteDetails();
+  }, []);
   return (
     <section className="container mx-auto mt-6 mb-24">
       <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
@@ -16,7 +40,9 @@ const CreateProjectSchedule = () => {
           className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           >
             <option>Select a Site</option>
-
+            {sites.map((site)=>(
+              <option key={site._id} value={site._id}>{site.name}</option>
+            ))}
           </select>
         </div>
 
@@ -65,6 +91,7 @@ const CreateProjectSchedule = () => {
             Create Project Schedule
           </button>
         </div>
+      <Toaster position="top-right" reverseOrder={false} />
       </form>
     </section>
   )

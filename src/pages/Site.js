@@ -59,12 +59,12 @@ const Sites = () => {
       <table className="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
-            <th scope="col" className="px-6 py-3">Name</th>
-            <th scope="col" className="px-6 py-3">Client</th>
-            <th scope="col" className="px-6 py-3">Total Floor</th>
-            <th scope="col" className="px-6 py-3">Area</th>
-            <th scope="col" className="px-6 py-3">Project Type</th>
-            <th scope="col" className="px-6 py-3">Actions</th>
+            <th scope="col" className="px-6 py-4">Name</th>
+            <th scope="col" className="px-6 py-4">Client</th>
+            <th scope="col" className="px-6 py-4">Total Floor</th>
+            <th scope="col" className="px-6 py-4">Area</th>
+            <th scope="col" className="px-6 py-4">Project Type</th>
+            <th scope="col" className="px-6 py-4">Actions</th>
           </tr>
         </thead>
         <tbody>

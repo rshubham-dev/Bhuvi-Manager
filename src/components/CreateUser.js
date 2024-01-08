@@ -32,10 +32,7 @@ const CreateUser = () => {
   const [userIdToEdit, setUserIdToEdit] = useState(null);
 
   useEffect(() => {
-    console.log('location.search:', location.search);
-  
     const userId = new URLSearchParams(location.search).get('userId');
-    console.log('userId:', userId);
   
     if (userId) {
       setUserIdToEdit(userId);
@@ -47,7 +44,6 @@ const CreateUser = () => {
     try {
       const response = await axios.get(`/api/v1/user/${userId}`);
       const user = response.data;
-      console.log(response.data)
       setUserData({
         userName: user.userName,
         userMail: user.userMail,

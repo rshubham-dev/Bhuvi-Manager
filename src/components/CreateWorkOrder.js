@@ -10,8 +10,8 @@ const WorkOrderForm = () => {
   const [formData, setFormData] = useState({
     workOrderName: '',
     workOrderNo: '',
-    contractorName: '',
-    siteName: '',
+    contractor: '',
+    site: '',
     work: [
       {
         workDetail: '', // Now it's a dropdown, so it stores the _id of the selected Work-Detail
@@ -48,6 +48,7 @@ const WorkOrderForm = () => {
         toast.error(error.message)
       }
     };
+
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
@@ -57,19 +58,13 @@ const WorkOrderForm = () => {
       } catch (error) {
         toast.error(error.message)
       }
-
     }
-    const fetchContractor = async () => {
-      try {
-        const contractorsData = await axios.get('/api/v1/contractor');
-        setContractor(contractorsData.data);
-      } catch (error) {
-        toast.error(error.message)
-      }
-    }
+    
+    {sites.map((site)=>{
+      setContractor(site.contractor)
+    })}
 
     fetchSite();
-    fetchContractor();
     fetchWorkDetails();
   }, []); // Run only once on component mount
 
@@ -172,9 +167,9 @@ const WorkOrderForm = () => {
           </label>
           <select
             type="text"
-            id="contractorName"
-            name="contractorName"
-            value={formData.contractorName}
+            id="contractor"
+            name="contractor"
+            value={formData.contractor}
             onChange={handleChange}
             className="border p-2 rounded w-full"
           >
@@ -188,14 +183,15 @@ const WorkOrderForm = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="siteName" className="block text-sm font-semibold text-gray-600">
+          <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
             Site
           </label>
           <select
-            name="siteName"
+            name="site"
+            value={formData.site}
             required
             className="mt-1 p-2 w-full border rounded-md"
-            onChange={handleAddWork}
+            onChange={handleChange}
           >
             <option>Site</option>
             {sites.map((site) => (
