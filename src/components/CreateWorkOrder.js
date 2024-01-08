@@ -58,15 +58,14 @@ const WorkOrderForm = () => {
       } catch (error) {
         toast.error(error.message)
       }
-    }
-    
-    {sites.map((site)=>{
-      setContractor(site.contractor)
-    })}
+    };
 
-    fetchSite();
     fetchWorkDetails();
-  }, []); // Run only once on component mount
+    fetchSite();
+    const contractorData = sites.map((site) => site.contractor);
+    setContractor(contractorData);
+  }, []); 
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
