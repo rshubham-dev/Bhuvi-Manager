@@ -43,6 +43,7 @@ import BillScreen from './screen/BillScreen';
 import Payment_SchedulScreen from './screen/Payment_SchedulScreen';
 import Project_ScheduleScreen from './screen/Project_ScheduleScreen';
 import ContractorScreen from './screen/ContractorScreen';
+import WorkDetails from './pages/WorkDetails';
 
 const App = () => {
 
@@ -92,6 +93,7 @@ const App = () => {
         <Route path='/work-order' element={<WorkOrderScreen />} />
         <Route path='/edit-work-details' element={<CreateWorkDetails />} />
         <Route path='/create-work-details' element={<CreateWorkDetails />} />
+        <Route path='/work-details' element={<WorkDetails />} />
         <Route path='/project-schedules' element={<ProjectSchedules />} />
         <Route path='/project-schedule' element={<Project_ScheduleScreen />} />
         <Route path='/edit-project-schedule' element={<CreateProjectSchedule />} />

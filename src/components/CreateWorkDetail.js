@@ -4,12 +4,14 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 
 function WorkDetailsForm() {
+
   const [workDetail, setWorkDetail] = useState({
     title: '',
     description: [{
       work: '',
     }]
   });
+
   const navigate = useNavigate();
 
   const handelChange = (e, index) => {
@@ -60,7 +62,7 @@ function WorkDetailsForm() {
 
   const createWorkDetails = async (e) => {
     e.preventDefault();
-    console.log('Submitting form...');
+    console.log('Submitting form...', workDetail);
     try {
       // API call to create work details
       const response = await axios.post('/api/v1/work-details/create', workDetail);
@@ -77,7 +79,7 @@ function WorkDetailsForm() {
   };
   
   return (
-    <section className="container mx-auto mt-8">
+    <section className="container mx-auto mt-6 mb-24">
       <form className='max-w-md mx-auto bg-white p-6 rounded-md shadow-md' onSubmit={createWorkDetails}>
 
         <div className="mb-4">

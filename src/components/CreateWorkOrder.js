@@ -58,6 +58,7 @@ const WorkOrderForm = () => {
         toast.error(error.message)
       }
     };
+    
     const fetchContractor = async ()=>{
       try {
         const contractorData = await axios.get('/api/v1/contractor');
@@ -127,6 +128,7 @@ const WorkOrderForm = () => {
       toast.error(error.message)
     }
   };
+
   return (
     <div className="container mx-auto mt-6 mb-24">
       <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>

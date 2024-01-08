@@ -35,6 +35,7 @@ const CreatePaymentSchedule = () => {
 
   useEffect(() => {
     // Fetch Work-Detail options from your backend and set the state
+    
     const fetchWorkDetails = async () => {
       try {
         const response = await axios.get('/api/v1/work-details')
@@ -50,6 +51,7 @@ const CreatePaymentSchedule = () => {
         toast.error(error.message)
       }
     };
+
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
