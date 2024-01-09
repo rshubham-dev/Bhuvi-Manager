@@ -22,26 +22,17 @@ const CreateEmployee = () => {
             district: "",
             state: "",
         },
+        addhar: "",
+        pan: "",
+        cv: "",
+        offerletter: "",
+        bank: "",
     });
-    // addhar: "",
-    // pan: "",
-    // cv: "",
-    // offerletter: "",
-    // bank: "",
-    // certificates: [],
-
-    // const [location, setLocation] = useState({
-    //     street: "",
-    //     city: "",
-    //     district: "",
-    //     state: "",
-    //     pincode: "",
-    // });
 
     const [error, setError] = useState(null);
 
-    const inputData = (data) => {
-        const { name, value } = data.target;
+    const inputData = (data, field) => {
+        const { name, value, type } = data.target;
         if (name.startsWith('address.')) {
             const addressField = name.split('.')[1];
             setEmployee((prevEmployee) => ({
@@ -51,24 +42,49 @@ const CreateEmployee = () => {
                     [addressField]: value,
                 },
             }));
+        } else if (type === 'file') {
+            setEmployee((prevEmployee) => ({
+                ...prevEmployee,
+                [field]: data.target.files[0],
+            }));
         } else {
             setEmployee((prevEmployee) => ({ ...prevEmployee, [name]: value }));
         }
-    }
+    };
 
     const formSubmit = async (e) => {
         e.preventDefault();
+
+        const formData = new FormData();
+        Object.entries(employee).forEach(([key, value]) => {
+            if (value instanceof File) {
+                formData.append(key, value);
+            } else if (typeof value === 'object') {
+                Object.entries(value).forEach(([subKey, subValue]) => {
+                    formData.append(`${key}.${subKey}`, subValue);
+                });
+            } else {
+                formData.append(key, value);
+            }
+        });
+
         try {
-            console.log(employee)
-            const response = await axios.post('/api/v1/employee/create', employee);
+            console.log(employee);
+            const response = await axios.post('/api/v1/employee/create', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Set content type to multipart/form-data
+                },
+            });
+
             console.log(response.data);
-            console.log(response.data.error);
-            toast.success('Employee Created successful!');
+            toast.success('Employee Created successfully!');
         } catch (error) {
-            toast.error(error.message)
+            toast.error(error.message);
             setError(error.message);
         }
     };
+
+
 
     return (
         <main>
@@ -79,7 +95,6 @@ const CreateEmployee = () => {
                 >
                     <h2 className='text-2xl font-bold mb-6 text-center'>Create Employee</h2>
 
-                    {/* Group Personal Information */}
                     <div className='mb-4'>
                         <label htmlFor='avatar'
                             className='block text-gray-700 text-sm font-bold mb-2'>Avatar:</label>
@@ -87,7 +102,7 @@ const CreateEmployee = () => {
                             className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             type='file'
                             name='avatar'
-                            onChange={inputData}
+                            onChange={(e) => inputData(e, 'avatar')}
                         />
                     </div>
 
@@ -101,7 +116,6 @@ const CreateEmployee = () => {
                             type='text'
                             name='name'
                             placeholder='Enter Your Name here'
-                            required
                             autoComplete='off'
                             value={employee.name}
                             onChange={inputData}
@@ -118,14 +132,13 @@ const CreateEmployee = () => {
                             type='email'
                             name='email'
                             placeholder='Enter Your Email here'
-                            required
                             autoComplete='off'
                             value={employee.email}
                             onChange={inputData}
                         />
                     </div>
 
-                    {/* Contact no */}
+
                     <div className='mb-4'>
                         <label htmlFor='phone'
                             className='block text-sm font-medium text-gray-600'>
@@ -137,14 +150,13 @@ const CreateEmployee = () => {
                             name='contactNo'
                             id='contactNo'
                             placeholder='Enter Your Contact Number'
-                            required
                             autoComplete='off'
                             value={employee.contactNo}
                             onChange={inputData}
                         />
                     </div>
 
-                    {/* Whatsapp No */}
+
                     <div className='mb-4'>
                         <label htmlFor='whatsapp'
                             className='block text-sm font-medium text-gray-600'>
@@ -156,7 +168,6 @@ const CreateEmployee = () => {
                             name='whatsapp'
                             id='whatsapp'
                             placeholder='Enter Your Whatsapp Number'
-                            required
                             autoComplete='off'
                             value={employee.whatsapp}
                             onChange={inputData}
@@ -171,7 +182,6 @@ const CreateEmployee = () => {
                             className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             name='employeeId'
                             placeholder='Enter Your Employee ID here'
-                            required
                             autoComplete='off'
                             value={employee.employeeId}
                             onChange={inputData}
@@ -186,15 +196,12 @@ const CreateEmployee = () => {
                             type='password'
                             name='password'
                             placeholder='Enter Your Password here'
-                            required
                             autoComplete='off'
                             value={employee.password}
                             onChange={inputData}
                         />
                     </div>
 
-
-                    {/* Address */}
                     <div className="mb-4">
                         <h4 className="text-lg font-semibold mb-2">Address</h4>
                         <div className="grid grid-cols-2 gap-4">
@@ -257,72 +264,65 @@ const CreateEmployee = () => {
                         </div>
                     </div>
 
-                    {/* <div className='mb-4'>
+                    <div className='mb-4'>
                         <h4 className='mb-2'>Document Name</h4>
+
                         <div className='mb-4'>
-                            <label htmlFor='addhar' 
-                            className='block text-gray-700 text-sm font-bold mb-2'>Addhar Card:</label>
+                            <label htmlFor='addhar'
+                                className='block text-gray-700 text-sm font-bold mb-2'>Addhar Card:</label>
                             <input
                                 className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 type='file'
                                 name='addhar'
-                                onChange={inputData}
+                                onChange={(e) => inputData(e, 'addhar')}
                             />
                         </div>
+
                         <div className='mb-4'>
-                            <label htmlFor='pan' 
-                            className='block text-gray-700 text-sm font-bold mb-2'>Pan Card:</label>
+                            <label htmlFor='pan'
+                                className='block text-gray-700 text-sm font-bold mb-2'>Pan Card:</label>
                             <input
                                 className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 type='file'
                                 name='pan'
-                                onChange={inputData}
+                                onChange={(e) => inputData(e, 'pan')}
                             />
                         </div>
+
                         <div className='mb-4'>
-                            <label htmlFor='cv' 
-                            className='block text-gray-700 text-sm font-bold mb-2'>CV:</label>
+                            <label htmlFor='cv'
+                                className='block text-gray-700 text-sm font-bold mb-2'>CV:</label>
                             <input
                                 className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 type='file'
                                 name='cv'
-                                onChange={inputData}
+                                onChange={(e) => inputData(e, 'cv')}
                             />
                         </div>
+
                         <div className='mb-4'>
-                            <label htmlFor='offerletter' 
-                            className='block text-gray-700 text-sm font-bold mb-2'>Offer Letter:</label>
+                            <label htmlFor='offerletter'
+                                className='block text-gray-700 text-sm font-bold mb-2'>Offer Letter:</label>
                             <input
                                 className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 type='file'
                                 name='offerletter'
-                                onChange={inputData}
+                                onChange={(e) => inputData(e, 'offerletter')}
                             />
                         </div>
+
                         <div className='mb-4'>
-                            <label htmlFor='account' 
-                            className='block text-gray-700 text-sm font-bold mb-2'>Bank Detail:</label>
+                            <label htmlFor='account'
+                                className='block text-gray-700 text-sm font-bold mb-2'>Bank Detail:</label>
                             <input
                                 className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 type='file'
                                 name='bank'
-                                onChange={inputData}
+                                onChange={(e) => inputData(e, 'bank')}
                             />
                         </div>
-                        <div className='mb-4'>
-                            <label htmlFor='certificates' className='block text-gray-700 text-sm font-bold mb-2'>Certificates:</label>
-                            <input
-                                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                                type='file'
-                                name='certificates'
-                                onChange={inputData} />
-                             {employee.certificates.map((certificate, index) => (
-                                <div key={index}>
-                                    Certificate {index + 1}: {certificate ? certificate.name : ''}
-                                </div>
-                            ))} 
-                        </div> 
-                    </div> */}
+                    </div>
+
                     <div className='mb-4'>
                         <label
                             htmlFor='joining'
@@ -334,12 +334,12 @@ const CreateEmployee = () => {
                             type='date'
                             name='joinDate'
                             placeholder='Enter Your Joining Date'
-                            required
                             autoComplete='off'
                             value={employee.joinDate}
                             onChange={inputData}
                         />
                     </div>
+
                     <div className='mb-4'>
                         <label htmlFor='birthdate' className='block text-gray-700 text-sm font-bold mb-2'>DOB</label>
                         <input
@@ -347,17 +347,19 @@ const CreateEmployee = () => {
                             type='date'
                             name='birthdate'
                             placeholder='Enter Your Date of Birth'
-                            required
                             autoComplete='off'
                             value={employee.birthdate}
                             onChange={inputData}
                         />
                     </div>
+
                     <button
                         type='submit'
                         className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
                     >
-                        Create</button>
+                        Create
+                    </button>
+                    
                     {error && <p className="text-red-500 mt-4">{error}</p>}
                 </form>
                 <Toaster
@@ -368,6 +370,7 @@ const CreateEmployee = () => {
         </main>
     )
 }
+
 
 
 export default CreateEmployee
