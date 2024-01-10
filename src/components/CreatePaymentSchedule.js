@@ -5,7 +5,6 @@ axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
 const CreatePaymentSchedule = () => {
   const [formData, setFormData] = useState({
-    workOrderName: '',
     client: '',
     contractor: '',
     site: '',
@@ -71,7 +70,7 @@ const CreatePaymentSchedule = () => {
       paymentDetails: [
         ...prevData.paymentDetails,
         {
-          workDetail: '',
+          workDescription: '',
           rate: '',
           area: '',
           unit: '',
@@ -204,16 +203,14 @@ const CreatePaymentSchedule = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label
-                    htmlFor={`work[${index}].workDetail`}
+                    htmlFor={`work[${index}].workDescription`}
                     className="block text-sm font-semibold text-gray-600"
                   >
                     Work Detail
                   </label>
                   <select
-                    id={`work[${index}].workDetail`}
-                    name={`work[${index}].workDetail`}
-                    value={work.workDetail}
-                    onChange={(e) => handleWorkChange(index, 'workDetail', e.target.value)}
+                    value={work.workDescription}
+                    onChange={(e) => handleWorkChange(index, 'workDescription', e.target.value)}
                     className="border p-2 rounded w-full"
                   >
                     <option disabled>

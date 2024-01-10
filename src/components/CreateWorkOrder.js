@@ -148,6 +148,7 @@ const WorkOrderForm = () => {
     try {
       const response = await axios.post('/api/v1/work-order/create', formData);
       toast.success(response.data.message)
+      console.log(formData)
     } catch (error) {
       console.error('Error submitting work order:', error.message);
       toast.error(error.message)
