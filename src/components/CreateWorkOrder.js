@@ -76,15 +76,11 @@ const WorkOrderForm = () => {
     const fetchWork = async () => {
       try {
         const id = formData.workOrderName;
-        if (id) { 
+        if (id) {
           const workData = await axios.get(`/api/v1/work-details/${id}`);
-          let works = [];
-          for (let i = 0; i < workData.data.description.length; i++) {
-            works = works.concat(workData.data.description[i]);
-          }
-          setWorkDetails(works);
+          setWorkDetails(workData.data.description);
         } else {
-          setWorkDetails([]);  // If there's no ID, clear the workDetails
+          setWorkDetails([]); // If there's no ID, clear the workDetails
         }
       } catch (error) {
         console.error('Error fetching work details:', error.message);
@@ -255,7 +251,7 @@ const WorkOrderForm = () => {
                       Select Work Detail
                     </option>
                     {workDetails.map((workDetail) => (
-                      <option key={workDetail._id} value={workDetail._id}>
+                      <option key={workDetail._id} value={workDetail.work}>
                         {workDetail.work}
                       </option>
                     ))}
