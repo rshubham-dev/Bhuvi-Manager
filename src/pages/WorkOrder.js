@@ -14,16 +14,18 @@ const WorkOrders = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
     const fetchWorkorders = async () => {
       try {
         const workOrdersData = await axios.get('/api/v1/work-order');
         setWorkOrder(workOrdersData.data);
-        console.log(workOrders.data)
+        console.log(workOrdersData.data)
       } catch (error) {
         toast.error(error.message)
         setError(error.message);
       }
     }
+
     fetchWorkorders();
   }, [])
 
@@ -71,9 +73,9 @@ const WorkOrders = () => {
           {workOrders.map((workOrder) => (
             <tr key={workOrder._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">
-                  {workOrder.workOrderName?.title}
+                  {workOrder.workOrderName}
               </td>
-              <td className="px-6 py-4">{workOrder.workOrderId}</td>
+              <td className="px-6 py-4">{workOrder.workOrderNo}</td>
               <td className="px-6 py-4">{workOrder.site?.name}</td>
               <td className="px-6 py-4">{workOrder.contractor?.name}</td>
               <td className="px-6 py-4">
