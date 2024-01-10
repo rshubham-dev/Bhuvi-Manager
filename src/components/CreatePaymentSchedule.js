@@ -78,11 +78,13 @@ const CreatePaymentSchedule = () => {
     if (siteId) {
         siteData = sites.filter((site) => site._id === siteId )
     }
-    console.log(siteData);
-    setContractor(siteData)
+    setContractor(siteData[0].contractor)
+    // const getContractor = () => {
+      
+    // };
+    // getContractor();
   }, [formData.site])
 
-  console.log(contractors)
   const handleAddWork = () => {
     setFormData((prevData) => ({
       ...prevData,
@@ -197,7 +199,7 @@ const CreatePaymentSchedule = () => {
           </select>
         </div>
 
-        {/* <div className="mb-4">
+        <div className="mb-4">
           <label htmlFor="contractor" className="block text-sm font-medium text-gray-600">
             Choose Contractor
           </label>
@@ -213,7 +215,7 @@ const CreatePaymentSchedule = () => {
               </option>
             })}
           </select>
-        </div> */}
+        </div>
 
         <div className="mb-4">
           <label htmlFor="projectScheduleId" className="block text-sm font-medium text-gray-600">
