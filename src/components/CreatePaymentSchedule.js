@@ -34,31 +34,31 @@ const CreatePaymentSchedule = () => {
   useEffect(() => {
     // Fetch Work-Detail options from your backend and set the state
     
-    const fetchWorkDetails = async () => {
-      try {
-        const response = await axios.get('/api/v1/work-details')
-        console.log(response.data)
-        let works = [];
-        for (let i = 0; i < response.data.length; i++) {
-          works = works.concat(response.data[i].description);
-        }
-        setWorkDetails(works)
-        console.log('work', workDetails)
-      } catch (error) {
-        console.error('Error fetching work details:', error.message);
-        toast.error(error.message)
-      }
-    };
-
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
-        console.log('sites:', response.data)
         setSite(response.data)
       } catch (error) {
         toast.error(error.message)
       }
-    }
+    };
+
+    const fetchWorkDetails = async () => {
+      try {
+        const title = 'Payment Schedule';
+        const workData = await axios.post('/api/v1/work-details/name', {
+          title
+        });
+        let works = [];
+        for (let i = 0; i < workData.data.description.length; i++) {
+          works = works.concat(workData.data.description[i]);
+        }
+        setWorkDetails(works);
+      } catch (error) {
+        console.log('Error fetching work details:', error.message);
+        toast.error(error.message);
+      }
+    };
 
     fetchSite();
     fetchWorkDetails();
@@ -122,9 +122,12 @@ const CreatePaymentSchedule = () => {
       }),
     };
     setFormData(updatedFormData);
+
     try {
       console.log(updatedFormData);
-      const response = await axios.post('/api/v1/')
+      const response = await axios.post('/api/v1/payment-schedule')
+      console.log(response.data)
+      toast.success(response.data.message);
     } catch (error) {
       console.error('Error submitting work order:', error.message);
       toast.error(error.message);
