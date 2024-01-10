@@ -125,7 +125,7 @@ const CreatePaymentSchedule = () => {
 
     try {
       console.log(updatedFormData);
-      const response = await axios.post('/api/v1/payment-schedule')
+      const response = await axios.post('/api/v1/payment-schedule', formData)
       console.log(response.data)
       toast.success(response.data.message);
     } catch (error) {
@@ -220,7 +220,7 @@ const CreatePaymentSchedule = () => {
                       Select Work Detail
                     </option>
                     {workDetails.map((workDetail) => (
-                      <option key={workDetail._id} value={workDetail._id}>
+                      <option key={workDetail._id} value={workDetail.work}>
                         {workDetail.work}
                       </option>
                     ))}
