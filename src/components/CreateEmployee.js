@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.withCredentials = true;
 
 const CreateEmployee = () => {
@@ -27,9 +27,19 @@ const CreateEmployee = () => {
         cv: "",
         offerletter: "",
         bank: "",
+        certificates: [],
     });
 
+    // const [location, setLocation] = useState({
+    //     street: "",
+    //     city: "",
+    //     district: "",
+    //     state: "",
+    //     pincode: "",
+    // });
+
     const [error, setError] = useState(null);
+
 
     const inputData = (data, field) => {
         const { name, value, type } = data.target;
@@ -101,6 +111,7 @@ const CreateEmployee = () => {
                         <input
                             className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             type='file'
+                            accept='.png, .jpg, .jpeg'
                             name='avatar'
                             onChange={(e) => inputData(e, 'avatar')}
                         />
@@ -370,7 +381,6 @@ const CreateEmployee = () => {
         </main>
     )
 }
-
 
 
 export default CreateEmployee

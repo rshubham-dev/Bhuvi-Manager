@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.withCredentials = true;
 
 
@@ -36,24 +36,15 @@ const WorkOrderForm = () => {
     const fetchWorkDetails = async () => {
       try {
         const response = await axios.get('/api/v1/work-details')
-        console.log(response.data)
-        setWorkDetails(response.data);
-        let works = [];
-        for (let i = 0; i < response.data.length; i++) {
-          works = works.concat(response.data[i].description);
-        }
-        setWorkName(works);
-        console.log('work', workDetails)
+        setWorkName(response.data);
       } catch (error) {
         console.error('Error fetching work details:', error.message);
         toast.error(error.message)
       }
     };
-
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
-        console.log('sites:', response.data)
         setSite(response.data)
       } catch (error) {
         toast.error(error.message)
@@ -63,13 +54,11 @@ const WorkOrderForm = () => {
     const fetchContractor = async () => {
       try {
         const contractorData = await axios.get('/api/v1/contractor');
-        console.log(contractorData.data)
         setContractor(contractorData.data);
       } catch (error) {
         toast.error(error.message)
       }
     }
-
     fetchWorkDetails();
     fetchSite();
     fetchContractor();
@@ -82,7 +71,32 @@ const WorkOrderForm = () => {
     });
   };
 
-  const handleAddWork = () => {
+  useEffect(() => {
+    const fetchWork = async () => {
+      try {
+        const id = formData.workOrderName;
+        console.log('Work Order ID:', id); 
+        if (id) {  // Ensure there is a valid ID before making the request
+          const workData = await axios.get(`/api/v1/work-details/${id}`);
+          let works = [];
+          for (let i = 0; i < workData.data.description.length; i++) {
+            works = works.concat(workData.data.description[i]);
+          }
+          console.log(works)
+          setWorkDetails(works);
+        } else {
+          setWorkDetails([]);  // If there's no ID, clear the workDetails
+        }
+      } catch (error) {
+        console.error('Error fetching work details:', error.message);
+        toast.error(error.message);
+      }
+    };
+    fetchWork();
+  }, [formData.workOrderName]);
+  
+  
+    const handleAddWork = () => {
     setFormData({
       ...formData,
       work: [
@@ -145,9 +159,9 @@ const WorkOrderForm = () => {
             className="border p-2 rounded w-full"
           >
             <option value=''>Work Order Name</option>
-            {workDetails.map((workDetail) => (
-              <option key={workDetail._id} value={workDetail._id}>
-                {workDetail.title}
+            {workName.map((name) => (
+              <option key={name._id} value={name._id}>
+                {name.title}
               </option>
             ))}
           </select>
@@ -194,7 +208,6 @@ const WorkOrderForm = () => {
           <select
             name="site"
             value={formData.site}
-            required
             className="mt-1 p-2 w-full border rounded-md"
             onChange={(e) => handleChange('site', e.target.value)}
           >
