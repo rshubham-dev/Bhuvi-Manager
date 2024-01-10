@@ -201,7 +201,7 @@ const CreatePaymentSchedule = () => {
           />
         </div>
 
-        <div className="mt-4">
+        <div className="m-4">
           <h2 className="text-lg font-semibold mb-2">Work Details</h2>
           {formData.paymentDetails.map((work, index) => (
             <div key={index} className="mb-4 p-4 border rounded">
