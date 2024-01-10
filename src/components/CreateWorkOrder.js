@@ -134,8 +134,19 @@ const WorkOrderForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+    const updatedFormData = {
+      ...formData,
+      work: formData.work.map((detail) => {
+        const amount = parseFloat(detail.area) * parseFloat(detail.rate);
+        return {
+          ...detail,
+          amount: isNaN(amount) ? '' : amount.toFixed(2),
+        };
+      }),
+    };
+    setFormData(updatedFormData);
     try {
+      console.log(formData)
       await axios.post('/api/v1/work-order/create', formData);
       console.log('Work order submitted successfully!');
     } catch (error) {
@@ -239,7 +250,7 @@ const WorkOrderForm = () => {
                     onChange={(e) => handleWorkChange(index, 'workDetail', e.target.value)}
                     className="border p-2 rounded w-full"
                   >
-                    <option disabled>
+                    <option value=''>
                       Select Work Detail
                     </option>
                     {workDetails.map((workDetail) => (

@@ -27,19 +27,9 @@ const CreateEmployee = () => {
         cv: "",
         offerletter: "",
         bank: "",
-        certificates: [],
     });
 
-    // const [location, setLocation] = useState({
-    //     street: "",
-    //     city: "",
-    //     district: "",
-    //     state: "",
-    //     pincode: "",
-    // });
-
     const [error, setError] = useState(null);
-
 
     const inputData = (data, field) => {
         const { name, value, type } = data.target;

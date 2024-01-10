@@ -124,7 +124,6 @@ const CreatePaymentSchedule = () => {
       }),
     };
     setFormData(updatedFormData);
-    
     try {
       console.log(updatedFormData);
       const response = await axios.post('/api/v1/')
