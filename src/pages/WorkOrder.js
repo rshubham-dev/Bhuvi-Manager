@@ -5,6 +5,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const WorkOrders = () => {
   const navigate = useNavigate();
@@ -12,17 +14,17 @@ const WorkOrders = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getSites = async () => {
+    const fetchWorkorders = async () => {
       try {
         const workOrdersData = await axios.get('/api/v1/work-order');
         setWorkOrder(workOrdersData.data);
-        console.log(workOrders)
+        console.log(workOrders.data)
       } catch (error) {
         toast.error(error.message)
         setError(error.message);
       }
     }
-    getSites();
+    fetchWorkorders();
   }, [])
 
   const handleEdit = (workOrderId) => {
@@ -32,7 +34,8 @@ const WorkOrders = () => {
 
   const handleRedirect = (workOrderId) => {
     navigate(`/workOrder?workOrderId=${workOrderId}`);
-  }
+  };
+
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/v1/work-order/remove/${id}`);
@@ -41,6 +44,7 @@ const WorkOrders = () => {
       toast.error(error.message)
     }
   };
+
   const handleAdd = () => {
     navigate('/create-work-order');
   };
@@ -67,11 +71,11 @@ const WorkOrders = () => {
           {workOrders.map((workOrder) => (
             <tr key={workOrder._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">
-                  {workOrder.name}
+                  {workOrder.workOrderName?.title}
               </td>
               <td className="px-6 py-4">{workOrder.workOrderId}</td>
-              <td className="px-6 py-4">{workOrder.site}</td>
-              <td className="px-6 py-4">{workOrder.contractor}</td>
+              <td className="px-6 py-4">{workOrder.site?.name}</td>
+              <td className="px-6 py-4">{workOrder.contractor?.name}</td>
               <td className="px-6 py-4">
                 <button
                   onClick={() => handleRedirect(workOrder._id)}

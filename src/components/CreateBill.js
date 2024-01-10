@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.withCredentials = true;
 
 const CreateBill = () => {
   const [sites, setSite] = useState([]);

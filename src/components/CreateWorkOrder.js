@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
-
 
 
 const WorkOrderForm = () => {
@@ -32,7 +31,7 @@ const WorkOrderForm = () => {
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
   useEffect(() => {
-    // Fetch Work-Detail options from your backend and set the state
+
     const fetchWorkDetails = async () => {
       try {
         const response = await axios.get('/api/v1/work-details')
@@ -42,6 +41,7 @@ const WorkOrderForm = () => {
         toast.error(error.message)
       }
     };
+
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
@@ -59,6 +59,7 @@ const WorkOrderForm = () => {
         toast.error(error.message)
       }
     }
+    
     fetchWorkDetails();
     fetchSite();
     fetchContractor();
@@ -75,14 +76,12 @@ const WorkOrderForm = () => {
     const fetchWork = async () => {
       try {
         const id = formData.workOrderName;
-        console.log('Work Order ID:', id); 
-        if (id) {  // Ensure there is a valid ID before making the request
+        if (id) { 
           const workData = await axios.get(`/api/v1/work-details/${id}`);
           let works = [];
           for (let i = 0; i < workData.data.description.length; i++) {
             works = works.concat(workData.data.description[i]);
           }
-          console.log(works)
           setWorkDetails(works);
         } else {
           setWorkDetails([]);  // If there's no ID, clear the workDetails
@@ -145,10 +144,10 @@ const WorkOrderForm = () => {
       }),
     };
     setFormData(updatedFormData);
+
     try {
-      console.log(formData)
-      await axios.post('/api/v1/work-order/create', formData);
-      console.log('Work order submitted successfully!');
+      const response = await axios.post('/api/v1/work-order/create', formData);
+      toast.success(response.data.message)
     } catch (error) {
       console.error('Error submitting work order:', error.message);
       toast.error(error.message)
@@ -158,6 +157,7 @@ const WorkOrderForm = () => {
   return (
     <div className="container mx-auto mt-6 mb-24">
       <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
+      <h2 className="text-2xl font-semibold mb-4 text-center">Create Work Order</h2>
 
         <div className="mb-4">
           <label htmlFor="workOrderName" className="block text-sm font-semibold text-gray-600">
@@ -192,6 +192,25 @@ const WorkOrderForm = () => {
         </div>
 
         <div className="mb-4">
+          <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
+            Site
+          </label>
+          <select
+            name="site"
+            value={formData.site}
+            className="mt-1 p-2 w-full border rounded-md"
+            onChange={(e) => handleChange('site', e.target.value)}
+          >
+            <option>Site</option>
+            {sites.map((site) => (
+              <option key={site._id} value={site._id}>
+                {site.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="mb-4">
           <label htmlFor="contractorName" className="block text-sm font-semibold text-gray-600">
             Contractor
           </label>
@@ -212,28 +231,9 @@ const WorkOrderForm = () => {
           </select>
         </div>
 
-        <div className="mb-4">
-          <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
-            Site
-          </label>
-          <select
-            name="site"
-            value={formData.site}
-            className="mt-1 p-2 w-full border rounded-md"
-            onChange={(e) => handleChange('site', e.target.value)}
-          >
-            <option>Site</option>
-            {sites.map((site) => (
-              <option key={site._id} value={site._id}>
-                {site.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Work Details</h2>
+          
           {formData.work.map((workItem, index) => (
             <div key={index} className="mb-4 p-4 border rounded">
               <div className="grid grid-cols-2 gap-4">
@@ -305,20 +305,6 @@ const WorkOrderForm = () => {
                   </select>
                 </div>
 
-                {/* <div>
-                  <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
-                    Amount
-                  </label>
-                  <input
-                    type="number"
-                    name={`work[${index}].amount`}
-                    value={workItem.amount}
-                    onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
-                    placeholder="Amount"
-                    className="border p-2 rounded w-full"
-                  />
-                </div> */}
-
                 <div>
                   <label htmlFor={`work[${index}].startdate`} className="block text-sm font-semibold text-gray-600">
                     Starting Date
@@ -336,7 +322,7 @@ const WorkOrderForm = () => {
                     Project Duration
                   </label>
                   <input
-                    type='date'
+                    type='month'
                     value={workItem.duration}
                     onChange={(e) => handleWorkChange(index, 'duration', e.target.value)}
                     className="border p-2 rounded w-full"

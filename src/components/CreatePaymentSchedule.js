@@ -3,7 +3,6 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
-
 const CreatePaymentSchedule = () => {
   const [formData, setFormData] = useState({
     workOrderName: '',
