@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdPerson, MdDateRange, MdPayment, MdLocationOn, MdBusiness, MdPeople, MdDesignServices, MdReceipt, MdPlaylistAddCheck, MdConstruction, MdBuild, MdMoney, MdAssignment, MdWork } from "react-icons/md";
 import { GrUserWorker } from "react-icons/gr";
+import { BiSolidPurchaseTag } from "react-icons/bi";
 
 const All = () => {
     const navItems = [
@@ -14,9 +15,9 @@ const All = () => {
         { to: '/bills', text: 'Bill', icon: <MdReceipt /> },
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
         { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
-        { to: '/purchase-order', text: 'Purchase-Order', icon: <MdBuild /> },
+        { to: '/purchase-order', text: 'Purchase-Order', icon: <BiSolidPurchaseTag />  },
         { to: '/employee', text: 'Employee', icon: <GrUserWorker />},
-        { to: '/extra-works', text: 'Extra-Work' },
+        { to: '/extra-works', text: 'Extra-Work', icon: <MdBuild /> },
         { to: '/expenses', text: 'Expenses', icon: <MdMoney /> },
         { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
         { to: '/work-orders', text: 'Work-Order', icon: <MdWork /> },
