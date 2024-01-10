@@ -74,7 +74,7 @@ const CreatePaymentSchedule = () => {
 
   useEffect(() => {
     const siteId = formData.site;
-    let siteData;
+    let siteData = [];
     if (siteId) {
         siteData = sites.filter((site) => site._id === siteId )
     }
