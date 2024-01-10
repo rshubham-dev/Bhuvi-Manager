@@ -38,7 +38,6 @@ const CreatePaymentSchedule = () => {
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
-        console.log(response.data)
         setSite(response.data)
       } catch (error) {
         toast.error(error.message)
@@ -72,6 +71,7 @@ const CreatePaymentSchedule = () => {
       [field]: data,
     });
   };
+
   useEffect(() => {
     const siteId = formData.site;
     let siteData;
@@ -79,9 +79,10 @@ const CreatePaymentSchedule = () => {
         siteData = sites.filter((site) => site._id === siteId )
     }
     console.log(siteData);
-    setContractor(siteData.contractor)
+    setContractor(siteData)
   }, [formData.site])
 
+  console.log(contractors)
   const handleAddWork = () => {
     setFormData((prevData) => ({
       ...prevData,
@@ -196,7 +197,7 @@ const CreatePaymentSchedule = () => {
           </select>
         </div>
 
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="contractor" className="block text-sm font-medium text-gray-600">
             Choose Contractor
           </label>
@@ -212,7 +213,7 @@ const CreatePaymentSchedule = () => {
               </option>
             })}
           </select>
-        </div>
+        </div> */}
 
         <div className="mb-4">
           <label htmlFor="projectScheduleId" className="block text-sm font-medium text-gray-600">

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdPerson, MdDateRange, MdPayment, MdLocationOn, MdBusiness, MdPeople, MdDesignServices, MdReceipt, MdPlaylistAddCheck, MdConstruction, MdBuild, MdMoney, MdAssignment, MdWork } from "react-icons/md";
+import { GrUserWorker } from "react-icons/gr";
 
 const All = () => {
     const navItems = [
@@ -14,7 +15,7 @@ const All = () => {
         { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
         { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
         { to: '/purchase-order', text: 'Purchase-Order', icon: <MdBuild /> },
-        { to: '/employee', text: 'Employee' },
+        { to: '/employee', text: 'Employee', icon: <GrUserWorker />},
         { to: '/extra-works', text: 'Extra-Work' },
         { to: '/expenses', text: 'Expenses', icon: <MdMoney /> },
         { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
