@@ -78,7 +78,7 @@ const CreatePaymentSchedule = () => {
     if (siteId) {
         siteData = sites.filter((site) => site._id === siteId )
     }
-    console.log(siteData.contractor);
+    console.log(siteData);
     console.log(siteData.data);
     setContractor(siteData.data.contractor)
   }, [formData.site])
