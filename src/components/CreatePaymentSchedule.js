@@ -76,14 +76,11 @@ const CreatePaymentSchedule = () => {
     const siteId = formData.site;
     let siteData = [];
     if (siteId) {
-        siteData = sites.filter((site) => site._id === siteId )
+      siteData = sites.filter((site) => site._id === siteId);
     }
-    setContractor(siteData[0].contractor)
-    // const getContractor = () => {
-      
-    // };
-    // getContractor();
-  }, [formData.site])
+    setContractor(siteData[0]?.contractor || '');
+  }, [formData.site]);
+  
 
   const handleAddWork = () => {
     setFormData((prevData) => ({
@@ -207,15 +204,17 @@ const CreatePaymentSchedule = () => {
             name="contractor"
             required
             onChange={(e) => handleChange('contractor', e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md">
+            className="mt-1 p-2 w-full border rounded-md"
+          >
             <option>Contractor</option>
-            {contractors.map((contractor) => {
-              <option key={contractor?.id} value={contractor?._id}>
+            {contractors && contractors.map((contractor) => (
+              <option key={contractor?._id} value={contractor?._id}>
                 {contractor?.name}
               </option>
-            })}
+            ))}
           </select>
         </div>
+
 
         <div className="mb-4">
           <label htmlFor="projectScheduleId" className="block text-sm font-medium text-gray-600">
