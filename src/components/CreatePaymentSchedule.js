@@ -29,12 +29,12 @@ const CreatePaymentSchedule = () => {
   const [workDetails, setWorkDetails] = useState([]);
   // const [clients, setClient] = useState([]);
   const [sites, setSite] = useState([]);
-  // const [contractors, setContractor] = useState([]);
+  const [contractors, setContractor] = useState([]);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
   useEffect(() => {
     // Fetch Work-Detail options from your backend and set the state
-    
+
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
@@ -65,6 +65,22 @@ const CreatePaymentSchedule = () => {
     fetchSite();
     fetchWorkDetails();
   }, []);
+
+  const handleChange = (field, data) => {
+    setFormData({
+      ...formData,
+      [field]: data,
+    });
+  };
+  useEffect(() => {
+    const siteId = formData.site;
+    let siteData;
+    if (siteId) {
+        siteData = sites.filter((site) => site._id === siteId )
+    }
+    console.log(siteData);
+    setContractor(siteData.contractor)
+  }, [formData.site])
 
   const handleAddWork = () => {
     setFormData((prevData) => ({
@@ -112,7 +128,7 @@ const CreatePaymentSchedule = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const updatedFormData = {
       ...formData,
       paymentDetails: formData.paymentDetails.map((detail) => {
@@ -135,7 +151,7 @@ const CreatePaymentSchedule = () => {
       toast.error(error.message);
     }
   };
-  
+
 
 
   return (
@@ -150,6 +166,7 @@ const CreatePaymentSchedule = () => {
           <select
             name="site"
             required
+            onChange={(e) => handleChange('site', e.target.value)}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           >
             <option>Site</option>
@@ -165,7 +182,11 @@ const CreatePaymentSchedule = () => {
           <label htmlFor="client" className="block text-sm font-medium text-gray-600">
             Choose Client
           </label>
-          <select name="client" required className="mt-1 p-2 w-full border rounded-md">
+          <select
+            name="client"
+            required
+            onChange={(e) => handleChange('client', e.target.value)}
+            className="mt-1 p-2 w-full border rounded-md">
             <option>Client</option>
             {sites.map((site) => (
               <option key={site.client?.id} value={site.client?.id}>
@@ -179,11 +200,15 @@ const CreatePaymentSchedule = () => {
           <label htmlFor="contractor" className="block text-sm font-medium text-gray-600">
             Choose Contractor
           </label>
-          <select name="contractor" required className="mt-1 p-2 w-full border rounded-md">
+          <select
+            name="contractor"
+            required
+            onChange={(e) => handleChange('contractor', e.target.value)}
+            className="mt-1 p-2 w-full border rounded-md">
             <option>Contractor</option>
-            {sites.map((site) => {
-              <option key={site.contractor?.id} value={site.contractor?._id}>
-                {site.contractor?.name}
+            {contractors.map((contractor) => {
+              <option key={contractor?.id} value={contractor?._id}>
+                {contractor?.name}
               </option>
             })}
           </select>
@@ -197,6 +222,7 @@ const CreatePaymentSchedule = () => {
             type="text"
             name="projectScheduleId"
             required
+            onChange={(e) => handleChange('projectScheduleId', e.target.value)}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -206,6 +232,7 @@ const CreatePaymentSchedule = () => {
           {formData.paymentDetails.map((work, index) => (
             <div key={index} className="mb-4 p-4 border rounded">
               <div className="grid grid-cols-2 gap-4">
+
                 <div>
                   <label
                     htmlFor={`work[${index}].workDescription`}
