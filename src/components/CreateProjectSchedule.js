@@ -33,11 +33,7 @@ const CreateProjectSchedule = () => {
         const workData = await axios.post('/api/v1/work-details/name', {
           title
         });
-        let works = [];
-        for (let i = 0; i < workData.data.description.length; i++) {
-          works = works.concat(workData.data.description[i]);
-        }
-        setWorkDetails(works);
+        setWorkDetails(workData.data.description);
       } catch (error) {
         console.log('Error fetching work details:', error.message);
         toast.error(error.message);
@@ -54,7 +50,6 @@ const CreateProjectSchedule = () => {
       [field]: value,
     });
   };
-
 
   const handleAddWork = () => {
     setFormData({
@@ -159,7 +154,7 @@ const CreateProjectSchedule = () => {
                       Select Work Detail
                     </option>
                     {workDetails.map((workDetail) => (
-                      <option key={workDetail._id} value={workDetail._id}>
+                      <option key={workDetail._id} value={workDetail.work}>
                         {workDetail.work}
                       </option>
                     ))}
