@@ -251,7 +251,7 @@ const WorkOrderForm = () => {
                       Select Work Detail
                     </option>
                     {workDetails.map((workDetail) => (
-                      <option key={workDetail._id} value={workDetail.work}>
+                      <option key={workDetail._id} value={workDetail._id}>
                         {workDetail.work}
                       </option>
                     ))}
