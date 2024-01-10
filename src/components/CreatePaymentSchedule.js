@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
+
 const CreatePaymentSchedule = () => {
   const [formData, setFormData] = useState({
     client: '',
@@ -37,6 +38,7 @@ const CreatePaymentSchedule = () => {
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
+        console.log(response.data)
         setSite(response.data)
       } catch (error) {
         toast.error(error.message)
@@ -151,11 +153,11 @@ const CreatePaymentSchedule = () => {
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           >
             <option>Site</option>
-            {sites.map((site) => {
+            {sites.map((site) => (
               <option key={site._id} value={site._id}>
                 {site.name}
               </option>
-            })}
+            ))}
           </select>
         </div>
 
@@ -166,8 +168,8 @@ const CreatePaymentSchedule = () => {
           <select name="client" required className="mt-1 p-2 w-full border rounded-md">
             <option>Client</option>
             {sites.map((site) => (
-              <option key={site._id} value={site._id}>
-                {site.name}
+              <option key={site.client?.id} value={site.client?.id}>
+                {site.client?.name}
               </option>
             ))}
           </select>
@@ -180,8 +182,8 @@ const CreatePaymentSchedule = () => {
           <select name="contractor" required className="mt-1 p-2 w-full border rounded-md">
             <option>Contractor</option>
             {sites.map((site) => {
-              <option key={site._id} value={site._id}>
-                {site.name}
+              <option key={site.contractor?.id} value={site.contractor?._id}>
+                {site.contractor?.name}
               </option>
             })}
           </select>

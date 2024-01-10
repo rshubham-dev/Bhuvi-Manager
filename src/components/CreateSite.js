@@ -32,11 +32,11 @@ const CreateSite = () => {
   const [employees, setEmployee] = useState([]);
   const [clients, setClient] = useState([]);
   const projectType = ['Residential', 'Commercial', 'Instutional', 'Government'];
-  const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6'];
+  const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6', 'First', 'Second'];
   const location = useLocation();
   const navigate = useNavigate();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
-  const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
+  // const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
   useEffect(() => {
     const siteId = new URLSearchParams(location.search).get('siteId');
@@ -73,8 +73,8 @@ const CreateSite = () => {
 
   }
 
-  const handleChange = (e) => {
-    const {name, value} = e.target;
+  const handleChange = (e, field) => {
+    const {name, value, type} = e.target;
     if (name.startsWith('address.')) {
       const addressField = name.split('.')[1];
       setSite((prevSite) => ({
@@ -84,7 +84,12 @@ const CreateSite = () => {
           [addressField]: value,
         },
       }));
-    }else{
+    }else if (type === 'file') {
+      setSite((prevSite) => ({
+          ...prevSite,
+          [field]: e.target.files[0],
+      }));
+  }else{
       setSite((prevSite) => ({
         ...prevSite,
         [name]: value,
@@ -118,13 +123,26 @@ const CreateSite = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const siteData = new FormData();
+    Object.entries(site).forEach(([key, value]) => {
+        if (value instanceof File) {
+          siteData.append(key, value);
+        } else if (typeof value === 'object') {
+            Object.entries(value).forEach(([subKey, subValue]) => {
+              siteData.append(`${key}.${subKey}`, subValue);
+            });
+        } else {
+          siteData.append(key, value);
+        }
+    });
+
     try {
       if (siteIdToEdit) {
-        await axios.put(`/api/v1/site/${siteIdToEdit}`, site);
+        await axios.put(`/api/v1/site/${siteIdToEdit}`, siteData);
         toast.success('User edited successfully');
       } else {
-        console.log(site)
-        const siteData = await axios.post('/api/v1/site', site);
+        console.log(siteData)
+        const siteData = await axios.post('/api/v1/site', siteData);
         console.log(siteData);
         toast.success('Site created successfully');
         navigate('/sites');
@@ -398,7 +416,7 @@ const CreateSite = () => {
           <input 
           type="file" 
           name="agreement" 
-          onChange={handleChange}
+          onChange={(e) => handleChange(e, 'agreement')}
           className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
         </div>
 
