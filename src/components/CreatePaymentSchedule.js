@@ -146,7 +146,7 @@ const CreatePaymentSchedule = () => {
       console.log(response.data);
       toast.success(response.data.message);
     } catch (error) {
-      console.error('Error submitting work order:', error.message);
+      console.log('Error submitting work order:', error.message);
       toast.error(error.message);
     }
   };
