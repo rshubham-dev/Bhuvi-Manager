@@ -44,6 +44,8 @@ import Payment_SchedulScreen from './screen/Payment_SchedulScreen';
 import Project_ScheduleScreen from './screen/Project_ScheduleScreen';
 import ContractorScreen from './screen/ContractorScreen';
 import WorkDetails from './pages/WorkDetails';
+import CreateExtraWork from './components/CreateExtraWork';
+import ExtraWork from './pages/ExtraWork';
 
 const App = () => {
 
@@ -106,6 +108,9 @@ const App = () => {
         <Route path='/bill' element={<BillScreen />} />
         <Route path='/edit-bill' element={<CreateBill />} />
         <Route path='/create-bill' element={<CreateBill />} />
+        <Route path='/extra-work' element={<ExtraWork />} />
+        <Route path='/create-extra-work' element={<CreateExtraWork />} />
+        <Route path='/edit-extra-work' element={<CreateExtraWork />} />
         <Route path='/checklists' element={<CheckList />} />
         <Route path='/setting' element={<Profile />} />
         {/* </ProtectedRoute> */}
