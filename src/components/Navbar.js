@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
 
-axios.defaults.baseURL = 'https://jolly-pasca-1c0cf6.netlify.app';
+axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
 
 const Navbar = () => {
