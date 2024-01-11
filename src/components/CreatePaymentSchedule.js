@@ -64,6 +64,7 @@ const CreatePaymentSchedule = () => {
 
     fetchSite();
     fetchWorkDetails();
+    console.log('site:', sites)
   }, []);
 
   const handleChange = (field, data) => {
