@@ -28,7 +28,6 @@ const CreatePaymentSchedule = () => {
 
   const [workDetails, setWorkDetails] = useState([]);
   // const [clients, setClient] = useState([]);
-  const client = {};
   const [sites, setSite] = useState([]);
   const [contractors, setContractor] = useState([]);
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
@@ -81,7 +80,6 @@ const CreatePaymentSchedule = () => {
       siteData = sites.filter((site) => site._id === siteId);
     }
     setContractor(siteData[0]?.contractor || '');
-    client = siteData[0]?.cleint || '';
   }, [formData.site]);
   console.log(client)
   
