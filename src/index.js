@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 // import { UserContextProvider } from './context/AuthContext';
 import { store } from './app/store';
 
-axios.defaults.baseURL = process.env.BACKEND_URI;
+axios.defaults.baseURL = 'https://bhuvi-management-server-7nf0.onrender.com';
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
