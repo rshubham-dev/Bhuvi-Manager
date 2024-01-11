@@ -18,13 +18,14 @@ const ProjectSchedules = () => {
       try {
         const projectScheduleData = await axios.get('/api/v1/project-schedule');
         setProjectSchedule(projectScheduleData.data);
-        console.log(projectSchedules); // Add this line
+        console.log(projectScheduleData.data)
       } catch (error) {
         toast.error(error.message);
         setError(error.message);
       }
     }
     getprojectSchedules();
+    console.log(projectSchedules); // Add this line
   }, []);
 
 
