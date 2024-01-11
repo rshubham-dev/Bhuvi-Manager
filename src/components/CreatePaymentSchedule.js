@@ -142,7 +142,7 @@ const CreatePaymentSchedule = () => {
   
     try {
       console.log(updatedFormData);
-      const response = await axios.post('/api/v1/payment-schedule', formData); // Use updatedFormData instead of formData
+      const response = await axios.post('/api/v1/payment-schedule', updatedFormData); // Use updatedFormData instead of formData
       console.log(response.data);
       toast.success(response.data.message);
     } catch (error) {
