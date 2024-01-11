@@ -184,7 +184,6 @@ const CreatePaymentSchedule = () => {
           </label>
           <select
             name="client"
-            required
             onChange={(e) => handleChange('client', e.target.value)}
             className="mt-1 p-2 w-full border rounded-md">
             <option>Client</option>
@@ -202,7 +201,6 @@ const CreatePaymentSchedule = () => {
           </label>
           <select
             name="contractor"
-            required
             onChange={(e) => handleChange('contractor', e.target.value)}
             className="mt-1 p-2 w-full border rounded-md"
           >

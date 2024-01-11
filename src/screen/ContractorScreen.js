@@ -40,7 +40,7 @@ const ContractorScreen = () => {
 
     return (
         <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
-            <h1 className="text-3xl font-semibold text-gray-800"> Contractor Details</h1>
+            <h1 className="text-3xl font-semibold text-gray-800 mt-4"> Contractor Details</h1>
             <div className="mt-6 w-full">
 
                 <div className="card ">

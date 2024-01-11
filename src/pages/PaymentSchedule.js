@@ -18,6 +18,7 @@ const PaymentSchedules = () => {
       try {
         const paymentSchedulesData = await axios.get('/api/v1/payment-schedule');
         setpaymentSchedules(paymentSchedulesData.data);
+        console.log('res:', paymentSchedulesData.data)
         console.log(paymentSchedules)
       } catch (error) {
         toast.error(error.message)
@@ -50,7 +51,7 @@ const PaymentSchedules = () => {
 
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
-    <h1 className="text-2xl font-bold text-center">Payment Schedules</h1>
+    <h1 className="text-2xl font-bold text-center mt-4">Payment Schedules</h1>
     <div className=" mb-4 mr-20 text-right">
       <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
         Add Payment Schedule
