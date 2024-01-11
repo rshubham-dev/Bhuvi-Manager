@@ -58,13 +58,12 @@ const PaymentSchedules = () => {
     </div>
 
     <section className='bg-white px-12 py-8 mb-16 h-full w-2/5'>
-        <h1 className="text-3xl font-semibold text-gray-800"> Site Details</h1>
         <div className="mt-6 w-full">
           {paymentSchedules.map((paymentSchedule) => (
             <div key={paymentSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  
+                Payment Schedule of {paymentSchedule?.site}
                 </summary>
 
                 {/* {workDetail.description.map((description) => (
@@ -72,7 +71,26 @@ const PaymentSchedules = () => {
                     <li className='font-medium text-color-title mx-5 my-1.5 list-disc'>{description.work}</li>
                   </ul>
                 ))} */}
-
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3">Name</th>
+                                    <th scope="col" className="px-6 py-3">Total Floor</th>
+                                    <th scope="col" className="px-6 py-3">Area</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {paymentSchedules?.paymentDetails.map((work) => (
+                                    <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td className="px-6 py-4">
+                                        {work.workDescription}
+                                        </td>
+                                        <td className="px-6 py-4"></td>
+                                        <td className="px-6 py-4"></td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
               </details>
             </div>
           ))}
