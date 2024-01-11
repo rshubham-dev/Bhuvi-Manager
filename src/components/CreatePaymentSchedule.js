@@ -142,7 +142,7 @@ const CreatePaymentSchedule = () => {
   
     try {
       console.log(updatedFormData);
-      const response = await axios.post('/api/v1/payment-schedule', updatedFormData); // Use updatedFormData instead of formData
+      const response = await axios.post('/api/v1/payment-schedule', formData); // Use updatedFormData instead of formData
       console.log(response.data);
       toast.success(response.data.message);
     } catch (error) {
@@ -211,20 +211,6 @@ const CreatePaymentSchedule = () => {
               </option>
             ))}
           </select>
-        </div>
-
-
-        <div className="mb-4">
-          <label htmlFor="projectScheduleId" className="block text-sm font-medium text-gray-600">
-            Schedule ID
-          </label>
-          <input
-            type="text"
-            name="projectScheduleId"
-            required
-            onChange={(e) => handleChange('projectScheduleId', e.target.value)}
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-          />
         </div>
 
         <div className="m-4">
