@@ -59,19 +59,21 @@ const PaymentSchedules = () => {
     </div>
 
     <section className='bg-white px-12 py-8 mb-16 h-full w-2/5'>
-        {/* <div className="mt-6 w-full">
+        <div className="mt-6 w-full">
           {paymentSchedules.map((paymentSchedule) => (
             <div key={paymentSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                Payment Schedule of {paymentSchedule?.site}
+                Payment Schedule of {paymentSchedule.site?.name}
                 </summary>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" className="px-6 py-3">Name</th>
-                                    <th scope="col" className="px-6 py-3">Total Floor</th>
+                                    <th scope="col" className="px-6 py-3">Work</th>
+                                    <th scope="col" className="px-6 py-3">Rate</th>
                                     <th scope="col" className="px-6 py-3">Area</th>
+                                    <th scope="col" className="px-6 py-3">Amount</th>
+                                    <th scope="col" className="px-6 py-3">Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,8 +82,10 @@ const PaymentSchedules = () => {
                                         <td className="px-6 py-4">
                                         {work.workDescription}
                                         </td>
-                                        <td className="px-6 py-4"></td>
-                                        <td className="px-6 py-4"></td>
+                                        <td className="px-6 py-4">{work.rate}</td>
+                                        <td className="px-6 py-4">{work.area}</td>
+                                        <td className="px-6 py-4">{work.amount}</td>
+                                        <td className="px-6 py-4">{work.status}</td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -89,7 +93,7 @@ const PaymentSchedules = () => {
               </details>
             </div>
           ))}
-        </div> */}
+        </div>
       </section>
 
     <Toaster
