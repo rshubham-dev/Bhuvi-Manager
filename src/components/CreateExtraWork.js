@@ -8,6 +8,7 @@ axios.defaults.withCredentials = true;
 const CreateExtraWork = () => {
     const [formData, setFormData] = useState({
         contractor: '',
+        client:'',
         site: '',
         extraWorkDetail: [
           {
@@ -29,6 +30,7 @@ const CreateExtraWork = () => {
         const fetchSite = async () => {
           try {
             const response = await axios.get('/api/v1/site');
+            console.log(response.data)
             setSite(response.data)
           } catch (error) {
             toast.error(error.message)
