@@ -17,7 +17,7 @@ const All = () => {
         { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
         { to: '/purchase-order', text: 'Purchase-Order', icon: <BiSolidPurchaseTag />  },
         { to: '/employee', text: 'Employee', icon: <GrUserWorker />},
-        { to: '/extra-works', text: 'Extra-Work', icon: <MdBuild /> },
+        { to: '/extra-work', text: 'Extra-Work', icon: <MdBuild /> },
         { to: '/expenses', text: 'Expenses', icon: <MdMoney /> },
         { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
         { to: '/work-orders', text: 'Work-Order', icon: <MdWork /> },
