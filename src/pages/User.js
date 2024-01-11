@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
+axios.defaults.withCredentials = true;
 
 const UserManagement = () => {
   const navigate = useNavigate();

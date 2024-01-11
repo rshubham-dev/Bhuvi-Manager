@@ -5,7 +5,7 @@ import './screen.css';
 import { GrEdit } from "react-icons/gr";
 import { MdAdd, MdDownload } from "react-icons/md";
 
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+
 axios.defaults.withCredentials = true;
 
 const ContractorScreen = () => {

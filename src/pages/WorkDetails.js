@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+
 axios.defaults.withCredentials = true;
 const WorkDetails = () => {
   const [workDetails, setWorkDetail] = useState([]);

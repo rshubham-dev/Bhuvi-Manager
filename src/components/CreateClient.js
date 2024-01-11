@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+
 axios.defaults.withCredentials = true;
 
 const CreateClient = () => {

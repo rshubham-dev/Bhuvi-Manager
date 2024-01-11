@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useLocation} from 'react-router-dom';
 
+axios.defaults.withCredentials = true;
 
 const CreateUser = () => {
   const [userData, setUserData] = useState({

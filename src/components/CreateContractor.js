@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
-axios.defaults.withCredentials = true;
 
+axios.defaults.withCredentials = true;
 const CreateContractor = () => {
   const [contractor, setContractor] = useState({
     name: '',

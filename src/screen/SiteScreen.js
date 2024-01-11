@@ -6,7 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdAdd, MdDownload, MdDelete } from "react-icons/md";
 
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+
 axios.defaults.withCredentials = true;
 
 const SiteScreen = () => {
