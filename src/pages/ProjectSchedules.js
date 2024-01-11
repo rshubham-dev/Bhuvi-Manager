@@ -61,21 +61,22 @@ const ProjectSchedules = () => {
       </div>
 
       <section className='bg-white px-12 py-8 mb-16 h-full w-2/5'>
-        {/* <div className="mt-6 w-full">
-          {projectSchedules.map((projectSchedule) => (
+        <div className="mt-6 w-full">
+          {projectSchedules?.map((projectSchedule) => (
             <div key={projectSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  Project Schedule of {projectSchedule?.site || 'Unknown Site'}
+                  Project Schedule of {projectSchedule.site?.name}
                 </summary>
 
 
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="px-6 py-3">Name</th>
-                      <th scope="col" className="px-6 py-3">Total Floor</th>
-                      <th scope="col" className="px-6 py-3">Area</th>
+                      <th scope="col" className="px-6 py-3">Work</th>
+                      <th scope="col" className="px-6 py-3">Starting Date</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-6 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -84,9 +85,28 @@ const ProjectSchedules = () => {
                         <td className="px-6 py-4">
                           {work.workDetail || 'No Work Detail'}
                         </td>
-
-                        <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4">{work.toStart}</td>
+                        <td className="px-6 py-4">{work.status}</td>
+                        <td className="px-6 py-4">
+                                      <button
+                onClick={() => handleRedirect(work._id)}
+                className="bg-blue-500 text-white px-2 py-1 mr-2"
+              >
+                <FaExternalLinkAlt />
+              </button>
+              <button
+                onClick={() => handleEdit(work._id)}
+                className="bg-blue-500 text-white px-2 py-1 mr-2"
+              >
+                <GrEdit />
+              </button>
+              <button
+                onClick={() => handleDelete(work._id)}
+                className="bg-red-500 text-white px-2 py-1 mr-2"
+              >
+                <MdDelete />
+              </button>
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -95,28 +115,9 @@ const ProjectSchedules = () => {
               </details>
             </div>
           ))}
-        </div> */}
+        </div>
       </section>
 
-      {/* 
-              <button
-                onClick={() => handleRedirect(projectSchedule._id)}
-                className="bg-blue-500 text-white px-2 py-1 mr-2"
-              >
-                <FaExternalLinkAlt />
-              </button>
-              <button
-                onClick={() => handleEdit(projectSchedule._id)}
-                className="bg-blue-500 text-white px-2 py-1 mr-2"
-              >
-                <GrEdit />
-              </button>
-              <button
-                onClick={() => handleDelete(projectSchedule._id)}
-                className="bg-red-500 text-white px-2 py-1 mr-2"
-              >
-                <MdDelete />
-              </button> */}
 
       <Toaster
         position="top-right"
