@@ -63,9 +63,9 @@ const WorkOrders = () => {
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">Work-Order Name</th>
-            <th scope="col" className="px-6 py-3">Work-Order Id</th>
             <th scope="col" className="px-6 py-3">Site</th>
             <th scope="col" className="px-6 py-3">Contractor</th>
+            <th scope="col" className="px-6 py-3">Duration</th>
             <th scope="col" className="px-6 py-3">Actions</th>
           </tr>
         </thead>
@@ -75,9 +75,9 @@ const WorkOrders = () => {
               <td className="px-6 py-4">
                   {workOrder.workOrderName}
               </td>
-              <td className="px-6 py-4">{workOrder.workOrderNo}</td>
               <td className="px-6 py-4">{workOrder.site?.name}</td>
               <td className="px-6 py-4">{workOrder.contractor?.name}</td>
+              <td className="px-6 py-4">{workOrder.duration}</td>
               <td className="px-6 py-4">
                 <button
                   onClick={() => handleRedirect(workOrder._id)}

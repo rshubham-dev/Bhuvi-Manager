@@ -60,7 +60,7 @@ const ProjectSchedules = () => {
         </button>
       </div>
 
-      <section className='bg-white px-12 py-8 mb-16 h-full w-2/5'>
+      <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
         <div className="mt-6 w-full">
           {projectSchedules?.map((projectSchedule) => (
             <div key={projectSchedule._id} className="card">
@@ -76,6 +76,7 @@ const ProjectSchedules = () => {
                       <th scope="col" className="px-6 py-3">Work</th>
                       <th scope="col" className="px-6 py-3">Starting Date</th>
                       <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-6 py-3">Actual Date</th>
                       <th scope="col" className="px-6 py-3">Action</th>
                     </tr>
                   </thead>
@@ -87,6 +88,7 @@ const ProjectSchedules = () => {
                         </td>
                         <td className="px-6 py-4">{work.toStart}</td>
                         <td className="px-6 py-4">{work.status}</td>
+                        <td className="px-6 py-4">{work.startedAt ? work.startedAt : '-' }</td>
                         <td className="px-6 py-4">
                                       <button
                 onClick={() => handleRedirect(work._id)}

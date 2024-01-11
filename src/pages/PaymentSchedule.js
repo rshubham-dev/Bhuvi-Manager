@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
@@ -65,6 +65,23 @@ const PaymentSchedules = () => {
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
                   Payment Schedule of {paymentSchedule.site?.name}
+                  <div>
+                  <button
+              className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+                <MdAdd className="text-xl text-white" />
+              </button>
+                  <button
+                    className="bg-blue-500 text-white px-2 py-1 mr-2"
+                  >
+                    <GrEdit />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(paymentSchedule._id)}
+                    className="bg-red-500 text-white px-2 py-1 mr-2"
+                  >
+                    <MdDelete />
+                  </button>
+                </div>
                 </summary>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -121,6 +138,22 @@ const PaymentSchedules = () => {
             <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
               <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
                 Payment Schedule of
+                <div>
+                <button
+              className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+                <MdAdd className="text-xl text-white" />
+              </button>
+                  <button
+                    className="bg-blue-500 text-white px-2 py-1 mr-2"
+                  >
+                    <GrEdit />
+                  </button>
+                  <button
+                    className="bg-red-500 text-white px-2 py-1 mr-2"
+                  >
+                    <MdDelete />
+                  </button>
+                </div>
               </summary>
               <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -141,6 +174,11 @@ const PaymentSchedules = () => {
                     <td className="px-6 py-4"></td>
                     <td className="px-6 py-4"></td>
                     <td className="px-6 py-4">
+                      <button
+                        className="bg-blue-500 text-white px-2 py-1 mr-2"
+                      >
+                        <FaExternalLinkAlt />
+                      </button>
                       <button
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
                       >

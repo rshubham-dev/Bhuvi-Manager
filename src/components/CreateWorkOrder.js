@@ -18,10 +18,10 @@ const WorkOrderForm = () => {
         area: '',
         unit: '',
         amount: '',
-        startdate: '',
-        duration: '',
       },
     ],
+    startdate: '',
+    duration: '',
   });
 
   const [workDetails, setWorkDetails] = useState([]);
@@ -59,7 +59,7 @@ const WorkOrderForm = () => {
         toast.error(error.message)
       }
     }
-    
+
     fetchWorkDetails();
     fetchSite();
     fetchContractor();
@@ -89,9 +89,9 @@ const WorkOrderForm = () => {
     };
     fetchWork();
   }, [formData.workOrderName]);
-  
-  
-    const handleAddWork = () => {
+
+
+  const handleAddWork = () => {
     setFormData({
       ...formData,
       work: [
@@ -102,8 +102,6 @@ const WorkOrderForm = () => {
           area: '',
           unit: '',
           amount: '',
-          startdate: '',
-          duration: '',
         },
       ],
     });
@@ -129,6 +127,7 @@ const WorkOrderForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
     const updatedFormData = {
       ...formData,
       work: formData.work.map((detail) => {
@@ -154,7 +153,7 @@ const WorkOrderForm = () => {
   return (
     <div className="container mx-auto mt-6 mb-24">
       <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
-      <h2 className="text-2xl font-semibold mb-4 text-center">Create Work Order</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Create Work Order</h2>
 
         <div className="mb-4">
           <label htmlFor="workOrderName" className="block text-sm font-semibold text-gray-600">
@@ -228,9 +227,33 @@ const WorkOrderForm = () => {
           </select>
         </div>
 
+        <div className="mb-4">
+          <label htmlFor={'startdate'} className="block text-sm font-semibold text-gray-600">
+            Starting Date
+          </label>
+          <input
+            type="date"
+            value={formData.startdate}
+            onChange={(e) => handleChange('startdate', e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor={'duration'} className="block text-sm font-semibold text-gray-600">
+            Project Duration
+          </label>
+          <input
+            type='month'
+            value={formData.duration}
+            onChange={(e) => handleChange('duration', e.target.value)}
+            className="border p-2 rounded w-full"
+          />
+        </div>
+
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Work Details</h2>
-          
+
           {formData.work.map((workItem, index) => (
             <div key={index} className="mb-4 p-4 border rounded">
               <div className="grid grid-cols-2 gap-4">
