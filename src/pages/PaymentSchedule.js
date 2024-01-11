@@ -65,9 +65,9 @@ const PaymentSchedules = () => {
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
                   Payment Schedule of {paymentSchedule.site?.name}
-                  <div>
+                  <div className='self-end'>
                   <button
-              className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+              className="bg-green-500 rounded-2xl text-white px-2 py-1 mr-2">
                 <MdAdd className="text-xl text-white" />
               </button>
                   <button
@@ -77,7 +77,7 @@ const PaymentSchedules = () => {
                   </button>
                   <button
                     onClick={() => handleDelete(paymentSchedule._id)}
-                    className="bg-red-500 text-white px-2 py-1 mr-2"
+                    className="bg-green-500 rounded-2xl text-white px-2 py-1 mr-2"
                   >
                     <MdDelete />
                   </button>
