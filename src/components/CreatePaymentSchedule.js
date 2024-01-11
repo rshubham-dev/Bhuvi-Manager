@@ -81,7 +81,6 @@ const CreatePaymentSchedule = () => {
     }
     setContractor(siteData[0]?.contractor || '');
   }, [formData.site]);
-  console.log(client)
   
 
   const handleAddWork = () => {
