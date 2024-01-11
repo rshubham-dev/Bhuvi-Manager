@@ -104,7 +104,7 @@ const ProjectSchedules = () => {
                         </td>
                         <td className="px-6 py-4">{work.toStart}</td>
                         <td className="px-6 py-4">{work.status}</td>
-                        <td className="px-6 py-4">{work.startedAt ? work.startedAt : '-'}</td>
+                        <td className="px-6 py-4 text-center">{work.startedAt ? work.startedAt : '-'}</td>
                         <td className="px-6 py-4">
                           <button
                             onClick={() => handleRedirect(work._id)}
