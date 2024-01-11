@@ -59,19 +59,13 @@ const PaymentSchedules = () => {
     </div>
 
     <section className='bg-white px-12 py-8 mb-16 h-full w-2/5'>
-        <div className="mt-6 w-full">
+        {/* <div className="mt-6 w-full">
           {paymentSchedules.map((paymentSchedule) => (
             <div key={paymentSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
                 Payment Schedule of {paymentSchedule?.site}
                 </summary>
-
-                {/* {workDetail.description.map((description) => (
-                  <ul key={description._id} className='flex justify-between flex-row my-1.5'>
-                    <li className='font-medium text-color-title mx-5 my-1.5 list-disc'>{description.work}</li>
-                  </ul>
-                ))} */}
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
@@ -95,7 +89,7 @@ const PaymentSchedules = () => {
               </details>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
 
     <Toaster

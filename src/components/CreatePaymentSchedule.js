@@ -128,7 +128,7 @@ const CreatePaymentSchedule = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const updatedFormData = {
       ...formData,
       paymentDetails: formData.paymentDetails.map((detail) => {
@@ -139,18 +139,18 @@ const CreatePaymentSchedule = () => {
         };
       }),
     };
-    setFormData(updatedFormData);
-
+  
     try {
       console.log(updatedFormData);
-      const response = await axios.post('/api/v1/payment-schedule', formData)
-      console.log(response.data)
+      const response = await axios.post('/api/v1/payment-schedule', updatedFormData); // Use updatedFormData instead of formData
+      console.log(response.data);
       toast.success(response.data.message);
     } catch (error) {
       console.error('Error submitting work order:', error.message);
       toast.error(error.message);
     }
   };
+  
 
 
 

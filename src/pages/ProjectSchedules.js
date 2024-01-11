@@ -60,7 +60,7 @@ const ProjectSchedules = () => {
       </div>
 
       <section className='bg-white px-12 py-8 mb-16 h-full w-2/5'>
-        <div className="mt-6 w-full">
+        {/* <div className="mt-6 w-full">
           {projectSchedules.map((projectSchedule) => (
             <div key={projectSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
@@ -91,16 +91,10 @@ const ProjectSchedules = () => {
                   </tbody>
                 </table>
 
-                {/* {projectSchedule?.projectDetail.map((work) => (
-                  <ul key={work._id} className='flex justify-between flex-row my-1.5'>
-                    <li className='font-medium text-color-title mx-5 my-1.5 list-disc'>{work.workDetail}</li>
-                  </ul>
-                ))} */}
-
               </details>
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
 
       {/* 
