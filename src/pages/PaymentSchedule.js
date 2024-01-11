@@ -55,7 +55,7 @@ const PaymentSchedules = () => {
         </button>
       </div>
 
-      {/* <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
+      <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
         <div className="mt-6 w-full">
           {paymentSchedules.map((paymentSchedule) => (
             <div key={paymentSchedule._id} className="card">
@@ -104,7 +104,7 @@ const PaymentSchedules = () => {
             </div>
           ))}
         </div>
-      </section> */}
+      </section>
 
       <section className='bg-white px-8 py-2 mb-16 h-full w-full'>
         <div className="mt-6 w-full">
@@ -132,6 +132,18 @@ const PaymentSchedules = () => {
                     <td className="px-6 py-4"></td>
                     <td className="px-6 py-4"></td>
                     <td className="px-6 py-4"></td>
+                    <td className="px-6 py-4">
+                      <button
+                        className="bg-blue-500 text-white px-2 py-1 mr-2"
+                      >
+                        <GrEdit />
+                      </button>
+                      <button
+                        className="bg-red-500 text-white px-2 py-1 mr-2"
+                      >
+                        <MdDelete />
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
