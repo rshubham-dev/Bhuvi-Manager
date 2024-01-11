@@ -28,14 +28,13 @@ const CreateExtraWork = () => {
       useEffect(() => {
     
         const fetchSite = async () => {
-          try {
-            const response = await axios.get('/api/v1/site');
-            console.log(response.data)
-            setSite(response.data)
-          } catch (error) {
-            toast.error(error.message)
+            try {
+              const siteData = await axios.get('/api/v1/site');
+              setSite(siteData.data);
+            } catch (error) {
+              toast.error(error.message)
+            }
           }
-        };
     
         const fetchContractor = async () => {
           try {
