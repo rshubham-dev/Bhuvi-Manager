@@ -30,6 +30,7 @@ const CreateExtraWork = () => {
         const fetchSite = async () => {
             try {
               const siteData = await axios.get('/api/v1/site');
+              console.log(siteData.data)
               setSite(siteData.data);
             } catch (error) {
               toast.error(error.message)
