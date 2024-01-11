@@ -131,7 +131,6 @@ const PaymentSchedules = () => {
                     <td className="px-6 py-4"></td>
                     <td className="px-6 py-4"></td>
                     <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
                     <td className="px-6 py-4">
                       <button
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
