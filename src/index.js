@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 // import { UserContextProvider } from './context/AuthContext';
 import { store } from './app/store';
 
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.baseURL = 'https://jolly-pasca-1c0cf6.netlify.app';
 axios.defaults.withCredentials = true;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

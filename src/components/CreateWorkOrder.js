@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.baseURL = 'https://jolly-pasca-1c0cf6.netlify.app';
 axios.defaults.withCredentials = true;
 
 

@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 // import {UserContext} from '../context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../features/auth/authSlice';
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.baseURL = 'https://jolly-pasca-1c0cf6.netlify.app';
 axios.defaults.withCredentials = true;
 
 

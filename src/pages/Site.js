@@ -6,7 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.baseURL = 'https://jolly-pasca-1c0cf6.netlify.app';
 axios.defaults.withCredentials = true;
 
 

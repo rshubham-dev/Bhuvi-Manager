@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useLocation } from 'react-router-dom';
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
+axios.defaults.baseURL = 'https://jolly-pasca-1c0cf6.netlify.app';
 axios.defaults.withCredentials = true;
 
 const CreateSite = () => {
