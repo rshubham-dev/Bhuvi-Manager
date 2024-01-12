@@ -16,8 +16,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Provider store={store}>
+      <React.Suspense fallback={<div>Loading...</div>}>
         <Layout />
         <App />
+      </React.Suspense>
     </Provider>
   </BrowserRouter>
 );
