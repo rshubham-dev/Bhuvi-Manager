@@ -137,11 +137,11 @@ const SiteScreen = () => {
                 {site.paymentSchedule?.map((paymentSchedule) => (
                   <tr key={paymentSchedule.paymentDetails._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="px-6 py-4">
-
+                      {paymentSchedule.paymentDetails?.workDescription}
                     </td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
+                    <td className="px-6 py-4">{paymentSchedule.paymentDetails?.amount}</td>
+                    <td className="px-6 py-4">{paymentSchedule.paymentDetails?.dateOfPayment}</td>
+                    <td className="px-6 py-4">{paymentSchedule.paymentDetails?.status}</td>
                     <td className="px-6 py-4">
                       <button
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
@@ -185,13 +185,10 @@ const SiteScreen = () => {
               <tbody>
                 {site.projectSchedule?.projectDetail.map((work) => (
                   <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="px-6 py-4">
-
-                    </td>
                     <td className="px-6 py-4">{work.workDetail}</td>
                     <td className="px-6 py-4">{work.toStart}</td>
                     <td className="px-6 py-4">{work.status}</td>
-                    <td className="px-6 py-4">{work.startedAt ? work.startedAt : '-' }</td>
+                    <td className="px-6 py-4 text-center">{work.startedAt ? work.startedAt : '-' }</td>
                     <td className="px-6 py-4">
                       <button
                         className="bg-blue-500 text-white px-2 py-1 mr-2"

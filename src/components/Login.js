@@ -26,38 +26,31 @@ const LoginForm = () => {
       [e.target.name]: e.target.value,
     });
   };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/v1/user/login', formData);
-      toast.success(response.data.message);
-      if (!response.data.user) {
-        dispatch(logout())
-      }
-      else {
-        dispatch(login(response.data.user))
-        sessionStorage.setItem("token", response.data.accessToken);
-      }
-      setFormData({
-        userMail: '',
-        password: '',
-      })
+        const response = await axios.post('/api/v1/user/login', formData);
+        toast.success(response.data.message);
+        if (!response.data.user) {
+            dispatch(logout());
+        } else {
+            dispatch(login(response.data.user));
+            sessionStorage.setItem("token", response.data.accessToken);
+            navigate('/dashboard');  // Redirect here
+        }
+        setFormData({
+            userMail: '',
+            password: '',
+        });
     } catch (error) {
-      console.log(error)
-      toast.error(error.message);
-      setError('Login failed. Please check your credentials.');
+        console.log(error);
+        toast.error(error.message);
+        setError('Login failed. Please check your credentials.');
     }
-  };
+};
 
-  useEffect(() => {
-    const handleNavigation = () => {
-      if (isLoggedIn) {
-        navigate('/dashboard')
-      }
-    };
-
-    handleNavigation();
-  }, [isLoggedIn, navigate]);
 
 
 
