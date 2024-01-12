@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import Layout from './pages/Layout';
 import axios from 'axios';
 import { Provider } from 'react-redux';
-// import { UserContextProvider } from './context/AuthContext';
 import { store } from './app/store';
 
 axios.defaults.baseURL = 'https://bhuvi-management-server-7nf0.onrender.com';
@@ -17,10 +16,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Provider store={store}>
-      <React.Suspense fallback={<div>Loading...</div>}>
-          <Layout />
-          <App />
-      </React.Suspense>
+        <Layout />
+        <App />
     </Provider>
   </BrowserRouter>
 );
