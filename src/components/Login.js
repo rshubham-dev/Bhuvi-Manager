@@ -16,9 +16,6 @@ const LoginForm = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoggedIn } = useSelector((state) => {
-    return state.auth
-  });
 
   const handleChange = (e) => {
     setFormData({
