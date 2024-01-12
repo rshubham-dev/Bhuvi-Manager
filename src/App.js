@@ -57,7 +57,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        {/* <ProtectedRoute isLoggedIn={isLoggedIn}> */}
+        <ProtectedRoute isLoggedIn={isLoggedIn}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/ceo' element={<Admin />} />
           <Route path='/admin' element={<Admin />} />
@@ -111,7 +111,7 @@ const App = () => {
           <Route path='/edit-extra-work' element={<CreateExtraWork />} />
           <Route path='/checklists' element={<CheckList />} />
           <Route path='/setting' element={<Profile />} />
-        {/* </ProtectedRoute> */}
+        </ProtectedRoute>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

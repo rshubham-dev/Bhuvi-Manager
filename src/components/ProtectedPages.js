@@ -1,6 +1,6 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import Home from '../pages/Home';
 
 export const ProtectedRoute = ({ isLoggedIn, children }) => {
-  return isLoggedIn ? children : <Navigate to="/login" />;
+  return isLoggedIn ? children : <Home/>;
 };
