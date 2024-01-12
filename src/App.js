@@ -112,7 +112,6 @@ const App = () => {
           <Route path='/checklists' element={<CheckList />} />
           <Route path='/setting' element={<Profile />} />
         </ProtectedRoute>
-        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )
