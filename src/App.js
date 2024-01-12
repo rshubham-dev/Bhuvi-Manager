@@ -46,6 +46,12 @@ import ContractorScreen from './screen/ContractorScreen';
 import WorkDetails from './pages/WorkDetails';
 import CreateExtraWork from './components/CreateExtraWork';
 import ExtraWork from './pages/ExtraWork';
+import CreateSupplier from './components/CreateSupplier';
+import CreatePurchaseOrder from './components/CreatePurchaseOrder';
+import CreateMaterialOrder from './components/CreateMaterialOrder';
+import PurchaseOrders from './pages/PurchaseOrders';
+import Suppliers from './pages/Suppliers';
+import MaterialOrder from './pages/MaterialOrder';
 
 const App = () => {
 
@@ -113,6 +119,13 @@ const App = () => {
         <Route path='/edit-extra-work' element={<CreateExtraWork />} />
         <Route path='/checklists' element={<CheckList />} />
         <Route path='/setting' element={<Profile />} />
+        <Route path='/create-supplier' element={<CreateSupplier />} />
+        <Route path='/edit-supplier' element={<CreateSupplier />} />
+        <Route path='/suppliers' element={<Suppliers />} />
+        <Route path='/create-purchase-order' element={<CreatePurchaseOrder />} />
+        <Route path='/Purchase-Order' element={<PurchaseOrders />} />
+        <Route path='/create-material-order' element={<CreateMaterialOrder />} />
+        <Route path='/Material-Order' element={<MaterialOrder />} />
         {/* </ProtectedRoute> */}
       </Routes>
     </>

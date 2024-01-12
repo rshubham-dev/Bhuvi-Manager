@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 
@@ -203,7 +202,6 @@ const CreateContractor = () => {
                 name="documents.addhar"
                 value={contractor.documents.addhar}
                 onChange={handleChange}
-                placeholder="Street"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -217,7 +215,6 @@ const CreateContractor = () => {
                 name="documents.pan"
                 value={contractor.documents.pan}
                 onChange={handleChange}
-                placeholder="City"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
@@ -231,7 +228,6 @@ const CreateContractor = () => {
                 name="documents.bank"
                 value={contractor.address.bank}
                 onChange={handleChange}
-                placeholder="District"
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>

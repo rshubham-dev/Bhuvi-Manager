@@ -1,10 +1,209 @@
-import React from 'react'
-
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate, useLocation } from 'react-router-dom';
 axios.defaults.withCredentials = true;
 
 const CreateSupplier = () => {
+
+  const [supplier, setSupplier] = useState({
+    name: '',
+    contactNo: '',
+    whatsapp: '',
+    gst: '',
+    address: '',
+    pan: '',
+    bank: '',
+  });
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [supplierIdToEdit, setSupplierIdToEdit] = useState(null);
+
+  useEffect(() => {
+    const id = new URLSearchParams(location.search).get('supplierId');
+
+    if (id) {
+      setSupplierIdToEdit(id);
+      fetchSupplierDetails(id);
+    }
+  }, [location.search]);
+
+  const fetchSupplierDetails = async (id) => {
+    try {
+      const response = await axios.get(`/api/v1/supplier/${id}`);
+      const supplier = response.data;
+      setSupplier({
+        name: supplier.name,
+        contactNo: supplier.contactNo,
+        whatsapp: supplier.whatsapp,
+        gst: supplier.gst,
+        address: supplier.address,
+        pan: supplier.pan,
+        bank: '',
+      });
+    } catch (error) {
+      console.log('Error fetching user details:', error);
+    }
+  };
+
+  const handleChange = (data) => {
+    const { type, value, name } = data.target;
+    if (type === 'file') {
+      setSupplier((prevSupplier) => ({
+        ...prevSupplier,
+        [name]: data.target.files[0],
+      }));
+    } else {
+      setSupplier((prevSupplier) => ({
+        ...prevSupplier,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    Object.entries(supplier).forEach(([key, value]) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value);
+      }
+    });
+
+    if (supplierIdToEdit) {
+      try {
+        await axios.put(`/api/v1/supplier/${supplierIdToEdit}`, supplier);
+        toast.success('User edited successfully');
+      } catch (error) {
+        toast.error('Failed Creating Contractor. Please check your credentials.');
+        setError('Failed Creating Contractor. Please check your credentials.');
+      }
+    } else {
+      try {
+        const response = await axios.post('/api/v1/supplier', formData);
+        toast.success(response.data.message);
+        console.log('Form data submitted:', supplier);
+      } catch (error) {
+        console.error('Error creating contractor:', error);
+        toast.error('Failed Creating Contractor. Please check your credentials.');
+        setError('Failed Creating Contractor. Please check your credentials.');
+      }
+    }
+  };
+
   return (
-    <div>CreateSupplier</div>
+    <section className='container mx-auto mt-6 mb-24'>
+      <form onSubmit={handleSubmit}
+        className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+        <h2 className="text-2xl font-semibold mb-4 text-center">Create Supplier</h2>
+
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-600">
+            Name:
+          </label>
+          <input
+            type="text"
+            name="name"
+            onChange={(e) => handleChange(e, "name")}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label htmlFor='phone'
+            className='block text-sm font-medium text-gray-600'>
+            Contact Number:
+          </label>
+          <input
+            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+            type='text'
+            name='contactNo'
+            placeholder='Enter Your Contact Number'
+            onChange={(e) => handleChange(e, 'contactNo')}
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label htmlFor='whatsapp'
+            className='block text-sm font-medium text-gray-600'>
+            Whatsapp Number:
+          </label>
+          <input
+            className='mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500'
+            type='text'
+            name='whatsapp'
+            placeholder='Enter Your Whatsapp Number'
+            onChange={(e) => handleChange(e, 'whatsapp')}
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label htmlFor="address" className="block text-sm font-medium text-gray-600">
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            onChange={(e) => handleChange(e, 'address')}
+            placeholder="Address"
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label htmlFor="gst" className="block text-sm font-medium text-gray-600">
+            GST No
+          </label>
+          <input
+            type="text"
+            name="gst"
+            onChange={(e) => handleChange(e, 'gst')}
+            placeholder="GST No."
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label htmlFor="pan" className="block text-sm font-medium text-gray-600">
+            Pan Card:
+          </label>
+          <input
+            type="text"
+            name="pan"
+            onChange={(e) => handleChange(e, "pan")}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div className='mb-4'>
+          <label htmlFor="account" className="block text-sm font-medium text-gray-600">
+            Account Details:
+          </label>
+          <input
+            type="file"
+            name="bank"
+            onChange={(e) => handleChange(e, "bank")}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
+        >
+          Create Supplier
+        </button>
+      </form>
+      {error && <p className="text-red-500">{error}</p>}
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
+    </section>
   )
 }
 
