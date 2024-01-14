@@ -212,13 +212,13 @@ const CreatePaymentSchedule = () => {
           </select>
         </div>
 
-        <div className="m-4">
+        <div className="mb-4">
           <h2 className="text-lg font-semibold mb-2">Work Details</h2>
           {formData.paymentDetails.map((work, index) => (
-            <div key={index} className="mb-4 p-4 border rounded">
-              <div className="grid grid-cols-2 gap-4">
+            <div key={index} className="mb-4 p-3 border rounded">
+              <div className="grid grid-cols-2 grid-flow-row-dense gap-4">
 
-                <div>
+                <div className='col-span-2'>
                   <label
                     htmlFor={`work[${index}].workDescription`}
                     className="block text-sm font-semibold text-gray-600"

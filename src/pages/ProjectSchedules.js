@@ -11,7 +11,6 @@ axios.defaults.withCredentials = true;
 const ProjectSchedules = () => {
   const navigate = useNavigate();
   const [projectSchedules, setProjectSchedule] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getprojectSchedules = async () => {
@@ -21,7 +20,6 @@ const ProjectSchedules = () => {
         console.log(projectScheduleData.data)
       } catch (error) {
         toast.error(error.message);
-        setError(error.message);
       }
     }
     getprojectSchedules();
@@ -29,19 +27,30 @@ const ProjectSchedules = () => {
   }, []);
 
 
-  const handleEdit = (projectScheduleId) => {
-    // Add your edit logic here
-    navigate(`/edit-project-schedule?project-scheduleId=${projectScheduleId}`);
+  const handleEdit = (id, index) => {
+    console.log(id)
+    console.log(index)
+    navigate(`/edit-projectSchedule/${id}/${index}`);
   };
 
-  const handleRedirect = (projectScheduleId) => {
-    navigate(`/project-schedule?project-scheduleId=${projectScheduleId}`);
+  const addMore = async (id) => {
+      navigate(`/edit-projectSchedule/${id}`);
   }
 
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/v1/project-schedule/${id}`);
       setProjectSchedule(projectSchedules.filter((projectSchedule) => projectSchedule._id !== id));
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
+  const deleteDetail = async (id, index) => {
+    try {
+      const response = await axios.delete(`/api/v1/project-schedule/${id}/projectDetails/${index}`);
+      setProjectSchedule(response.data);
+      console.table(response.data)
     } catch (error) {
       toast.error(error.message)
     }
@@ -65,21 +74,18 @@ const ProjectSchedules = () => {
           {projectSchedules?.map((projectSchedule) => (
             <div key={projectSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
+                
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
                   Project Schedule of {projectSchedule.site?.name}
                   <div className='self-end'>
                     <button
-                      className="bg-green-500 rounded-2xl text-white px-2 py-1 mr-2">
+                    onClick={()=> addMore(projectSchedule._id)}
+                      className="bg-green-500 rounded-3xl text-white px-1.5 py-1.5 mr-2">
                       <MdAdd className="text-xl text-white" />
                     </button>
                     <button
-                      className="bg-blue-500 text-white px-2 py-1 mr-2"
-                    >
-                      <GrEdit />
-                    </button>
-                    <button
                       onClick={() => handleDelete(projectSchedule._id)}
-                      className="bg-green-500 rounded-2xl text-white px-2 py-1 mr-2"
+                      className="bg-red-500 rounded-3xl text-white px-1.5 py-1.5 mr-2"
                     >
                       <MdDelete />
                     </button>
@@ -96,8 +102,9 @@ const ProjectSchedules = () => {
                       <th scope="col" className="px-6 py-3">Action</th>
                     </tr>
                   </thead>
+
                   <tbody>
-                    {projectSchedule?.projectDetail.map((work) => (
+                    {projectSchedule?.projectDetail.map((work, index) => (
                       <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
                           {work.workDetail || 'No Work Detail'}
@@ -107,20 +114,14 @@ const ProjectSchedules = () => {
                         <td className="px-6 py-4 text-center">{work.startedAt ? work.startedAt : '-'}</td>
                         <td className="px-6 py-4">
                           <button
-                            onClick={() => handleRedirect(work._id)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2"
-                          >
-                            <FaExternalLinkAlt />
-                          </button>
-                          <button
-                            onClick={() => handleEdit(work._id)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2"
+                            onClick={() => handleEdit(projectSchedule._id, index)}
+                            className="bg-blue-500 text-white px-1.5 py-1.5 mr-2 rounded-3xl"
                           >
                             <GrEdit />
                           </button>
                           <button
-                            onClick={() => handleDelete(work._id)}
-                            className="bg-red-500 text-white px-2 py-1 mr-2"
+                            onClick={() => deleteDetail(projectSchedule._id, index)}
+                            className="bg-red-500 text-white px-1.5 py-1.5 mr-2 rounded-3xl"
                           >
                             <MdDelete />
                           </button>

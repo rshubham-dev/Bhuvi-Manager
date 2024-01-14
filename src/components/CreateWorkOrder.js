@@ -256,9 +256,9 @@ const WorkOrderForm = () => {
 
           {formData.work.map((workItem, index) => (
             <div key={index} className="mb-4 p-4 border rounded">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 grid-flow-row-dense gap-4">
 
-                <div>
+                <div className='col-span-2'>
                   <label
                     htmlFor={`work[${index}].workDetail`}
                     className="block text-sm font-semibold text-gray-600"
@@ -323,30 +323,6 @@ const WorkOrderForm = () => {
                       </option>
                     ))}
                   </select>
-                </div>
-
-                <div>
-                  <label htmlFor={`work[${index}].startdate`} className="block text-sm font-semibold text-gray-600">
-                    Starting Date
-                  </label>
-                  <input
-                    type="date"
-                    value={workItem.startdate}
-                    onChange={(e) => handleWorkChange(index, 'startdate', e.target.value)}
-                    className="border p-2 rounded w-full"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor={`work[${index}].duration`} className="block text-sm font-semibold text-gray-600">
-                    Project Duration
-                  </label>
-                  <input
-                    type='month'
-                    value={workItem.duration}
-                    onChange={(e) => handleWorkChange(index, 'duration', e.target.value)}
-                    className="border p-2 rounded w-full"
-                  />
                 </div>
 
                 {formData.work.length > 1 && (

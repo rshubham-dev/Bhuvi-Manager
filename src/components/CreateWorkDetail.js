@@ -67,7 +67,7 @@ function WorkDetailsForm() {
     try {
       const response = await axios.post('/api/v1/work-details/create', workDetail);
       toast.success(response.data.message)
-      navigate('/work-details');
+      navigate(-1);
     } catch (error) {
       toast.error(error.message)
     }

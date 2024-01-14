@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -19,9 +20,25 @@ const CreateClient = () => {
       state: "",
     },
   });
+  const [users, setUsers] = useState([]);
+const navigate = useNavigate();
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const userData = await axios.get('/api/v1/user/lists');
+        let users = userData.data;
+        if(userData){
+          setUsers(users.filter((user)=> user.role === 'Client'));
+        }
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+    getUsers();
+  }, [])
 
   const handleChange = (e) => {
-    const{name, value} = e.target;
+    const { name, value } = e.target;
     if (name.startsWith('address.')) {
       const addressField = name.split('.')[1];
       setClient((prevclient) => ({
@@ -31,8 +48,8 @@ const CreateClient = () => {
           [addressField]: value,
         },
       }));
-    }else{
-    setClient({ ...client, [name]: value });
+    } else {
+      setClient({ ...client, [name]: value });
     }
   };
 
@@ -41,8 +58,11 @@ const CreateClient = () => {
     console.log('Before data submitted:', client);
     try {
       const response = await axios.post('/api/v1/client', client);
-      toast(response.data.message)
-      console.log(response.data)
+      if(response.data){
+        toast.success(response.data.message)
+        console.log(response.data)
+        navigate(-1)
+      }
     } catch (error) {
       toast.error(error.message)
     }
@@ -53,19 +73,35 @@ const CreateClient = () => {
       <form onSubmit={handleSubmit}
         className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-4 text-center">Create Client</h2>
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">
             Name:
           </label>
-          <input
+          <select
+            name="name"
+            value={client.name}
+            onChange={handleChange}
+            required
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+            <option>Client</option>
+            {users.map((user) => (
+              <option key={user._id} value={user.userName}>
+                {user.userName}
+              </option>
+            ))}
+          </select>
+
+          {/* <input
             type="text"
             name="name"
             value={client.name}
             onChange={handleChange}
             required
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-          />
+          /> */}
         </div>
+
         <div className="mb-4">
           <label
             htmlFor="UserEmail"
@@ -83,6 +119,7 @@ const CreateClient = () => {
             placeholder="Email"
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
         </div>
+
         <div className="mb-4">
           <label
             htmlFor="Password"
@@ -90,15 +127,15 @@ const CreateClient = () => {
           >
             Password
           </label>
-        <input
-          type="password"
-          name="password"
-          value={client.password}
-          onChange={handleChange}
-          required
-          minLength={8}
-          className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-        />
+          <input
+            type="password"
+            name="password"
+            value={client.password}
+            onChange={handleChange}
+            required
+            minLength={8}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
         </div>
 
         <div className='mb-4'>
@@ -141,6 +178,7 @@ const CreateClient = () => {
         <div className="mb-4">
           <h4 className="text-lg font-semibold mb-2">Address</h4>
           <div className="grid grid-cols-2 gap-4">
+
             <div>
               <label htmlFor="street" className="block text-sm font-medium text-gray-600">
                 Street
@@ -155,6 +193,7 @@ const CreateClient = () => {
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
+
             <div>
               <label htmlFor="city" className="block text-sm font-medium text-gray-600">
                 City
@@ -169,6 +208,7 @@ const CreateClient = () => {
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
+
             <div>
               <label htmlFor="district" className="block text-sm font-medium text-gray-600">
                 District
@@ -183,6 +223,7 @@ const CreateClient = () => {
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
+
             <div>
               <label htmlFor="state" className="block text-sm font-medium text-gray-600">
                 State
@@ -197,6 +238,7 @@ const CreateClient = () => {
                 className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>
+
           </div>
         </div>
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useLocation} from 'react-router-dom';
-
 axios.defaults.withCredentials = true;
 
 const CreateUser = () => {
@@ -74,7 +73,7 @@ const CreateUser = () => {
       }
       navigate('/user');
     } catch (error) {
-      console.error('Error submitting user data:', error);
+      console.log('Error submitting user data:', error);
       toast.error(error.response?.data?.message || 'An error occurred');
     }
   };

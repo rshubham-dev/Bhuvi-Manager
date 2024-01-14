@@ -52,6 +52,7 @@ import CreateMaterialOrder from './components/CreateMaterialOrder';
 import PurchaseOrders from './pages/PurchaseOrders';
 import Suppliers from './pages/Suppliers';
 import MaterialOrder from './pages/MaterialOrder';
+import EditDetails from './components/EditDetails';
 
 const App = () => {
 
@@ -104,15 +105,17 @@ const App = () => {
         <Route path='/work-details' element={<WorkDetails />} />
         <Route path='/project-schedules' element={<ProjectSchedules />} />
         <Route path='/project-schedule' element={<Project_ScheduleScreen />} />
-        <Route path='/edit-project-schedule' element={<CreateProjectSchedule />} />
+        <Route path='/edit-projectSchedule/:id/:index' element={<CreateProjectSchedule />} />
+        <Route path='/edit-projectSchedule/:id' element={<CreateProjectSchedule />} />
         <Route path='/create-project-schedule' element={<CreateProjectSchedule />} />
         <Route path='/payment-schedules' element={<PaymentSchedules />} />
         <Route path='/payment-schedule' element={<Payment_SchedulScreen />} />
-        <Route path='/edit-payment-schedule' element={<CreatePaymentSchedule />} />
+        <Route path='/edit-payment-schedule/:id' element={<CreatePaymentSchedule />} />
+        <Route path='/edit-payment-schedule/:id/index' element={<CreatePaymentSchedule />} />
         <Route path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
         <Route path='/bills' element={<Bills />} />
         <Route path='/bill' element={<BillScreen />} />
-        <Route path='/edit-bill' element={<CreateBill />} />
+        <Route path='/edit-bill/:id' element={<CreateBill />} />
         <Route path='/create-bill' element={<CreateBill />} />
         <Route path='/extra-work' element={<ExtraWork />} />
         <Route path='/create-extra-work' element={<CreateExtraWork />} />
@@ -123,9 +126,9 @@ const App = () => {
         <Route path='/edit-supplier' element={<CreateSupplier />} />
         <Route path='/suppliers' element={<Suppliers />} />
         <Route path='/create-purchase-order' element={<CreatePurchaseOrder />} />
-        <Route path='/Purchase-Order' element={<PurchaseOrders />} />
+        <Route path='/purchase-order' element={<PurchaseOrders />} />
         <Route path='/create-material-order' element={<CreateMaterialOrder />} />
-        <Route path='/Material-Order' element={<MaterialOrder />} />
+        <Route path='/material-order' element={<MaterialOrder />} />
         {/* </ProtectedRoute> */}
       </Routes>
     </>

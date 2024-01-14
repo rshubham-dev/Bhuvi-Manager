@@ -5,7 +5,7 @@ import './screen.css';
 import { GrEdit } from "react-icons/gr";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdAdd, MdDownload, MdDelete } from "react-icons/md";
-
+import toast, { Toaster } from 'react-hot-toast';
 
 axios.defaults.withCredentials = true;
 
@@ -13,6 +13,7 @@ const SiteScreen = () => {
   const [site, setSiteData] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
+  const [projectDetail, setProjectDetail] = useState([]);
 
   useEffect(() => {
     const siteId = new URLSearchParams(location.search).get('siteId');
@@ -27,17 +28,38 @@ const SiteScreen = () => {
       const response = await axios.get(`/api/v1/site/${siteId}`);
       console.log(response.data)
       setSiteData(response.data);
+      setProjectDetail(response.data?.projectSchedule.projectDetail)
     } catch (error) {
       console.log('Error fetching site details:', error);
     }
   };
-
+console.log(projectDetail)
   const street = site?.address?.street || '';
   const city = site?.address?.city || '';
   const district = site?.address?.district || '';
   const state = site?.address?.state || '';
 
   const addressString = `${street} ${city} ${district} ${state}`;
+
+  const addMore = async (id) => {
+    navigate(`/edit-projectSchedule/${id}`);
+};
+
+const handleEdit = (projectId, projectIndex) => {
+  console.log(projectId)
+  console.log(projectIndex)
+  navigate(`/edit-projectSchedule/${projectId}/${projectIndex}`);
+};
+
+const deleteDetail = async (id, index) => {
+  try {
+    const response = await axios.delete(`/api/v1/project-schedule/${id}/projectDetails/${index}`);
+    setProjectDetail(response.data)
+    console.table(response.data)
+  } catch (error) {
+    toast.error(error.message)
+  }
+};
 
   return (
     <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
@@ -135,13 +157,13 @@ const SiteScreen = () => {
               </thead>
               <tbody>
                 {site.paymentSchedule?.map((paymentSchedule) => (
-                  <tr key={paymentSchedule.paymentDetails._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tr key={paymentSchedule._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="px-6 py-4">
-                      {paymentSchedule.paymentDetails?.workDescription}
+                      {paymentSchedule}
                     </td>
-                    <td className="px-6 py-4">{paymentSchedule.paymentDetails?.amount}</td>
-                    <td className="px-6 py-4">{paymentSchedule.paymentDetails?.dateOfPayment}</td>
-                    <td className="px-6 py-4">{paymentSchedule.paymentDetails?.status}</td>
+                    <td className="px-6 py-4">{paymentSchedule}</td>
+                    <td className="px-6 py-4">{paymentSchedule}</td>
+                    <td className="px-6 py-4">{paymentSchedule}</td>
                     <td className="px-6 py-4">
                       <button
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
@@ -167,6 +189,7 @@ const SiteScreen = () => {
               Project Schedules
               <div>
                 <button
+                onClick={()=> addMore(site?.projectSchedule._id)}
                   className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
                   <MdAdd className="text-xl text-white" />
                 </button>
@@ -183,7 +206,7 @@ const SiteScreen = () => {
                 </tr>
               </thead>
               <tbody>
-                {site.projectSchedule?.projectDetail.map((work) => (
+                {projectDetail?.map((work, index) => (
                   <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="px-6 py-4">{work.workDetail}</td>
                     <td className="px-6 py-4">{work.toStart}</td>
@@ -191,11 +214,13 @@ const SiteScreen = () => {
                     <td className="px-6 py-4 text-center">{work.startedAt ? work.startedAt : '-' }</td>
                     <td className="px-6 py-4">
                       <button
+                      onClick={() => handleEdit(site?.projectSchedule._id, index)}
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
                       >
                         <GrEdit />
                       </button>
                       <button
+                      onClick={() => deleteDetail(site?.projectSchedule._id, index)}
                         className="bg-red-500 text-white px-2 py-1 mr-2"
                       >
                         <MdDelete />

@@ -16,27 +16,16 @@ const CreateSite = () => {
     supervisor: '',
     projectType: '',
     agreement: '',
-    address: {
-      street: '',
-      city: '',
-      district: '',
-      state: '',
-    },
+    address: '',
   })
-  // value: [{
-  //   work: '',
-  //   area: '',
-  //   rate: '',
-  //   unit: '',
-  // }],
-  const [employees, setEmployee] = useState([]);
+  const [incharges, setIncharge] = useState([]);
+  const [supervisors, setSupervisor] = useState([]);
   const [clients, setClient] = useState([]);
   const projectType = ['Residential', 'Commercial', 'Instutional', 'Government'];
   const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6', 'First', 'Second'];
   const location = useLocation();
   const navigate = useNavigate();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
-  // const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
 
   useEffect(() => {
     const siteId = new URLSearchParams(location.search).get('siteId');
@@ -46,7 +35,7 @@ const CreateSite = () => {
     }
   }, [location.search]);
 
-  const fetchSiteDetails = async(siteId)=>{
+  const fetchSiteDetails = async (siteId) => {
     try {
       const response = await axios.get(`/api/v1/site/${siteId}`);
       const site = response.data;
@@ -60,12 +49,7 @@ const CreateSite = () => {
         supervisor: site.supervisor,
         projectType: site.projectType,
         agreement: site.agreement,
-        address: {
-          street: site.address.street,
-          city: site.address.city,
-          district: site.address.district,
-          state: site.address.state,
-        }
+        address: site.address,
       })
     } catch (error) {
       toast.error(error.message)
@@ -74,22 +58,13 @@ const CreateSite = () => {
   }
 
   const handleChange = (e, field) => {
-    const {name, value, type} = e.target;
-    if (name.startsWith('address.')) {
-      const addressField = name.split('.')[1];
+    const { name, value, type } = e.target;
+    if (type === 'file') {
       setSite((prevSite) => ({
         ...prevSite,
-        address: {
-          ...prevSite.address,
-          [addressField]: value,
-        },
+        [field]: e.target.files[0],
       }));
-    }else if (type === 'file') {
-      setSite((prevSite) => ({
-          ...prevSite,
-          [field]: e.target.files[0],
-      }));
-  }else{
+    } else {
       setSite((prevSite) => ({
         ...prevSite,
         [name]: value,
@@ -98,13 +73,16 @@ const CreateSite = () => {
   };
 
   useEffect(() => {
-
     const getemployees = async () => {
       try {
-        const employeesData = await axios.get('/api/v1/employee');
-        setEmployee(employeesData.data);
+        const userData = await axios.get('/api/v1/user/lists');
+        let users = userData.data;
+        if (userData) {
+          setIncharge(users.filter((user) => user.department === 'Site Incharge'));
+          setSupervisor(users.filter((user) => user.department === 'Site Supervisor'));
+        }
       } catch (error) {
-        toast.error(error.message)
+        toast.error(error.message);
       }
     }
 
@@ -123,32 +101,31 @@ const CreateSite = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const siteData = new FormData();
+
+    const formData = new FormData();
     Object.entries(site).forEach(([key, value]) => {
-        if (value instanceof File) {
-          siteData.append(key, value);
-        } else if (typeof value === 'object') {
-            Object.entries(value).forEach(([subKey, subValue]) => {
-              siteData.append(`${key}.${subKey}`, subValue);
-            });
-        } else {
-          siteData.append(key, value);
-        }
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value);
+      }
     });
 
     try {
       if (siteIdToEdit) {
-        await axios.put(`/api/v1/site/${siteIdToEdit}`, siteData);
+        await axios.put(`/api/v1/site/${siteIdToEdit}`, formData);
         toast.success('User edited successfully');
       } else {
-        console.log(siteData)
-        const siteData = await axios.post('/api/v1/site', siteData);
-        console.log(siteData);
-        toast.success('Site created successfully');
-        navigate('/sites');
+        console.log(formData)
+        const siteData = await axios.post('/api/v1/site', site);
+        if(siteData.data){
+          console.log(siteData.data);
+          toast.success('Site created successfully');
+          navigate(-1);
+        }
       }
     } catch (error) {
-      console.log('Error submitting site data:', error.message);
+      console.error('Error submitting site data:', error);
       toast.error(error.message || 'An error occurred');
     }
   };
@@ -315,14 +292,14 @@ const CreateSite = () => {
           <label htmlFor="incharge" className="block text-sm font-medium text-gray-600">
             Site Incharge
           </label>
-          <select 
-          name="incharge"
+          <select
+            name="incharge"
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
             <option>Assign an incharge</option>
-            {employees.map((employee) => (
-              <option key={employee._id} value={employee._id}>
-                {employee.name}
+            {incharges.map((incharge) => (
+              <option key={incharge._id} value={incharge._id}>
+                {incharge.userName}
               </option>
             ))}
           </select>
@@ -337,75 +314,27 @@ const CreateSite = () => {
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
             <option>Assign a supervisor</option>
-            {employees.map((employee) => (
-              <option key={employee._id} value={employee._id}>
-                {employee.name}
+            {supervisors.map((supervisor) => (
+              <option key={supervisor._id} value={supervisor._id}>
+                {supervisor.userName}
               </option>
             ))}
           </select>
         </div>
 
         {/* Address */}
-        <div className="mb-4">
-          <h4 className="text-lg font-semibold mb-2">Address</h4>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label htmlFor="street" className="block text-sm font-medium text-gray-600">
-                Street
-              </label>
-              <input
-                type="text"
-                id="address.street"
-                name="address.street"
-                placeholder="Street"
-                value={site.address.street}
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="city" className="block text-sm font-medium text-gray-600">
-                City
-              </label>
-              <input
-                type="text"
-                id="address.city"
-                name="address.city"
-                value={site.address.city}
-                placeholder="City"
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="district" className="block text-sm font-medium text-gray-600">
-                District
-              </label>
-              <input
-                type="text"
-                id="address.district"
-                name="address.district"
-                value={site.address.district}
-                placeholder="District"
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-            <div>
-              <label htmlFor="state" className="block text-sm font-medium text-gray-600">
-                State
-              </label>
-              <input
-                type="text"
-                id="address.state"
-                name="address.state"
-                value={site.address.state}
-                placeholder="State"
-                onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-              />
-            </div>
-          </div>
+        <div>
+          <label htmlFor="address" className="block text-sm font-medium text-gray-600">
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={site.address}
+            onChange={handleChange}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
         </div>
 
         {/* Agreement */}
@@ -413,11 +342,11 @@ const CreateSite = () => {
           <label htmlFor="agreement" className="block text-sm font-medium text-gray-600">
             Agreement
           </label>
-          <input 
-          type="file" 
-          name="agreement" 
-          onChange={(e) => handleChange(e, 'agreement')}
-          className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
+          <input
+            type="file"
+            name="agreement"
+            onChange={(e) => handleChange(e, 'agreement')}
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
         </div>
 
         {/* Submit Button */}
