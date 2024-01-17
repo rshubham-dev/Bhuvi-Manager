@@ -109,9 +109,9 @@ const App = () => {
         <Route path='/edit-projectSchedule/:id' element={<CreateProjectSchedule />} />
         <Route path='/create-project-schedule' element={<CreateProjectSchedule />} />
         <Route path='/payment-schedules' element={<PaymentSchedules />} />
-        <Route path='/payment-schedule' element={<Payment_SchedulScreen />} />
-        <Route path='/edit-payment-schedule/:id' element={<CreatePaymentSchedule />} />
-        <Route path='/edit-payment-schedule/:id/index' element={<CreatePaymentSchedule />} />
+        <Route path='/payment-schedule/:id' element={<Payment_SchedulScreen />} />
+        <Route path='/edit-paymentSchedule/:id' element={<CreatePaymentSchedule />} />
+        <Route path='/edit-paymentSchedule/:id/:index' element={<CreatePaymentSchedule />} />
         <Route path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
         <Route path='/bills' element={<Bills />} />
         <Route path='/bill' element={<BillScreen />} />

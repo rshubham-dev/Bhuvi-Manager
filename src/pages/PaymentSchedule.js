@@ -11,29 +11,46 @@ axios.defaults.withCredentials = true;
 const PaymentSchedules = () => {
   const navigate = useNavigate();
   const [paymentSchedules, setpaymentSchedules] = useState([]);
-  const [error, setError] = useState(null);
+  const [supplierPaymentSchedules, setsupplierPaymentSchedules] = useState([]);
+  const [contractorPaymentSchedules, setcontractorPaymentSchedules] = useState([]);
+  const [clientPaymentSchedules, setclientPaymentSchedules] = useState([]);
 
   useEffect(() => {
     const getpaymentSchedules = async () => {
       try {
         const paymentSchedulesData = await axios.get('/api/v1/payment-schedule');
         setpaymentSchedules(paymentSchedulesData.data);
-        console.log('res:', paymentSchedulesData.data)
-        console.log(paymentSchedules)
+        setclientPaymentSchedules([
+          ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client')
+        ]);
+        setcontractorPaymentSchedules([
+          ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor')
+        ]);
+        setsupplierPaymentSchedules([
+          ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier')
+        ]);
       } catch (error) {
         toast.error(error.message)
-        setError(error.message);
       }
     }
     getpaymentSchedules();
   }, [])
+  
+  console.log('client:', clientPaymentSchedules);
+  console.log('contractor:', contractorPaymentSchedules);
+  console.log('supplier:', supplierPaymentSchedules);
 
-  const handleEdit = (paymentScheduleId) => {
-    // Add your edit logic here
-    navigate(`/edit-payment-schedule?payment-ScheduleId=${paymentScheduleId}`);
+  const handleEdit = (id, index) => {
+    navigate(`/edit-paymentSchedule/${id}/${index}`);
   };
-  const handleRedirect = (projectScheduleId) => {
-    navigate(`/project-schedule?project-scheduleId=${projectScheduleId}`);
+
+  // const handleRedirect = (id) => {
+  //   navigate(`/payment-schedule/${id}`);
+  // }
+
+  const addMore = async (id) => {
+
+    navigate(`/edit-paymentSchedule/${id}`);
   }
 
   const handleDelete = async (id) => {
@@ -44,6 +61,18 @@ const PaymentSchedules = () => {
       toast.error(error.message)
     }
   };
+
+  const deleteDetail = async (id, index) => {
+    try {
+      const response = await axios.delete(`/api/v1/payment-schedule/${id}/paymentDetails/${index}`);
+      console.log(response.data)
+      setpaymentSchedules(response.data);
+      console.table(response.data)
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
   const handleAdd = () => {
     navigate('/create-payment-schedule');
   };
@@ -64,25 +93,28 @@ const PaymentSchedules = () => {
             <div key={paymentSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  Payment Schedule of {paymentSchedule.site?.name}
+                  <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
+                    Payment Schedule of {paymentSchedule.site?.name}
+                  </NavLink>
                   <div className='self-end'>
-                  <button
-              className="bg-green-500 rounded-2xl text-white px-2 py-1 mr-2">
-                <MdAdd className="text-xl text-white" />
-              </button>
-                  <button
-                    className="bg-blue-500 text-white px-2 py-1 mr-2"
-                  >
-                    <GrEdit />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(paymentSchedule._id)}
-                    className="bg-green-500 rounded-2xl text-white px-2 py-1 mr-2"
-                  >
-                    <MdDelete />
-                  </button>
-                </div>
+                    <button
+                      onClick={() => addMore(paymentSchedule._id)}
+                      className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                      <MdAdd className="text-xl text-white" />
+                    </button>
+                    <button
+                      onClick={() => addMore(paymentSchedule._id)}
+                      className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                      <GrEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(paymentSchedule._id)}
+                      className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                      <MdDelete />
+                    </button>
+                  </div>
                 </summary>
+
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -93,8 +125,9 @@ const PaymentSchedules = () => {
                       <th scope="col" className="px-6 py-3">Action</th>
                     </tr>
                   </thead>
+
                   <tbody>
-                    {paymentSchedule?.paymentDetails.map((work) => (
+                    {paymentSchedule?.paymentDetails.map((work, index) => (
                       <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
                           {work.workDescription}
@@ -104,21 +137,13 @@ const PaymentSchedules = () => {
                         <td className="px-6 py-4">{work.status}</td>
                         <td className="px-6 py-4">
                           <button
-                            onClick={() => handleRedirect(work._id)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2"
-                          >
-                            <FaExternalLinkAlt />
-                          </button>
-                          <button
-                            onClick={() => handleEdit(work._id)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2"
-                          >
+                            onClick={() => handleEdit(paymentSchedule._id, index)}
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
                             <GrEdit />
                           </button>
                           <button
-                            onClick={() => handleDelete(work._id)}
-                            className="bg-red-500 text-white px-2 py-1 mr-2"
-                          >
+                            onClick={() => deleteDetail(paymentSchedule._id, index)}
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
                             <MdDelete />
                           </button>
                         </td>
@@ -132,71 +157,7 @@ const PaymentSchedules = () => {
         </div>
       </section>
 
-      <section className='bg-white px-8 py-2 mb-16 h-full w-full'>
-        <div className="mt-6 w-full">
-          <div className="card">
-            <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
-              <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                Payment Schedule of
-                <div>
-                <button
-              className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
-                <MdAdd className="text-xl text-white" />
-              </button>
-                  <button
-                    className="bg-blue-500 text-white px-2 py-1 mr-2"
-                  >
-                    <GrEdit />
-                  </button>
-                  <button
-                    className="bg-red-500 text-white px-2 py-1 mr-2"
-                  >
-                    <MdDelete />
-                  </button>
-                </div>
-              </summary>
-              <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                    <th scope="col" className="px-6 py-3">Work</th>
-                    <th scope="col" className="px-6 py-3">Amount</th>
-                    <th scope="col" className="px-6 py-3">Payment Date</th>
-                    <th scope="col" className="px-6 py-3">Status</th>
-                    <th scope="col" className="px-6 py-3">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="px-6 py-4">
 
-                    </td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4">
-                      <button
-                        className="bg-blue-500 text-white px-2 py-1 mr-2"
-                      >
-                        <FaExternalLinkAlt />
-                      </button>
-                      <button
-                        className="bg-blue-500 text-white px-2 py-1 mr-2"
-                      >
-                        <GrEdit />
-                      </button>
-                      <button
-                        className="bg-red-500 text-white px-2 py-1 mr-2"
-                      >
-                        <MdDelete />
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </details>
-          </div>
-        </div>
-      </section>
       <Toaster
         position="top-right"
         reverseOrder={false}
@@ -206,3 +167,65 @@ const PaymentSchedules = () => {
 }
 
 export default PaymentSchedules
+
+
+{/* <section className='bg-white px-8 py-2 mb-16 h-full w-full'> 
+ <div className="mt-6 w-full">
+  <div className="card">
+    <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
+      <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+        Payment Schedule of
+        <div>
+          <button
+            className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+            <MdAdd className="text-xl text-white" />
+          </button>
+          <button
+            className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2"
+          >
+            <GrEdit />
+          </button>
+          <button
+            className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2"
+          >
+            <MdDelete />
+          </button>
+        </div>
+      </summary>
+      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th scope="col" className="px-6 py-3">Work</th>
+            <th scope="col" className="px-6 py-3">Amount</th>
+            <th scope="col" className="px-6 py-3">Payment Date</th>
+            <th scope="col" className="px-6 py-3">Status</th>
+            <th scope="col" className="px-6 py-3">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <td className="px-6 py-4">
+
+            </td>
+            <td className="px-6 py-4"></td>
+            <td className="px-6 py-4"></td>
+            <td className="px-6 py-4"></td>
+            <td className="px-6 py-4">
+              <button
+                className="bg-blue-500 text-white px-2 py-1 mr-2"
+              >
+                <GrEdit />
+              </button>
+              <button
+                className="bg-red-500 text-white px-2 py-1 mr-2"
+              >
+                <MdDelete />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </div>
+</div> 
+</section> */}

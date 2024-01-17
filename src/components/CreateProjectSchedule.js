@@ -163,6 +163,7 @@ const CreateProjectSchedule = () => {
     e.preventDefault();
     try {
       if (scheduleIdToEdit) {
+        console.log(formData)
         const response = await axios.put(`/api/v1/project-schedule/${scheduleIdToEdit}`, formData);
         if (response.data) {
           console.log('Project Schedule Edited Successfully!');
