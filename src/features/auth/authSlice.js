@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 const token = sessionStorage.getItem("token");
 
-const removeTokenFromSession = () => {
-    sessionStorage.removeItem("token");
-  };
-window.location.reload();
-
 const initialState = token
     ? { isLoggedIn: true, user: {} }
     : { isLoggedIn: false, user: null };
@@ -20,8 +15,7 @@ export const authSlice = createSlice({
         },
         logout: (state) => {
             console.log('Logout action triggered');
-            removeTokenFromSession();
-            window.location.reload();
+            sessionStorage.removeItem("token");
             return { ...initialState };
         },
     },
