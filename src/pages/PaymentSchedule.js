@@ -49,7 +49,6 @@ const PaymentSchedules = () => {
   // }
 
   const addMore = async (id) => {
-
     navigate(`/edit-paymentSchedule/${id}`);
   }
 

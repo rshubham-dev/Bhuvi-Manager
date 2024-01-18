@@ -116,8 +116,7 @@ const CreateSite = () => {
         await axios.put(`/api/v1/site/${siteIdToEdit}`, formData);
         toast.success('User edited successfully');
       } else {
-        console.log(formData)
-        const siteData = await axios.post('/api/v1/site', site);
+        const siteData = await axios.post('/api/v1/site/create', formData);
         if(siteData.data){
           console.log(siteData.data);
           toast.success('Site created successfully');

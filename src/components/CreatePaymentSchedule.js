@@ -28,6 +28,8 @@ const CreatePaymentSchedule = () => {
     amount: '',
     paymentDate: '',
     status: '',
+    paid: '',
+    due: '',
   });
   const [scheduleIdToEdit, setScheduleIdToEdit] = useState(null);
   const navigate = useNavigate();
@@ -311,7 +313,7 @@ const CreatePaymentSchedule = () => {
             </label>
             <input
               name="client"
-              value={formData.client}
+              value={formData.client || ''}
               readOnly
               onChange={(e) => handleChange('client', e.target.value)}
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
@@ -328,13 +330,12 @@ const CreatePaymentSchedule = () => {
 
   if (paymentToEdit.id && paymentToEdit.index) {
     return (
-      <main>
-        <section className="flex items-center justify-center max-h-screen mb-24 mt-10">
+        <section className="container mx-auto mt-6 mb-20 flex justify-center item-center">
           <form
             onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+            className="bg-white shadow-md rounded px-8 pt-6 pb-6 mb-4 w-full max-w-md">
 
-            <div className='mt-2'>
+            <div className='mb-4'>
               <label
                 htmlFor='workDescription'
                 className="block text-sm font-semibold text-gray-600"
@@ -360,7 +361,7 @@ const CreatePaymentSchedule = () => {
               </select>
             </div>
 
-            <div>
+            <div className="mb-4">
               <label htmlFor='rate' className="block text-sm font-semibold text-gray-600">
                 Rate
               </label>
@@ -374,7 +375,7 @@ const CreatePaymentSchedule = () => {
               />
             </div>
 
-            <div>
+            <div className="mb-4">
               <label htmlFor='area' className="block text-sm font-semibold text-gray-600">
                 Area
               </label>
@@ -388,7 +389,7 @@ const CreatePaymentSchedule = () => {
               />
             </div>
 
-            <div>
+            <div className="mb-4">
               <label htmlFor='unit' className="block text-sm font-semibold text-gray-600">
                 Unit
               </label>
@@ -410,7 +411,7 @@ const CreatePaymentSchedule = () => {
               </select>
             </div>
 
-            <div>
+            <div className="mb-4">
               <label htmlFor='paymentDate' className="block text-sm font-semibold text-gray-600">
                 Date of Payment
               </label>
@@ -419,6 +420,34 @@ const CreatePaymentSchedule = () => {
                 name='paymentDate'
                 value={paymentDetail.paymentDate}
                 onChange={(e) => handleUpdate('paymentDate', e.target.value)}
+                className="border p-2 rounded w-full"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor='paid' className="block text-sm font-semibold text-gray-600">
+                Paid
+              </label>
+              <input
+                type="number"
+                name='paid'
+                value={paymentDetail.paid}
+                onChange={(e) => handleUpdate('paid', e.target.value)}
+                placeholder="Paid Amount"
+                className="border p-2 rounded w-full"
+              />
+            </div>
+
+            <div className="mb-4">
+              <label htmlFor='due' className="block text-sm font-semibold text-gray-600">
+                Due
+              </label>
+              <input
+                type="number"
+                name='due'
+                value={paymentDetail.due}
+                onChange={(e) => handleUpdate('due', e.target.value)}
+                placeholder="Due Amount"
                 className="border p-2 rounded w-full"
               />
             </div>
@@ -454,7 +483,6 @@ const CreatePaymentSchedule = () => {
             reverseOrder={false}
           />
         </section>
-      </main>
     )
   } else {
     return (

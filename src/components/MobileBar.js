@@ -2,11 +2,11 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdAccountBalanceWallet, MdDashboard, MdSettings, MdMessage } from "react-icons/md";
 import { GoBackward, GoForward } from './Navigation';
-
+import { FaTasks } from "react-icons/fa";
 
 const MobileBar = () => {
     return (
-        <section className='fixed bottom-0 w-full'>
+        <section className='fixed bottom-0 w-full z-10'>
             <div className="flex items-center justify-between mx-6 md:mx-14 mb-4">
                 <GoBackward />
                 <GoForward />
@@ -20,8 +20,12 @@ const MobileBar = () => {
                     <MdAccountBalanceWallet className='text-xl mb-1 lg:text-2xl' />
                     Expense
                 </NavLink>
-                <NavLink to='/Message' className='text-white flex flex-col items-center'>
-                    <MdMessage className='text-xl mb-1 lg:text-2xl' />
+                <NavLink to='/task' className='text-white flex flex-col items-center'>
+                <FaTasks className='text-xl mb-1 lg:text-2xl' />
+                    Task
+                </NavLink>
+                <NavLink to='/message' className='text-white flex flex-col items-center'>
+                <MdMessage className='text-xl mb-1 lg:text-2xl' />
                     Message
                 </NavLink>
                 <NavLink to='/setting' className='text-white flex flex-col items-center'>

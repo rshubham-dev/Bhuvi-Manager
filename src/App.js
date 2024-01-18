@@ -88,7 +88,7 @@ const App = () => {
         <Route path='/create-user' element={<CreateUser />} />
         <Route path='/edit-user' element={<CreateUser />} />
         <Route path='/sites' element={<Sites />} />
-        <Route path='/site' element={<SiteScreen />} />
+        <Route path='/site/:id' element={<SiteScreen />} />
         <Route path='/create-site' element={<CreateSite />} />
         <Route path='/edit-site' element={<CreateSite />} />
         <Route path='/clients' element={<Clients />} />
@@ -104,7 +104,7 @@ const App = () => {
         <Route path='/create-work-details' element={<CreateWorkDetails />} />
         <Route path='/work-details' element={<WorkDetails />} />
         <Route path='/project-schedules' element={<ProjectSchedules />} />
-        <Route path='/project-schedule' element={<Project_ScheduleScreen />} />
+        <Route path='/project-schedule/:id' element={<Project_ScheduleScreen />} />
         <Route path='/edit-projectSchedule/:id/:index' element={<CreateProjectSchedule />} />
         <Route path='/edit-projectSchedule/:id' element={<CreateProjectSchedule />} />
         <Route path='/create-project-schedule' element={<CreateProjectSchedule />} />

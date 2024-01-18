@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { MdOutlineDarkMode, MdLogout, MdSearch, MdLogin } from "react-icons/md";
+import { MdOutlineDarkMode, MdLogout, MdSearch, MdLogin, MdMessage } from "react-icons/md";
 import logo from '../asset/logo.png';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
@@ -8,24 +8,23 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice';
 
-axios.defaults.baseURL = 'https://bhuvi-management-server.onrender.com';
 axios.defaults.withCredentials = true;
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const {isLoggedIn} = useSelector((state) => {
+  const { isLoggedIn } = useSelector((state) => {
     return state.auth
   });
   const dispatch = useDispatch()
-  
+
   const logOut = async () => {
     try {
       const response = await axios.post('/api/v1/user/logout');
       dispatch(logout());
-        sessionStorage.removeItem('token');
-        toast.success(response.data.message);
-        console.log(response.data);
-        navigate('/login');
+      sessionStorage.removeItem('token');
+      toast.success(response.data.message);
+      console.log(response.data);
+      navigate('/login');
     } catch (error) {
       toast.error(error.message);
     }
@@ -52,6 +51,9 @@ const Navbar = () => {
             </div>
             <div className="flex items-center space-x-4">
               <MdOutlineDarkMode className="text-white text-lg md:text-xl lg:text-2xl" />
+              <NavLink to='/message' className='text-white flex flex-col items-center'>
+                <MdMessage className='text-xl lg:text-2xl' />
+              </NavLink>
               {isLoggedIn ? (
                 <NavLink onClick={logOut} className="text-white text-lg md:text-xl lg:text-2xl">
                   <MdLogout />
