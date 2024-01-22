@@ -169,7 +169,7 @@ const CreateProjectSchedule = () => {
           toast.success(response.data.message);
           navigate(-1)
         }
-      } else if(projectToEdit){
+      } else if(projectToEdit.id && projectToEdit.index){
         console.log(projectDetail)
         await axios.put(`/api/v1/project-schedule/${projectToEdit.id}/projectDetails/${projectToEdit.index}`, projectDetail);
         toast.success('Edited successfully');

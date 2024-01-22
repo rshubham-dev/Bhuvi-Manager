@@ -75,7 +75,7 @@ const CreateBill = () => {
       const response = await axios.get(`/api/v1/payment-schedule/site/${siteId}`);
       const paymentSchedules = response.data.filter((detail) => detail.scheduleFor === billFor);
       const paymentWorks = paymentSchedules.map((paymentSchedule) => paymentSchedule.paymentDetails)
-      setBillWork(paymentWorks)
+      setBillWork(...paymentWorks)
       console.log(paymentSchedules)
       console.log(paymentWorks)
     } catch (error) {

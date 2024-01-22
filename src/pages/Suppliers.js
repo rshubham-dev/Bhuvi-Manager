@@ -56,7 +56,7 @@ const Suppliers = () => {
                       <th scope="col" className="px-6 py-3">Name</th>
                       <th scope="col" className="px-6 py-3">Contact No</th>
                       <th scope="col" className="px-6 py-3">GST No</th>
-                      <th scope="col" className="px-6 py-3">Total Purchase Order</th>
+                      <th scope="col" className="px-6 py-3">Purchase Orders</th>
                       <th scope="col" className="px-6 py-3">Actions</th>
                   </tr>
               </thead>

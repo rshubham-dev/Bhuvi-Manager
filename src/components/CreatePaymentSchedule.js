@@ -47,7 +47,7 @@ const CreatePaymentSchedule = () => {
     supplier: '',
   });
   const [contractors, setContractor] = useState([]);
-  const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM'];
+  const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM', '₹'];
   const schedule = ['Client', 'Contractor', 'Supplier'];
   const status = ['Started', 'Completed', 'Pending', 'Partaly Completed'];
   const { id, index } = useParams();

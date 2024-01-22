@@ -55,6 +55,7 @@ import MaterialOrder from './pages/MaterialOrder';
 import EditDetails from './components/EditDetails';
 import PurchaseOrderScreen from './screen/PurchaseOrderScreen';
 import Message from './pages/Message';
+import Employee from './pages/Employee';
 
 const App = () => {
 
@@ -80,7 +81,8 @@ const App = () => {
         <Route path='/quality-engineer' element={<Quality_Engineer />} />
         <Route path='/design-engineer' element={<Design_Engineer />} />
         <Route path='/accountant' element={<Accountant />} />
-        <Route path='/employee' element={<CreateEmployee />} />
+        <Route path='/employee' element={<Employee />} />
+        <Route path='/create-employee' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
         <Route path='/contractor' element={<ContractorScreen />} />
         <Route path='/edit-contractor' element={<CreateContractor />} />

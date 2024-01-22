@@ -72,7 +72,7 @@ const PurchaseOrders = () => {
             <div key={purchaseOrder._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                Purchase Order of
+                Purchase Order of {purchaseOrder.supplier?.name} for {purchaseOrder.site?.name}
                   <div className='self-end'>
                     <button
                       onClick={() => handleEdit(purchaseOrder._id)}

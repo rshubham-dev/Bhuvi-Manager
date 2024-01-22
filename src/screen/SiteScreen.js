@@ -18,8 +18,12 @@ const SiteScreen = () => {
   const { id } = useParams();
   // const [paymentSchedules, setpaymentSchedules] = useState([]);
   const [supplierPaymentSchedules, setSupplierPaymentSchedules] = useState([]);
+  const [supplierBills, setSupplierBill] = useState([]);
   const [contractorPaymentSchedules, setContractorPaymentSchedules] = useState([]);
-  const [clientPaymentSchedules, setClientPaymentSchedules] = useState(null);
+  const [contractorBills, setContractorBill] = useState([]);
+  const [clientPaymentSchedules, setClientPaymentSchedules] = useState();
+  const [clientBills, setClientBill] = useState([]);
+  const [materialBills, setMaterialBill] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -30,26 +34,48 @@ const SiteScreen = () => {
           setSiteData(site);
           setProjectDetail(site.projectSchedule?.projectDetail)
           setWorkOrder(site.workOrder)
-          // setpaymentSchedules(site.paymentSchedule)
         } catch (error) {
           console.log('Error fetching site details:', error);
         }
       };
       fetchSiteDetails();
-      getpaymentSchedules();
+      getpaymentSchedules(id);
+      fetchBill(id)
     }
-
   }, [])
 
-  const getpaymentSchedules = () => {
-    const clientSchedules = site.paymentSchedule?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client') || [];
-    const contractorSchedules = site.paymentSchedule?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor') || [];
-    const supplierSchedules = site.paymentSchedule?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier') || [];
-    setClientPaymentSchedules(...clientSchedules);
-    setContractorPaymentSchedules([...contractorSchedules]);
-    setSupplierPaymentSchedules([...supplierSchedules]);
+  const getpaymentSchedules = async (id) => {
+    try {
+      const paymentSchedulesData = await axios.get(`/api/v1/payment-schedule/site/${id}`);
+      console.log(paymentSchedulesData.data)
+      const clientSchedules = paymentSchedulesData.data?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client') || [];
+      const contractorSchedules = paymentSchedulesData.data?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor') || [];
+      const supplierSchedules = paymentSchedulesData.data?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier') || [];
+      setClientPaymentSchedules(...clientSchedules);
+      setContractorPaymentSchedules([...contractorSchedules]);
+      setSupplierPaymentSchedules([...supplierSchedules]);
+    } catch (error) {
+      console.log('Error fetching payment schedule:', error);
+    }
   };
-console.log(contractorPaymentSchedules)
+  console.log(contractorPaymentSchedules);
+
+  const fetchBill = async (id) => {
+    try {
+      const billData = await axios.get(`/api/v1/bill/site/${id}`);
+      console.log(billData.data)
+      const clientBill = billData.data?.filter((bill) => bill.billFor === 'Client') || [];
+      const contractorBill = billData.data?.filter((bill) => bill.billFor === 'Contractor') || [];
+      const supplierBill = billData.data?.filter((bill) => bill.billFor === 'Supplier') || [];
+      const materialBill = billData.data?.filter((bill) => bill.billFor === 'Material') || [];
+      setClientBill([...clientBill]);
+      setContractorBill([...contractorBill]);
+      setSupplierBill([...supplierBill]);
+      setMaterialBill([...materialBill]);
+    } catch (error) {
+      console.log('Error fetching bill', error);
+    }
+  };
   // const fetchPurchaseOrders = async () => {
   //   try {
   //     const response = await axios.get(`/api/v1/purchase-order/${bill.site}/${bill.supplier}`);
@@ -64,7 +90,7 @@ console.log(contractorPaymentSchedules)
   const deletePaymentDetail = async (id) => {
     try {
       const response = await axios.delete(`/api/v1/payment-schedule/${id}`);
-      if(clientPaymentSchedules._id === id){
+      if (clientPaymentSchedules._id === id) {
         setClientPaymentSchedules(null)
       }
       setContractorPaymentSchedules(contractorPaymentSchedules.filter((paymentSchedule) => paymentSchedule._id !== id))
@@ -236,25 +262,23 @@ console.log(contractorPaymentSchedules)
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="px-6 py-3">Work</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-6 py-3">Contractor</th>
+                      <th scope="col" className="px-6 py-3">Total Payment</th>
+                      <th scope="col" className="px-6 py-3">Amount Paid</th>
+                      <th scope="col" className="px-6 py-3">Remaning Payment</th>
                       <th scope="col" className="px-6 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {contractorPaymentSchedules?.map((paymentSchedule) => (
                       <tr key={paymentSchedule._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-
-                        </td>
-                        <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4">{paymentSchedule.contractor?.name}</td>
+                        <td className='px-6 py-4'>{paymentSchedule.totalValue}</td>
+                        <td className='px-6 py-4'>{paymentSchedule.amountPaid}</td>
+                        <td className='px-6 py-4'>{paymentSchedule.remaningAmount}</td>
                         <td className="px-6 py-4">
                           <button onClick={() => {
-                            navigate(`/project-schedule/${paymentSchedule._id}`)
+                            navigate(`/payment-schedule/${paymentSchedule._id}`)
                           }}
                             className="bg-blue-500 text-white px-2 py-1 mr-2 text-md">
                             <FaExternalLinkAlt />
@@ -276,22 +300,20 @@ console.log(contractorPaymentSchedules)
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" className="px-6 py-3">Work</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-6 py-3">Contractor</th>
+                      <th scope="col" className="px-6 py-3">Total Payment</th>
+                      <th scope="col" className="px-6 py-3">Amount Paid</th>
+                      <th scope="col" className="px-6 py-3">Remaning Payment</th>
                       <th scope="col" className="px-6 py-3">Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     {supplierPaymentSchedules?.map((paymentSchedule) => (
                       <tr key={paymentSchedule._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-
-                        </td>
-                        <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4">{paymentSchedule.supplier?.name}</td>
+                        <td className='px-6 py-4'>{paymentSchedule.totalValue}</td>
+                        <td className='px-6 py-4'>{paymentSchedule.amountPaid}</td>
+                        <td className='px-6 py-4'>{paymentSchedule.remaningAmount}</td>
                         <td className="px-6 py-4">
                           <button onClick={() => {
                             navigate(`/project-schedule/${paymentSchedule._id}`)
@@ -484,25 +506,27 @@ console.log(contractorPaymentSchedules)
                   </thead>
 
                   <tbody>
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <td className="px-6 py-4">
-                      </td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-3 py-4">
-                        <button
-                          className="bg-blue-500 text-white px-2 py-1 mr-2">
-                          <GrEdit />
-                        </button>
-                        <button
-                          className="bg-red-500 text-white px-2 py-1 mr-2">
-                          <MdDelete />
-                        </button>
-                      </td>
-                    </tr>
+                    {clientBills.map((bill) => (
+                      <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                        </td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-3 py-4">
+                          <button
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </Tabs.TabPane>
@@ -522,25 +546,27 @@ console.log(contractorPaymentSchedules)
                   </thead>
 
                   <tbody>
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <td className="px-6 py-4">
-                      </td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-3 py-4">
-                        <button
-                          className="bg-blue-500 text-white px-2 py-1 mr-2">
-                          <GrEdit />
-                        </button>
-                        <button
-                          className="bg-red-500 text-white px-2 py-1 mr-2">
-                          <MdDelete />
-                        </button>
-                      </td>
-                    </tr>
+                    {contractorBills.map((bill) => (
+                      <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                        </td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-3 py-4">
+                          <button
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </Tabs.TabPane>
@@ -560,25 +586,27 @@ console.log(contractorPaymentSchedules)
                   </thead>
 
                   <tbody>
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <td className="px-6 py-4">
-                      </td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-3 py-4">
-                        <button
-                          className="bg-blue-500 text-white px-2 py-1 mr-2">
-                          <GrEdit />
-                        </button>
-                        <button
-                          className="bg-red-500 text-white px-2 py-1 mr-2">
-                          <MdDelete />
-                        </button>
-                      </td>
-                    </tr>
+                    {supplierBills.map((bill) => (
+                      <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                        </td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-3 py-4">
+                          <button
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </Tabs.TabPane>
@@ -598,26 +626,27 @@ console.log(contractorPaymentSchedules)
                   </thead>
 
                   <tbody>
-                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <td className="px-6 py-3">
-
-                      </td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-6 py-4"></td>
-                      <td className="px-3 py-4">
-                        <button
-                          className="bg-blue-500 text-white px-2 py-1 mr-2">
-                          <GrEdit />
-                        </button>
-                        <button
-                          className="bg-red-500 text-white px-2 py-1 mr-2">
-                          <MdDelete />
-                        </button>
-                      </td>
-                    </tr>
+                    {materialBills.map((bill) => (
+                      <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                        </td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-6 py-4"></td>
+                        <td className="px-3 py-4">
+                          <button
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </Tabs.TabPane>

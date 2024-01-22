@@ -72,7 +72,7 @@ const Bills = () => {
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  Bill of
+                  Bill of {bill.client?.name} 
                   <div className="self-end text-lg">
                     <button
                       onClick={() => handleEdit(bill._id)}
@@ -141,7 +141,7 @@ const Bills = () => {
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  Bill of
+                  {bill.contractor?.name} bill for {bill.site?.name}
                   <div className="self-end text-lg">
                     <button
                       onClick={() => handleEdit(bill._id)}
@@ -210,7 +210,7 @@ const Bills = () => {
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  Bill of
+                {bill.supplier?.name} bill for {bill.site?.name}
                   <div className="self-end text-lg">
                     <button
                       onClick={() => handleEdit(bill._id)}
@@ -279,7 +279,7 @@ const Bills = () => {
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  Bill of
+                {bill.supplier?.name} bill for {bill.site?.name}
                   <div className="self-end text-lg">
                     <button
                       onClick={() => handleEdit(bill._id)}

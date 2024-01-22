@@ -68,7 +68,8 @@ const PaymentSchedules = () => {
     try {
       const response = await axios.delete(`/api/v1/payment-schedule/${id}/paymentDetails/${index}`);
       console.log(response.data)
-      setpaymentSchedules(response.data);
+      setpaymentSchedules(response.data.paymentSchedules);
+      toast.success(response.data.message);
     } catch (error) {
       toast.error(error.message)
     }
@@ -99,11 +100,11 @@ const PaymentSchedules = () => {
                     Payment Schedule of {paymentSchedule.site?.name}
                   </NavLink>
                   <div className='self-end'>
-                    {/* <button
+                    <button
                       onClick={() => handleRedirect(paymentSchedule._id)}
                       className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
                         <FaExternalLinkAlt className="text-lg text-white" />
-                    </button> */}
+                    </button>
                     <button
                       onClick={() => addMore(paymentSchedule._id)}
                       className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
@@ -130,7 +131,7 @@ const PaymentSchedules = () => {
 
                   <tbody>
                     {paymentSchedule?.paymentDetails.map((work, index) => (
-                      <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
                           {work.workDescription}
                         </td>
@@ -167,11 +168,11 @@ const PaymentSchedules = () => {
                     Payment Schedule of {paymentSchedule.site?.name}
                   </NavLink>
                   <div className='self-end'>
-                    {/* <button
+                    <button
                       onClick={() => handleRedirect(paymentSchedule._id)}
                       className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
                         <FaExternalLinkAlt className="text-lg text-white" />
-                    </button> */}
+                    </button>
                     <button
                       onClick={() => addMore(paymentSchedule._id)}
                       className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
@@ -198,7 +199,7 @@ const PaymentSchedules = () => {
 
                   <tbody>
                     {paymentSchedule?.paymentDetails.map((work, index) => (
-                      <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
                           {work.workDescription}
                         </td>
@@ -235,11 +236,11 @@ const PaymentSchedules = () => {
                     Payment Schedule of {paymentSchedule.site?.name}
                   </NavLink>
                   <div className='self-end'>
-                    {/* <button
+                    <button
                       onClick={() => handleRedirect(paymentSchedule._id)}
                       className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
                         <FaExternalLinkAlt className="text-lg text-white" />
-                    </button> */}
+                    </button>
                     <button
                       onClick={() => addMore(paymentSchedule._id)}
                       className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
@@ -266,7 +267,7 @@ const PaymentSchedules = () => {
 
                   <tbody>
                     {paymentSchedule?.paymentDetails.map((work, index) => (
-                      <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
                           {work.workDescription}
                         </td>
