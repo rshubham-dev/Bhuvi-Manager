@@ -67,7 +67,6 @@ const CreateProjectSchedule = () => {
     }
   };
 
-
   const fetchProjectSchedule = async (id) => {
     try {
       const response = await axios.get(`/api/v1/project-schedule/${id}`);

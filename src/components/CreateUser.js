@@ -71,7 +71,7 @@ const CreateUser = () => {
         await axios.post('/api/v1/user/create', userData);
         toast.success('User created successfully');
       }
-      navigate('/user');
+      navigate(-1);
     } catch (error) {
       console.log('Error submitting user data:', error);
       toast.error(error.response?.data?.message || 'An error occurred');

@@ -17,18 +17,18 @@ import {
 
 const SiteIncharge = () => {
   const navItems = [
+    { to: '/sites', text: 'Site', icon: <MdLocationOn /> },
+    { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
+    { to: '/suppliers', text: 'Supplier', icon: <GrUserWorker/> },
+    { to: '/work-orders', text: 'Work-Order', icon: <MdWork /> },
     { to: '/project-schedules', text: 'Project Schedule', icon: <MdDateRange /> },
     { to: '/payment-schedules', text: 'Payment Schedule', icon: <MdPayment /> },
-    { to: '/sites', text: 'Site', icon: <MdLocationOn /> },
     { to: '/bills', text: 'Bill', icon: <MdReceipt /> },
     { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
-    { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
     { to: '/purchase-order', text: 'Purchase-Order', icon: <BiSolidPurchaseTag /> },
     { to: '/material-order', text: 'Material-Order', icon: '' },
-    { to: '/suppliers', text: 'Supplier', icon: <GrUserWorker/> },
     { to: '/extra-work', text: 'Extra-Work', icon: <MdBuild /> },
     { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
-    { to: '/work-orders', text: 'Work-Order', icon: <MdWork /> },
   ];
   return (
     <>

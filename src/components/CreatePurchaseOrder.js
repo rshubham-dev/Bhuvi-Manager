@@ -1,27 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
 const CreatePurchaseOrder = () => {
-
   const [formData, setFormData] = useState({
     supplier: '',
     site: '',
-    requirement: [
-      {
-        material: '',
-        rate: '',
-        quantity: '',
-        unit: '',
-      },
-    ],
+    purchaseOrderNo: '',
+    duration: '',
+    startdate: '',
+    requirement: [{
+      material: '',
+      rate: '',
+      quantity: '',
+      unit: '',
+      amount: '',
+    }],
   });
-
+  const [requirement, setRequirement] = useState({
+    material: '',
+    rate: '',
+    quantity: '',
+    unit: '',
+    amount: '',
+    status: '',
+  });
+  const [data, setData] = useState({
+    supplier: '',
+    site: '',
+  });
   const [sites, setSite] = useState([]);
   const [suppliers, setSupplier] = useState([]);
+  const status = ['Started', 'Completed', 'Pending', 'Partaly Completed'];
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM', 'BAG', 'KG', 'TONES', 'LITERS'];
+  const [requirementToEdit, setRequirementToEdit] = useState({
+    id: '',
+    index: '',
+  });
+  const [purchaseOrderToEdit, setPurchaseOrderToEdit] = useState(null);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const { index } = useParams();
+
+  useEffect(() => {
+    if (id && index) {
+      setRequirementToEdit({ id, index })
+      fetchPurchaseOrder(id, index);
+    } else if (id && !index) {
+      setPurchaseOrderToEdit(id)
+      fetchPurchaseOrder(id)
+    }
+  }, [id, index]);
 
   useEffect(() => {
 
@@ -47,12 +79,57 @@ const CreatePurchaseOrder = () => {
     fetchSupplier();
   }, []);
 
+  const fetchPurchaseOrder = async (id, index) => {
+    try {
+      const response = await axios.get(`/api/v1/purchase-order/${id}`);
+      if (id && index) {
+        const require = response.data.requirement[index];
+        setRequirement({
+          material: require.material,
+          rate: require.rate,
+          quantity: require.quantity,
+          unit: require.unit,
+          amount: require.amount,
+          status: require.status,
+        })
+      } else if (id && !index) {
+        setData({
+          site: response.data?.site.name,
+          supplier: response.data?.supplier.name,
+        });
+        setFormData({
+          supplier: response.data?.supplier._id,
+          site: response.data?.site._id,
+          purchaseOrderNo: response.data?.purchaseOrderNo,
+          duration: response.data?.duration,
+          startdate: response.data?.startdate,
+          requirement: [{
+            material: '',
+            rate: '',
+            quantity: '',
+            unit: '',
+            amount: '',
+          }],
+        })
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
   const handleChange = (field, value) => {
     setFormData({
       ...formData,
       [field]: value,
     });
   };
+
+  const handleUpdate = (field, value) => {
+    setRequirement({
+      ...requirement,
+      [field]: value
+    })
+  }
 
   const handleAddWork = () => {
     setFormData({
@@ -89,10 +166,42 @@ const CreatePurchaseOrder = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const updatedFormData = {
+      ...formData,
+      requirement: formData.requirement.map((detail) => {
+        const amount = parseFloat(detail.quantity) * parseFloat(detail.rate);
+        return {
+          ...detail,
+          amount: isNaN(amount) ? '' : amount.toFixed(2),
+        };
+      }),
+    };
+    setFormData(updatedFormData)
+
+    const amount = parseFloat(requirement.quantity) * parseFloat(requirement.rate);
+    const updatedDetail = {
+      ...requirement,
+      amount: isNaN(amount) ? '' : amount.toFixed(2),
+    }
+
     try {
-      console.log(formData)
-      const response = await axios.post('/api/v1/purchase-order/create', formData);
-      toast.success(response.data.message)
+      if (purchaseOrderToEdit) {
+        console.log(updatedFormData)
+        const response = await axios.put(`/api/v1/purchase-order/${purchaseOrderToEdit}`, updatedFormData);
+        toast.success(response.data.message)
+        navigate(-1)
+      } else if (requirementToEdit.id && requirementToEdit.index) {
+        console.log(updatedDetail)
+        const response = await axios.put(`/api/v1/purchase-order/${requirementToEdit.id}/requirement/${requirementToEdit.index}`,  updatedDetail);
+        toast.success(response.data.message)
+        navigate(-1)
+      } else {
+        console.log(updatedFormData)
+        const response = await axios.post('/api/v1/purchase-order/create', updatedFormData);
+        toast.success(response.data.message)
+        navigate(-1)
+      }
     } catch (error) {
       console.error('Error submitting work order:', error.message);
       toast.error(error.message)
@@ -128,14 +237,12 @@ const CreatePurchaseOrder = () => {
             Supplier
           </label>
           <select
-            type="text"
-            id="contractor"
             name="contractor"
             value={formData.supplier}
             onChange={(e) => handleChange('supplier', e.target.value)}
             className="border p-2 rounded w-full"
           >
-            <option>Contractor</option>
+            <option>Supplier</option>
             {suppliers?.map((supplier) => (
               <option key={supplier._id} value={supplier._id}>
                 {supplier.name}
@@ -250,3 +357,5 @@ const CreatePurchaseOrder = () => {
 }
 
 export default CreatePurchaseOrder;
+
+

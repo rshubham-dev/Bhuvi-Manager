@@ -22,8 +22,8 @@ const Suppliers = () => {
       getSuppliers();
   }, [])
 
-  const handleEdit = (supplierId) => {
-      navigate(`/edit-supplier?supplierId=${supplierId}`)
+  const handleEdit = (id) => {
+      navigate(`/edit-supplier/${id}`)
   };
 
   // const handleRedirect = (supplierId) => {
@@ -62,7 +62,7 @@ const Suppliers = () => {
               </thead>
               <tbody>
                   {suppliers.map((supplier) => (
-                      <tr key={supplier.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <tr key={supplier._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <td className="px-6 py-4">{supplier.name}</td>
                           <td className="px-6 py-4">{supplier.contactNo}, {supplier.whatsapp}</td>
                           <td className="px-6 py-4">{supplier.gst}</td>
@@ -81,7 +81,7 @@ const Suppliers = () => {
                                   <GrEdit />
                               </button>
                               <button
-                                  onClick={() => handleDelete(supplier.id)}
+                                  onClick={() => handleDelete(supplier._id)}
                                   className="bg-red-500 text-white px-2 py-1 mr-2"
                               >
                                   <MdDelete />

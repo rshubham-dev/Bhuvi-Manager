@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 
@@ -23,22 +23,22 @@ const CreateSite = () => {
   const [clients, setClient] = useState([]);
   const projectType = ['Residential', 'Commercial', 'Instutional', 'Government'];
   const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6', 'First', 'Second'];
-  const location = useLocation();
   const navigate = useNavigate();
   const [siteIdToEdit, setSiteIdToEdit] = useState(null);
+  const { id } = useParams();
 
   useEffect(() => {
-    const siteId = new URLSearchParams(location.search).get('siteId');
-    if (siteId) {
-      setSiteIdToEdit(siteId);
-      fetchSiteDetails(siteId);
+    if (id) {
+      setSiteIdToEdit(id);
+      fetchSiteDetails(id);
     }
-  }, [location.search]);
+  }, []);
 
-  const fetchSiteDetails = async (siteId) => {
+  const fetchSiteDetails = async (id) => {
     try {
-      const response = await axios.get(`/api/v1/site/${siteId}`);
+      const response = await axios.get(`/api/v1/site/${id}`);
       const site = response.data;
+      console.log(site)
       setSite({
         name: site.name,
         client: site.client,
@@ -115,9 +115,10 @@ const CreateSite = () => {
       if (siteIdToEdit) {
         await axios.put(`/api/v1/site/${siteIdToEdit}`, formData);
         toast.success('User edited successfully');
+        navigate(-1);
       } else {
         const siteData = await axios.post('/api/v1/site/create', formData);
-        if(siteData.data){
+        if (siteData.data) {
           console.log(siteData.data);
           toast.success('Site created successfully');
           navigate(-1);
@@ -156,10 +157,11 @@ const CreateSite = () => {
           </label>
           <select
             name="client"
+            value={site.client}
             className="mt-1 p-2 w-full border rounded-md"
             onChange={handleChange}
           >
-            <option value=''>Client</option>
+            <option>{siteIdToEdit ? site.client.name : 'Client'}</option>
             {clients.map((client) => (
               <option key={client._id} value={client._id}>
                 {client.name}
@@ -191,9 +193,10 @@ const CreateSite = () => {
           </label>
           <select
             name="floors"
+            value={site.floors}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
-            <option value=''>Select a Floor</option>
+            <option>{siteIdToEdit ? site.floors : 'Select a Floor'}</option>
             {floors.map((floor, index) => (
               <option key={index} value={floor}>
                 {floor}
@@ -224,10 +227,10 @@ const CreateSite = () => {
           </label>
           <select
             name="projectType"
-            required
+            value={site.projectType}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
-            <option>Select a Floor</option>
+            <option>{siteIdToEdit ? site.projectType : 'Select a Floor'}</option>
             {projectType.map((type, index) => (
               <option key={index} value={type}>
                 {type}
@@ -236,56 +239,6 @@ const CreateSite = () => {
           </select>
         </div>
 
-        {/* Value */}
-        {/* <div className="mb-4">
-          <label htmlFor="floorNo" className="block text-sm font-medium text-gray-600">
-            Floor No
-          </label>
-          <input
-            type="text"
-            name="floorNo"
-            required
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="unit" className="block text-sm font-medium text-gray-600">
-            Unit
-          </label>
-          <select name="unit" className="mt-1 p-2 w-full border rounded-md">
-            <option>Select a Unit</option>
-            {units.map((unit, index) => (
-              <option key={index} value={unit}>
-                {unit}
-              </option>
-            ))}
-          </select>
-        </div>
-        
-        <div className="mb-4">
-          <label htmlFor="area" className="block text-sm font-medium text-gray-600">
-            Area
-          </label>
-          <input
-            type="number"
-            name="area"
-            required
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="rate" className="block text-sm font-medium text-gray-600">
-            Rate
-          </label>
-          <input
-            type="number"
-            name="rate"
-            required
-            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-          />
-        </div> */}
-
         {/* Site Incharge */}
         <div className="mb-4">
           <label htmlFor="incharge" className="block text-sm font-medium text-gray-600">
@@ -293,9 +246,10 @@ const CreateSite = () => {
           </label>
           <select
             name="incharge"
+            value={site.incharge}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
-            <option>Assign an incharge</option>
+            <option>{siteIdToEdit ? site.incharge.userName : 'Assign an incharge'}</option>
             {incharges.map((incharge) => (
               <option key={incharge._id} value={incharge._id}>
                 {incharge.userName}
@@ -310,9 +264,10 @@ const CreateSite = () => {
             Site Supervisor
           </label>
           <select name="supervisor"
+          value={site.supervisor}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md">
-            <option>Assign a supervisor</option>
+            <option>{siteIdToEdit ? site.supervisor.userName : 'Assign a supervisor'}</option>
             {supervisors.map((supervisor) => (
               <option key={supervisor._id} value={supervisor._id}>
                 {supervisor.userName}

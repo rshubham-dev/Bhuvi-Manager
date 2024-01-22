@@ -23,7 +23,6 @@ const ProjectSchedules = () => {
       }
     }
     getprojectSchedules();
-    console.log(projectSchedules); // Add this line
   }, []);
 
 

@@ -64,6 +64,7 @@ const Clients = () => {
             <th scope="col" className="px-6 py-3">Email</th>
             <th scope="col" className="px-6 py-3">Phone</th>
             <th scope="col" className="px-6 py-3">Address</th>
+            <th scope="col" className="px-6 py-3">Site</th>
             <th scope="col" className="px-6 py-3">Actions</th>
           </tr>
         </thead>
@@ -74,7 +75,7 @@ const Clients = () => {
               <td className="px-6 py-4">{client.email}</td>
                 <td className="px-6 py-4">{client.contactNo}</td>
                 <td className="px-6 py-4">{client.whatsapp}</td>
-              <td className="px-6 py-4"></td>
+              <td className="px-6 py-4">{client.site.name}</td>
               <td className="px-6 py-4">
               <button
                   onClick={() => handleRedirect(client._id)}

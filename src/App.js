@@ -53,6 +53,8 @@ import PurchaseOrders from './pages/PurchaseOrders';
 import Suppliers from './pages/Suppliers';
 import MaterialOrder from './pages/MaterialOrder';
 import EditDetails from './components/EditDetails';
+import PurchaseOrderScreen from './screen/PurchaseOrderScreen';
+import Message from './pages/Message';
 
 const App = () => {
 
@@ -90,17 +92,19 @@ const App = () => {
         <Route path='/sites' element={<Sites />} />
         <Route path='/site/:id' element={<SiteScreen />} />
         <Route path='/create-site' element={<CreateSite />} />
-        <Route path='/edit-site' element={<CreateSite />} />
+        <Route path='/edit-site/:id' element={<CreateSite />} />
         <Route path='/clients' element={<Clients />} />
         <Route path='/client' element={<ClientScreen />} />
         <Route path='/create-client' element={<CreateClient />} />
         <Route path='/edit-client' element={<CreateClient />} />
         <Route path='/team' element={<TeamSection />} />
-        <Route path='/edit-work-order' element={<CreateWorkOrder />} />
+        <Route path='/edit-workOrder/:id' element={<CreateWorkOrder />} />
+        <Route path='/edit-workOrder/:id/work/:index' element={<CreateWorkOrder />} />
         <Route path='/create-work-order' element={<CreateWorkOrder />} />
         <Route path='/work-orders' element={<WorkOrders />} />
-        <Route path='/work-order' element={<WorkOrderScreen />} />
-        <Route path='/edit-work-details' element={<CreateWorkDetails />} />
+        <Route path='/work-order/:id' element={<WorkOrderScreen />} />
+        <Route path='/edit-work-detail/:id' element={<CreateWorkDetails />} />
+        <Route path='/edit-work-detail/:id/:index' element={<CreateWorkDetails />} />
         <Route path='/create-work-details' element={<CreateWorkDetails />} />
         <Route path='/work-details' element={<WorkDetails />} />
         <Route path='/project-schedules' element={<ProjectSchedules />} />
@@ -119,16 +123,21 @@ const App = () => {
         <Route path='/create-bill' element={<CreateBill />} />
         <Route path='/extra-work' element={<ExtraWork />} />
         <Route path='/create-extra-work' element={<CreateExtraWork />} />
-        <Route path='/edit-extra-work' element={<CreateExtraWork />} />
+        <Route path='/edit-extra-work/:id' element={<CreateExtraWork />} />
+        <Route path='/edit-extra-work/:id/work/:index' element={<CreateExtraWork />} />
         <Route path='/checklists' element={<CheckList />} />
         <Route path='/setting' element={<Profile />} />
         <Route path='/create-supplier' element={<CreateSupplier />} />
-        <Route path='/edit-supplier' element={<CreateSupplier />} />
+        <Route path='/edit-supplier/:id' element={<CreateSupplier />} />
         <Route path='/suppliers' element={<Suppliers />} />
-        <Route path='/create-purchase-order' element={<CreatePurchaseOrder />} />
+        <Route path='/create-purchaseOrder' element={<CreatePurchaseOrder />} />
+        <Route path='/edit-purchaseOrder/:id' element={<CreatePurchaseOrder />} />
+        <Route path='/edit-purchaseOrder/:id/material/:index' element={<CreatePurchaseOrder />} />
         <Route path='/purchase-order' element={<PurchaseOrders />} />
+        <Route path='/purchaseOrder/:id' element={<PurchaseOrderScreen />} />
         <Route path='/create-material-order' element={<CreateMaterialOrder />} />
         <Route path='/material-order' element={<MaterialOrder />} />
+        <Route path='/message' element={<Message />} />
         {/* </ProtectedRoute> */}
       </Routes>
     </>

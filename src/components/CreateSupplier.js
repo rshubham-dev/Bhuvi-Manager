@@ -74,24 +74,20 @@ const CreateSupplier = () => {
       }
     });
 
+    try{
     if (supplierIdToEdit) {
-      try {
-        await axios.put(`/api/v1/supplier/${supplierIdToEdit}`, supplier);
+        await axios.put(`/api/v1/supplier/${supplierIdToEdit}`, formData);
         toast.success('User edited successfully');
-      } catch (error) {
-        toast.error('Failed Creating Contractor. Please check your credentials.');
-        setError('Failed Creating Contractor. Please check your credentials.');
-      }
+        navigate(-1)
     } else {
-      try {
-        const response = await axios.post('/api/v1/supplier', formData);
+      console.log('Form data submitted:', supplier);
+        const response = await axios.post('/api/v1/supplier/create', supplier);
         toast.success(response.data.message);
-        console.log('Form data submitted:', supplier);
-      } catch (error) {
-        console.error('Error creating contractor:', error);
-        toast.error('Failed Creating Contractor. Please check your credentials.');
-        setError('Failed Creating Contractor. Please check your credentials.');
+        navigate(-1)
       }
+    } catch (error) {
+      console.error('Error creating contractor:', error);
+      toast.error('Failed Creating Contractor. Please check your credentials.');
     }
   };
 
@@ -108,7 +104,7 @@ const CreateSupplier = () => {
           <input
             type="text"
             name="name"
-            onChange={(e) => handleChange(e, "name")}
+            onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -123,7 +119,7 @@ const CreateSupplier = () => {
             type='text'
             name='contactNo'
             placeholder='Enter Your Contact Number'
-            onChange={(e) => handleChange(e, 'contactNo')}
+            onChange={handleChange}
           />
         </div>
 
@@ -137,7 +133,7 @@ const CreateSupplier = () => {
             type='text'
             name='whatsapp'
             placeholder='Enter Your Whatsapp Number'
-            onChange={(e) => handleChange(e, 'whatsapp')}
+            onChange={handleChange}
           />
         </div>
 
@@ -148,7 +144,7 @@ const CreateSupplier = () => {
           <input
             type="text"
             name="address"
-            onChange={(e) => handleChange(e, 'address')}
+            onChange={handleChange}
             placeholder="Address"
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
@@ -161,7 +157,7 @@ const CreateSupplier = () => {
           <input
             type="text"
             name="gst"
-            onChange={(e) => handleChange(e, 'gst')}
+            onChange={handleChange}
             placeholder="GST No."
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
@@ -174,7 +170,7 @@ const CreateSupplier = () => {
           <input
             type="text"
             name="pan"
-            onChange={(e) => handleChange(e, "pan")}
+            onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
@@ -186,7 +182,7 @@ const CreateSupplier = () => {
           <input
             type="file"
             name="bank"
-            onChange={(e) => handleChange(e, "bank")}
+            onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>

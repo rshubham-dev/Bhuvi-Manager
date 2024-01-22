@@ -14,53 +14,61 @@ const SiteScreen = () => {
   const [site, setSiteData] = useState({});
   const navigate = useNavigate();
   const [projectDetail, setProjectDetail] = useState([]);
+  const [workOrders, setWorkOrder] = useState([]);
   const { id } = useParams();
-  const [paymentSchedules, setpaymentSchedules] = useState([]);
-  const [supplierPaymentSchedules, setsupplierPaymentSchedules] = useState([]);
-  const [contractorPaymentSchedules, setcontractorPaymentSchedules] = useState([]);
-  const [clientPaymentSchedules, setclientPaymentSchedules] = useState(null);
+  // const [paymentSchedules, setpaymentSchedules] = useState([]);
+  const [supplierPaymentSchedules, setSupplierPaymentSchedules] = useState([]);
+  const [contractorPaymentSchedules, setContractorPaymentSchedules] = useState([]);
+  const [clientPaymentSchedules, setClientPaymentSchedules] = useState(null);
 
   useEffect(() => {
     if (id) {
-      fetchSiteDetails(id);
-      getpaymentSchedules(id);
+      const fetchSiteDetails = async () => {
+        try {
+          const response = await axios.get(`/api/v1/site/${id}`);
+          const site = response.data
+          setSiteData(site);
+          setProjectDetail(site.projectSchedule?.projectDetail)
+          setWorkOrder(site.workOrder)
+          // setpaymentSchedules(site.paymentSchedule)
+        } catch (error) {
+          console.log('Error fetching site details:', error);
+        }
+      };
+      fetchSiteDetails();
+      getpaymentSchedules();
     }
 
   }, [])
 
-  const getpaymentSchedules = async (id) => {
-    try {
-      const paymentSchedulesData = await axios.get(`/api/v1/payment-schedule/site/${id}`);
-      setpaymentSchedules(paymentSchedulesData.data);
-      setclientPaymentSchedules(
-        ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client')
-      );
-      setcontractorPaymentSchedules([
-        ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor')
-      ]);
-      setsupplierPaymentSchedules([
-        ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier')
-      ]);
-    } catch (error) {
-      toast.error(error.message)
-    }
-  }
-
-  const fetchSiteDetails = async (id) => {
-    try {
-      const response = await axios.get(`/api/v1/site/${id}`);
-      setSiteData(response.data);
-      setProjectDetail(response.data?.projectSchedule.projectDetail)
-    } catch (error) {
-      console.log('Error fetching site details:', error);
-    }
+  const getpaymentSchedules = () => {
+    const clientSchedules = site.paymentSchedule?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client') || [];
+    const contractorSchedules = site.paymentSchedule?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor') || [];
+    const supplierSchedules = site.paymentSchedule?.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier') || [];
+    setClientPaymentSchedules(...clientSchedules);
+    setContractorPaymentSchedules([...contractorSchedules]);
+    setSupplierPaymentSchedules([...supplierSchedules]);
   };
-  console.log(clientPaymentSchedules)
-
+console.log(contractorPaymentSchedules)
+  // const fetchPurchaseOrders = async () => {
+  //   try {
+  //     const response = await axios.get(`/api/v1/purchase-order/${bill.site}/${bill.supplier}`);
+  //     setPurchaseOrder(purchaseOrdersData.data);
+  //     console.log(purchaseOrdersData.data)
+  //   } catch (error) {
+  //     toast.error(error.message)
+  //   }
+  // }
+  // fetchPurchaseOrders();
 
   const deletePaymentDetail = async (id) => {
     try {
       const response = await axios.delete(`/api/v1/payment-schedule/${id}`);
+      if(clientPaymentSchedules._id === id){
+        setClientPaymentSchedules(null)
+      }
+      setContractorPaymentSchedules(contractorPaymentSchedules.filter((paymentSchedule) => paymentSchedule._id !== id))
+      setSupplierPaymentSchedules(supplierPaymentSchedules.filter((paymentSchedule) => paymentSchedule._id !== id))
       console.log(response.data)
     } catch (error) {
       toast.error(error.message)
@@ -77,11 +85,21 @@ const SiteScreen = () => {
     }
   };
 
+  const deleteWorkOrder = async (id) => {
+    try {
+      await axios.delete(`/api/v1/work-order/${id}`);
+      setWorkOrder(workOrders.filter((workOrder) => workOrder._id !== id));
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
   return (
     <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
       <h1 className="text-3xl font-semibold text-gray-800"> Site Details</h1>
       <div className="mt-6 w-full">
 
+        {/* Site Info */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
@@ -133,6 +151,7 @@ const SiteScreen = () => {
           </details>
         </div>
 
+        {/* Agreement */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
@@ -149,16 +168,16 @@ const SiteScreen = () => {
           </details>
         </div>
 
-
+        {/* Payment Schedules */}
         <div className="card">
           <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Payment Schedules
-                  <button
-                    onClick={() => navigate('/create-payment-schedule')}
-                    className="bg-green-500 text-white p-1.5 rounded-2xl text-lg mr-2">
-                    <MdAdd />
-                  </button>
+              <button
+                onClick={() => navigate('/create-payment-schedule')}
+                className="bg-green-500 text-white p-1.5 rounded-2xl text-lg mr-2">
+                <MdAdd />
+              </button>
             </summary>
             <Tabs defaultActiveKey='client'>
               <Tabs.TabPane tab='Client' key={'client'}>
@@ -198,13 +217,18 @@ const SiteScreen = () => {
                       </tr>
                     ))}
                   </tbody>
-                  <div className='text-right mt-4'>
-                  <button
-                    onClick={() => navigate(`/edit-paymentSchedule/${clientPaymentSchedules?._id}`)}
-                    className="bg-green-500 rounded-2xl text-white flex px-2 py-1.5 mr-2">
-                    <MdAdd className="text-xl text-white" /> More
-                  </button>
-                </div>
+                  <div className='text-right mt-4 ml-2 flex gap-1'>
+                    <button
+                      onClick={() => navigate(`/edit-paymentSchedule/${clientPaymentSchedules?._id}`)}
+                      className="bg-green-500 rounded-2xl text-white flex px-2 py-1.5 mr-2">
+                      <MdAdd className="text-xl text-white" /> More
+                    </button>
+                    <button
+                      onClick={() => navigate(`/payment-schedule/${clientPaymentSchedules._id}`)}
+                      className="bg-blue-500 rounded-2xl text-white flex px-2 py-1.5 ml-2">
+                      <FaExternalLinkAlt className="text-lg text-white" />
+                    </button>
+                  </div>
                 </table>
               </Tabs.TabPane>
 
@@ -292,6 +316,7 @@ const SiteScreen = () => {
           </details>
         </div>
 
+        {/* Project Schedules */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
@@ -347,7 +372,8 @@ const SiteScreen = () => {
           </details>
         </div>
 
-        <div className="card ">
+        {/* Quality Check Schedule */}
+        {/* <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Quality Check Schedule
@@ -369,13 +395,14 @@ const SiteScreen = () => {
               <dd className='text-color-title mx-5 my-1.5'></dd>
             </div>
           </details>
-        </div>
+        </div> */}
 
+        {/* Work Order */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Work Order
-              <button onClick={() => { navigate('') }}
+              <button onClick={() => { navigate('/create-work-order') }}
                 className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
                 <MdAdd className="text-xl text-white" />
               </button>
@@ -386,33 +413,37 @@ const SiteScreen = () => {
                 <tr>
                   <th scope="col" className="px-6 py-3">Name</th>
                   <th scope="col" className="px-6 py-3">Contractor</th>
+                  <th scope="col" className="px-6 py-3">Work Order No</th>
                   <th scope="col" className="px-6 py-3">Work Order Value</th>
                   <th scope="col" className="px-6 py-3">Duration</th>
                   <th scope="col" className="px-6 py-3">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {site.workOrder?.map((workorder) => (
+                {workOrders?.map((workorder) => (
                   <tr key={workorder._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="px-6 py-4">
                       {workorder.workOrderName}
                     </td>
+                    <td className="px-6 py-4">{workorder.contractor?.name}</td>
                     <td className="px-6 py-4">{workorder.workOrderNo}</td>
-                    <td className="px-6 py-4">{workorder.site?.name}</td>
                     <td className="px-6 py-4">{workorder.workOrderValue}</td>
                     <td className="px-6 py-4">{workorder.duration}</td>
                     <td className="px-6 py-4">
                       <button
+                        onClick={() => navigate(`/work-order/${workorder._id}`)}
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
                       >
                         <FaExternalLinkAlt />
                       </button>
                       <button
+                        onClick={() => navigate(`/edit-workOrder/${workorder._id}`)}
                         className="bg-blue-500 text-white px-2 py-1 mr-2"
                       >
                         <GrEdit />
                       </button>
                       <button
+                        onClick={() => deleteWorkOrder(workorder._id)}
                         className="bg-red-500 text-white px-2 py-1 mr-2"
                       >
                         <MdDelete />
@@ -426,51 +457,247 @@ const SiteScreen = () => {
           </details>
         </div>
 
+        {/* Bills */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Bills
-              <button onClick={() => { navigate('') }}
+              <button onClick={() => { navigate('/create-bill') }}
                 className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
                 <MdAdd className="text-xl text-white" />
               </button>
             </summary>
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
-              <dd className='text-color-title mx-5 my-1.5'></dd>
-            </div>
+            <Tabs defaultActiveKey='client'>
+
+              <Tabs.TabPane tab='Client' key={'client'}>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Work</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Payment Date</th>
+                      <th scope="col" className="px-6 py-3">Paid</th>
+                      <th scope="col" className="px-6 py-3">Due</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-3 py-3">Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-6 py-4">
+                      </td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-3 py-4">
+                        <button
+                          className="bg-blue-500 text-white px-2 py-1 mr-2">
+                          <GrEdit />
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-2 py-1 mr-2">
+                          <MdDelete />
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Tabs.TabPane>
+
+              <Tabs.TabPane tab='Contractor' key={'contractor'}>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Work</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Payment Date</th>
+                      <th scope="col" className="px-6 py-3">Paid</th>
+                      <th scope="col" className="px-6 py-3">Due</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-3 py-3">Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-6 py-4">
+                      </td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-3 py-4">
+                        <button
+                          className="bg-blue-500 text-white px-2 py-1 mr-2">
+                          <GrEdit />
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-2 py-1 mr-2">
+                          <MdDelete />
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Tabs.TabPane>
+
+              <Tabs.TabPane tab='Supplier' key={'supplier'}>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Material</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Payment Date</th>
+                      <th scope="col" className="px-6 py-3">Paid</th>
+                      <th scope="col" className="px-6 py-3">Due</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-3 py-3">Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-6 py-4">
+                      </td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-3 py-4">
+                        <button
+                          className="bg-blue-500 text-white px-2 py-1 mr-2">
+                          <GrEdit />
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-2 py-1 mr-2">
+                          <MdDelete />
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Tabs.TabPane>
+
+              <Tabs.TabPane tab='Material' key={'material'}>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Material</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Payment Date</th>
+                      <th scope="col" className="px-6 py-3">Paid</th>
+                      <th scope="col" className="px-6 py-3">Due</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-3 py-3">Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-6 py-3">
+
+                      </td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-6 py-4"></td>
+                      <td className="px-3 py-4">
+                        <button
+                          className="bg-blue-500 text-white px-2 py-1 mr-2">
+                          <GrEdit />
+                        </button>
+                        <button
+                          className="bg-red-500 text-white px-2 py-1 mr-2">
+                          <MdDelete />
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </Tabs.TabPane>
+
+            </Tabs>
           </details>
         </div>
 
+        {/* Purchase Order */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Purchase Order
-              <button onClick={() => { navigate('') }}
+              <button onClick={() => { navigate('/create-purchase-order') }}
                 className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
                 <MdAdd className="text-xl text-white" />
               </button>
             </summary>
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
-              <dd className='text-color-title mx-5 my-1.5'></dd>
-            </div>
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">Material</th>
+                  <th scope="col" className="px-6 py-3">Rate</th>
+                  <th scope="col" className="px-6 py-3">Quantity</th>
+                  <th scope="col" className="px-6 py-3">Unit</th>
+                  <th scope="col" className="px-6 py-3">Amount</th>
+                  <th scope="col" className="px-6 py-3">Status</th>
+                  <th scope="col" className="px-6 py-3">Actions</th>
+                </tr>
+              </thead>
+
+              {/* {purchaseOrder?.requirement.map((requirement)=>(
+                  <tbody key={requirement._id}>
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                          {requirement.material}
+                        </td>
+                        <td className="px-6 py-4">{requirement.rate}</td>
+                        <td className="px-6 py-4">{requirement.quantity}</td>
+                        <td className="px-6 py-4">{requirement.unit}</td>
+                        <td className="px-6 py-4">{requirement.amount}</td>
+                        <td className="px-6 py-4">{requirement.status}</td>
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() => editRequirement()}
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            onClick={() => deleteRequirement()}
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                  </tbody>
+                  ))} */}
+            </table>
           </details>
         </div>
 
+        {/* Extra Work */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Extra Work
-              <button onClick={() => { navigate('') }}
+              <button onClick={() => { navigate('/create-extra-work') }}
                 className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
                 <MdAdd className="text-xl text-white" />
               </button>
             </summary>
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'></dt>
-              <dd className='text-color-title mx-5 my-1.5'></dd>
-            </div>
+            <Tabs defaultActiveKey='client'>
+
+              <Tabs.TabPane tab='Client' key={'client'}>
+              </Tabs.TabPane>
+
+              <Tabs.TabPane tab='Contractor' key={'contractor'}>
+              </Tabs.TabPane>
+
+            </Tabs>
           </details>
         </div>
 

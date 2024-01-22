@@ -7,49 +7,47 @@ import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 
-
 axios.defaults.withCredentials = true;
-
 
 const Sites = () => {
   const navigate = useNavigate();
   const [sites, setSite] = useState([]);
   const [error, setError] = useState(null);
-  const {user} = useSelector((state)=> state.auth)
+  const { user } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    if(user && user.department === 'Site Incharge'){
-    getUserSites(user._id);
-    } else if(user && user.department === 'Site Supervisor'){
+    if (user && user.department === 'Site Incharge') {
+      console.log(user._id)
+      getUserSites(user._id);
+    } else if (user && user.department === 'Site Supervisor') {
       getUserSites(user._id);
     } else {
-    getSites();
-  }
+      const getSites = async () => {
+        try {
+          const siteData = await axios.get('/api/v1/site');
+          setSite(siteData.data);
+        } catch (error) {
+          toast.error(error.message)
+          setError(error.message);
+        }
+      }
+      getSites();
+    }
   }, [])
 
   const getUserSites = async (id) => {
     try {
-    const siteData = await axios.get(`/api/v1/site/user/${id}`);
-    console.log(siteData.data);
-    setSite(siteData.data);
-  } catch (error) {
-    toast.error(error.message)
-    setError(error.message);
+      const siteData = await axios.get(`/api/v1/site/user/${id}`);
+      setSite(siteData.data);
+    } catch (error) {
+      toast.error(error.message)
+      setError(error.message);
+    }
   }
-}
+  console.log(sites)
 
-const getSites = async () => {
-  try {
-  const siteData = await axios.get('/api/v1/site');
-  setSite(siteData.data);
-} catch (error) {
-  toast.error(error.message)
-  setError(error.message);
-}
-}
-
-  const handleEdit = (siteId) => {
-    navigate(`/edit-site?siteId=${siteId}`);
+  const handleEdit = (id) => {
+    navigate(`/edit-site/${id}`);
   };
 
   const handleRedirect = (id) => {
@@ -64,12 +62,12 @@ const getSites = async () => {
       toast.error(error.message)
     }
   };
-  
+
   const handleAdd = () => {
     navigate('/create-site');
   };
 
-  
+
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold text-center">Site List</h1>
@@ -90,10 +88,10 @@ const getSites = async () => {
           </tr>
         </thead>
         <tbody>
-          {sites?.map((site) => (
+           {sites?.map((site) => (
             <tr key={site._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">
-                  {site.name}
+                {site.name}
               </td>
               <td className="px-6 py-4">{site.client.name}</td>
               <td className="px-6 py-4">{site.floors}</td>
@@ -120,7 +118,7 @@ const getSites = async () => {
                 </button>
               </td>
             </tr>
-          ))}
+          ))} 
         </tbody>
         {error && <p className="text-red-500">{error}</p>}
       </table>

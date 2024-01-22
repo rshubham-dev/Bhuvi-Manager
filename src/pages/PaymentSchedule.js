@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { Tabs } from 'antd';
 
 axios.defaults.withCredentials = true;
 
@@ -20,15 +21,6 @@ const PaymentSchedules = () => {
       try {
         const paymentSchedulesData = await axios.get('/api/v1/payment-schedule');
         setpaymentSchedules(paymentSchedulesData.data);
-        setclientPaymentSchedules([
-          ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client')
-        ]);
-        setcontractorPaymentSchedules([
-          ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor')
-        ]);
-        setsupplierPaymentSchedules([
-          ...paymentSchedulesData.data.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier')
-        ]);
       } catch (error) {
         toast.error(error.message)
       }
@@ -36,17 +28,28 @@ const PaymentSchedules = () => {
     getpaymentSchedules();
   }, [])
   
+  useEffect(()=>{
+  setclientPaymentSchedules([
+    ...paymentSchedules.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client')
+  ]);
+  setcontractorPaymentSchedules([
+    ...paymentSchedules.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor')
+  ]);
+  setsupplierPaymentSchedules([
+    ...paymentSchedules.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier')
+  ]);
+},[paymentSchedules])
+
   console.log('client:', clientPaymentSchedules);
   console.log('contractor:', contractorPaymentSchedules);
-  console.log('supplier:', supplierPaymentSchedules);
 
   const handleEdit = (id, index) => {
     navigate(`/edit-paymentSchedule/${id}/${index}`);
   };
 
-  // const handleRedirect = (id) => {
-  //   navigate(`/payment-schedule/${id}`);
-  // }
+  const handleRedirect = (id) => {
+    navigate(`/payment-schedule/${id}`);
+  }
 
   const addMore = async (id) => {
     navigate(`/edit-paymentSchedule/${id}`);
@@ -66,7 +69,6 @@ const PaymentSchedules = () => {
       const response = await axios.delete(`/api/v1/payment-schedule/${id}/paymentDetails/${index}`);
       console.log(response.data)
       setpaymentSchedules(response.data);
-      console.table(response.data)
     } catch (error) {
       toast.error(error.message)
     }
@@ -78,17 +80,18 @@ const PaymentSchedules = () => {
 
 
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded-lg">
-      <h1 className="text-2xl font-bold text-center mt-4">Payment Schedules</h1>
-      <div className=" mb-4 mr-20 text-right">
+    <section className='bg-white px-12 py-6 mb-16 h-full w-full'>
+      <h1 className="text-3xl font-semibold text-gray-800 text-center">Payment Schedules</h1>
+      <div className=" mb-2 mr-6 text-right">
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
           Add Payment Schedule
         </button>
       </div>
 
-      <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
-        <div className="mt-6 w-full">
-          {paymentSchedules.map((paymentSchedule) => (
+      <Tabs defaultActiveKey='client'>
+
+      <Tabs.TabPane tab='Client' key={'client'}>
+          {clientPaymentSchedules.map((paymentSchedule) => (
             <div key={paymentSchedule._id} className="card">
               <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
@@ -96,11 +99,11 @@ const PaymentSchedules = () => {
                     Payment Schedule of {paymentSchedule.site?.name}
                   </NavLink>
                   <div className='self-end'>
-                    <button
-                      onClick={() => addMore(paymentSchedule._id)}
+                    {/* <button
+                      onClick={() => handleRedirect(paymentSchedule._id)}
                       className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                      <MdAdd className="text-xl text-white" />
-                    </button>
+                        <FaExternalLinkAlt className="text-lg text-white" />
+                    </button> */}
                     <button
                       onClick={() => addMore(paymentSchedule._id)}
                       className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
@@ -153,15 +156,151 @@ const PaymentSchedules = () => {
               </details>
             </div>
           ))}
-        </div>
-      </section>
+      </Tabs.TabPane>
 
+      <Tabs.TabPane tab='Contractor' key={'contractor'}>
+          { contractorPaymentSchedules.map((paymentSchedule) => (
+            <div key={paymentSchedule._id} className="card">
+              <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
+                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                  <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
+                    Payment Schedule of {paymentSchedule.site?.name}
+                  </NavLink>
+                  <div className='self-end'>
+                    {/* <button
+                      onClick={() => handleRedirect(paymentSchedule._id)}
+                      className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                        <FaExternalLinkAlt className="text-lg text-white" />
+                    </button> */}
+                    <button
+                      onClick={() => addMore(paymentSchedule._id)}
+                      className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                      <GrEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(paymentSchedule._id)}
+                      className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                      <MdDelete />
+                    </button>
+                  </div>
+                </summary>
+
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Work</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Payment Date</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-6 py-3">Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {paymentSchedule?.paymentDetails.map((work, index) => (
+                      <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                          {work.workDescription}
+                        </td>
+                        <td className="px-6 py-4">{work.amount}</td>
+                        <td className="px-6 py-4">{work.dateOfPayment}</td>
+                        <td className="px-6 py-4">{work.status}</td>
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() => handleEdit(paymentSchedule._id, index)}
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            onClick={() => deleteDetail(paymentSchedule._id, index)}
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </details>
+            </div>
+          ))}
+      </Tabs.TabPane>
+
+      <Tabs.TabPane tab='Supplier' key={'supplier'}>
+          {supplierPaymentSchedules.map((paymentSchedule) => (
+            <div key={paymentSchedule._id} className="card">
+              <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
+                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                  <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
+                    Payment Schedule of {paymentSchedule.site?.name}
+                  </NavLink>
+                  <div className='self-end'>
+                    {/* <button
+                      onClick={() => handleRedirect(paymentSchedule._id)}
+                      className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                        <FaExternalLinkAlt className="text-lg text-white" />
+                    </button> */}
+                    <button
+                      onClick={() => addMore(paymentSchedule._id)}
+                      className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                      <GrEdit />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(paymentSchedule._id)}
+                      className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                      <MdDelete />
+                    </button>
+                  </div>
+                </summary>
+
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Work</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Payment Date</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-6 py-3">Action</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {paymentSchedule?.paymentDetails.map((work, index) => (
+                      <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                          {work.workDescription}
+                        </td>
+                        <td className="px-6 py-4">{work.amount}</td>
+                        <td className="px-6 py-4">{work.dateOfPayment}</td>
+                        <td className="px-6 py-4">{work.status}</td>
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() => handleEdit(paymentSchedule._id, index)}
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            onClick={() => deleteDetail(paymentSchedule._id, index)}
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </details>
+            </div>
+          ))}
+      </Tabs.TabPane>
+
+      </Tabs>
 
       <Toaster
         position="top-right"
         reverseOrder={false}
       />
-    </div>
+    </section>
   )
 }
 

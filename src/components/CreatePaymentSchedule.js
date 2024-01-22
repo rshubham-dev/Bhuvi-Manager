@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { Tabs } from 'antd';
 axios.defaults.withCredentials = true;
 const CreatePaymentSchedule = () => {
   const [formData, setFormData] = useState({
@@ -122,17 +122,17 @@ const CreatePaymentSchedule = () => {
       const payment = response.data;
       console.log(payment)
       setData({
-        site: payment?.site.name,
-        client: payment?.client.name,
-        contractor: payment?.contractor.name,
-        supplier: payment?.supplier.name,
+        site: payment.site?.name,
+        client: payment.client?.name,
+        contractor: payment.contractor?.name,
+        supplier: payment.supplier?.name,
       });
       setFormData({
-        scheduleFor: payment?.scheduleFor,
-        site: payment?.site.id,
-        client: payment?.client.id,
-        contractor: payment?.contractor.id,
-        supplier: payment?.supplier.id,
+        scheduleFor: payment.scheduleFor,
+        site: payment.site?.id,
+        client: payment.client?.id,
+        contractor: payment?.contractor?.id,
+        supplier: payment?.supplier?.id,
         paymentDetails: [{
           workDescription: '',
           rate: '',
@@ -248,10 +248,46 @@ const CreatePaymentSchedule = () => {
         toast.success(response.data.message);
         navigate(-1);
       } else {
-        const response = await axios.post('/api/v1/payment-schedule', updatedFormData);
-        console.log(response.data);
-        toast.success(response.data.message);
-        navigate(-1);
+        switch (formData.scheduleFor) {
+
+          case 'Client':
+            const Client = await axios.post('/api/v1/payment-schedule', {
+              site: updatedFormData.site,
+              scheduleFor: updatedFormData.scheduleFor,
+              paymentDetails: updatedFormData.paymentDetails,
+            });
+            console.log(Client.data);
+            toast.success(Client.data.message);
+            navigate(-1);
+            break;
+
+          case 'Contractor':
+            const Contractor = await axios.post('/api/v1/payment-schedule', {
+              contractor: updatedFormData.contractor,
+              site: updatedFormData.site,
+              scheduleFor: updatedFormData.scheduleFor,
+              paymentDetails: updatedFormData.paymentDetails,
+            });
+            console.log(Contractor.data);
+            toast.success(Contractor.data.message);
+            navigate(-1);
+            break;
+
+          case 'Supplier':
+            const Supplier = await axios.post('/api/v1/payment-schedule', {
+              site: updatedFormData.site,
+              supplier: updatedFormData,
+              scheduleFor: updatedFormData.scheduleFor,
+              paymentDetails: updatedFormData.paymentDetails,
+            });
+            console.log(Supplier.data);
+            toast.success(Supplier.data.message);
+            navigate(-1);
+            break;
+
+          default:
+            break;
+        }
       }
     } catch (error) {
       console.log('Error submitting payment schedule:', error.message);
@@ -500,7 +536,7 @@ const CreatePaymentSchedule = () => {
               onChange={(e) => handleChange('scheduleFor', e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option>Schedule</option>
+              <option>{scheduleIdToEdit ? formData.scheduleFor : 'Schedule'}</option>
               {schedule.map((schedule, index) => (
                 <option key={index} value={schedule}>
                   {schedule}

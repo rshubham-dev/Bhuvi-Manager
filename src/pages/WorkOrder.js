@@ -25,22 +25,20 @@ const WorkOrders = () => {
         setError(error.message);
       }
     }
-
     fetchWorkorders();
   }, [])
 
-  const handleEdit = (workOrderId) => {
-    // Add your edit logic here
-    navigate(`/edit-work-order?workOrderId=${workOrderId}`);
+  const handleEdit = (id) => {
+    navigate(`/edit-workOrder/${id}`);
   };
 
-  const handleRedirect = (workOrderId) => {
-    navigate(`/workOrder?workOrderId=${workOrderId}`);
+  const handleRedirect = (id) => {
+    navigate(`/work-order/${id}`);
   };
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/v1/work-order/remove/${id}`);
+      await axios.delete(`/api/v1/work-order/${id}`);
       setWorkOrder(workOrders.filter((workOrder) => workOrder._id !== id));
     } catch (error) {
       toast.error(error.message)
@@ -52,8 +50,8 @@ const WorkOrders = () => {
   };
 
   return (
-        <div className="overflow-x-auto shadow-md sm:rounded-lg">
-      <h1 className="text-2xl font-bold text-center">Work Orders</h1>
+    <div className="overflow-x-auto shadow-md sm:rounded-lg ">
+      <h1 className="text-2xl font-bold text-center mt-4">Work Orders</h1>
       <div className=" mb-4 mr-20 text-right">
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
           Add Work-Order
@@ -65,6 +63,7 @@ const WorkOrders = () => {
             <th scope="col" className="px-6 py-3">Work-Order Name</th>
             <th scope="col" className="px-6 py-3">Site</th>
             <th scope="col" className="px-6 py-3">Contractor</th>
+            <th scope="col" className="px-6 py-3">Work-Order Value</th>
             <th scope="col" className="px-6 py-3">Duration</th>
             <th scope="col" className="px-6 py-3">Actions</th>
           </tr>
@@ -73,12 +72,15 @@ const WorkOrders = () => {
           {workOrders.map((workOrder) => (
             <tr key={workOrder._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">
-                  {workOrder.workOrderName}
+                <NavLink to={`/work-order/${workOrder._id}`}>
+                {workOrder.workOrderName}
+                </NavLink>
               </td>
-              <td className="px-6 py-4">{workOrder.site?.name}</td>
-              <td className="px-6 py-4">{workOrder.contractor?.name}</td>
-              <td className="px-6 py-4">{workOrder.duration}</td>
-              <td className="px-6 py-4">
+              <td className="px-6 py-3">{workOrder.site?.name}</td>
+              <td className="px-6 py-3">{workOrder.contractor?.name}</td>
+              <td className="px-6 py-3">{workOrder.workOrderValue}</td>
+              <td className="px-6 py-3">{workOrder.duration}</td>
+              <td className="px-6 py-3">
                 <button
                   onClick={() => handleRedirect(workOrder._id)}
                   className="bg-blue-500 text-white px-2 py-1 mr-2"
