@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import io from 'socket.io-client';
-const socket = io('http://localhost:8080'); // Replace with your Socket.IO server URL
+const socket = io('https://bhuvi-management-server-7nf0.onrender.com'); // Replace with your Socket.IO server URL
 
 const Message = () => {
     const [allMessages, setAllMessages] = useState([]);
