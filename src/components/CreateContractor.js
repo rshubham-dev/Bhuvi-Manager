@@ -40,7 +40,7 @@ const navigate = useNavigate();
       console.log('Form data submitted:', contractor);
       navigate(-1);
     } catch (error) {
-      console.error('Error creating contractor:', error);
+      console.log('Error creating contractor:', error);
       toast.error('Failed Creating Contractor. Please check your credentials.');
     }
   };
