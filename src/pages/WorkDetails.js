@@ -37,7 +37,6 @@ const WorkDetails = () => {
       </div>
       
       <section className='bg-white px-12 py-8 mb-16 h-full w-2/5'>
-        <h1 className="text-3xl font-semibold text-gray-800"> Site Details</h1>
         <div className="mt-6 w-full">
           {workDetails.map((workDetail) => (
             <div key={workDetail._id} className="card">

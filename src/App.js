@@ -48,14 +48,13 @@ import CreateExtraWork from './components/CreateExtraWork';
 import ExtraWork from './pages/ExtraWork';
 import CreateSupplier from './components/CreateSupplier';
 import CreatePurchaseOrder from './components/CreatePurchaseOrder';
-import CreateMaterialOrder from './components/CreateMaterialOrder';
 import PurchaseOrders from './pages/PurchaseOrders';
 import Suppliers from './pages/Suppliers';
-import MaterialOrder from './pages/MaterialOrder';
 import EditDetails from './components/EditDetails';
 import PurchaseOrderScreen from './screen/PurchaseOrderScreen';
 import Message from './pages/Message';
 import Employee from './pages/Employee';
+import Task from './pages/Task';
 
 const App = () => {
 
@@ -136,10 +135,9 @@ const App = () => {
         <Route path='/edit-purchaseOrder/:id' element={<CreatePurchaseOrder />} />
         <Route path='/edit-purchaseOrder/:id/material/:index' element={<CreatePurchaseOrder />} />
         <Route path='/purchase-order' element={<PurchaseOrders />} />
-        <Route path='/purchaseOrder/:id' element={<PurchaseOrderScreen />} />
-        <Route path='/create-material-order' element={<CreateMaterialOrder />} />
-        <Route path='/material-order' element={<MaterialOrder />} />
+        <Route path='/purchase-order/:id' element={<PurchaseOrderScreen />} />
         <Route path='/message' element={<Message />} />
+        <Route path='/tasks' element={<Task />} />
         {/* </ProtectedRoute> */}
       </Routes>
     </>

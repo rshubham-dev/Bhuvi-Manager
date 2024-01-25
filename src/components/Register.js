@@ -9,10 +9,11 @@ const Register = () => {
     const navigate = useNavigate();
     const [user, setUser] = useState({
         userName: "",
+        avatar:"",
         userMail: "",
         password: "",
         confirmPassword: "",
-        phone: "",
+        whatsapp:"",
     });
     const [error, setError] = useState(null);
 

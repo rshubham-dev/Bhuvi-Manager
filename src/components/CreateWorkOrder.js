@@ -481,7 +481,7 @@ const WorkOrderForm = () => {
               Project Duration: {formData.duration}
             </label>
             <input
-              type='month'
+              type='date'
               value={formData.duration}
               onChange={(e) => handleChange('duration', e.target.value)}
               className="border p-2 rounded w-full"

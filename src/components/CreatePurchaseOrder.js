@@ -254,7 +254,7 @@ const CreatePurchaseOrder = () => {
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Work Details</h2>
 
-          {formData.requirement.map((material, index) => (
+          {formData.requirement.map((index, material) => (
             <div key={index} className="mb-4 p-4 border rounded">
               <div className="grid grid-cols-2 grid-flow-row-dense gap-4">
 

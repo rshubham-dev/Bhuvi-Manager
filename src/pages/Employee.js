@@ -51,7 +51,7 @@ const Employee = () => {
           <tr>
             <th scope="col" className="px-6 py-3">User Name</th>
             <th scope="col" className="px-6 py-3">Email</th>
-            <th scope="col" className="px-6 py-3">Whatsapp No</th>
+            <th scope="col" className="px-6 py-3">Contact No</th>
             <th scope="col" className="px-6 py-3">Employee Id</th>
             <th scope="col" className="px-6 py-3">Department</th>
             <th scope="col" className="px-6 py-3">Actions</th>

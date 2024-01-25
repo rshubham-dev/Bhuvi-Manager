@@ -10,14 +10,12 @@ const CreateBill = () => {
   const [data, setData] = useState({
     site: '',
     contractor: '',
-    client: '',
     supplier: '',
   });
   const [bill, setBill] = useState({
     site: '',
     billFor: '',
     contractor: '',
-    client: '',
     supplier: '',
     createdBy: '',
     billOf: '',
@@ -28,9 +26,8 @@ const CreateBill = () => {
     dueAmount: '',
   });
   const [suppliers, setSupplier] = useState([]);
-  const [client, setClient] = useState({});
   const [contractors, setContractor] = useState([]);
-  const billFor = ['Client', 'Contractor', 'Supplier', 'Material'];
+  const billFor = ['Contractor', 'Supplier'];
   const status = ['Due', 'Paid', 'Pending'];
   const { user } = useSelector((state) => state.auth)
   const [billToEdit, setBillToEdit] = useState(null);
@@ -63,26 +60,9 @@ const CreateBill = () => {
     }
     console.log(siteData)
     setContractor(siteData[0]?.contractor || '');
-    setClient(siteData[0]?.client || '');
     setSupplier(siteData[0]?.supplier || '');
-    getpaymentSchedule(siteId, bill.billFor);
   }, [bill.site]);
-  bill.client = client.name;
 
-  const getpaymentSchedule = async (siteId, billFor) => {
-    try {
-      console.log(siteId)
-      const response = await axios.get(`/api/v1/payment-schedule/site/${siteId}`);
-      const paymentSchedules = response.data.filter((detail) => detail.scheduleFor === billFor);
-      const paymentWorks = paymentSchedules.map((paymentSchedule) => paymentSchedule.paymentDetails)
-      setBillWork(...paymentWorks)
-      console.log(paymentSchedules)
-      console.log(paymentWorks)
-    } catch (error) {
-      console.error(error);
-      toast.error(error.message);
-    }
-  };
 
   useEffect(() => {
     const getMaterialOrder = async () => {
@@ -108,14 +88,12 @@ const CreateBill = () => {
       setData({
         site: billData.data.site?.name,
         contractor: billData.data.contractor?.name,
-        client: billData.data.client?.name,
         supplier: billData.data.supplier?.name,
       })
 
       setBill({
         site: billData.data?.site._id,
         contractor: billData.data.contractor?._id,
-        client: billData.data.client?._id,
         supplier: billData.data.supplier?._id,
         billOf: billData.data.billOf.workDescription,
         billFor: billData.data.billFor,
@@ -148,7 +126,6 @@ const CreateBill = () => {
           site: bill.site,
           billFor: bill.billFor,
           contractor: bill.contractor,
-          client: client._id,
           supplier: bill.supplier,
           createdBy: user._id,
           billOf: bill.billOf,
@@ -168,7 +145,6 @@ const CreateBill = () => {
           site: bill.site,
           billFor: bill.billFor,
           contractor: bill.contractor,
-          client: client._id,
           supplier: bill.supplier,
           createdBy: user._id,
           billOf: bill.billOf,
@@ -178,7 +154,7 @@ const CreateBill = () => {
         navigate(-1)
       }
     } catch (error) {
-      console.error(error)
+      console.log(error)
       toast.error(error.message)
     }
   }
@@ -226,22 +202,6 @@ const CreateBill = () => {
                 </option>
               ))}
             </select>
-          </>
-        );
-        break;
-      case 'Client':
-        return (
-          <>
-            <label htmlFor="client" className="block text-sm font-medium text-gray-600 mb-2">
-              Client
-            </label>
-            <input
-              name="client"
-              value={bill.client || ''}
-              readOnly
-              onChange={(e) => handleChange('client', e.target.value)}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-            />
           </>
         );
         break;
@@ -357,7 +317,7 @@ const CreateBill = () => {
               onChange={(e) => handleChange('billFor', e.target.value)}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option>{billToEdit ? bill.billFor : 'Bill for'}</option>
+              <option>{billToEdit ? bill?.billFor : 'Bill for'}</option>
               {billFor.map((bill, index) => (
                 <option key={index} value={bill}>
                   {bill}
@@ -388,7 +348,7 @@ const CreateBill = () => {
             {BillFor(bill.billFor)}
           </div>
 
-          {bill.billFor === 'Material' ?
+          {bill.billFor === 'Supplier' ?
             <div className="mb-4">
               <label
                 htmlFor='material'
@@ -398,7 +358,7 @@ const CreateBill = () => {
               <select
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => handleChange('billOf', e.target.value)}>
-                <option>{billToEdit ? bill.billOf : 'Select Ordered Material'}</option>
+                <option>{billToEdit ? bill.billOf : 'Select Material'}</option>
                 {materials.map((requirement, index) => (
                   <option key={index} value={requirement.material}>
                     {requirement.material}
@@ -416,8 +376,8 @@ const CreateBill = () => {
               <select
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => handleChange('billOf', e.target.value)}>
-                <option>{billToEdit ? bill.billOf : 'Work'}</option>
-                {billWork.map((work, index) => (
+                <option>{billToEdit ? bill?.billOf : 'Work'}</option>
+                {billWork?.map((work, index) => (
                   <option key={index} value={work.workDescription}>
                     {work.workDescription}
                   </option>
@@ -433,7 +393,7 @@ const CreateBill = () => {
               type="submit"
               className="bg-blue-500 text-white px-3 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
             >
-              Create Bill
+              {billToEdit ? 'Update Bill' : 'Create Bill'}
             </button>
           </div>
 

@@ -5,16 +5,12 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
-import { Tabs } from 'antd';
 
 axios.defaults.withCredentials = true;
 
 const PaymentSchedules = () => {
   const navigate = useNavigate();
   const [paymentSchedules, setpaymentSchedules] = useState([]);
-  const [supplierPaymentSchedules, setsupplierPaymentSchedules] = useState([]);
-  const [contractorPaymentSchedules, setcontractorPaymentSchedules] = useState([]);
-  const [clientPaymentSchedules, setclientPaymentSchedules] = useState([]);
 
   useEffect(() => {
     const getpaymentSchedules = async () => {
@@ -27,21 +23,6 @@ const PaymentSchedules = () => {
     }
     getpaymentSchedules();
   }, [])
-  
-  useEffect(()=>{
-  setclientPaymentSchedules([
-    ...paymentSchedules.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Client')
-  ]);
-  setcontractorPaymentSchedules([
-    ...paymentSchedules.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Contractor')
-  ]);
-  setsupplierPaymentSchedules([
-    ...paymentSchedules.filter((paymentSchedule) => paymentSchedule.scheduleFor === 'Supplier')
-  ]);
-},[paymentSchedules])
-
-  console.log('client:', clientPaymentSchedules);
-  console.log('contractor:', contractorPaymentSchedules);
 
   const handleEdit = (id, index) => {
     navigate(`/edit-paymentSchedule/${id}/${index}`);
@@ -89,213 +70,71 @@ const PaymentSchedules = () => {
         </button>
       </div>
 
-      <Tabs defaultActiveKey='client'>
+      {paymentSchedules.map((paymentSchedule) => (
+        <div key={paymentSchedule._id} className="card mt-6">
+          <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
+            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
+                Payment Schedule of {paymentSchedule.site?.name}
+              </NavLink>
+              <div className='self-end'>
+                <button
+                  onClick={() => handleRedirect(paymentSchedule._id)}
+                  className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                  <FaExternalLinkAlt className="text-lg text-white" />
+                </button>
+                <button
+                  onClick={() => addMore(paymentSchedule._id)}
+                  className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                  <GrEdit />
+                </button>
+                <button
+                  onClick={() => handleDelete(paymentSchedule._id)}
+                  className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                  <MdDelete />
+                </button>
+              </div>
+            </summary>
 
-      <Tabs.TabPane tab='Client' key={'client'}>
-          {clientPaymentSchedules.map((paymentSchedule) => (
-            <div key={paymentSchedule._id} className="card">
-              <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
-                    Payment Schedule of {paymentSchedule.site?.name}
-                  </NavLink>
-                  <div className='self-end'>
-                    <button
-                      onClick={() => handleRedirect(paymentSchedule._id)}
-                      className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                        <FaExternalLinkAlt className="text-lg text-white" />
-                    </button>
-                    <button
-                      onClick={() => addMore(paymentSchedule._id)}
-                      className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                      <GrEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(paymentSchedule._id)}
-                      className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                      <MdDelete />
-                    </button>
-                  </div>
-                </summary>
+            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                  <th scope="col" className="px-6 py-3">Work</th>
+                  <th scope="col" className="px-6 py-3">Amount</th>
+                  <th scope="col" className="px-6 py-3">Payment Date</th>
+                  <th scope="col" className="px-6 py-3">Status</th>
+                  <th scope="col" className="px-6 py-3">Action</th>
+                </tr>
+              </thead>
 
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Work</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
-                      <th scope="col" className="px-6 py-3">Action</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {paymentSchedule?.paymentDetails.map((work, index) => (
-                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-                          {work.workDescription}
-                        </td>
-                        <td className="px-6 py-4">{work.amount}</td>
-                        <td className="px-6 py-4">{work.dateOfPayment}</td>
-                        <td className="px-6 py-4">{work.status}</td>
-                        <td className="px-6 py-4">
-                          <button
-                            onClick={() => handleEdit(paymentSchedule._id, index)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
-                          </button>
-                          <button
-                            onClick={() => deleteDetail(paymentSchedule._id, index)}
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </details>
-            </div>
-          ))}
-      </Tabs.TabPane>
-
-      <Tabs.TabPane tab='Contractor' key={'contractor'}>
-          { contractorPaymentSchedules.map((paymentSchedule) => (
-            <div key={paymentSchedule._id} className="card">
-              <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
-                    Payment Schedule of {paymentSchedule.site?.name}
-                  </NavLink>
-                  <div className='self-end'>
-                    <button
-                      onClick={() => handleRedirect(paymentSchedule._id)}
-                      className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                        <FaExternalLinkAlt className="text-lg text-white" />
-                    </button>
-                    <button
-                      onClick={() => addMore(paymentSchedule._id)}
-                      className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                      <GrEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(paymentSchedule._id)}
-                      className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                      <MdDelete />
-                    </button>
-                  </div>
-                </summary>
-
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Work</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
-                      <th scope="col" className="px-6 py-3">Action</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {paymentSchedule?.paymentDetails.map((work, index) => (
-                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-                          {work.workDescription}
-                        </td>
-                        <td className="px-6 py-4">{work.amount}</td>
-                        <td className="px-6 py-4">{work.dateOfPayment}</td>
-                        <td className="px-6 py-4">{work.status}</td>
-                        <td className="px-6 py-4">
-                          <button
-                            onClick={() => handleEdit(paymentSchedule._id, index)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
-                          </button>
-                          <button
-                            onClick={() => deleteDetail(paymentSchedule._id, index)}
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </details>
-            </div>
-          ))}
-      </Tabs.TabPane>
-
-      <Tabs.TabPane tab='Supplier' key={'supplier'}>
-          {supplierPaymentSchedules.map((paymentSchedule) => (
-            <div key={paymentSchedule._id} className="card">
-              <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
-                    Payment Schedule of {paymentSchedule.site?.name}
-                  </NavLink>
-                  <div className='self-end'>
-                    <button
-                      onClick={() => handleRedirect(paymentSchedule._id)}
-                      className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                        <FaExternalLinkAlt className="text-lg text-white" />
-                    </button>
-                    <button
-                      onClick={() => addMore(paymentSchedule._id)}
-                      className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                      <GrEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(paymentSchedule._id)}
-                      className="bg-red-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
-                      <MdDelete />
-                    </button>
-                  </div>
-                </summary>
-
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Work</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
-                      <th scope="col" className="px-6 py-3">Action</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {paymentSchedule?.paymentDetails.map((work, index) => (
-                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-                          {work.workDescription}
-                        </td>
-                        <td className="px-6 py-4">{work.amount}</td>
-                        <td className="px-6 py-4">{work.dateOfPayment}</td>
-                        <td className="px-6 py-4">{work.status}</td>
-                        <td className="px-6 py-4">
-                          <button
-                            onClick={() => handleEdit(paymentSchedule._id, index)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
-                          </button>
-                          <button
-                            onClick={() => deleteDetail(paymentSchedule._id, index)}
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </details>
-            </div>
-          ))}
-      </Tabs.TabPane>
-
-      </Tabs>
+              <tbody>
+                {paymentSchedule?.paymentDetails.map((work, index) => (
+                  <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td className="px-6 py-4">
+                      {work.workDescription}
+                    </td>
+                    <td className="px-6 py-4">{work.amount}</td>
+                    <td className="px-6 py-4">{work.dateOfPayment}</td>
+                    <td className="px-6 py-4">{work.status}</td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => handleEdit(paymentSchedule._id, index)}
+                        className="bg-blue-500 text-white px-2 py-1 mr-2">
+                        <GrEdit />
+                      </button>
+                      <button
+                        onClick={() => deleteDetail(paymentSchedule._id, index)}
+                        className="bg-red-500 text-white px-2 py-1 mr-2">
+                        <MdDelete />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </details>
+        </div>
+      ))}
 
       <Toaster
         position="top-right"

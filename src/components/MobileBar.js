@@ -20,7 +20,7 @@ const MobileBar = () => {
                     <MdAccountBalanceWallet className='text-xl mb-1 lg:text-2xl' />
                     Expense
                 </NavLink>
-                <NavLink to='/task' className='text-white flex flex-col items-center'>
+                <NavLink to='/tasks' className='text-white flex flex-col items-center'>
                 <FaTasks className='text-xl mb-1 lg:text-2xl' />
                     Task
                 </NavLink>

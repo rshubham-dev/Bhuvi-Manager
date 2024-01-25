@@ -14,7 +14,7 @@ const Payment_SchedulScreen = () => {
     if(id){
       getpaymentSchedules(id);
     }
-  }, [])
+  }, [id])
 
   const getpaymentSchedules = async (id) => {
     try {

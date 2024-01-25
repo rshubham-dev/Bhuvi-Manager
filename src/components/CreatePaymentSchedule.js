@@ -2,29 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Tabs } from 'antd';
+
 axios.defaults.withCredentials = true;
 const CreatePaymentSchedule = () => {
   const [formData, setFormData] = useState({
-    scheduleFor: '',
-    contractor: '',
-    supplier: '',
     site: '',
     client: '',
     paymentDetails: [{
       workDescription: '',
-      rate: '',
-      area: '',
-      unit: '',
       amount: '',
       paymentDate: '',
     }],
   });
   const [paymentDetail, setPaymentDetail] = useState({
     workDescription: '',
-    rate: '',
-    area: '',
-    unit: '',
     amount: '',
     paymentDate: '',
     status: '',
@@ -39,16 +30,10 @@ const CreatePaymentSchedule = () => {
   });
   const [client, setClient] = useState([]);
   const [workDetails, setWorkDetails] = useState([]);
-  const [suppliers, setSupplier] = useState([]);
   const [sites, setSite] = useState([]);
   const [data, setData] = useState({
     site: '',
-    contractor: '',
-    supplier: '',
   });
-  const [contractors, setContractor] = useState([]);
-  const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM', '₹'];
-  const schedule = ['Client', 'Contractor', 'Supplier'];
   const status = ['Started', 'Completed', 'Pending', 'Partaly Completed'];
   const { id, index } = useParams();
   console.log('id:', id)
@@ -104,8 +89,6 @@ const CreatePaymentSchedule = () => {
       console.log(detail)
       setPaymentDetail({
         workDescription: detail?.workDescription,
-        rate: detail?.rate,
-        area: detail?.area,
         unit: detail?.unit,
         amount: detail?.amount,
         paymentDate: detail?.paymentDate,
@@ -124,19 +107,12 @@ const CreatePaymentSchedule = () => {
       setData({
         site: payment.site?.name,
         client: payment.client?.name,
-        contractor: payment.contractor?.name,
-        supplier: payment.supplier?.name,
       });
       setFormData({
-        scheduleFor: payment.scheduleFor,
         site: payment.site?.id,
         client: payment.client?.id,
-        contractor: payment?.contractor?.id,
-        supplier: payment?.supplier?.id,
         paymentDetails: [{
           workDescription: '',
-          rate: '',
-          area: '',
           unit: '',
           amount: '',
           paymentDate: '',
@@ -160,8 +136,6 @@ const CreatePaymentSchedule = () => {
     if (siteId) {
       siteData = sites.filter((site) => site._id === siteId);
     }
-    setContractor(siteData[0]?.contractor || '');
-    setSupplier(siteData[0]?.supplier || '');
     setClient(siteData[0]?.client || '');
   }, [formData.site]);
   formData.client = client.name;
@@ -173,8 +147,6 @@ const CreatePaymentSchedule = () => {
         ...prevData.paymentDetails,
         {
           workDescription: '',
-          rate: '',
-          area: '',
           unit: '',
           paymentDate: '',
           billNo: '',
@@ -219,20 +191,8 @@ const CreatePaymentSchedule = () => {
     const updatedFormData = {
       ...formData,
       client: client._id,
-      paymentDetails: formData.paymentDetails.map((detail) => {
-        const amount = parseFloat(detail.area) * parseFloat(detail.rate);
-        return {
-          ...detail,
-          amount: isNaN(amount) ? '' : amount.toFixed(2),
-        };
-      }),
     };
 
-    const amount = parseFloat(paymentDetail.area) * parseFloat(paymentDetail.rate);
-    const updatedDetail = {
-      ...paymentDetail,
-      amount: isNaN(amount) ? '' : amount.toFixed(2),
-    }
 
     try {
       if (scheduleIdToEdit) {
@@ -243,51 +203,15 @@ const CreatePaymentSchedule = () => {
           navigate(-1)
         }
       } else if (paymentToEdit.id && paymentToEdit.index) {
-        const response = await axios.put(`/api/v1/payment-schedule/${paymentToEdit.id}/paymentDetails/${paymentToEdit.index}`, updatedDetail);
+        const response = await axios.put(`/api/v1/payment-schedule/${paymentToEdit.id}/paymentDetails/${paymentToEdit.index}`, paymentDetail);
         console.log(response.data);
         toast.success(response.data.message);
         navigate(-1);
       } else {
-        switch (formData.scheduleFor) {
-
-          case 'Client':
-            const Client = await axios.post('/api/v1/payment-schedule', {
-              site: updatedFormData.site,
-              scheduleFor: updatedFormData.scheduleFor,
-              paymentDetails: updatedFormData.paymentDetails,
-            });
-            console.log(Client.data);
-            toast.success(Client.data.message);
-            navigate(-1);
-            break;
-
-          case 'Contractor':
-            const Contractor = await axios.post('/api/v1/payment-schedule', {
-              contractor: updatedFormData.contractor,
-              site: updatedFormData.site,
-              scheduleFor: updatedFormData.scheduleFor,
-              paymentDetails: updatedFormData.paymentDetails,
-            });
-            console.log(Contractor.data);
-            toast.success(Contractor.data.message);
-            navigate(-1);
-            break;
-
-          case 'Supplier':
-            const Supplier = await axios.post('/api/v1/payment-schedule', {
-              site: updatedFormData.site,
-              supplier: updatedFormData,
-              scheduleFor: updatedFormData.scheduleFor,
-              paymentDetails: updatedFormData.paymentDetails,
-            });
-            console.log(Supplier.data);
-            toast.success(Supplier.data.message);
-            navigate(-1);
-            break;
-
-          default:
-            break;
-        }
+        const response = await axios.post('/api/v1/payment-schedule', updatedFormData);
+        console.log(response.data);
+        toast.success(response.data.message);
+        navigate(-1);
       }
     } catch (error) {
       console.log('Error submitting payment schedule:', error.message);
@@ -295,255 +219,132 @@ const CreatePaymentSchedule = () => {
     }
   };
 
-  const scheduleFor = (name) => {
-    switch (name) {
-      case 'Contractor':
-        return (
-          <>
-            <label htmlFor="contractor" className="block text-sm font-medium text-gray-600">
-              Choose Contractor
-            </label>
-            <select
-              name="contractor"
-              value={formData.contractor}
-              onChange={(e) => handleChange('contractor', e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option>{scheduleIdToEdit ? data.contractor : 'Contractor'}</option>
-              {contractors && contractors?.map((contractor) => (
-                <option key={contractor?._id} value={contractor?._id}>
-                  {contractor?.name}
-                </option>
-              ))}
-            </select>
-          </>
-        );
-        break;
-      case 'Supplier':
-        return (
-          <>
-            <label htmlFor="contractor" className="block text-sm font-medium text-gray-600">
-              Choose Supplier
-            </label>
-            <select
-              name="supplier"
-              value={formData.supplier}
-              onChange={(e) => handleChange('supplier', e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option>{scheduleIdToEdit ? data.supplier : 'Supplier'}</option>
-              {suppliers && suppliers?.map((supplier) => (
-                <option key={supplier?._id} value={supplier?._id}>
-                  {supplier?.name}
-                </option>
-              ))}
-            </select>
-          </>
-        );
-        break;
-      case 'Client':
-        return (
-          <>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-600">
-              Client
-            </label>
-            <input
-              name="client"
-              value={formData.client || ''}
-              readOnly
-              onChange={(e) => handleChange('client', e.target.value)}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-            />
-          </>
-        );
-        break;
-      default: return (
-        <p>Please Select, For Which the </p>
-      );
-        break;
-    }
-  };
 
   if (paymentToEdit.id && paymentToEdit.index) {
     return (
-        <section className="container mx-auto mt-6 mb-20 flex justify-center item-center">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded px-8 pt-6 pb-6 mb-4 w-full max-w-md">
+      <section className="container mx-auto mt-6 mb-20 flex justify-center item-center">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-white shadow-md rounded px-8 pt-6 pb-6 mb-4 w-full max-w-md">
 
-            <div className='mb-4'>
-              <label
-                htmlFor='workDescription'
-                className="block text-sm font-semibold text-gray-600"
-              >
-                Work Detail
-              </label>
-              <select
-                value={paymentDetail.workDescription}
-                onChange={(e) => handleUpdate('workDescription', e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option>
+          <div className='mb-4'>
+            <label
+              htmlFor='workDescription'
+              className="block text-sm font-semibold text-gray-600"
+            >
+              Work Detail
+            </label>
+            <select
+              value={paymentDetail.workDescription}
+              onChange={(e) => handleUpdate('workDescription', e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option>
                 {paymentDetail ? paymentDetail.workDescription :
-                    'Work Detail'
-                  }
+                  'Work Detail'
+                }
+              </option>
+              {workDetails.map((workDetail) => (
+                <option key={workDetail._id} value={workDetail.work}>
+                  {workDetail.work}
                 </option>
-                {workDetails.map((workDetail) => (
-                  <option key={workDetail._id} value={workDetail.work}>
-                    {workDetail.work}
-                  </option>
-                ))}
+              ))}
 
-              </select>
-            </div>
+            </select>
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor='rate' className="block text-sm font-semibold text-gray-600">
-                Rate
-              </label>
-              <input
-                type="number"
-                name='rate'
-                value={paymentDetail.rate}
-                onChange={(e) => handleUpdate('rate', e.target.value)}
-                placeholder="Rate"
-                className="border p-2 rounded w-full"
-              />
-            </div>
+          <div className="mb-4">
+            <label htmlFor='amount' className="block text-sm font-semibold text-gray-600">
+              Amount
+            </label>
+            <input
+              type="number"
+              name='amount'
+              value={paymentDetail.amount}
+              onChange={(e) => handleUpdate('amount', e.target.value)}
+              placeholder="Amount"
+              className="border p-2 rounded w-full"
+            />
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor='area' className="block text-sm font-semibold text-gray-600">
-                Area
-              </label>
-              <input
-                type="number"
-                name='area'
-                value={paymentDetail.area}
-                onChange={(e) => handleUpdate('area', e.target.value)}
-                placeholder="Area"
-                className="border p-2 rounded w-full"
-              />
-            </div>
+          <div className="mb-4">
+            <label htmlFor='paymentDate' className="block text-sm font-semibold text-gray-600">
+              Date of Payment
+            </label>
+            <input
+              type="date"
+              name='paymentDate'
+              value={paymentDetail.paymentDate}
+              onChange={(e) => handleUpdate('paymentDate', e.target.value)}
+              className="border p-2 rounded w-full"
+            />
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor='unit' className="block text-sm font-semibold text-gray-600">
-                Unit
-              </label>
-              <select
-                name='unit'
-                value={paymentDetail.unit}
-                onChange={(e) => handleUpdate('unit', e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                <option>
-                  {paymentDetail ? paymentDetail.unit :
-                    'Unit'
-                  }
-                </option>
-                {units.map((unit, index) => (
-                  <option key={index} value={unit}>
-                    {unit}
-                  </option>
-                ))}
-              </select>
-            </div>
+          <div className="mb-4">
+            <label htmlFor='paid' className="block text-sm font-semibold text-gray-600">
+              Paid
+            </label>
+            <input
+              type="number"
+              name='paid'
+              value={paymentDetail.paid}
+              onChange={(e) => handleUpdate('paid', e.target.value)}
+              placeholder="Paid Amount"
+              className="border p-2 rounded w-full"
+            />
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor='paymentDate' className="block text-sm font-semibold text-gray-600">
-                Date of Payment
-              </label>
-              <input
-                type="date"
-                name='paymentDate'
-                value={paymentDetail.paymentDate}
-                onChange={(e) => handleUpdate('paymentDate', e.target.value)}
-                className="border p-2 rounded w-full"
-              />
-            </div>
+          <div className="mb-4">
+            <label htmlFor='due' className="block text-sm font-semibold text-gray-600">
+              Due
+            </label>
+            <input
+              type="number"
+              name='due'
+              value={paymentDetail.due}
+              onChange={(e) => handleUpdate('due', e.target.value)}
+              placeholder="Due Amount"
+              className="border p-2 rounded w-full"
+            />
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor='paid' className="block text-sm font-semibold text-gray-600">
-                Paid
-              </label>
-              <input
-                type="number"
-                name='paid'
-                value={paymentDetail.paid}
-                onChange={(e) => handleUpdate('paid', e.target.value)}
-                placeholder="Paid Amount"
-                className="border p-2 rounded w-full"
-              />
-            </div>
+          <div className="mb-4">
+            <label htmlFor="status" className="block text-gray-700 text-sm font-bold mb-2">
+              Status
+            </label>
+            <select
+              value={paymentDetail.status}
+              onChange={(e) => handleUpdate('status', e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            >
+              <option>
+                {paymentDetail ? paymentDetail.status :
+                  'Status'
+                }
+              </option>
+              {status.map((status, index) => (
+                <option key={index} value={status}>{status}</option>
+              ))}
+            </select>
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor='due' className="block text-sm font-semibold text-gray-600">
-                Due
-              </label>
-              <input
-                type="number"
-                name='due'
-                value={paymentDetail.due}
-                onChange={(e) => handleUpdate('due', e.target.value)}
-                placeholder="Due Amount"
-                className="border p-2 rounded w-full"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="status" className="block text-gray-700 text-sm font-bold mb-2">
-                Status
-              </label>
-              <select
-                value={paymentDetail.status}
-                onChange={(e) => handleUpdate('status', e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
-                <option>
-                  {paymentDetail ? paymentDetail.status :
-                    'Status'
-                  }
-                </option>
-                {status.map((status, index) => (
-                  <option key={index} value={status}>{status}</option>
-                ))}
-              </select>
-            </div>
-
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-              Submit
-            </button>
-          </form>
-          <Toaster
-            position="top-right"
-            reverseOrder={false}
-          />
-        </section>
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Submit
+          </button>
+        </form>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
+      </section>
     )
   } else {
     return (
       <section className="container mx-auto mt-6 mb-24">
         <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
           <h2 className="text-2xl font-semibold mb-4 text-center">Create Payment Schedule</h2>
-
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-600">
-              Payment Schedule for
-            </label>
-            <select
-              name="scheduleFor"
-              value={formData.scheduleFor}
-              onChange={(e) => handleChange('scheduleFor', e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option>{scheduleIdToEdit ? formData.scheduleFor : 'Schedule'}</option>
-              {schedule.map((schedule, index) => (
-                <option key={index} value={schedule}>
-                  {schedule}
-                </option>
-              ))}
-            </select>
-          </div>
 
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-600">
@@ -565,7 +366,16 @@ const CreatePaymentSchedule = () => {
           </div>
 
           <div className="mb-4">
-            {scheduleFor(formData.scheduleFor)}
+            <label htmlFor="name" className="block text-sm font-medium text-gray-600">
+              Client
+            </label>
+            <input
+              name="client"
+              value={formData.client || ''}
+              readOnly
+              onChange={(e) => handleChange('client', e.target.value)}
+              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+            />
           </div>
 
           <div className="mb-4">
@@ -599,50 +409,17 @@ const CreatePaymentSchedule = () => {
                   </div>
 
                   <div>
-                    <label htmlFor={`work[${index}].rate`} className="block text-sm font-semibold text-gray-600">
-                      Rate
+                    <label htmlFor={`work[${index}].amount`} className="block text-sm font-semibold text-gray-600">
+                      Amount
                     </label>
                     <input
                       type="number"
-                      name={`work[${index}].rate`}
-                      value={work.rate}
-                      onChange={(e) => handleWorkChange(index, 'rate', e.target.value)}
-                      placeholder="Rate"
+                      name={`work[${index}].amount`}
+                      value={work.amount}
+                      onChange={(e) => handleWorkChange(index, 'amount', e.target.value)}
+                      placeholder="Amount"
                       className="border p-2 rounded w-full"
                     />
-                  </div>
-
-                  <div>
-                    <label htmlFor={`work[${index}].area`} className="block text-sm font-semibold text-gray-600">
-                      Area
-                    </label>
-                    <input
-                      type="number"
-                      name={`work[${index}].area`}
-                      value={work.area}
-                      onChange={(e) => handleWorkChange(index, 'area', e.target.value)}
-                      placeholder="Area"
-                      className="border p-2 rounded w-full"
-                    />
-                  </div>
-
-                  <div>
-                    <label 
-                    htmlFor={`work[${index}].unit`} 
-                    className="block text-sm font-semibold text-gray-600">
-                      Unit
-                    </label>
-                    <select
-                      name={`work[${index}].unit`}
-                      onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
-                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                      <option>Select a Unit</option>
-                      {units.map((unit, index) => (
-                        <option key={index} value={unit}>
-                          {unit}
-                        </option>
-                      ))}
-                    </select>
                   </div>
 
                   <div>
@@ -679,7 +456,7 @@ const CreatePaymentSchedule = () => {
               onClick={handleAddWork}
               className="bg-blue-500 text-white p-2 rounded"
             >
-              Add Work Order
+              More Work
             </button>
           </div>
 

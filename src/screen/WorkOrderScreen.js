@@ -18,7 +18,7 @@ const WorkOrderScreen = () => {
     if (id) {
       fetchWorkDetails(id);
     }
-  }, []);
+  }, [id]);
 
   const handleEdit = (id) => {
     console.log(id)
