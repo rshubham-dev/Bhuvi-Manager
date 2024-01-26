@@ -11,24 +11,23 @@ import {
   MdPlaylistAddCheck,
   MdConstruction,
   MdBuild,
-  MdAssignment,
   MdWork
 } from "react-icons/md";
+import { useSelector } from 'react-redux'
 
 const SiteSupervisour = () => {
+  const {user} = useSelector((state)=> state.auth)
   const navItems = [
-    { to: '/project-schedules', text: 'Project Schedule', icon: <MdDateRange /> },
-    { to: '/payment-schedules', text: 'Payment Schedule', icon: <MdPayment /> },
-    { to: '/sites', text: 'Site', icon: <MdLocationOn /> },
-    { to: '/bills', text: 'Bill', icon: <MdReceipt /> },
-    { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
-    { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
-    { to: '/purchase-order', text: 'Purchase-Order', icon: <BiSolidPurchaseTag /> },
-    { to: '/material-order', text: 'Material-Order', icon: '' },
-    { to: '/suppliers', text: 'Supplier', icon: <GrUserWorker/> },
-    { to: '/extra-work', text: 'Extra-Work', icon: <MdBuild /> },
-    { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
+    { to: `/site/${user?.site._id}`, text: 'Site', icon: <MdLocationOn /> },
+    { to: `/project-schedules/${user?.site.projectSchedule._id}`, text: 'Project Schedule', icon: <MdDateRange /> },
+    { to: `/payment-schedules/${user?.site.paymentSchedule._id}`, text: 'Payment Schedule', icon: <MdPayment /> },
     { to: '/work-orders', text: 'Work-Order', icon: <MdWork /> },
+    { to: '/purchase-order', text: 'Purchase-Order', icon: <BiSolidPurchaseTag /> },
+    { to: '/bills', text: 'Bill', icon: <MdReceipt /> },
+    { to: '/extra-work', text: 'Extra-Work', icon: <MdBuild /> },
+    { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
+    { to: '/suppliers', text: 'Supplier', icon: <GrUserWorker/> },
+    // { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
   ];
   return (
     <>

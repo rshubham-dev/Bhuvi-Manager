@@ -48,6 +48,7 @@ import CreateExtraWork from './components/CreateExtraWork';
 import ExtraWork from './pages/ExtraWork';
 import CreateSupplier from './components/CreateSupplier';
 import CreatePurchaseOrder from './components/CreatePurchaseOrder';
+import CreateMaterialOrder from './components/CreateMaterialOrder';
 import PurchaseOrders from './pages/PurchaseOrders';
 import Suppliers from './pages/Suppliers';
 import EditDetails from './components/EditDetails';
@@ -55,6 +56,7 @@ import PurchaseOrderScreen from './screen/PurchaseOrderScreen';
 import Message from './pages/Message';
 import Employee from './pages/Employee';
 import Task from './pages/Task';
+import ExtraWorkScreen from './screen/ExtraWorkScreen';
 
 const App = () => {
 
@@ -83,8 +85,8 @@ const App = () => {
         <Route path='/employee' element={<Employee />} />
         <Route path='/create-employee' element={<CreateEmployee />} />
         <Route path='/contractors' element={<Contractors />} />
-        <Route path='/contractor' element={<ContractorScreen />} />
-        <Route path='/edit-contractor' element={<CreateContractor />} />
+        <Route path='/contractor/:id' element={<ContractorScreen />} />
+        <Route path='/edit-contractor/:id' element={<CreateContractor />} />
         <Route path='/create-contractors' element={<CreateContractor />} />
         <Route path='/user' element={<UserManagement />} />
         <Route path='/account' element={<Profile />} />
@@ -97,7 +99,7 @@ const App = () => {
         <Route path='/clients' element={<Clients />} />
         <Route path='/client' element={<ClientScreen />} />
         <Route path='/create-client' element={<CreateClient />} />
-        <Route path='/edit-client' element={<CreateClient />} />
+        <Route path='/edit-client/:id' element={<CreateClient />} />
         <Route path='/team' element={<TeamSection />} />
         <Route path='/edit-workOrder/:id' element={<CreateWorkOrder />} />
         <Route path='/edit-workOrder/:id/work/:index' element={<CreateWorkOrder />} />
@@ -123,6 +125,7 @@ const App = () => {
         <Route path='/edit-bill/:id' element={<CreateBill />} />
         <Route path='/create-bill' element={<CreateBill />} />
         <Route path='/extra-work' element={<ExtraWork />} />
+        <Route path='/extra-work/:id' element={<ExtraWorkScreen />} />
         <Route path='/create-extra-work' element={<CreateExtraWork />} />
         <Route path='/edit-extra-work/:id' element={<CreateExtraWork />} />
         <Route path='/edit-extra-work/:id/work/:index' element={<CreateExtraWork />} />

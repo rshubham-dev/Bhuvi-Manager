@@ -22,7 +22,7 @@ const WorkOrders = () => {
         console.log(workOrdersData.data)
       } catch (error) {
         toast.error(error.message)
-        setError(error.message);
+        setError('No Work Order Found');
       }
     }
     fetchWorkorders();
@@ -38,8 +38,10 @@ const WorkOrders = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/v1/work-order/${id}`);
+      const response = await axios.delete(`/api/v1/work-order/${id}`);
       setWorkOrder(workOrders.filter((workOrder) => workOrder._id !== id));
+      toast.success(response.data.message)
+      console.log(response.data)
     } catch (error) {
       toast.error(error.message)
     }

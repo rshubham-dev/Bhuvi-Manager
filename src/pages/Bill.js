@@ -20,9 +20,9 @@ const Bills = () => {
       try {
         const billData = await axios.get('/api/v1/bill');
         const bills = billData.data;
-        setContractorBill(bills.filter((bill)=> bill.billFor === 'Contractor'))
-        setSupplierBill(bills.filter((bill)=> bill.billFor === 'Supplier'))
-        setMaterialBill(bills.filter((bill)=> bill.billFor === 'Material'))
+        setContractorBill(bills.filter((bill) => bill.billFor === 'Contractor'))
+        setSupplierBill(bills.filter((bill) => bill.billFor === 'Supplier'))
+        setMaterialBill(bills.filter((bill) => bill.billFor === 'Material'))
         console.log(bills)
       } catch (error) {
         toast.error(error.message)
@@ -86,46 +86,51 @@ const Bills = () => {
                 </summary>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Name</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.site?.name}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Id</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Contractor</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.contractor?.name}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Client</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Bill Date</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Project Type</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Work</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf.workDetail}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Total Floor</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Amount</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.amount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Incharge</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Paid</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.paidAmount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Supervisor</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Due</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dueAmount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Address</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>
-
-                  </dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Status</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.paymentStatus}</dd>
                 </div>
+
+                <div className='flex justify-between flex-row my-1.5'>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Payment Date</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment}</dd>
+                </div>
+
+
 
               </details>
             </div>
@@ -137,7 +142,7 @@ const Bills = () => {
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                {bill.supplier?.name} bill for {bill.site?.name}
+                  {bill.supplier?.name} bill for {bill.site?.name}
                   <div className="self-end text-lg">
                     <button
                       onClick={() => handleEdit(bill._id)}
@@ -206,7 +211,7 @@ const Bills = () => {
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                {bill.supplier?.name} bill for {bill.site?.name}
+                  {bill.supplier?.name} bill for {bill.site?.name}
                   <div className="self-end text-lg">
                     <button
                       onClick={() => handleEdit(bill._id)}

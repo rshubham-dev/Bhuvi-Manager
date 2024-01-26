@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 axios.defaults.withCredentials = true;
 const CreateContractor = () => {
@@ -13,8 +13,39 @@ const CreateContractor = () => {
     addhar: '',
     pan: '',
     bank: '',
+    jobWork:'',
   });
+  const [contractorToEdit, setContractorToEdit] = useState(null);
+  const {id} = useParams();
+  useEffect(()=>{
+    if(id){
+      console.log(id)
+      setContractorToEdit(id)
+      fetchContractor(id)
+    }
+  },[id])
 const navigate = useNavigate();
+
+const fetchContractor = async(id)=>{
+  try {
+    const contractorData = await axios.get(`/api/v1/contractor/${id}`);
+    const Contractor = contractorData.data;
+    setContractor({
+      name: Contractor?.name,
+      contactNo: Contractor?.contactNo,
+      whatsapp: Contractor?.whatsapp,
+      address: Contractor?.address,
+      addhar: Contractor?.addhar,
+      pan: Contractor?.pan,
+      bank: Contractor?.bank,
+      jobWork: Contractor?.jobWork,
+    })
+    console.log(Contractor)
+  } catch (error) {
+    toast.error(error.message)
+  }
+}
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setContractor((prevContractor) => ({
@@ -35,12 +66,13 @@ const navigate = useNavigate();
         addhar: contractor.addhar,
         pan: contractor.pan,
         bank: contractor.bank,
+        jobWork: contractor.jobWork,
       });
       toast.success(response.data.message);
       console.log('Form data submitted:', contractor);
       navigate(-1);
     } catch (error) {
-      console.log('Error creating contractor:', error);
+      console.error('Error creating contractor:', error);
       toast.error('Failed Creating Contractor. Please check your credentials.');
     }
   };
@@ -102,7 +134,7 @@ const navigate = useNavigate();
           />
         </div>
 
-        <div>
+        <div className='mb-4'>
           <label htmlFor="address" className="block text-sm font-medium text-gray-600">
             Address
           </label>
@@ -117,7 +149,22 @@ const navigate = useNavigate();
           />
         </div>
 
-        <div className="mb-4">
+        <div className='mb-4'>
+          <label htmlFor="jobWork" className="block text-sm font-medium text-gray-600">
+            Work Of Contractor
+          </label>
+          <input
+            type="text"
+            id="jobWork"
+            name="jobWork"
+            value={contractor.jobWork}
+            onChange={handleChange}
+            placeholder="Address"
+            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+          />
+        </div>
+
+        <div className="mb-5">
           <h4 className="text-lg font-semibold mb-2">Documents</h4>
           <div className="grid grid-cols-2 gap-4">
 

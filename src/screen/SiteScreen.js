@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom';
 import './screen.css';
 import { GrEdit } from "react-icons/gr";
 import { FaExternalLinkAlt } from "react-icons/fa";
@@ -19,7 +19,8 @@ const SiteScreen = () => {
   const [paymentSchedules, setpaymentSchedules] = useState({});
   const [supplierBills, setSupplierBill] = useState([]);
   const [contractorBills, setContractorBill] = useState([]);
-  const [materialBills, setMaterialBill] = useState([]);
+  const [contractorExtra, setContractorExtra] = useState([]);
+  const [clientExtra, setClientExtra] = useState({});
   const [purchaseOrders, setPurchaseOrder] = useState([])
 
   useEffect(() => {
@@ -39,6 +40,7 @@ const SiteScreen = () => {
       fetchBill(id);
       fetchWorkOrder(id);
       fetchPurchaseOrders(id);
+      fetchExtraWork(id)
     }
   }, [id])
 
@@ -60,7 +62,7 @@ const SiteScreen = () => {
       console.log('Error fetching payment schedule:', error);
     }
   };
-  console.log(paymentSchedules);
+  // console.log(paymentSchedules);
 
   const fetchBill = async (id) => {
     try {
@@ -68,24 +70,36 @@ const SiteScreen = () => {
       console.log(billData.data)
       const contractorBill = billData.data?.filter((bill) => bill.billFor === 'Contractor') || [];
       const supplierBill = billData.data?.filter((bill) => bill.billFor === 'Supplier') || [];
-      const materialBill = billData.data?.filter((bill) => bill.billFor === 'Material') || [];
       setContractorBill([...contractorBill]);
       setSupplierBill([...supplierBill]);
-      setMaterialBill([...materialBill]);
     } catch (error) {
       console.log('Error fetching bill', error);
     }
   };
 
-  const fetchPurchaseOrders = async () => {
+  const fetchPurchaseOrders = async (id) => {
     try {
-      const purchaseOrdersData = await axios.get(`/api/v1/purchase-order`);
+      const purchaseOrdersData = await axios.get(`/api/v1/purchase-order/site/${id}`);
       setPurchaseOrder(purchaseOrdersData.data);
       console.log(purchaseOrdersData.data)
     } catch (error) {
       toast.error(error.message)
     }
   }
+
+  const fetchExtraWork = async (id) => {
+    try {
+      const extraWork = await axios.get(`/api/v1/extra-work/site/${id}`);
+      setContractorExtra(extraWork.data?.filter((extrawork) => extrawork.extraFor === 'Contractor'))
+      setClientExtra(extraWork?.data.filter((extrawork) => extrawork.extraFor === 'Client')[0])
+      // console.log(extraWork.data);
+    } catch (error) {
+      toast.error(error.message)
+    }
+  }
+
+  console.log(clientExtra);
+  // console.log(contractorExtra);
 
   const deletePaymentDetail = async (id, index) => {
     try {
@@ -126,6 +140,26 @@ const SiteScreen = () => {
       toast.error(error.message)
     }
   };
+
+  const deleteExtraWork = async (id) => {
+    try {
+      await axios.delete(`/api/v1/extra-work/${id}`);
+      setContractorExtra(contractorExtra.filter((contractorExtra) => contractorExtra._id !== id));
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
+  const deleteExtraWorkDetail = async (id, index) => {
+    try {
+      const deletedWork = await axios.delete(`/api/v1/extra-work/${id}/work/${index}`);
+      setClientExtra(deletedWork.data?.extraWork);
+      toast.success(deletedWork.data?.message)
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
 
   return (
     <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
@@ -368,9 +402,10 @@ const SiteScreen = () => {
                 <tr>
                   <th scope="col" className="px-6 py-3">Name</th>
                   <th scope="col" className="px-6 py-3">Contractor</th>
-                  <th scope="col" className="px-6 py-3">Work Order No</th>
-                  <th scope="col" className="px-6 py-3">Work Order Value</th>
                   <th scope="col" className="px-6 py-3">Duration</th>
+                  <th scope="col" className="px-6 py-3">Total Value</th>
+                  <th scope="col" className="px-6 py-3">Total Paid</th>
+                  <th scope="col" className="px-6 py-3">Total Due</th>
                   <th scope="col" className="px-6 py-3">Actions</th>
                 </tr>
               </thead>
@@ -381,9 +416,10 @@ const SiteScreen = () => {
                       {workorder.workOrderName}
                     </td>
                     <td className="px-6 py-4">{workorder.contractor?.name}</td>
-                    <td className="px-6 py-4">{workorder.workOrderNo}</td>
-                    <td className="px-6 py-4">{workorder.workOrderValue}</td>
                     <td className="px-6 py-4">{workorder.duration}</td>
+                    <td className="px-6 py-4">{workorder.workOrderValue}</td>
+                    <td className="px-6 py-4">{workorder.totalPaid}</td>
+                    <td className="px-6 py-4">{workorder.totalDue}</td>
                     <td className="px-6 py-4">
                       <button
                         onClick={() => navigate(`/work-order/${workorder._id}`)}
@@ -393,7 +429,7 @@ const SiteScreen = () => {
                       </button>
                       <button
                         onClick={() => navigate(`/edit-workOrder/${workorder._id}`)}
-                        className="bg-blue-500 text-white px-2 py-1 mr-2"
+                        className="bg-green-500 text-white px-2 py-1 mr-2"
                       >
                         <GrEdit />
                       </button>
@@ -428,6 +464,7 @@ const SiteScreen = () => {
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
+                      <th scope="col" className="px-6 py-3">Contractor</th>
                       <th scope="col" className="px-6 py-3">Work</th>
                       <th scope="col" className="px-6 py-3">Amount</th>
                       <th scope="col" className="px-6 py-3">Payment Date</th>
@@ -441,6 +478,9 @@ const SiteScreen = () => {
                   <tbody>
                     {contractorBills.map((bill) => (
                       <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                          {bill?.contractor?.name}
+                        </td>
                         <td className="px-6 py-4">
                           {bill?.billOf.workDescription}
                         </td>
@@ -469,6 +509,7 @@ const SiteScreen = () => {
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
+                      <th scope="col" className="px-6 py-3">Supplier</th>
                       <th scope="col" className="px-6 py-3">Material</th>
                       <th scope="col" className="px-6 py-3">Amount</th>
                       <th scope="col" className="px-6 py-3">Payment Date</th>
@@ -483,46 +524,10 @@ const SiteScreen = () => {
                     {supplierBills.map((bill) => (
                       <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
+                          {bill?.supplier?.name}
                         </td>
-                        <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4">{bill?.dateOfPayment}</td>
-                        <td className="px-6 py-4">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
-                        <td className="px-6 py-4">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
-                        <td className="px-6 py-4">{bill?.paymentStatus}</td>
-                        <td className="px-3 py-4">
-                          <button
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
-                          </button>
-                          <button
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </Tabs.TabPane>
-
-              <Tabs.TabPane tab='Material' key={'material'}>
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Material</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Paid</th>
-                      <th scope="col" className="px-6 py-3">Due</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
-                      <th scope="col" className="px-3 py-3">Actions</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {materialBills.map((bill) => (
-                      <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
+                          {bill?.billOf.material}
                         </td>
                         <td className="px-6 py-4"></td>
                         <td className="px-6 py-4">{bill?.dateOfPayment}</td>
@@ -562,12 +567,12 @@ const SiteScreen = () => {
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                  <th scope="col" className="px-6 py-3">Material</th>
-                  <th scope="col" className="px-6 py-3">Rate</th>
-                  <th scope="col" className="px-6 py-3">Quantity</th>
-                  <th scope="col" className="px-6 py-3">Unit</th>
-                  <th scope="col" className="px-6 py-3">Amount</th>
-                  <th scope="col" className="px-6 py-3">Status</th>
+                  <th scope="col" className="px-6 py-3">Supplier</th>
+                  <th scope="col" className="px-6 py-3">Total Amount</th>
+                  <th scope="col" className="px-6 py-3">Total Paid</th>
+                  <th scope="col" className="px-6 py-3">Total Due</th>
+                  <th scope="col" className="px-6 py-3">Requirements</th>
+                  <th scope="col" className="px-6 py-3">Approval</th>
                   <th scope="col" className="px-6 py-3">Actions</th>
                 </tr>
               </thead>
@@ -576,22 +581,26 @@ const SiteScreen = () => {
                 {purchaseOrders?.map((purchaseOrder) => (
                   <tr key={purchaseOrder._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="px-6 py-4">
-
+                      {purchaseOrder.supplier?.name}
                     </td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
-                    <td className="px-6 py-4"></td>
+                    <td className="px-6 py-4">{purchaseOrder.totalAmount}</td>
+                    <td className="px-6 py-4">{purchaseOrder.paidAmount}</td>
+                    <td className="px-6 py-4">{purchaseOrder.dueAmount}</td>
+                    <td className="px-6 py-4">
+                      <NavLink to={`/purchase-order/${purchaseOrder?._id}`}>
+                        {purchaseOrder.requirement?.length}
+                      </NavLink>
+                    </td>
+                    <td className="px-6 py-4">{purchaseOrder.approvalStatus}</td>
                     <td className="px-6 py-4">
                       <button
                         onClick={() => navigate(`/purchase-order/${purchaseOrder?._id}`)}
-                        className="bg-blue-500 rounded-2xl text-white flex px-2 py-1.5 ml-2">
-                        <FaExternalLinkAlt className="text-lg text-white" />
+                        className="bg-blue-500 text-white px-2 py-1 mr-2">
+                        <FaExternalLinkAlt />
                       </button>
                       <button
                         onClick={() => navigate(`/edit-purchaseOrder/${purchaseOrder?._id}`)}
-                        className="bg-blue-500 text-white px-2 py-1 mr-2">
+                        className="bg-green-500 text-white px-2 py-1 mr-2">
                         <GrEdit />
                       </button>
                       <button
@@ -610,6 +619,7 @@ const SiteScreen = () => {
         {/* Extra Work */}
         <div className="card ">
           <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+            
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Extra Work
               <button onClick={() => { navigate('/create-extra-work') }}
@@ -620,9 +630,110 @@ const SiteScreen = () => {
             <Tabs defaultActiveKey='client'>
 
               <Tabs.TabPane tab='Client' key={'client'}>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Work</th>
+                      <th scope="col" className="px-6 py-3">Rate</th>
+                      <th scope="col" className="px-6 py-3">Area</th>
+                      <th scope="col" className="px-6 py-3">Unit</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Status</th>
+                      <th scope="col" className="px-3 py-3">Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {clientExtra?.WorkDetail?.map((workDetail, index) => (
+                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                          {workDetail?.work}
+                        </td>
+                        <td className="px-6 py-4">{workDetail?.rate}</td>
+                        <td className="px-6 py-4">{workDetail?.area}</td>
+                        <td className="px-6 py-4">{workDetail?.amount}</td>
+                        <td className="px-6 py-4">{workDetail?.paymentStatus}</td>
+                        <td className="px-6 py-4">{workDetail?.work}</td>
+                        <td className="px-6 py-4">{workDetail?.work}</td>
+                        <td className="px-3 py-4">
+                          <button
+                            onClick={() => navigate(`/edit-extra-work/${clientExtra._id}/work/${index}`)}
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                          onClick={()=> deleteExtraWorkDetail(clientExtra._id, index)}
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+
+                  <div className='text-right mt-4 ml-2 flex gap-1'>
+                    <button
+                      onClick={() => navigate(`/edit-extra-work/${clientExtra._id}`)}
+                      className="bg-green-500 rounded-2xl text-white flex px-2 py-1.5 mr-2">
+                      <MdAdd className="text-xl text-white" /> More
+                    </button>
+                    <button
+                      onClick={() => navigate(`/extra-work/${clientExtra._id}`)}
+                      className="bg-blue-500 rounded-2xl text-white flex px-2 py-1.5 ml-2">
+                      <FaExternalLinkAlt className="text-lg text-white" />
+                    </button>
+                  </div>
+
+                </table>
               </Tabs.TabPane>
 
               <Tabs.TabPane tab='Contractor' key={'contractor'}>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">Contractor</th>
+                      <th scope="col" className="px-6 py-3">Amount</th>
+                      <th scope="col" className="px-6 py-3">Paid</th>
+                      <th scope="col" className="px-6 py-3">Due</th>
+                      <th scope="col" className="px-6 py-3">Total Work</th>
+                      <th scope="col" className="px-3 py-3">Actions</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {contractorExtra.map((extraWork) => (
+                      <tr key={extraWork._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td className="px-6 py-4">
+                          {extraWork?.contractor?.name}
+                        </td>
+                        <td className="px-6 py-4">{extraWork?.totalAmount}</td>
+                        <td className="px-6 py-4">{extraWork?.paid}</td>
+                        <td className="px-6 py-4">{extraWork?.due}</td>
+                        <td className="px-6 py-4">
+                          {extraWork?.WorkDetail.length}
+                        </td>
+                        <td className="px-3 py-4">
+                          <button
+                            onClick={() => navigate(`/extra-work/${extraWork._id}`)}
+                            className="bg-blue-500 text-white px-2 py-1 mr-2">
+                            <FaExternalLinkAlt />
+                          </button>
+                          <button
+                            onClick={() => navigate(`/edit-extra-work/${extraWork._id}`)}
+                            className="bg-green-500 text-white px-2 py-1 mr-2">
+                            <GrEdit />
+                          </button>
+                          <button
+                            onClick={() => deleteExtraWork(extraWork._id)}
+                            className="bg-red-500 text-white px-2 py-1 mr-2">
+                            <MdDelete />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </Tabs.TabPane>
 
             </Tabs>

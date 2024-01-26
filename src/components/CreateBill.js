@@ -19,6 +19,10 @@ const CreateBill = () => {
     supplier: '',
     createdBy: '',
     billOf: '',
+    billNo: '',
+    toPay: '',
+    amount: '',
+    unit: '',
     dateOfPayment: '',
     paymentStatus: '',
     reason: '',
@@ -33,6 +37,8 @@ const CreateBill = () => {
   const [billToEdit, setBillToEdit] = useState(null);
   const [billWork, setBillWork] = useState([]);
   const [materials, setMaterial] = useState([]);
+  const [paymentDetail, setPaymentDetail] = useState({});
+  const units = ['%', '₹']
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -63,14 +69,25 @@ const CreateBill = () => {
     setSupplier(siteData[0]?.supplier || '');
   }, [bill.site]);
 
+  useEffect(() => {
+    const getMaterialOrder = async () => {
+      try {
+        const response = await axios.get(`/api/v1/work-order/${bill.site}/${bill.contractor}`);
+        setBillWork(...response.data.map((workOrder) => workOrder.work?.filter((work) => work?.due !== 0 && work?.status !== 'Pending')))
+      } catch (error) {
+        console.error(error);
+        toast.error(error.message);
+      }
+    }
+    getMaterialOrder();
+  }, [bill.contractor])
+  // console.log('work:', billWork)
 
   useEffect(() => {
     const getMaterialOrder = async () => {
       try {
         const response = await axios.get(`/api/v1/purchase-order/${bill.site}/${bill.supplier}`);
-        const purchase = response.data;
-        setMaterial(...purchase.map((purchase) => purchase.requirement))
-        console.log('material:', purchase)
+        setMaterial(...response.data.map((purchase) => purchase.requirement?.filter((require) => require.due !== 0 && require.status !== 'Pending')))
       } catch (error) {
         console.error(error);
         toast.error(error.message);
@@ -79,7 +96,15 @@ const CreateBill = () => {
     getMaterialOrder()
   }, [bill.supplier])
 
-  console.log(materials)
+  useEffect(() => {
+    if (bill.billFor === 'Contractor') {
+      console.log(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
+      setPaymentDetail(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
+    } else if (bill.billFor === 'Contractor') {
+      setPaymentDetail(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
+    }
+  }, [bill.billOf, bill.billFor])
+  // console.log(paymentDetail)
 
   const fetchBill = async (id) => {
     try {
@@ -95,8 +120,11 @@ const CreateBill = () => {
         site: billData.data?.site._id,
         contractor: billData.data.contractor?._id,
         supplier: billData.data.supplier?._id,
-        billOf: billData.data.billOf.workDescription,
+        billOf: billData.data.billOf.workDetail,
         billFor: billData.data.billFor,
+        toPay: billData.data.toPay,
+        billNo: billData.data.billNo,
+        amount: billData.data?.amount,
         createdBy: billData.data.createdBy?._id,
         dateOfPayment: billData.data?.dateOfPayment,
         paymentStatus: billData.data?.paymentStatus,
@@ -122,6 +150,7 @@ const CreateBill = () => {
     try {
       if (billToEdit) {
         console.log(bill)
+        const paid = parseFloat(bill.paidAmount);
         const updateBill = await axios.put(`/api/v1/bill/${billToEdit}`, {
           site: bill.site,
           billFor: bill.billFor,
@@ -129,10 +158,12 @@ const CreateBill = () => {
           supplier: bill.supplier,
           createdBy: user._id,
           billOf: bill.billOf,
+          billNo: bill.billNo,
+          toPay: bill.toPay,
           dateOfPayment: bill.dateOfPayment,
           paymentStatus: bill.paymentStatus,
           reason: bill.reason,
-          paidAmount: bill.paidAmount,
+          paidAmount: paid,
           dueAmount: bill.dueAmount,
         });
         if (updateBill) {
@@ -141,13 +172,16 @@ const CreateBill = () => {
           navigate(-1)
         }
       } else {
+        // console.log(bill)
         const response = await axios.post('/api/v1/bill/create', {
           site: bill.site,
           billFor: bill.billFor,
           contractor: bill.contractor,
           supplier: bill.supplier,
-          createdBy: user._id,
+          // createdBy: user._id,
+          billNo: bill.billNo,
           billOf: bill.billOf,
+          toPay: bill.toPay,
         });
         console.log(response.data)
         toast.success(response.data.message);
@@ -164,71 +198,89 @@ const CreateBill = () => {
       case 'Contractor':
         return (
           <>
-            <label htmlFor="contractor" className="block text-sm font-medium text-gray-600 mb-2">
-              Choose Contractor
-            </label>
-            <select
-              name="contractor"
-              value={bill.contractor}
-              onChange={(e) => handleChange('contractor', e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option>{billToEdit ? data.contractor : 'Contractor'}</option>
-              {contractors && contractors?.map((contractor) => (
-                <option key={contractor?._id} value={contractor?._id}>
-                  {contractor?.name}
-                </option>
-              ))}
-            </select>
+            <div className="mb-4">
+              <label htmlFor="contractor" className="block text-sm font-medium text-gray-600 mb-2">
+                Choose Contractor
+              </label>
+              <select
+                name="contractor"
+                value={bill.contractor}
+                onChange={(e) => handleChange('contractor', e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option>{billToEdit ? data.contractor : 'Contractor'}</option>
+                {contractors && contractors?.map((contractor) => (
+                  <option key={contractor?._id} value={contractor?._id}>
+                    {contractor?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor='work'
+                className="block text-sm font-medium text-gray-600 mb-2">
+                Work
+              </label>
+              <select
+                value={bill.billOf}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                onChange={(e) => handleChange('billOf', e.target.value)}>
+                <option>{billToEdit ? bill?.billOf : 'Work'}</option>
+                {billWork?.map((work, index) => (
+                  <option key={index} value={work.workDetail}>
+                    {work.workDetail}
+                  </option>
+                ))}
+              </select>
+            </div>
           </>
         );
         break;
       case 'Supplier':
         return (
           <>
-            <label htmlFor="contractor" className="block text-sm font-medium text-gray-600 mb-2">
-              Choose Supplier
-            </label>
-            <select
-              name="supplier"
-              value={bill.supplier}
-              onChange={(e) => handleChange('supplier', e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option>{billToEdit ? data.supplier : 'Supplier'}</option>
-              {suppliers && suppliers?.map((supplier) => (
-                <option key={supplier?._id} value={supplier?._id}>
-                  {supplier?.name}
-                </option>
-              ))}
-            </select>
-          </>
-        );
-        break;
-      case 'Material':
-        return (
-          <>
-            <label htmlFor="contractor" className="block text-sm font-medium text-gray-600 mb-2">
-              Choose Supplier
-            </label>
-            <select
-              name="supplier"
-              value={bill.supplier}
-              onChange={(e) => handleChange('supplier', e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option>{billToEdit ? data.supplier : 'Supplier'}</option>
-              {suppliers && suppliers?.map((supplier) => (
-                <option key={supplier?._id} value={supplier?._id}>
-                  {supplier?.name}
-                </option>
-              ))}
-            </select>
+            <div className="mb-4">
+              <label htmlFor="contractor" className="block text-sm font-medium text-gray-600 mb-2">
+                Choose Supplier
+              </label>
+              <select
+                name="supplier"
+                value={bill.supplier}
+                onChange={(e) => handleChange('supplier', e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option>{billToEdit ? data.supplier : 'Supplier'}</option>
+                {suppliers && suppliers?.map((supplier) => (
+                  <option key={supplier?._id} value={supplier?._id}>
+                    {supplier?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor='material'
+                className="block text-sm font-medium text-gray-600 mb-2">
+                Ordered Material
+              </label>
+              <select
+                value={bill.billOf}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                onChange={(e) => handleChange('billOf', e.target.value)}>
+                <option>{billToEdit ? bill.billOf : 'Select Material'}</option>
+                {materials.map((requirement, index) => (
+                  <option key={index} value={requirement.material}>
+                    {requirement.material}
+                  </option>
+                ))}
+              </select>
+            </div>
           </>
         );
         break;
       default: return (
-        <p>Please Select, For Whom You Wan't to Make Bill </p>
+        <p className='mb-2'>Please Select, For Whom You Wan't to Make Bill </p>
       );
         break;
     }
@@ -255,7 +307,8 @@ const CreateBill = () => {
             Paid Amount
           </label>
           <input
-            type="number"
+            type="text"
+            id='paidAmount'
             name='paidAmount'
             value={bill.paidAmount}
             onChange={(e) => handleChange('paidAmount', e.target.value)}
@@ -270,8 +323,10 @@ const CreateBill = () => {
           </label>
           <input
             type="number"
+            id='dueAmount'
             name='dueAmount'
             value={bill.dueAmount}
+            readOnly
             onChange={(e) => handleChange('dueAmount', e.target.value)}
             placeholder="Due Amount"
             className="border p-2 rounded w-full"
@@ -283,6 +338,7 @@ const CreateBill = () => {
             Status
           </label>
           <select
+            id='paymentStatus'
             value={bill.paymentStatus}
             onChange={(e) => handleChange('paymentStatus', e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -344,49 +400,33 @@ const CreateBill = () => {
             </select>
           </div>
 
-          <div className="mb-4">
+          <div>
             {BillFor(bill.billFor)}
           </div>
 
-          {bill.billFor === 'Supplier' ?
-            <div className="mb-4">
-              <label
-                htmlFor='material'
-                className="block text-sm font-medium text-gray-600 mb-2">
-                Ordered Material
-              </label>
-              <select
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                onChange={(e) => handleChange('billOf', e.target.value)}>
-                <option>{billToEdit ? bill.billOf : 'Select Material'}</option>
-                {materials.map((requirement, index) => (
-                  <option key={index} value={requirement.material}>
-                    {requirement.material}
-                  </option>
-                ))}
-              </select>
-            </div>
-            :
-            <div className="mb-4">
-              <label
-                htmlFor='work'
-                className="block text-sm font-medium text-gray-600 mb-2">
-                Work
-              </label>
-              <select
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                onChange={(e) => handleChange('billOf', e.target.value)}>
-                <option>{billToEdit ? bill?.billOf : 'Work'}</option>
-                {billWork?.map((work, index) => (
-                  <option key={index} value={work.workDescription}>
-                    {work.workDescription}
-                  </option>
-                ))}
-              </select>
-            </div>
-          }
+          <div className="mb-4">
+            <label htmlFor='toPay' className="block text-sm font-medium text-gray-600 mb-2">To Pay</label>
+            <input
+            type='text'
+              name='toPay'
+              id='toPay'
+              value={bill.toPay}
+              onChange={(e) => handleChange('toPay', e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
 
           {billToEdit ? <Update /> : ''}
+
+          <div className="mb-4">
+            <h2 className="block text-lg font-semibold text-gray-600 mb-4 mt-2">Work Detail</h2>
+            <p className="text-md font-medium text-gray-600 my-1">Rate: {paymentDetail?.rate}{'/' + paymentDetail?.unit}</p><hr />
+            <p className="text-md font-medium text-gray-600 my-1">Area: {paymentDetail?.area}</p><hr />
+            <p className="text-md font-medium text-gray-600 my-1">Total Amount: ₹ {paymentDetail?.amount}</p><hr />
+            <p className="text-md font-medium text-gray-600 my-1">Work Status: {paymentDetail?.status}</p><hr />
+            <p className="text-md font-medium text-gray-600 my-1">Amount Paid: {paymentDetail?.paid}</p><hr />
+            <p className="text-md font-medium text-gray-600 my-1">Amount Due: {paymentDetail?.due}</p><hr />
+          </div>
 
           <div className="text-center">
             <button

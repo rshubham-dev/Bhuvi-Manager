@@ -13,24 +13,25 @@ const Contractors = () => {
     const [contractors, setContractor] = useState([]);
 
     useEffect(() => {
-        const getContractors = async () => {
-            try {
-                const contractorData = await axios.get('/api/v1/contractor');
-                console.log(contractorData.data)
-                setContractor(contractorData.data);
-            } catch (error) {
-                toast.error(error.message)
-            }
-        }
         getContractors();
-    }, [])
+    }, []);
+
+    const getContractors = async () => {
+        try {
+            const contractorData = await axios.get('/api/v1/contractor');
+            console.log(contractorData.data)
+            setContractor(contractorData.data);
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
 
     const handleEdit = (contractorId) => {
-        navigate(`/edit-contractor?contractorId=${contractorId}`)
+        navigate(`/edit-contractor/${contractorId}`)
     };
 
     const handleRedirect = (contractorId) => {
-        navigate(`/contractor?contractorId=${contractorId}`);
+        navigate(`/contractor/${contractorId}`);
       }
 
     const handleDelete = (contractorId) => {
@@ -62,7 +63,7 @@ const Contractors = () => {
                         <tr key={contractor.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td className="px-6 py-4">{contractor.name}</td>
                             <td className="px-6 py-4">{contractor.contactNo}, {contractor.whatsapp}</td>
-                            <td className="px-6 py-4">{contractor.site.length}</td>
+                            <td className="px-6 py-4">{contractor.site?.length}</td>
                             <td className="px-6 py-4">
                                 <button
                                     onClick={() => handleRedirect(contractor._id)}
