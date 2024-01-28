@@ -20,20 +20,20 @@ import { logout } from '../features/auth/authSlice.js';
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  useEffect(() => {
-    const isPageReloaded = performance.navigation.type === 1;
-    if (isPageReloaded) {
-      dispatch(logout());
-      navigate('/login')
-      console.log('Reloaded')
-    } else {
-      console.log( "This page is not reloaded");
-    }
-  }, []);
-  if(window.performance){
-    console.log('test', window.performance)
-  }
-  console.log('state', window.performance.navigation.type)
+  // useEffect(() => {
+  //   const isPageReloaded = performance.navigation.type === 1;
+  //   if (isPageReloaded) {
+  //     dispatch(logout());
+  //     navigate('/login')
+  //     console.log('Reloaded')
+  //   } else {
+  //     console.log( "This page is not reloaded");
+  //   }
+  // }, []);
+  // if(window.performance){
+  //   console.log('test', window.performance)
+  // }
+  // console.log('state', window.performance.navigation.type)
 
   useEffect(() => {
     if(isLoggedIn === true && user){
