@@ -72,7 +72,7 @@ const App = () => {
       navigate('/login')
       console.log('Reloaded')
     } else {
-      alert( "This page is not reloaded");
+      console.log( "This page is not reloaded");
     }
   }, []);
 

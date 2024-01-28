@@ -16,10 +16,10 @@ const MobileBar = () => {
                     <MdDashboard className='text-xl mb-1 lg:text-2xl' />
                     Dashboard
                 </NavLink>
-                <NavLink to='/expenses' className='text-white flex flex-col items-center'>
+                {/* <NavLink to='/expenses' className='text-white flex flex-col items-center'>
                     <MdAccountBalanceWallet className='text-xl mb-1 lg:text-2xl' />
                     Expense
-                </NavLink>
+                </NavLink> */}
                 <NavLink to='/tasks' className='text-white flex flex-col items-center'>
                 <FaTasks className='text-xl mb-1 lg:text-2xl' />
                     Task
@@ -28,10 +28,10 @@ const MobileBar = () => {
                 <MdMessage className='text-xl mb-1 lg:text-2xl' />
                     Message
                 </NavLink>
-                <NavLink to='/setting' className='text-white flex flex-col items-center'>
+                {/* <NavLink to='/setting' className='text-white flex flex-col items-center'>
                     <MdSettings className='text-xl mb-1 lg:text-2xl' />
                     Setting
-                </NavLink>
+                </NavLink> */}
             </div>
         </section>
     )
