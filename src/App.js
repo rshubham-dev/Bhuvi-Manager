@@ -67,7 +67,7 @@ const App = () => {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home />} >
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />
@@ -142,7 +142,6 @@ const App = () => {
         <Route path='/message' element={<Message />} />
         <Route path='/tasks' element={<Task />} />
         {/* </ProtectedRoute> */}
-        </Route>
       </Routes>
     </>
   )
