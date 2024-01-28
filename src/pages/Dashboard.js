@@ -1,6 +1,15 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate} from 'react-router-dom';
+import Admin from './Admin';
+import Client from './Client';
+import Accountant from './Accountant';
+import Marketing from './Marketing';
+import SiteIncharge from './SiteIncharge';
+import SiteSupervisour from './SiteSupervisour';
+import Design_Head from './Design_Head';
+import Design_Engineer from './Design_Engineer';
+import Quality_Engineer from './Quality_Engineer';
 
  const Dashboard = () => {
   const { user, isLoggedIn } = useSelector((state) => {
@@ -11,38 +20,55 @@ import { useNavigate} from 'react-router-dom';
     const handleNavigation = () => {
       if (isLoggedIn) {
         switch (user.department) {
-          case 'Admin':
-            navigate('/admin');
-            break;
           case 'Company':
-            navigate('/admin');
+            return (
+              <Admin/> 
+              )
             break;
           case 'Client':
-            navigate('/Client-dashboard');
+            return (
+              <Client/> 
+              )
             break;
           case 'Accountant':
-            navigate('/accountant');
+            return (
+              <Accountant/> 
+              )
             break;
           case 'Marketing':
-            navigate('/marketing');
+            return (
+              <Marketing/> 
+              )
             break;
           case 'Ceo':
-            navigate('/admin');
+            return (
+              <Admin/> 
+              )
             break;
           case 'Site Incharge':
-            navigate('/site-incharge');
+            return (
+              <SiteIncharge/> 
+              )
             break;
           case 'Site Supervisor':
-            navigate('/site-supervisour');
+            return (
+              <SiteSupervisour/> 
+              )
             break;
           case 'Design Head':
-            navigate('/design-head');
+            return (
+              <Design_Head/> 
+              )
             break;
           case 'Design Engineer':
-            navigate('/design-engineer');
+            return (
+              <Design_Engineer/> 
+              )
             break;
           case 'Quality Engineer':
-            navigate('/quality-engineer');
+            return (
+            <Quality_Engineer/> 
+            )
             break;
           default:
             console.log("Not exists");

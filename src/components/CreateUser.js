@@ -14,7 +14,7 @@ const CreateUser = () => {
     department:'',
   });
   const roles = ['Admin', 'Client', 'Supplier', 'Employee'];
-  const departments = ['Admin', 
+  const departments = [
   'Company', 
   'Client', 
   'Accountant', 
