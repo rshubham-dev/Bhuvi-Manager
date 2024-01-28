@@ -55,6 +55,7 @@ import Message from './pages/Message.js';
 import Employee from './pages/Employee.js';
 import Task from './pages/Task.js';
 import ExtraWorkScreen from './screen/ExtraWorkScreen.js';
+import { logout } from './features/auth/authSlice.js';
 
 
 const App = () => {
@@ -62,6 +63,18 @@ const App = () => {
   const { isLoggedIn } = useSelector((state) => {
     return state.auth
   });
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const isPageReloaded = performance.navigation.type === 1;
+    if (isPageReloaded) {
+      dispatch(logout());
+      navigate('/login')
+      console.log('Reloaded')
+    } else {
+      console.log( "This page is not reloaded");
+    }
+  }, []);
 
 
   return (
@@ -70,10 +83,10 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/dashboard' element={<Dashboard />} />
         {/* <ProtectedRoute LoggedIn={isLoggedIn}> */}
-        <Route path='/ceo' element={<Admin />} />
+        <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
+        <Route path='/ceo' element={<Admin />} />
         <Route path='/Client-dashboard' element={<Client />} />
         <Route path='/design-head' element={<Design_Head />} />
         <Route path='/site-incharge' element={<SiteIncharge />} />
