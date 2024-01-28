@@ -75,6 +75,10 @@ const App = () => {
       console.log( "This page is not reloaded");
     }
   }, []);
+  if(window.performance){
+    console.log('test', window.performance)
+  }
+  console.log('state', window.performance.now.type)
 
 
 
