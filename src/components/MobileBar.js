@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { MdAccountBalanceWallet, MdDashboard, MdSettings, MdMessage } from "react-icons/md";
-import { GoBackward, GoForward } from './Navigation';
+import { GoBackward, GoForward } from './Navigation.js';
 import { FaTasks } from "react-icons/fa";
 
 const MobileBar = () => {

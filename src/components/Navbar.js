@@ -6,7 +6,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../features/auth/authSlice';
+import { logout } from '../features/auth/authSlice.js';
 
 axios.defaults.withCredentials = true;
 

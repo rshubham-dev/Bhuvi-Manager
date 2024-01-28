@@ -1,6 +1,6 @@
 import React from 'react';
 import UserProfile from '../components/ProfileCard.js';
-import All from './All';
+import All from './All.js';
 import TeamSection from './Team.js';
 
 const Admin = () => {

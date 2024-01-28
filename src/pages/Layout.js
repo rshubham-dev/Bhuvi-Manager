@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import MobileBar from '../components/MobileBar';
+import Navbar from '../components/Navbar.js';
+import MobileBar from '../components/MobileBar.js';
 
 const Layout = () => {
   // This component represents the overall layout structure of the application.
