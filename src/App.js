@@ -55,30 +55,14 @@ import Message from './pages/Message';
 import Employee from './pages/Employee';
 import Task from './pages/Task';
 import ExtraWorkScreen from './screen/ExtraWorkScreen';
-import { logout } from './features/auth/authSlice.js';
+
 
 const App = () => {
 
   const { isLoggedIn } = useSelector((state) => {
     return state.auth
   });
-  const dispatch = useDispatch();
 
-  const navigate = useNavigate();
-  useEffect(() => {
-    const isPageReloaded = performance.now.type === 1;
-    if (isPageReloaded) {
-      dispatch(logout());
-      navigate('/login')
-      console.log('Reloaded')
-    } else {
-      console.log( "This page is not reloaded");
-    }
-  }, []);
-  if(window.performance){
-    console.log('test', window.performance)
-  }
-  console.log('state', window.performance.now.type)
 
 
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Dashboard from './Dashboard'
+import Dashboard from './Dashboard.js';
 
 const Home = () => {
   const { isLoggedIn } = useSelector((state) => {
