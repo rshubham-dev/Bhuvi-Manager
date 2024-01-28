@@ -1,60 +1,60 @@
 import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import UserManagement from './pages/User';
-import CreateUser from './components/CreateUser';
-import Sites from './pages/Site';
-import CreateSite from './components/CreateSite';
-import Clients from './pages/Clients';
-import CreateClient from './components/CreateClient';
-import TeamSection from './pages/Team';
-import CreateEmployee from './components/CreateEmployee';
-import Profile from './components/Profile';
-import Login from './components/Login';
-import Register from './components/Register';
-import WorkOrders from './pages/WorkOrder';
-import CreateWorkOrder from './components/CreateWorkOrder';
-import CreateWorkDetails from './components/CreateWorkDetail';
-import ProjectSchedules from './pages/ProjectSchedules';
-import CreateProjectSchedule from './components/CreateProjectSchedule';
-import PaymentSchedules from './pages/PaymentSchedule';
-import CreatePaymentSchedule from './components/CreatePaymentSchedule';
-import Bills from './pages/Bill';
-import CreateBill from './components/CreateBill';
-import CheckList from './pages/CheckList';
-import Contractors from './pages/Contractors';
-import CreateContractor from './components/CreateContractor';
-import Admin from './pages/Admin';
-import Home from './pages/Home';
-import Accountant from './pages/Accountant';
-import Design_Head from './pages/Design_Head';
-import SiteIncharge from './pages/SiteIncharge';
-import SiteSupervisour from './pages/SiteSupervisour';
-import Quality_Engineer from './pages/Quality_Engineer';
-import Design_Engineer from './pages/Design_Engineer';
-import Marketing from './pages/Marketing';
-import Dashboard from './pages/Dashboard';
-import Client from './pages/Client';
-import { ProtectedRoute } from './components/ProtectedPages';
-import SiteScreen from './screen/SiteScreen';
-import ClientScreen from './screen/ClientScreen';
-import WorkOrderScreen from './screen/WorkOrderScreen'
-import BillScreen from './screen/BillScreen';
-import Payment_SchedulScreen from './screen/Payment_SchedulScreen';
-import Project_ScheduleScreen from './screen/Project_ScheduleScreen';
-import ContractorScreen from './screen/ContractorScreen';
-import WorkDetails from './pages/WorkDetails';
-import CreateExtraWork from './components/CreateExtraWork';
-import ExtraWork from './pages/ExtraWork';
-import CreateSupplier from './components/CreateSupplier';
-import CreatePurchaseOrder from './components/CreatePurchaseOrder';
-import PurchaseOrders from './pages/PurchaseOrders';
-import Suppliers from './pages/Suppliers';
-import PurchaseOrderScreen from './screen/PurchaseOrderScreen';
-import Message from './pages/Message';
-import Employee from './pages/Employee';
-import Task from './pages/Task';
-import ExtraWorkScreen from './screen/ExtraWorkScreen';
+import UserManagement from './pages/User.js';
+import CreateUser from './components/CreateUser.js';
+import Sites from './pages/Site.js';
+import CreateSite from './components/CreateSite.js';
+import Clients from './pages/Clients.js';
+import CreateClient from './components/CreateClient.js';
+import TeamSection from './pages/Team.js';
+import CreateEmployee from './components/CreateEmployee.js';
+import Profile from './components/Profile.js';
+import Login from './components/Login.js';
+import Register from './components/Register.js';
+import WorkOrders from './pages/WorkOrder.js';
+import CreateWorkOrder from './components/CreateWorkOrder.js';
+import CreateWorkDetails from './components/CreateWorkDetail.js';
+import ProjectSchedules from './pages/ProjectSchedules.js';
+import CreateProjectSchedule from './components/CreateProjectSchedule.js';
+import PaymentSchedules from './pages/PaymentSchedule.js';
+import CreatePaymentSchedule from './components/CreatePaymentSchedule.js';
+import Bills from './pages/Bill.js';
+import CreateBill from './components/CreateBill.js';
+import CheckList from './pages/CheckList.js';
+import Contractors from './pages/Contractors.js';
+import CreateContractor from './components/CreateContractor.js';
+import Admin from './pages/Admin.js';
+import Home from './pages/Home.js';
+import Accountant from './pages/Accountant.js';
+import Design_Head from './pages/Design_Head.js';
+import SiteIncharge from './pages/SiteIncharge.js';
+import SiteSupervisour from './pages/SiteSupervisour.js';
+import Quality_Engineer from './pages/Quality_Engineer.js';
+import Design_Engineer from './pages/Design_Engineer.js';
+import Marketing from './pages/Marketing.js';
+import Dashboard from './pages/Dashboard.js';
+import Client from './pages/Client.js';
+import { ProtectedRoute } from './components/ProtectedPages.js';
+import SiteScreen from './screen/SiteScreen.js';
+import ClientScreen from './screen/ClientScreen.js';
+import WorkOrderScreen from './screen/WorkOrderScreen.js'
+import BillScreen from './screen/BillScreen.js';
+import Payment_SchedulScreen from './screen/Payment_SchedulScreen.js';
+import Project_ScheduleScreen from './screen/Project_ScheduleScreen.js';
+import ContractorScreen from './screen/ContractorScreen.js';
+import WorkDetails from './pages/WorkDetails.js';
+import CreateExtraWork from './components/CreateExtraWork.js';
+import ExtraWork from './pages/ExtraWork.js';
+import CreateSupplier from './components/CreateSupplier.js';
+import CreatePurchaseOrder from './components/CreatePurchaseOrder.js';
+import PurchaseOrders from './pages/PurchaseOrders.js';
+import Suppliers from './pages/Suppliers.js';
+import PurchaseOrderScreen from './screen/PurchaseOrderScreen.js';
+import Message from './pages/Message.js';
+import Employee from './pages/Employee.js';
+import Task from './pages/Task.js';
+import ExtraWorkScreen from './screen/ExtraWorkScreen.js';
 
 
 const App = () => {
@@ -64,12 +64,10 @@ const App = () => {
   });
 
 
-
-
   return (
     <>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={<Home />} >
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/dashboard' element={<Dashboard />} />
@@ -144,6 +142,7 @@ const App = () => {
         <Route path='/message' element={<Message />} />
         <Route path='/tasks' element={<Task />} />
         {/* </ProtectedRoute> */}
+        </Route>
       </Routes>
     </>
   )
