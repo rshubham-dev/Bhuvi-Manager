@@ -36,71 +36,69 @@ import { logout } from './features/auth/authSlice.js';
   console.log('state', window.performance.navigation.type)
 
   useEffect(() => {
-    const handleNavigation = () => {
-      if (isLoggedIn) {
-        switch (user.department) {
-          case 'Company':
-            return (
-              <Admin/> 
-              )
-            break;
-          case 'Client':
-            return (
-              <Client/> 
-              )
-            break;
-          case 'Accountant':
-            return (
-              <Accountant/> 
-              )
-            break;
-          case 'Marketing':
-            return (
-              <Marketing/> 
-              )
-            break;
-          case 'Ceo':
-            return (
-              <Admin/> 
-              )
-            break;
-          case 'Site Incharge':
-            return (
-              <SiteIncharge/> 
-              )
-            break;
-          case 'Site Supervisor':
-            return (
-              <SiteSupervisour/> 
-              )
-            break;
-          case 'Design Head':
-            return (
-              <Design_Head/> 
-              )
-            break;
-          case 'Design Engineer':
-            return (
-              <Design_Engineer/> 
-              )
-            break;
-          case 'Quality Engineer':
-            return (
-            <Quality_Engineer/> 
+    if(isLoggedIn === true && user){
+      handleNavigation(isLoggedIn);
+    } else {
+      navigate('/login')
+    }
+  }, [isLoggedIn]);
+  const handleNavigation = (user) => {
+      switch (user.department) {
+        case 'Company':
+          return (
+            <Admin/> 
             )
-            break;
-          default:
-            console.log("Not exists");
-            break;
-        }
-      } else {
-        return (
-          <Home/>
-        )
+          break;
+        case 'Client':
+          return (
+            <Client/> 
+            )
+          break;
+        case 'Accountant':
+          return (
+            <Accountant/> 
+            )
+          break;
+        case 'Marketing':
+          return (
+            <Marketing/> 
+            )
+          break;
+        case 'Ceo':
+          return (
+            <Admin/> 
+            )
+          break;
+        case 'Site Incharge':
+          return (
+            <SiteIncharge/> 
+            )
+          break;
+        case 'Site Supervisor':
+          return (
+            <SiteSupervisour/> 
+            )
+          break;
+        case 'Design Head':
+          return (
+            <Design_Head/> 
+            )
+          break;
+        case 'Design Engineer':
+          return (
+            <Design_Engineer/> 
+            )
+          break;
+        case 'Quality Engineer':
+          return (
+          <Quality_Engineer/> 
+          )
+          break;
+        default:
+          console.log("Not exists");
+          break;
       }
-    };
-    handleNavigation();
-  }, [isLoggedIn, navigate]);
+  };
 
 }
 
