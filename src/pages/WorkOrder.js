@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import moment from 'moment';
 
 axios.defaults.withCredentials = true;
 
@@ -81,7 +82,7 @@ const WorkOrders = () => {
               <td className="px-6 py-3">{workOrder.site?.name}</td>
               <td className="px-6 py-3">{workOrder.contractor?.name}</td>
               <td className="px-6 py-3">{workOrder.workOrderValue}</td>
-              <td className="px-6 py-3">{workOrder.duration}</td>
+              <td className="px-6 py-3">{moment(workOrder.duration).format('DD-MM-YYYY')}</td>
               <td className="px-6 py-3">
                 <button
                   onClick={() => handleRedirect(workOrder._id)}

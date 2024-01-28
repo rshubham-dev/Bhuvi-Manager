@@ -204,7 +204,7 @@ const CreateEmployee = () => {
                     </div>
 
                     <div className='mb-4'>
-                        <label htmlFor="address" className="block text-sm font-medium text-gray-600">
+                        <label htmlFor="address" className="block text-gray-700 text-sm font-bold mb-2">
                             Address
                         </label>
                         <input
@@ -218,7 +218,7 @@ const CreateEmployee = () => {
                         />
                     </div>
 
-                    <div className='mb-4'>
+                    {/* <div className='mb-4'>
                         <h4 className='mb-2'>Document Name</h4>
 
                         <div className='mb-4'>
@@ -275,7 +275,7 @@ const CreateEmployee = () => {
                                 onChange={(e) => inputData(e, 'bank')}
                             />
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className='mb-4'>
                         <label

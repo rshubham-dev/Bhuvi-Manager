@@ -14,9 +14,10 @@ export const authSlice = createSlice({
             state.isLoggedIn = true;
         },
         logout: (state) => {
-            console.log('Logout action triggered');
             sessionStorage.removeItem("token");
-            return { ...initialState };
+            state.isLoggedIn = false;
+            state.user = null;
+            console.log('Logout action triggered');
         },
     },
 })

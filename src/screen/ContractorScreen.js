@@ -5,6 +5,7 @@ import './screen.css';
 import { GrEdit } from "react-icons/gr";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdAdd, MdDownload, MdDelete } from "react-icons/md";
+import moment from 'moment';
 
 
 axios.defaults.withCredentials = true;
@@ -224,7 +225,7 @@ const ContractorScreen = () => {
                                             {workorder.workOrderName}
                                         </td>
                                         <td className="px-6 py-4">{workorder.site?.name}</td>
-                                        <td className="px-6 py-4">{workorder.duration}</td>
+                                        <td className="px-6 py-4">{workorder.duration ? moment(workorder.duration).format('DD-MM-YYYY') : '-'}</td>
                                         <td className="px-6 py-4">{workorder.workOrderValue}</td>
                                         <td className="px-6 py-4">{workorder.totalPaid}</td>
                                         <td className="px-6 py-4">{workorder.totalDue}</td>
@@ -291,7 +292,7 @@ const ContractorScreen = () => {
                                             {bill?.billOf.workDescription}
                                         </td>
                                         <td className="px-6 py-4">{bill?.billOf.amount}</td>
-                                        <td className="px-6 py-4">{bill?.dateOfPayment}</td>
+                                        <td className="px-6 py-4">{bill?.dateOfPayment ? moment(bill?.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
                                         <td className="px-6 py-4">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
                                         <td className="px-6 py-4">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
                                         <td className="px-6 py-4">{bill?.paymentStatus}</td>

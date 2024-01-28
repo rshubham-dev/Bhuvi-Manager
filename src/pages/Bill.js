@@ -6,6 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { Tabs } from 'antd';
+import moment from 'moment';
 
 axios.defaults.withCredentials = true;
 
@@ -97,12 +98,12 @@ const Bills = () => {
 
                 <div className='flex justify-between flex-row my-1.5'>
                   <dt className='font-medium text-color-title mx-5 my-1.5'>Bill Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill}</dd>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill ? moment(bill.dateOfBill).format('DD-MM-YYYY') : '-'}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
                   <dt className='font-medium text-color-title mx-5 my-1.5'>Work</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf.workDetail}</dd>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf?.workDetail}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
@@ -127,7 +128,7 @@ const Bills = () => {
 
                 <div className='flex justify-between flex-row my-1.5'>
                   <dt className='font-medium text-color-title mx-5 my-1.5'>Payment Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment}</dd>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment ? moment(bill.dateOfPayment).format('DD-MM-YYYY') : '-'}</dd>
                 </div>
 
 
@@ -160,45 +161,48 @@ const Bills = () => {
                 </summary>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Name</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.site?.name}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Id</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Supplier</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.supplier?.name}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Client</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Bill Date</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill ? moment(bill.dateOfBill).format('DD-MM-YYYY') : '-'}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Project Type</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Material</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf?.material}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Total Floor</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Amount</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.amount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Incharge</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Paid</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.paidAmount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Supervisor</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Due</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dueAmount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Address</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Status</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.paymentStatus}</dd>
+                </div>
 
-                  </dd>
+                <div className='flex justify-between flex-row my-1.5'>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Payment Date</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment ? moment(bill.dateOfPayment).format('DD-MM-YYYY') : '-'}</dd>
                 </div>
 
               </details>
@@ -229,45 +233,43 @@ const Bills = () => {
                 </summary>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Name</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.site?.name}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Id</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Bill Date</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill ? moment(bill.dateOfBill).format('DD-MM-YYYY') : '-'}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Client</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Material</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf?.material}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Project Type</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Amount</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.amount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Total Floor</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Paid</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.paidAmount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Incharge</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Due</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dueAmount}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site Supervisor</dt>
-                  <dd className='text-color-title mx-5 my-1.5'></dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Status</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.paymentStatus}</dd>
                 </div>
 
                 <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Address</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>
-
-                  </dd>
+                  <dt className='font-medium text-color-title mx-5 my-1.5'>Payment Date</dt>
+                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment ? moment(bill.dateOfPayment).format('DD-MM-YYYY') : '-'}</dd>
                 </div>
 
               </details>

@@ -20,11 +20,10 @@ const Navbar = () => {
   const logOut = async () => {
     try {
       const response = await axios.post('/api/v1/user/logout');
-      dispatch(logout());
-      sessionStorage.removeItem('token');
       toast.success(response.data.message);
-      console.log(response.data);
+      dispatch(logout());
       navigate('/login');
+      console.log(response.data);
     } catch (error) {
       toast.error(error.message);
     }

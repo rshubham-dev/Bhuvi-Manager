@@ -70,23 +70,25 @@ const CreateBill = () => {
   }, [bill.site]);
 
   useEffect(() => {
-    const getMaterialOrder = async () => {
+    const getWorkOrder = async () => {
       try {
         const response = await axios.get(`/api/v1/work-order/${bill.site}/${bill.contractor}`);
+        console.log(response.data)
         setBillWork(...response.data.map((workOrder) => workOrder.work?.filter((work) => work?.due !== 0 && work?.status !== 'Pending')))
       } catch (error) {
         console.error(error);
         toast.error(error.message);
       }
     }
-    getMaterialOrder();
-  }, [bill.contractor])
-  // console.log('work:', billWork)
+    getWorkOrder();
+  }, [bill.contractor || id])
+   console.log('work:', billWork)
 
   useEffect(() => {
     const getMaterialOrder = async () => {
       try {
         const response = await axios.get(`/api/v1/purchase-order/${bill.site}/${bill.supplier}`);
+        console.log(response.data)
         setMaterial(...response.data.map((purchase) => purchase.requirement?.filter((require) => require.due !== 0 && require.status !== 'Pending')))
       } catch (error) {
         console.error(error);
@@ -103,13 +105,13 @@ const CreateBill = () => {
     } else if (bill.billFor === 'Contractor') {
       setPaymentDetail(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
     }
-  }, [bill.billOf, bill.billFor])
+  }, [bill.billOf])
   // console.log(paymentDetail)
 
   const fetchBill = async (id) => {
     try {
       const billData = await axios.get(`/api/v1/bill/${id}`);
-      console.log(billData.data)
+      // console.log(billData.data)
       setData({
         site: billData.data.site?.name,
         contractor: billData.data.contractor?.name,
@@ -120,24 +122,24 @@ const CreateBill = () => {
         site: billData.data?.site._id,
         contractor: billData.data.contractor?._id,
         supplier: billData.data.supplier?._id,
-        billOf: billData.data.billOf.workDetail,
+        billOf: billData.data?.billOf.workDetail,
         billFor: billData.data.billFor,
         toPay: billData.data.toPay,
         billNo: billData.data.billNo,
         amount: billData.data?.amount,
-        createdBy: billData.data.createdBy?._id,
+        createdBy: billData.data?.createdBy?._id,
         dateOfPayment: billData.data?.dateOfPayment,
         paymentStatus: billData.data?.paymentStatus,
         reason: billData.data?.reason,
         paidAmount: billData.data?.paidAmount,
         dueAmount: billData.data?.dueAmount,
       })
+      // console.log(billData.data?.billOf)
     } catch (error) {
       console.error(error)
       toast.error(error.message)
     }
   }
-
   const handleChange = (field, data) => {
     setBill({
       ...bill,
@@ -149,7 +151,7 @@ const CreateBill = () => {
     e.preventDefault();
     try {
       if (billToEdit) {
-        console.log(bill)
+        // console.log(bill)
         const paid = parseFloat(bill.paidAmount);
         const updateBill = await axios.put(`/api/v1/bill/${billToEdit}`, {
           site: bill.site,
@@ -172,7 +174,7 @@ const CreateBill = () => {
           navigate(-1)
         }
       } else {
-        // console.log(bill)
+        console.log(bill)
         const response = await axios.post('/api/v1/bill/create', {
           site: bill.site,
           billFor: bill.billFor,
@@ -183,7 +185,7 @@ const CreateBill = () => {
           billOf: bill.billOf,
           toPay: bill.toPay,
         });
-        console.log(response.data)
+        console.log(response.data?.ContractorBill)
         toast.success(response.data.message);
         navigate(-1)
       }

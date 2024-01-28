@@ -143,7 +143,7 @@ const CreateSite = () => {
           <input
             type="text"
             name="name"
-            required
+            // required
             value={site.name}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
@@ -179,7 +179,7 @@ const CreateSite = () => {
           <input
             type="text"
             name="siteId"
-            required
+            // required
             value={site.siteId}
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
@@ -214,7 +214,7 @@ const CreateSite = () => {
             type="text"
             name="area"
             value={site.area}
-            required
+            // required
             onChange={handleChange}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
@@ -277,7 +277,7 @@ const CreateSite = () => {
         </div>
 
         {/* Address */}
-        <div>
+        <div className="mb-4">
           <label htmlFor="address" className="block text-sm font-medium text-gray-600">
             Address
           </label>

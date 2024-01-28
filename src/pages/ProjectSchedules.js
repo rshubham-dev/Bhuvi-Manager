@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdAdd, MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import moment from 'moment';
 
 axios.defaults.withCredentials = true;
 
@@ -108,9 +109,9 @@ const ProjectSchedules = () => {
                         <td className="px-6 py-4">
                           {work.workDetail || 'No Work Detail'}
                         </td>
-                        <td className="px-6 py-4">{work.toStart}</td>
+                        <td className="px-6 py-4">{moment(work.toStart).format('DD-MM-YYYY')}</td>
                         <td className="px-6 py-4">{work.status}</td>
-                        <td className="px-6 py-4 text-center">{work.startedAt ? work.startedAt : '-'}</td>
+                        <td className="px-6 py-4 text-center">{work.startedAt ? moment(work.startedAt).format('DD-MM-YYYY') : '-'}</td>
                         <td className="px-6 py-4">
                           <button
                             onClick={() => handleEdit(projectSchedule._id, index)}

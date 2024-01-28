@@ -1,6 +1,6 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import UserManagement from './pages/User';
 import CreateUser from './components/CreateUser';
 import Sites from './pages/Site';
@@ -48,21 +48,35 @@ import CreateExtraWork from './components/CreateExtraWork';
 import ExtraWork from './pages/ExtraWork';
 import CreateSupplier from './components/CreateSupplier';
 import CreatePurchaseOrder from './components/CreatePurchaseOrder';
-import CreateMaterialOrder from './components/CreateMaterialOrder';
 import PurchaseOrders from './pages/PurchaseOrders';
 import Suppliers from './pages/Suppliers';
-import EditDetails from './components/EditDetails';
 import PurchaseOrderScreen from './screen/PurchaseOrderScreen';
 import Message from './pages/Message';
 import Employee from './pages/Employee';
 import Task from './pages/Task';
 import ExtraWorkScreen from './screen/ExtraWorkScreen';
+import { logout } from './features/auth/authSlice.js';
 
 const App = () => {
 
   const { isLoggedIn } = useSelector((state) => {
     return state.auth
   });
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const isPageReloaded = performance.navigation.type === 1;
+    if (isPageReloaded) {
+      dispatch(logout());
+      navigate('/login')
+      console.log('Reloaded')
+    } else {
+      alert( "This page is not reloaded");
+    }
+  }, []);
+
+
 
   return (
     <>
@@ -146,5 +160,6 @@ const App = () => {
     </>
   )
 }
+export default App;
 
-export default App
+

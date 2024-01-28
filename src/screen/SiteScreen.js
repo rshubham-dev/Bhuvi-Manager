@@ -7,6 +7,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdAdd, MdDownload, MdDelete } from "react-icons/md";
 import toast, { Toaster } from 'react-hot-toast';
 import { Tabs } from 'antd';
+import moment from 'moment';
 
 axios.defaults.withCredentials = true;
 
@@ -265,7 +266,7 @@ const SiteScreen = () => {
                       {paymentDetail?.workDescription}
                     </td>
                     <td className="px-6 py-4">{paymentDetail?.amount}</td>
-                    <td className="px-6 py-4">{paymentDetail?.paymentDate}</td>
+                    <td className="px-6 py-4">{paymentDetail?.paymentDate ? moment(paymentDetail?.paymentDate).format('DD-MM-YYYY') : '-'}</td>
                     <td className="px-6 py-4">{paymentDetail?.status}</td>
                     <td className="px-6 py-4">
                       <button onClick={() => {
@@ -325,9 +326,9 @@ const SiteScreen = () => {
                 {projectDetail?.map((work, index) => (
                   <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <td className="px-6 py-4">{work.workDetail}</td>
-                    <td className="px-6 py-4">{work.toStart}</td>
+                    <td className="px-6 py-4">{work.toStart ? moment(work.toStart).format('DD-MM-YYYY') : '-'}</td>
                     <td className="px-6 py-4">{work.status}</td>
-                    <td className="px-6 py-4 text-center">{work.startedAt ? work.startedAt : '-'}</td>
+                    <td className="px-6 py-4 text-center">{work.startedAt ? moment(work.startedAt).format('DD-MM-YYYY') : '-'}</td>
                     <td className="px-6 py-4">
                       <button
                         onClick={() => navigate(`/edit-projectSchedule/${site?.projectSchedule._id}/${index}`)}
@@ -416,7 +417,7 @@ const SiteScreen = () => {
                       {workorder.workOrderName}
                     </td>
                     <td className="px-6 py-4">{workorder.contractor?.name}</td>
-                    <td className="px-6 py-4">{workorder.duration}</td>
+                    <td className="px-6 py-4">{workorder.duration ? moment(workorder.duration).format('DD-MM-YYYY') : '-'}</td>
                     <td className="px-6 py-4">{workorder.workOrderValue}</td>
                     <td className="px-6 py-4">{workorder.totalPaid}</td>
                     <td className="px-6 py-4">{workorder.totalDue}</td>
@@ -485,7 +486,7 @@ const SiteScreen = () => {
                           {bill?.billOf.workDescription}
                         </td>
                         <td className="px-6 py-4">{bill?.billOf.amount}</td>
-                        <td className="px-6 py-4">{bill?.dateOfPayment}</td>
+                        <td className="px-6 py-4">{bill?.dateOfPayment ? moment(bill?.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
                         <td className="px-6 py-4">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
                         <td className="px-6 py-4">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
                         <td className="px-6 py-4">{bill?.paymentStatus}</td>
@@ -530,7 +531,7 @@ const SiteScreen = () => {
                           {bill?.billOf.material}
                         </td>
                         <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4">{bill?.dateOfPayment}</td>
+                        <td className="px-6 py-4">{bill?.dateOfPayment ? moment(bill?.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
                         <td className="px-6 py-4">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
                         <td className="px-6 py-4">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
                         <td className="px-6 py-4">{bill?.paymentStatus}</td>

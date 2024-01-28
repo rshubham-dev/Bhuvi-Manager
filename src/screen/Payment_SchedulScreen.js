@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
+import moment from 'moment';
 
 const Payment_SchedulScreen = () => {
   const [paymentSchedule, setpaymentSchedules] = useState({});
@@ -14,7 +15,7 @@ const Payment_SchedulScreen = () => {
     if(id){
       getpaymentSchedules(id);
     }
-  }, [id])
+  }, [])
 
   const getpaymentSchedules = async (id) => {
     try {
@@ -68,7 +69,7 @@ const Payment_SchedulScreen = () => {
                 {work.workDescription}
               </td>
               <td className="px-6 py-4">{work.amount}</td>
-              <td className="px-6 py-4">{work.dateOfPayment}</td>
+              <td className="px-6 py-4">{work.dateOfPayment ? moment(work.dateOfPayment ).format('DD-MM-YYYY') : '-'}</td>
               <td className="px-6 py-4">{work.status}</td>
               <td className="px-6 py-4">{work.paid}</td>
               <td className="px-6 py-4">{work.due}</td>

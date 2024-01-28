@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
+import moment from 'moment';
 axios.defaults.withCredentials = true;
 
 const PaymentSchedules = () => {
@@ -114,7 +114,7 @@ const PaymentSchedules = () => {
                       {work.workDescription}
                     </td>
                     <td className="px-6 py-4">{work.amount}</td>
-                    <td className="px-6 py-4">{work.dateOfPayment}</td>
+                    <td className="px-6 py-4">{work.dateOfPayment ? moment(work.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
                     <td className="px-6 py-4">{work.status}</td>
                     <td className="px-6 py-4">
                       <button
