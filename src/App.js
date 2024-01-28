@@ -60,9 +60,9 @@ import { logout } from './features/auth/authSlice.js';
 
 const App = () => {
 
-  const { isLoggedIn } = useSelector((state) => {
-    return state.auth
-  });
+  // const { isLoggedIn } = useSelector((state) => {
+  //   return state.auth
+  // });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -75,6 +75,10 @@ const App = () => {
       console.log( "This page is not reloaded");
     }
   }, []);
+    // if(window.performance){
+  //   console.log('test', window.performance)
+  // }
+  // console.log('state', window.performance.navigation.type)
 
 
   return (
