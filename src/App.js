@@ -66,7 +66,7 @@ const App = () => {
 
   const navigate = useNavigate();
   useEffect(() => {
-    const isPageReloaded = performance.navigation.type === 1;
+    const isPageReloaded = performance.now.type === 1;
     if (isPageReloaded) {
       dispatch(logout());
       navigate('/login')
