@@ -17,10 +17,10 @@ const Dashboard = () => {
 
         switch (user.department) {
           case 'Admin':
-            navigate('/admin');
+            return navigate('/admin');
             break;
           case 'Company':
-            navigate('/admin');
+            return navigate('/admin');
             break;
           case 'Client':
             navigate('/client');
