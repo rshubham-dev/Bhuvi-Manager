@@ -27,7 +27,7 @@ const SiteIncharge = () => {
     { to: '/contractors', text: 'Contractor', icon: <MdConstruction /> },
     { to: '/suppliers', text: 'Supplier', icon: <GrUserWorker/> },
     // { to: '/checklist', text: 'Check-List', icon: <MdPlaylistAddCheck /> },
-    { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
+    // { to: '/work-details', text: 'Work-Details', icon: <MdAssignment /> },
   ];
   return (
     <>

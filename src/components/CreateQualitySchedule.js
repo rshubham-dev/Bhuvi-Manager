@@ -2,18 +2,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 
-const CreateProjectSchedule = () => {
+const CreateQualitySchedule = () => {
 
   const [formData, setFormData] = useState({
     site: '',
-    projectScheduleId: '',
-    projectDetail: [{
-      workDetail: '',
-      toStart: '',
+    qualityScheduleId: '',
+    workDetails: [{
+        work: '',
+        checkingDate: '',
     }]
   });
   const [workDetails, setWorkDetails] = useState([]);
@@ -21,19 +20,18 @@ const CreateProjectSchedule = () => {
   const [sites, setSite] = useState([]);
   const [scheduleIdToEdit, setScheduleIdToEdit] = useState(null);
   const navigate = useNavigate();
-  const [projectToEdit, setProjectToEdit] = useState({
+  const [workToEdit, setWorkToEdit] = useState({
     id: '',
     index: '',
   });
-  const [projectDetail, setProjectDetail] = useState({
-    workDetail: '',
-    toStart: '',
-    startedAt: '',
+  const [workDetail, setWorkDetail] = useState({
+    work: '',
+    checkingDate: '',
+    checkedAt: '',
     difference: '',
     reason: '',
     status: '',
-  });
-  const { user, isLoggedIn } = useSelector((state) => state.auth);
+  })
   const status = ['Started', 'Completed', 'Pending', 'Partaly Completed'];
   const { index } = useParams();
   const { id } = useParams();
@@ -44,7 +42,7 @@ const CreateProjectSchedule = () => {
       setScheduleIdToEdit(id)
     } else if (id, index) {
       fetchProjectDetail(id, index )
-      setProjectToEdit({
+      setWorkToEdit({
         id,
         index,
       })
@@ -53,13 +51,13 @@ const CreateProjectSchedule = () => {
 
   const fetchProjectDetail = async (id, index) => {
     try {
-      const response = await axios.get(`/api/v1/project-schedule/${id}/projectDetails`);
+      const response = await axios.get(`/api/v1/quality-schedule/${id}/workDetails`);
       const detail = response.data[index];
       console.log(detail)
-      setProjectDetail({
-        workDetail: detail.workDetail,
-        toStart: detail.toStart,
-        startedAt: detail.startedAt,
+      setWorkDetail({
+        work: detail.work,
+        checkingDate: detail.checkingDate,
+        checkedAt: detail.checkedAt,
         difference: detail.difference,
         reason: detail.reason,
         status: detail.status,
@@ -71,16 +69,16 @@ const CreateProjectSchedule = () => {
 
   const fetchProjectSchedule = async (id) => {
     try {
-      const response = await axios.get(`/api/v1/project-schedule/${id}`);
+      const response = await axios.get(`/api/v1/quality-schedule/${id}`);
       const project = response.data;
       console.log(project?.site.name)
       setData(project?.site.name);
       setFormData({
         site: project?.site.id,
-        projectScheduleId: project?.projectScheduleId,
-        projectDetail: [{
-          workDetail: '',
-          toStart: '',
+        qualityScheduleId: project?.qualityScheduleId,
+        workDetails: [{
+          work: '',
+          checkingDate: '',
         }]
       });
     } catch (error) {
@@ -92,16 +90,7 @@ const CreateProjectSchedule = () => {
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
-        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
-          const existingSites = user?.site;
-          let Sites;
-          for(let existSite of existingSites) {
-            Sites = response.data?.filter((site) => site?._id.includes(existSite))
-          }
-          setSite(Sites)
-        } else {
-          setSite(response.data)
-        }
+        setSite(response.data)
       } catch (error) {
         toast.error(error.message)
       }
@@ -132,8 +121,8 @@ const CreateProjectSchedule = () => {
   };
 
   const handleUpdate = (field, value) => {
-    setProjectDetail({
-      ...projectDetail,
+    setWorkDetail({
+      ...workDetail,
       [field]: value
     })
   }
@@ -141,31 +130,31 @@ const CreateProjectSchedule = () => {
   const handleAddWork = () => {
     setFormData({
       ...formData,
-      projectDetail: [
-        ...formData.projectDetail,
+      workDetails: [
+        ...formData.workDetails,
         {
-          workDetail: '',
-          toStart: '',
+          work: '',
+          checkingDate: '',
         },
       ],
     });
   };
 
   const handleRemoveWork = (index) => {
-    const updatedWork = [...formData.projectDetail];
+    const updatedWork = [...formData.workDetails];
     updatedWork.splice(index, 1);
     setFormData({
       ...formData,
-      projectDetail: updatedWork,
+      workDetails: updatedWork,
     });
   };
 
   const handleWorkChange = (index, field, value) => {
-    const updatedWork = [...formData.projectDetail];
+    const updatedWork = [...formData.workDetails];
     updatedWork[index][field] = value;
     setFormData({
       ...formData,
-      projectDetail: updatedWork,
+      workDetails: updatedWork,
     });
   };
 
@@ -174,19 +163,19 @@ const CreateProjectSchedule = () => {
     try {
       if (scheduleIdToEdit) {
         console.log(formData)
-        const response = await axios.put(`/api/v1/project-schedule/${scheduleIdToEdit}`, formData);
+        const response = await axios.put(`/api/v1/quality-schedule/${scheduleIdToEdit}`, formData);
         if (response.data) {
           console.log('Project Schedule Edited Successfully!');
           toast.success(response.data.message);
           navigate(-1)
         }
-      } else if(projectToEdit.id && projectToEdit.index){
-        console.log(projectDetail)
-        await axios.put(`/api/v1/project-schedule/${projectToEdit.id}/projectDetails/${projectToEdit.index}`, projectDetail);
+      } else if(workToEdit.id && workToEdit.index){
+        console.log(workToEdit)
+        await axios.put(`/api/v1/quality-schedule/${workToEdit.id}/workDetails/${workToEdit.index}`, workDetail);
         toast.success('Edited successfully');
         navigate(-1);
       } else {
-        const response = await axios.post('/api/v1/project-schedule/create', formData);
+        const response = await axios.post('/api/v1/quality-schedule/create', formData);
         if (response.data) {
           console.log('Project Schedule Created Successfully!');
           toast.success(response.data.message);
@@ -199,7 +188,7 @@ const CreateProjectSchedule = () => {
     }
   };
 
-  if(projectToEdit.index && projectToEdit.id){
+  if(workToEdit.index && workToEdit.id){
     return (
       <main>
         <section className="flex items-center justify-center max-h-screen mb-24 mt-10">
@@ -208,15 +197,15 @@ const CreateProjectSchedule = () => {
             className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
   
             <div className="mb-4">
-              <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
+              <label htmlFor="work" className="block text-gray-700 text-sm font-bold mb-2">
                 Work:
               </label>
               <select
-                onChange={(e) => handleUpdate('workDetail', e.target.value)}
+                onChange={(e) => handleUpdate('work', e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option>
-                  {projectToEdit ? projectDetail.workDetail :
+                  {workToEdit ? workDetail.work :
                   'Select Work Detail:'
                   }
                 </option>
@@ -229,31 +218,31 @@ const CreateProjectSchedule = () => {
             </div>
   
             <div className="mb-4">
-              <label htmlFor="userMail" className="block text-gray-700 text-sm font-bold mb-2">
-                Starting Date: {projectDetail.toStart}
+              <label htmlFor="checkingDate" className="block text-gray-700 text-sm font-bold mb-2">
+                Checking Date: {workDetail.checkingDate}
               </label>
               <input
                 type="date"
-                name="toStart"
-                onChange={(e) => handleUpdate('toStart', e.target.value)}
+                name="checkingDate"
+                onChange={(e) => handleUpdate('checkingDate', e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
   
             <div className="mb-4">
-              <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-                Actual Starting Date: {projectDetail.startedAt}
+              <label htmlFor="checkedAt" className="block text-gray-700 text-sm font-bold mb-2">
+                Actual Checked At: {workDetail.checkedAt}
               </label>
               <input
                 type="date"
-                name="startedAt"
-                onChange={(e) => handleUpdate('startedAt', e.target.value)}
+                name="checkedAt"
+                onChange={(e) => handleUpdate('checkedAt', e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </div>
   
             <div className="mb-4">
-              <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">
+              <label htmlFor="difference" className="block text-gray-700 text-sm font-bold mb-2">
                 Difference: 
               </label>
               <input
@@ -265,7 +254,7 @@ const CreateProjectSchedule = () => {
             </div>
   
             <div className="mb-4">
-              <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">
+              <label htmlFor="reason" className="block text-gray-700 text-sm font-bold mb-2">
                 Reason
               </label>
               <input
@@ -277,7 +266,7 @@ const CreateProjectSchedule = () => {
             </div>
   
             <div className="mb-4">
-              <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">
+              <label htmlFor="status" className="block text-gray-700 text-sm font-bold mb-2">
                 Status
               </label>
               <select
@@ -285,7 +274,7 @@ const CreateProjectSchedule = () => {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
                 <option>
-                {projectToEdit ? projectDetail.status :
+                {workToEdit ? workDetail.status :
                   'Status'
                   }
                   </option>
@@ -312,7 +301,7 @@ const CreateProjectSchedule = () => {
   return (
     <section className="container mx-auto mt-6 mb-24">
       <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
-        <h2 className="text-2xl font-semibold mb-4 text-center">Create Project Schedule</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Create Quality Schedule</h2>
 
         <div className="mb-4">
           <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
@@ -338,33 +327,34 @@ const CreateProjectSchedule = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="projectScheduleId" className="block text-sm font-medium text-gray-600">
-            Schedule Id: {formData.projectScheduleId}
+          <label htmlFor="qualityScheduleId" className="block text-sm font-medium text-gray-600">
+            Schedule Id: {formData.qualityScheduleId}
           </label>
             <input
               type="text"
-              name="projectScheduleId"
-              value={formData.projectScheduleId}
-              onChange={(e) => handleChange('projectScheduleId', e.target.value)}
+              name="qualityScheduleId"
+              value={formData.qualityScheduleId}
+              onChange={(e) => handleChange('qualityScheduleId', e.target.value)}
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
             />
         </div>
 
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Work Details</h2>
-          {formData.projectDetail.map((workItem, index) => (
+          {formData.workDetails.map((workItem, index) => (
             <div key={index} className="mb-4 p-3 border rounded">
               <div className="grid grid-cols-1 gap-4">
+
                 <div>
                   <label
-                    htmlFor={`work[${index}].workDetail`}
+                    htmlFor={`work[${index}].work`}
                     className="block text-sm font-semibold text-gray-600"
                   >
-                    Project Work Detail:
+                    Work to Check:
                   </label>
                   <select
-                    value={workItem.workDetail}
-                    onChange={(e) => handleWorkChange(index, 'workDetail', e.target.value)}
+                    value={workItem.work}
+                    onChange={(e) => handleWorkChange(index, 'work', e.target.value)}
                     className="border p-2 rounded w-full"
                   >
                     <option>
@@ -379,18 +369,18 @@ const CreateProjectSchedule = () => {
                 </div>
 
                 <div>
-                  <label htmlFor={`work[${index}].toStart`} className="block text-sm font-semibold text-gray-600">
+                  <label htmlFor={`work[${index}].checkingDate`} className="block text-sm font-semibold text-gray-600">
                     Starting Date:
                   </label>
                   <input
                     type="date"
-                    value={workItem.toStart}
-                    onChange={(e) => handleWorkChange(index, 'toStart', e.target.value)}
+                    value={workItem.checkingDate}
+                    onChange={(e) => handleWorkChange(index, 'checkingDate', e.target.value)}
                     className="border p-2 rounded w-full"
                   />
                 </div>
 
-                {formData.projectDetail.length > 1 && (
+                {formData.workDetails.length > 1 && (
                   <div>
                     <button
                       type="button"
@@ -415,7 +405,7 @@ const CreateProjectSchedule = () => {
 
         <div className="text-center">
           <button type="submit" className="bg-green-500 text-white p-2 rounded mt-4">
-            Create Project Schedule
+            Create Quality Check Schedule
           </button>
         </div>
         <Toaster position="top-right" reverseOrder={false} />
@@ -425,4 +415,4 @@ const CreateProjectSchedule = () => {
   }
 }
 
-export default CreateProjectSchedule
+export default CreateQualitySchedule

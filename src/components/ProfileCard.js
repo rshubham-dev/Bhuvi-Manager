@@ -1,33 +1,130 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // import styles from '../style/User.module.css';
-// import { UserContext } from '../context/AuthContext';
 import { useSelector } from 'react-redux';
 import image from '../asset/profile.png';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
+import { MdCheck } from "react-icons/md";
+axios.defaults.withCredentials = true;
 
 const UserProfile = () => {
-  // const {user} = useContext(UserContext);
-  //   console.log(user)
-  const { user } = useSelector((state) => state.auth)
+  const [avatar, setAvatar] = useState('');
+  const { user } = useSelector((state) => state.auth);
+  const [User, setUser] = useState('');
+  useEffect(() => {
+    setUser(user);
+  }, [user])
+
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('avatar', avatar);
+    try {
+      const response = await axios.put(`/api/v1/user/${User._id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      console.log(response.data);
+      toast.success(response.data.message);
+      setUser(response.data.existingUser)
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      toast.error(error.message)
+    }
+  };
+
   return (
-    <div>
-      <div className="container mx-auto py-8">
+    <div className='flex justify-center mx-auto mt-8 mb-4 sm:mx-8'>
+      {/* <div className="container mx-auto py-8">
         <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto">
-          <div className='profile flex justify-center'>
-            <img
-              src={user?.avatar || image}
-              className='border-2 border-gray-100 w-36 h-36 rounded-full shadow-xl cursor-pointer object-cover object-center'
-              alt="avatar"
-            />
+          <form onSubmit={formSubmit} className='profile flex justify-center'>
+            <label htmlFor="avatar">
+              <img
+                src={user?.avatar || image}
+                className='border-2 border-gray-100 w-36 h-36 rounded-full shadow-xl cursor-pointer object-cover object-center'
+                alt="avatar"
+              />
+            </label>
+            <input
+              type="file"
+              id='avatar'
+              name='avatar'
+              onChange={(e) => setAvatar(e.target.files[0])}
+              accept='.png, .jpg, .jpeg' />
+          <h2 className="text-2xl font-semibold text-center mt-2"></h2>
+          <p className="text-center mt-2">{user?.userMail}</p>
+          <p className="text-center mt-2"></p>
+          <p className="text-center mt-2">{user?.role}</p>
+          <p className="text-center mt-2"></p>
+          <button
+              type='submit'
+              className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600">
+              <MdCheck className='text-lg' />
+            </button>
+      </form>
+        </div>
+      </div> */}
+
+
+      <form onSubmit={formSubmit} className="p-3 bg-white shadow-lg rounded-2xl w-90 dark:bg-gray-800">
+        <div className="flex flex-row items-start gap-5">
+
+          <div className='profile flex justify-center bg-red mx-2'>
+            <label htmlFor="avatar">
+              <img
+                src={User?.avatar || image}
+                className='border-2 border-gray-100 rounded-full w-52 h-32 shadow-lg object-cover object-center cursor-pointer text-center' alt="avatar" />
+            </label>
+            <input
+              type="file"
+              id='avatar'
+              name='avatar'
+              onChange={(e) => setAvatar(e.target.files[0])}
+              accept='.png, .jpg, .jpeg' />
           </div>
 
-          {/* <img className="w-24 h-24 rounded-full mx-auto" alt={user.userName} /> */}
-          <h2 className="text-2xl font-semibold text-center mt-2">{user?.userName}</h2>
-          <p className="text-center mt-2">{user?.userMail}</p>
-          <p className="text-center mt-2">{user?.phone}</p>
-          <p className="text-center mt-2">{user?.role}</p>
-          <p className="text-center mt-2">{user?.department}</p>
+          <div className="flex flex-col gap-4 justify-between w-full h-28 mx-2">
+            <div>
+              <p className="text-xl font-medium text-gray-800 dark:text-white">
+                {User?.userName}
+              </p>
+              <p className="text-md text-gray-400">
+                {User?.department}
+              </p>
+            </div>
+            <div className="w-full p-1.5 bg-blue-100 rounded-lg dark:bg-white">
+              <div className="flex items-start flex-col justify-center gap-2 text-xs text-gray-400 dark:text-black">
+                <p className="flex flex-row">
+                  Email:
+                  <span className="font-bold text-black dark:text-indigo-500 ml-2">
+                    {User?.userMail}
+                  </span>
+                </p>
+                <p className="flex flex-row">
+                  Contact No:
+                  <span className="font-bold text-black dark:text-indigo-500 ml-2">
+                    {User?.phone}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+
+        <div className="flex items-center justify-center gap-4 mt-8">
+          { avatar ? 
+          <button type="submit" className="w-1/3 px-3 py-2 text-base text-white bg-indigo-500 border rounded-lg hover:bg-indigo-700 ">
+            Update
+          </button> : ''
+          }
+        </div>
+      </form>
+
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
     </div>
   );
 };

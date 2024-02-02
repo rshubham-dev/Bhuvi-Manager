@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 const CreatePaymentSchedule = () => {
@@ -34,6 +35,7 @@ const CreatePaymentSchedule = () => {
   const [data, setData] = useState({
     site: '',
   });
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   const status = ['Started', 'Completed', 'Pending', 'Partaly Completed'];
   const { id, index } = useParams();
   console.log('id:', id)
@@ -44,7 +46,16 @@ const CreatePaymentSchedule = () => {
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
-        setSite(response.data)
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
+          const existingSites = user?.site;
+          let Sites;
+          for(let existSite of existingSites) {
+            Sites = response.data?.filter((site) => site?._id.includes(existSite))
+          }
+          setSite(Sites)
+        } else {
+          setSite(response.data)
+        }
       } catch (error) {
         toast.error(error.message)
       }

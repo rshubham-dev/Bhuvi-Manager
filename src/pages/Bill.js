@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux'
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'
@@ -15,16 +16,34 @@ const Bills = () => {
   const [contractorBill, setContractorBill] = useState([]);
   const [supplierBill, setSupplierBill] = useState([]);
   const [materialBill, setMaterialBill] = useState([]);
+  const { user, isLoggedIn } = useSelector((state) => state.auth)
 
   useEffect(() => {
     const getbills = async () => {
       try {
         const billData = await axios.get('/api/v1/bill');
         const bills = billData.data;
-        setContractorBill(bills.filter((bill) => bill.billFor === 'Contractor'))
-        setSupplierBill(bills.filter((bill) => bill.billFor === 'Supplier'))
-        setMaterialBill(bills.filter((bill) => bill.billFor === 'Material'))
-        console.log(bills)
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
+          const sites = user?.site;
+          console.log('user', user);
+          console.log('sites', sites);
+          let contractorBills;
+          let supplierBills;
+          // let materialBills;
+          for(let site of sites){
+            contractorBills = bills.filter((bill) => bill.site?._id.includes(site) && bill.billFor === 'Contractor')
+            supplierBills = bills.filter((bill) => bill.site?._id.includes(site) && bill.billFor === 'Supplier')
+            // materialBills = bills.filter((bill) => bill.site?._id.includes(site) && bill.billFor === 'Material')
+          }
+          console.log('contractorBillfirst',  contractorBills)
+          setContractorBill(contractorBills);
+          setSupplierBill(supplierBills);
+          // setMaterialBill(materialBills);
+        } else {
+          setContractorBill(bills.filter((bill) => bill.billFor === 'Contractor'));
+          setSupplierBill(bills.filter((bill) => bill.billFor === 'Supplier'));
+          // setMaterialBill(bills.filter((bill) => bill.billFor === 'Material'));
+        }
       } catch (error) {
         toast.error(error.message)
       }
@@ -65,7 +84,7 @@ const Bills = () => {
       <Tabs defaultActiveKey='contractor'>
 
         <Tabs.TabPane tab='Contractor' key={'contractor'}>
-          {contractorBill.map((bill) => (
+          {contractorBill?.map((bill) => (
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
@@ -139,7 +158,7 @@ const Bills = () => {
         </Tabs.TabPane>
 
         <Tabs.TabPane tab='Supplier' key={'supplier'}>
-          {supplierBill.map((bill) => (
+          {supplierBill?.map((bill) => (
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
@@ -210,8 +229,8 @@ const Bills = () => {
           ))}
         </Tabs.TabPane>
 
-        <Tabs.TabPane tab='Material' key={'material'}>
-          {materialBill.map((bill) => (
+        {/* <Tabs.TabPane tab='Material' key={'material'}>
+          {materialBill?.map((bill) => (
             <div key={bill._id} className="card ">
               <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
                 <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
@@ -275,7 +294,7 @@ const Bills = () => {
               </details>
             </div>
           ))}
-        </Tabs.TabPane>
+        </Tabs.TabPane> */}
 
       </Tabs>
       <Toaster

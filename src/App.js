@@ -56,13 +56,15 @@ import Employee from './pages/Employee.js';
 import Task from './pages/Task.js';
 import ExtraWorkScreen from './screen/ExtraWorkScreen.js';
 import { logout } from './features/auth/authSlice.js';
+import QualitySchedules from './pages/QualitySchedules.js';
+import CreateQualitySchedule from './components/CreateQualitySchedule.js';
 
 
 const App = () => {
 
-  // const { isLoggedIn } = useSelector((state) => {
-  //   return state.auth
-  // });
+  const { isLoggedIn } = useSelector((state) => {
+    return state.auth
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -75,10 +77,6 @@ const App = () => {
       console.log( "This page is not reloaded");
     }
   }, []);
-    // if(window.performance){
-  //   console.log('test', window.performance)
-  // }
-  // console.log('state', window.performance.navigation.type)
 
 
   return (
@@ -91,7 +89,7 @@ const App = () => {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/ceo' element={<Admin />} />
-        <Route path='/Client-dashboard' element={<Client />} />
+        <Route path='/client' element={<Client />} />
         <Route path='/design-head' element={<Design_Head />} />
         <Route path='/site-incharge' element={<SiteIncharge />} />
         <Route path='/site-supervisour' element={<SiteSupervisour />} />
@@ -108,13 +106,13 @@ const App = () => {
         <Route path='/user' element={<UserManagement />} />
         <Route path='/account' element={<Profile />} />
         <Route path='/create-user' element={<CreateUser />} />
-        <Route path='/edit-user' element={<CreateUser />} />
+        <Route path='/edit-user/:id' element={<CreateUser />} />
         <Route path='/sites' element={<Sites />} />
         <Route path='/site/:id' element={<SiteScreen />} />
         <Route path='/create-site' element={<CreateSite />} />
         <Route path='/edit-site/:id' element={<CreateSite />} />
         <Route path='/clients' element={<Clients />} />
-        <Route path='/client' element={<ClientScreen />} />
+        <Route path='/client/:id' element={<ClientScreen />} />
         <Route path='/create-client' element={<CreateClient />} />
         <Route path='/edit-client/:id' element={<CreateClient />} />
         <Route path='/team' element={<TeamSection />} />
@@ -128,10 +126,15 @@ const App = () => {
         <Route path='/create-work-details' element={<CreateWorkDetails />} />
         <Route path='/work-details' element={<WorkDetails />} />
         <Route path='/project-schedules' element={<ProjectSchedules />} />
+        <Route path='/quality-schedules' element={<QualitySchedules />} />
         <Route path='/project-schedule/:id' element={<Project_ScheduleScreen />} />
+        <Route path='/quality-schedule/:id' element={<Project_ScheduleScreen />} />
         <Route path='/edit-projectSchedule/:id/:index' element={<CreateProjectSchedule />} />
+        <Route path='/edit-qualitySchedule/:id/:index' element={<CreateQualitySchedule />} />
         <Route path='/edit-projectSchedule/:id' element={<CreateProjectSchedule />} />
+        <Route path='/edit-qualitySchedule/:id' element={<CreateQualitySchedule />} />
         <Route path='/create-project-schedule' element={<CreateProjectSchedule />} />
+        <Route path='/create-quality-schedule' element={<CreateQualitySchedule />} />
         <Route path='/payment-schedules' element={<PaymentSchedules />} />
         <Route path='/payment-schedule/:id' element={<Payment_SchedulScreen />} />
         <Route path='/edit-paymentSchedule/:id' element={<CreatePaymentSchedule />} />

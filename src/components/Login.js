@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-// import {UserContext} from '../context/AuthContext';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../features/auth/authSlice.js';
 axios.defaults.withCredentials = true;
@@ -36,6 +35,7 @@ const LoginForm = () => {
             dispatch(login(response.data.user));
             sessionStorage.setItem("token", response.data.accessToken);
             navigate('/dashboard');  // Redirect here
+            console.log('first')
         }
         setFormData({
             userMail: '',

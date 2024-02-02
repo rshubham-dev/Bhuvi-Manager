@@ -33,7 +33,7 @@ const CreateBill = () => {
   const [contractors, setContractor] = useState([]);
   const billFor = ['Contractor', 'Supplier'];
   const status = ['Due', 'Paid', 'Pending'];
-  const { user } = useSelector((state) => state.auth)
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   const [billToEdit, setBillToEdit] = useState(null);
   const [billWork, setBillWork] = useState([]);
   const [materials, setMaterial] = useState([]);
@@ -46,7 +46,16 @@ const CreateBill = () => {
     const getsites = async () => {
       try {
         const sitesData = await axios.get('/api/v1/site');
-        setSite(sitesData.data);
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
+          const existingSites = user?.site;
+          let Sites;
+          for(let existSite of existingSites) {
+            Sites = sitesData.data?.filter((site) => site?._id.includes(existSite))
+          }
+          setSite(Sites)
+        } else {
+          setSite(sitesData.data)
+        }
       } catch (error) {
         toast.error(error.message)
       }
@@ -81,7 +90,7 @@ const CreateBill = () => {
       }
     }
     getWorkOrder();
-  }, [bill.contractor || id])
+  }, [bill.contractor])
    console.log('work:', billWork)
 
   useEffect(() => {
@@ -89,7 +98,7 @@ const CreateBill = () => {
       try {
         const response = await axios.get(`/api/v1/purchase-order/${bill.site}/${bill.supplier}`);
         console.log(response.data)
-        setMaterial(...response.data.map((purchase) => purchase.requirement?.filter((require) => require.due !== 0 && require.status !== 'Pending')))
+        setMaterial(...response.data.map((purchase) => purchase?.requirement.filter((require) => require)))
       } catch (error) {
         console.error(error);
         toast.error(error.message);
@@ -97,6 +106,7 @@ const CreateBill = () => {
     };
     getMaterialOrder()
   }, [bill.supplier])
+  console.log(materials)
 
   useEffect(() => {
     if (bill.billFor === 'Contractor') {
@@ -270,8 +280,8 @@ const CreateBill = () => {
                 value={bill.billOf}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 onChange={(e) => handleChange('billOf', e.target.value)}>
-                <option>{billToEdit ? bill.billOf : 'Select Material'}</option>
-                {materials.map((requirement, index) => (
+                <option>{billToEdit ? bill?.billOf : 'Select Material'}</option>
+                {materials?.map((requirement, index) => (
                   <option key={index} value={requirement.material}>
                     {requirement.material}
                   </option>

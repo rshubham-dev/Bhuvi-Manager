@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate, useParams} from 'react-router-dom';
 axios.defaults.withCredentials = true;
 
 const CreateUser = () => {
@@ -28,26 +28,22 @@ const CreateUser = () => {
   'Quality Head', 
   'Quality Engineer'];
   const navigate = useNavigate();
-  const location = useLocation();
   const [userIdToEdit, setUserIdToEdit] = useState(null);
-
+  const {id} = useParams();
   useEffect(() => {
-    const userId = new URLSearchParams(location.search).get('userId');
-  
-    if (userId) {
-      setUserIdToEdit(userId);
-      fetchUserDetails(userId);
+    if (id) {
+      setUserIdToEdit(id);
+      fetchUserDetails(id);
     }
-  }, [location.search]);
+  }, [id]);
 
-  const fetchUserDetails = async (userId) => {
+  const fetchUserDetails = async (id) => {
     try {
-      const response = await axios.get(`/api/v1/user/${userId}`);
+      const response = await axios.get(`/api/v1/user/${id}`);
       const user = response.data;
       setUserData({
         userName: user.userName,
         userMail: user.userMail,
-        password: user.password,
         phone: user.phone,
         role: user.role,
         department: user.department,
@@ -65,7 +61,7 @@ const CreateUser = () => {
     e.preventDefault();
     try {
       if (userIdToEdit) {
-        await axios.put(`/api/v1/user/update/${userIdToEdit}`, userData);
+        await axios.put(`/api/v1/user/${userIdToEdit}`, userData);
         toast.success('User edited successfully');
       } else {
         await axios.post('/api/v1/user/create', userData);
@@ -114,6 +110,7 @@ const CreateUser = () => {
           />
         </div>
         
+        {/* Make Password Auto Generated and send to phone no by backend with details */}
         <div className="mb-4">
           <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
             Password
@@ -121,7 +118,7 @@ const CreateUser = () => {
           <input
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder={userIdToEdit ? 'Change Password' : "Password"}
             value={userData.password}
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -153,7 +150,7 @@ const CreateUser = () => {
             onChange={handleChange}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option>Role</option>
+              <option>{userIdToEdit? userData?.role : 'Role'}</option>
               {roles.map((role, index) => (
                 <option key={index} value={role}>
                   {role}
@@ -172,7 +169,7 @@ const CreateUser = () => {
             required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
-              <option>Department</option>
+              <option>{userIdToEdit? userData?.department :'Department'}</option>
               {departments.map((department, index) => (
                 <option key={index} value={department}>
                   {department}

@@ -1,12 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { MdOutlineDarkMode, MdLogout, MdSearch, MdLogin, MdMessage } from "react-icons/md";
+import { MdOutlineDarkMode, MdLogout, MdSearch, MdLogin, MdNotifications } from "react-icons/md";
 import logo from '../asset/logo.png';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice.js';
+import { Badge, Switch } from "antd";
 
 axios.defaults.withCredentials = true;
 
@@ -49,10 +50,21 @@ const Navbar = () => {
               />
             </div>
             <div className="flex items-center space-x-4">
-              <MdOutlineDarkMode className="text-white text-lg md:text-xl lg:text-2xl" />
-              <NavLink to='/message' className='text-white flex flex-col items-center'>
+            <Switch  />
+              {/* <MdOutlineDarkMode className="text-white text-lg md:text-xl lg:text-2xl" /> */}
+              <Badge
+                  count='1'
+                  onClick={() => {
+                    navigate("/message");
+                  }}
+                  size='small'
+                  className='text-white flex flex-col items-center'
+                >
+                   <MdNotifications className='text-xl lg:text-2xl' />
+                </Badge>
+              {/* <NavLink to='/message' className='text-white flex flex-col items-center'>
                 <MdMessage className='text-xl lg:text-2xl' />
-              </NavLink>
+              </NavLink> */}
               {isLoggedIn ? (
                 <NavLink onClick={logOut} className="text-white text-lg md:text-xl lg:text-2xl">
                   <MdLogout />

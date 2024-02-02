@@ -23,13 +23,14 @@ const SiteScreen = () => {
   const [contractorExtra, setContractorExtra] = useState([]);
   const [clientExtra, setClientExtra] = useState({});
   const [purchaseOrders, setPurchaseOrder] = useState([])
-
+  console.log(id)
   useEffect(() => {
     if (id) {
       const fetchSiteDetails = async () => {
         try {
           const response = await axios.get(`/api/v1/site/${id}`);
           const site = response.data
+          console.log(site)
           setSiteData(site);
           setProjectDetail(site.projectSchedule?.projectDetail)
         } catch (error) {

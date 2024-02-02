@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 axios.defaults.withCredentials = true;
 
 const CreateExtraWork = () => {
@@ -43,6 +43,7 @@ const CreateExtraWork = () => {
     contractor: '',
     client: '',
   });
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const { id, index } = useParams();
 
@@ -50,7 +51,16 @@ const CreateExtraWork = () => {
     const fetchSite = async () => {
       try {
         const siteData = await axios.get('/api/v1/site');
-        setSite(siteData.data);
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
+          const existingSites = user?.site;
+          let Sites;
+          for(let existSite of existingSites) {
+            Sites = siteData.data?.filter((site) => site?._id.includes(existSite))
+          }
+          setSite(Sites)
+        } else {
+          setSite(siteData.data)
+        }
       } catch (error) {
         toast.error(error.message)
       }

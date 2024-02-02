@@ -1,8 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
-// import convertToBase64 from '../helper/converter';
+import convertToBase64 from '../helper/converter';
 // import Style from '../style/User.module.css'
 import './components.css'
 import image from '../asset/profile.png';
@@ -38,10 +38,14 @@ const Register = () => {
         }
     };
 
-    // const onUpload = async e => {
-    //     const base64 = await convertToBase64(e.target.files[0]);
-    //     setImage(base64);
-    //   }
+    useEffect(() => {
+        onUpload();
+    }, [user?.avatar]);
+    const onUpload = async () => {
+        const base64 = await convertToBase64(user?.avatar);
+        setAvatar(base64);
+    }
+
 
     const formSubmit = async (e) => {
         e.preventDefault();
@@ -63,8 +67,8 @@ const Register = () => {
         // if (password.current.value === confirmPassword.current.value) {
         try {
             const response = await axios.post('/api/v1/user/register', formData, {
-                headers:{
-                    'Content-Type':'multipart/form-data'
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
             });
             console.log(response.data);
@@ -90,18 +94,20 @@ const Register = () => {
                     <h2 className='text-2xl font-bold mb-6 text-center'>Register</h2>
 
                     <div className='profile flex justify-center py-4'>
-                    <label htmlFor="avatar">
-                        <img src={avatar || image} className='border-4 border-gray-100 w-[135px] rounded-full shadow-lg cursor-pointer text-center' alt="avatar" />
-                    </label>
-                    <input
-                        // onChange={onUpload} 
-                        type="file"
-                        id='avatar'
-                        name='avatar'
-                        // onChange={(e) => setAvatar(e.target.files[0])}
-                        onChange={(e) => inputData(e, 'avatar')}
-                        accept='.png, .jpg, .jpeg' />
-                </div>
+                        <label htmlFor="avatar">
+                            <img
+                                src={avatar || image}
+                                className='border-4 border-gray-100 w-28 h-28 rounded-full shadow-lg cursor-pointer object-cover object-center' alt="avatar" />
+                        </label>
+                        <input
+                            // onChange={onUpload} 
+                            type="file"
+                            id='avatar'
+                            name='avatar'
+                            // onChange={(e) => setAvatar(e.target.files[0])}
+                            onChange={(e) => inputData(e, 'avatar')}
+                            accept='.png, .jpg, .jpeg' />
+                    </div>
 
                     {/* <div className="mb-4">
                         <label htmlFor="avatar" className="block text-sm font-medium text-gray-600">
@@ -126,9 +132,9 @@ const Register = () => {
                             placeholder='Enter Your Name here'
                             autoComplete='off'
                             ref={userName}
-                        // required
-                        value={user.userName}
-                        onChange={inputData}
+                            // required
+                            value={user.userName}
+                            onChange={inputData}
                         />
                     </div>
 
@@ -143,9 +149,9 @@ const Register = () => {
                             placeholder='Enter Your Email here'
                             autoComplete='off'
                             ref={userMail}
-                        // required
-                        value={user.userMail}
-                        onChange={inputData}
+                            // required
+                            value={user.userMail}
+                            onChange={inputData}
                         />
                     </div>
 
@@ -158,9 +164,9 @@ const Register = () => {
                             placeholder='Enter Your Whatsapp Number'
                             autoComplete='off'
                             ref={whatsapp}
-                        // required
-                        value={user.whatsapp}
-                        onChange={inputData}
+                            // required
+                            value={user.whatsapp}
+                            onChange={inputData}
                         />
                     </div>
 
@@ -173,9 +179,9 @@ const Register = () => {
                             placeholder='Enter Your Password here'
                             autoComplete='off'
                             ref={password}
-                        // required
-                        value={user.password}
-                        onChange={inputData}
+                            // required
+                            value={user.password}
+                            onChange={inputData}
                         />
                     </div>
 
@@ -188,9 +194,9 @@ const Register = () => {
                             placeholder='Confirm Your Password'
                             autoComplete='off'
                             ref={confirmPassword}
-                        // required
-                        value={user.confirmPassword}
-                        onChange={inputData}
+                            // required
+                            value={user.confirmPassword}
+                            onChange={inputData}
                         />
                     </div>
 

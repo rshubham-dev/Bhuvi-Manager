@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 
@@ -10,8 +11,6 @@ const CreatePurchaseOrder = () => {
     supplier: '',
     site: '',
     purchaseOrderNo: '',
-    duration: '',
-    startdate: '',
     requirement: [{
       material: '',
       rate: '',
@@ -27,6 +26,7 @@ const CreatePurchaseOrder = () => {
     unit: '',
     amount: '',
     status: '',
+    slip:'',
   });
   const [data, setData] = useState({
     supplier: '',
@@ -34,7 +34,7 @@ const CreatePurchaseOrder = () => {
   });
   const [sites, setSite] = useState([]);
   const [suppliers, setSupplier] = useState([]);
-  const status = ['Started', 'Completed', 'Pending', 'Partaly Completed'];
+  const status = ['Delivered', 'Pending', 'Returned'];
   const units = ['SQFT', 'RFT', 'LUMSUM', 'NOS', 'FIXED', 'RMT', 'SQMT', 'CUM', 'BAG', 'KG', 'TONES', 'LITERS'];
   const [requirementToEdit, setRequirementToEdit] = useState({
     id: '',
@@ -42,6 +42,7 @@ const CreatePurchaseOrder = () => {
   });
   const [purchaseOrderToEdit, setPurchaseOrderToEdit] = useState(null);
   const navigate = useNavigate();
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   const { id } = useParams();
   const { index } = useParams();
 
@@ -60,7 +61,16 @@ const CreatePurchaseOrder = () => {
     const fetchSite = async () => {
       try {
         const response = await axios.get('/api/v1/site');
-        setSite(response.data)
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
+          const existingSites = user?.site;
+          let Sites;
+          for(let existSite of existingSites) {
+            Sites = response.data?.filter((site) => site?._id.includes(existSite))
+          }
+          setSite(Sites)
+        } else {
+          setSite(response.data)
+        }
       } catch (error) {
         toast.error(error.message)
       }
@@ -84,6 +94,7 @@ const CreatePurchaseOrder = () => {
       const response = await axios.get(`/api/v1/purchase-order/${id}`);
       if (id && index) {
         const require = response.data.requirement[index];
+        console.log(require)
         setRequirement({
           material: require.material,
           rate: require.rate,
@@ -101,15 +112,6 @@ const CreatePurchaseOrder = () => {
           supplier: response.data?.supplier._id,
           site: response.data?.site._id,
           purchaseOrderNo: response.data?.purchaseOrderNo,
-          duration: response.data?.duration,
-          startdate: response.data?.startdate,
-          requirement: [{
-            material: '',
-            rate: '',
-            quantity: '',
-            unit: '',
-            amount: '',
-          }],
         })
       }
     } catch (error) {
@@ -164,6 +166,7 @@ const CreatePurchaseOrder = () => {
     });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -193,7 +196,7 @@ const CreatePurchaseOrder = () => {
         navigate(-1)
       } else if (requirementToEdit.id && requirementToEdit.index) {
         console.log(updatedDetail)
-        const response = await axios.put(`/api/v1/purchase-order/${requirementToEdit.id}/requirement/${requirementToEdit.index}`,  updatedDetail);
+        const response = await axios.put(`/api/v1/purchase-order/${requirementToEdit.id}/requirement/${requirementToEdit.index}`, updatedDetail);
         toast.success(response.data.message)
         navigate(-1)
       } else {
@@ -208,152 +211,268 @@ const CreatePurchaseOrder = () => {
     }
   };
 
-  return (
-    <div className="container mx-auto mt-6 mb-24">
-      <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
-        <h2 className="text-2xl font-semibold mb-4 text-center">Create Purchase Order</h2>
+  if (requirementToEdit.id && requirementToEdit.index) {
+    return (
+      <main>
+        <section className="flex items-center justify-center max-h-screen mb-24 mt-10">
+          <form
+            onSubmit={handleSubmit}
+            className="bg-white shadow-md rounded px-8 pt-6 pb-6 mb-2 w-full max-w-md">
 
-        <div className="mb-4">
-          <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
-            Site
-          </label>
-          <select
-            name="site"
-            value={formData.site}
-            className="mt-1 p-2 w-full border rounded-md"
-            onChange={(e) => handleChange('site', e.target.value)}
-          >
-            <option>Site</option>
-            {sites.map((site) => (
-              <option key={site._id} value={site._id}>
-                {site.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="contractorName" className="block text-sm font-semibold text-gray-600">
-            Supplier
-          </label>
-          <select
-            name="contractor"
-            value={formData.supplier}
-            onChange={(e) => handleChange('supplier', e.target.value)}
-            className="border p-2 rounded w-full"
-          >
-            <option>Supplier</option>
-            {suppliers?.map((supplier) => (
-              <option key={supplier._id} value={supplier._id}>
-                {supplier.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="mt-4">
-          <h2 className="text-lg font-semibold mb-2">Work Details</h2>
-
-          {formData.requirement.map((index, material) => (
-            <div key={index} className="mb-4 p-4 border rounded">
-              <div className="grid grid-cols-2 grid-flow-row-dense gap-4">
-
-                <div className='col-span-2'>
-                  <label
-                    htmlFor={`work[${index}].rate`}
-                    className="block text-sm font-semibold text-gray-600">
-                    Material
-                  </label>
-                  <input
-                    type="text"
-                    // value={workItem.material}
-                    onChange={(e) => handleWorkChange(index, 'material', e.target.value)}
-                    placeholder="Material"
-                    className="border p-2 rounded w-full"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor={`work[${index}].rate`}
-                    className="block text-sm font-semibold text-gray-600">
-                    Rate
-                  </label>
-                  <input
-                    type="number"
-                    // value={workItem.rate}
-                    onChange={(e) => handleWorkChange(index, 'rate', e.target.value)}
-                    placeholder="Rate"
-                    className="border p-2 rounded w-full"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor={`work[${index}].quantity`}
-                    className="block text-sm font-semibold text-gray-600">
-                    Quantity
-                  </label>
-                  <input
-                    type="number"
-                    // value={workItem.quantity}
-                    onChange={(e) => handleWorkChange(index, 'quantity', e.target.value)}
-                    placeholder="Quantity"
-                    className="border p-2 rounded w-full"
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor={`work[${index}].unit`}
-                    className="block text-sm font-semibold text-gray-600">
-                    Unit
-                  </label>
-                  <select
-                    // value={workItem.unit}
-                    onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
-                    className="border p-2 rounded w-full">
-                    <option>Select a Unit</option>
-                    {units.map((unit, index) => (
-                      <option key={index} value={unit}>
-                        {unit}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {formData.requirement.length > 1 && (
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => handleRemoveWork(index)}
-                      className="bg-red-500 text-white p-2 rounded"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                )}
-
-              </div>
+            <div className='mb-4'>
+              <label
+                htmlFor='material'
+                className="block text-sm font-semibold text-gray-600 mb-1">
+                Material
+              </label>
+              <input
+                type="text"
+                value={requirement.material}
+                onChange={(e) => handleUpdate('material', e.target.value)}
+                placeholder="Material"
+                className="border p-2 rounded w-full"
+              />
             </div>
-          ))}
 
-          <button
-            type="button"
-            onClick={handleAddWork}
-            className="bg-blue-500 text-white p-2 rounded"
-          >
-            More Requirement
+            <div className='mb-4'>
+              <label
+                htmlFor='rate'
+                className="block text-sm font-semibold text-gray-600 mb-1">
+                Rate
+              </label>
+              <input
+                type="number"
+                value={requirement.rate}
+                onChange={(e) => handleUpdate('rate', e.target.value)}
+                placeholder="Rate"
+                className="border p-2 rounded w-full"
+              />
+            </div>
+
+            <div className='mb-4'>
+              <label
+                htmlFor='quantity'
+                className="block text-sm font-semibold text-gray-600 mb-1">
+                Quantity
+              </label>
+              <input
+                type="number"
+                value={requirement.quantity}
+                onChange={(e) => handleUpdate('quantity', e.target.value)}
+                placeholder="Quantity"
+                className="border p-2 rounded w-full"
+              />
+            </div>
+
+            <div className='mb-4'>
+              <label
+                htmlFor='unit'
+                className="block text-sm font-semibold text-gray-600 mb-1">
+                Unit
+              </label>
+              <select
+              value={requirement.unit}
+                onChange={(e) => handleUpdate('unit', e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              >
+                <option>{requirementToEdit ? requirement.unit : 'Select a Unit'}</option>
+                {units.map((unit, index) => (
+                  <option key={index} value={unit}>
+                    {unit}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className='mb-4'>
+              <label
+                htmlFor='status'
+                className="block text-sm font-semibold text-gray-600 mb-1">
+                Status
+              </label>
+              <select
+              value={requirement.status}
+                onChange={(e) => handleUpdate('status', e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <option>{requirementToEdit ? requirement.status :'Status'}</option>
+                {status.map((status, index) => (
+                  <option key={index} value={status}>
+                    {status}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* <div className='mb-4'>
+              <label
+                htmlFor='slip'
+                className="block text-sm font-semibold text-gray-600 mb-1">
+                Slip
+              </label>
+              <input
+                type="file"
+                onChange={(e) => handleUpdate('slip', e.target.files[0])}
+                className="border p-2 rounded w-full"
+              />
+            </div> */}
+
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-700 mt-4 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Update Requirement
+            </button>
+
+          </form>
+        </section>
+      </main>
+    )
+  } else {
+    return (
+      <div className="container mx-auto mt-6 mb-24">
+        <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
+          <h2 className="text-2xl font-semibold mb-4 text-center">Create Purchase Order</h2>
+
+          <div className="mb-4">
+            <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
+              Site
+            </label>
+            <select
+              name="site"
+              value={formData.site}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              onChange={(e) => handleChange('site', e.target.value)}>
+              <option>{purchaseOrderToEdit ? data?.site : 'Site'}</option>
+              {sites.map((site) => (
+                <option key={site._id} value={site._id}>
+                  {site.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="contractorName" className="block text-sm font-semibold text-gray-600">
+              Supplier
+            </label>
+            <select
+              name="contractor"
+              value={formData.supplier}
+              onChange={(e) => handleChange('supplier', e.target.value)}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <option>{purchaseOrderToEdit ? data?.supplier : 'Supplier'}</option>
+              {suppliers?.map((supplier) => (
+                <option key={supplier._id} value={supplier._id}>
+                  {supplier.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          {purchaseOrderToEdit ? '' :
+            <div className="mt-4">
+              <h2 className="text-lg font-semibold mb-2">Work Details</h2>
+
+              {formData.requirement.map((item, index) => (
+                <div key={index} className="mb-4 p-4 border rounded">
+                  <div className="grid grid-cols-2 grid-flow-row-dense gap-4">
+
+                    <div className='col-span-2'>
+                      <label
+                        htmlFor={`work[${index}].material`}
+                        className="block text-sm font-semibold text-gray-600">
+                        Material
+                      </label>
+                      <input
+                        type="text"
+                        value={item.material}
+                        onChange={(e) => handleWorkChange(index, 'material', e.target.value)}
+                        placeholder="Material"
+                        className="border p-2 rounded w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor={`work[${index}].rate`}
+                        className="block text-sm font-semibold text-gray-600">
+                        Rate
+                      </label>
+                      <input
+                        type="number"
+                        value={item.rate}
+                        onChange={(e) => handleWorkChange(index, 'rate', e.target.value)}
+                        placeholder="Rate"
+                        className="border p-2 rounded w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor={`work[${index}].quantity`}
+                        className="block text-sm font-semibold text-gray-600">
+                        Quantity
+                      </label>
+                      <input
+                        type="number"
+                        value={item.quantity}
+                        onChange={(e) => handleWorkChange(index, 'quantity', e.target.value)}
+                        placeholder="Quantity"
+                        className="border p-2 rounded w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor={`work[${index}].unit`}
+                        className="block text-sm font-semibold text-gray-600">
+                        Unit
+                      </label>
+                      <select
+                        value={item.unit}
+                        onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
+                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option>Select a Unit</option>
+                        {units.map((unit, index) => (
+                          <option key={index} value={unit}>
+                            {unit}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {formData.requirement.length > 1 && (
+                      <div>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveWork(index)}
+                          className="bg-red-500 text-white p-2 rounded"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
+
+                  </div>
+                </div>
+              ))}
+
+              <button
+                type="button"
+                onClick={handleAddWork}
+                className="bg-blue-500 text-white p-2 rounded"
+              >
+                More Requirement
+              </button>
+            </div>
+          }
+          <button type="submit" className="bg-green-500 text-white p-2 rounded mt-2">
+            {purchaseOrderToEdit ? 'Update' : 'Create Purchase Order'}
           </button>
-        </div>
-
-        <button type="submit" className="bg-green-500 text-white p-2 rounded mt-4">
-          Submit Purchase Order
-        </button>
-      </form>
-      <Toaster position="top-right" reverseOrder={false} />
-    </div>
-  );
+        </form>
+        <Toaster position="top-right" reverseOrder={false} />
+      </div>
+    );
+  }
 }
 
 export default CreatePurchaseOrder;

@@ -6,20 +6,34 @@ import { Tabs } from 'antd';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import moment from 'moment';
+import { useSelector } from 'react-redux'
 axios.defaults.withCredentials = true;
 
 const ExtraWork = () => {
   const navigate = useNavigate();
   const [clientExtraWorks, setClientExtraWork] = useState([]);
   const [contractorExtraWorks, setContractorExtraWork] = useState([]);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
 
     const fetchExtraWork = async () => {
       try {
         const extraWorkData = await axios.get('/api/v1/extra-work');
-        setClientExtraWork(extraWorkData.data.filter((extra) => extra.extraFor === 'Client'));
-        setContractorExtraWork(extraWorkData.data.filter((extra) => extra.extraFor === 'Contractor'));
+        let clientExtraWork;
+        let contractorExtraWork;
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
+          const sites = user?.site;
+          for (let site of sites) {
+            clientExtraWork = extraWorkData.data.filter((extra) => extra.extraFor === 'Client' && extra?.site?._id.includes(site))
+            contractorExtraWork = extraWorkData.data.filter((extra) => extra.extraFor === 'Contractor' && extra?.site?._id.includes(site))
+          }
+          setClientExtraWork(clientExtraWork);
+          setContractorExtraWork(contractorExtraWork);
+        } else {
+          setClientExtraWork(extraWorkData.data.filter((extra) => extra.extraFor === 'Client'));
+          setContractorExtraWork(extraWorkData.data.filter((extra) => extra.extraFor === 'Contractor'));
+        }
       } catch (error) {
         toast.error(error.message)
       }

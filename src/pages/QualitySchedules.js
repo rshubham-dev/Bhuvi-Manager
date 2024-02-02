@@ -6,29 +6,18 @@ import { GrEdit } from "react-icons/gr";
 import { MdAdd, MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import moment from 'moment';
-import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 
-const ProjectSchedules = () => {
+const QualitySchedules = () => {
   const navigate = useNavigate();
   const [projectSchedules, setProjectSchedule] = useState([]);
-  const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const getprojectSchedules = async () => {
       try {
-        const projectScheduleData = await axios.get('/api/v1/project-schedule');
-        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
-          const sites = user?.site;
-          let ProjectSchedules;
-          for(let site of sites) {
-            ProjectSchedules = projectScheduleData.data?.filter((projectSchedule) => projectSchedule.site?._id.includes(site))
-          }
-          setProjectSchedule(ProjectSchedules)
-        } else {
-          setProjectSchedule(projectScheduleData.data);
-        }
+        const projectScheduleData = await axios.get('/api/v1/quality-schedule');
+        setProjectSchedule(projectScheduleData.data);
         console.log(projectScheduleData.data)
       } catch (error) {
         toast.error(error.message);
@@ -41,16 +30,16 @@ const ProjectSchedules = () => {
   const handleEdit = (id, index) => {
     console.log(id)
     console.log(index)
-    navigate(`/edit-projectSchedule/${id}/${index}`);
+    navigate(`/edit-qualitySchedule/${id}/${index}`);
   };
 
   const addMore = async (id) => {
-      navigate(`/edit-projectSchedule/${id}`);
+      navigate(`/edit-qualitySchedule/${id}`);
   }
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/v1/project-schedule/${id}`);
+      await axios.delete(`/api/v1/quality-schedule/${id}`);
       setProjectSchedule(projectSchedules.filter((projectSchedule) => projectSchedule._id !== id));
     } catch (error) {
       toast.error(error.message)
@@ -59,7 +48,7 @@ const ProjectSchedules = () => {
 
   const deleteDetail = async (id, index) => {
     try {
-      const response = await axios.delete(`/api/v1/project-schedule/${id}/projectDetails/${index}`);
+      const response = await axios.delete(`/api/v1/quality-schedule/${id}/workDetails/${index}`);
       setProjectSchedule(response.data);
       console.table(response.data)
     } catch (error) {
@@ -68,16 +57,16 @@ const ProjectSchedules = () => {
   };
 
   const handleAdd = () => {
-    navigate('/create-project-schedule');
+    navigate('/create-quality-schedule');
   };
 
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
-      <h1 className="text-2xl font-bold text-center my-4">Project Schedule</h1>
+      <h1 className="text-2xl font-bold text-center my-4">Quality Check Schedule</h1>
       <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
-      <h2 className="text-xl text-green-600 ml-8">Total Project Schedules: {projectSchedules?.length}</h2>
+      <h2 className="text-xl text-green-600 ml-8">Total Quality Schedules: {projectSchedules?.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
-          Add Project Schedule
+          Add Quality Schedule
         </button>
       </div>
 
@@ -158,4 +147,4 @@ const ProjectSchedules = () => {
   )
 }
 
-export default ProjectSchedules;
+export default QualitySchedules;

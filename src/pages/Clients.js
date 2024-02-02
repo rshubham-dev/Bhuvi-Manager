@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
+import { useSelector } from 'react-redux';
 axios.defaults.withCredentials = true;
 
 
@@ -13,12 +13,22 @@ const Clients = () => {
   const navigate = useNavigate();
   const [clients, setClient] = useState([]);
   const [error, setError] = useState(null);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const getClients = async () => {
       try {
         const clientData = await axios.get('/api/v1/client');
-        setClient(clientData.data);
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
+          const sites = user?.site;
+          let Clients;
+          for(let site of sites) {
+            Clients = clientData.data?.filter((client) => client.site?._id.includes(site))
+          }
+          setClient(Clients)
+        } else {
+          setClient(clientData.data);
+        }
         console.log(clients)
       } catch (error) {
         toast.error(error.message)
@@ -28,17 +38,17 @@ const Clients = () => {
     getClients();
   }, [])
 
-  const handleEdit = (clientId) => {
-    // Add your edit logic here
-    navigate(`/edit-client?clientId=${clientId}`);
+  const handleEdit = (id) => {
+    navigate(`/edit-client/${id}`);
   };
-  const handleRedirect = (clientId) => {
-    navigate(`/client?clientId=${clientId}`);
+  
+  const handleRedirect = (id) => {
+    navigate(`/client/${id}`);
   }
 
   const handleDelete = async (id) => {
     try {
-      const deleteClient = await axios.delete(`/api/v1/client/${id}`);
+      await axios.delete(`/api/v1/client/${id}`);
       setClient(clients.filter((client) => client._id !== id));
     } catch (error) {
       toast.error(error.message)
@@ -51,8 +61,9 @@ const Clients = () => {
 
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg">
-      <h1 className="text-2xl font-bold text-center">client List</h1>
-      <div className=" mb-4 mr-20 text-right">
+      <h1 className="text-2xl font-bold text-center">Client List</h1>
+      <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
+      <h2 className="text-xl text-green-600 ml-8">Total Client: {clients?.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
           Add Client
         </button>
@@ -63,13 +74,13 @@ const Clients = () => {
             <th scope="col" className="px-6 py-3">Name</th>
             <th scope="col" className="px-6 py-3">Email</th>
             <th scope="col" className="px-6 py-3">Phone</th>
-            <th scope="col" className="px-6 py-3">Address</th>
+            <th scope="col" className="px-6 py-3">Whatsapp</th>
             <th scope="col" className="px-6 py-3">Site</th>
             <th scope="col" className="px-6 py-3">Actions</th>
           </tr>
         </thead>
         <tbody>
-          {clients?.map((client) => (
+          {clients.map((client) => (
             <tr key={client._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
               <td className="px-6 py-4">{client.name}</td>
               <td className="px-6 py-4">{client.email}</td>

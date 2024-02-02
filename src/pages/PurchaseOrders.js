@@ -5,19 +5,28 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
+import { useSelector } from 'react-redux';
 axios.defaults.withCredentials = true;
 
 const PurchaseOrders = () => {
   const navigate = useNavigate();
   const [purchaseOrders, setPurchaseOrder] = useState([]);
-
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
   useEffect(() => {
 
     const fetchPurchaseOrders = async () => {
       try {
         const purchaseOrdersData = await axios.get('/api/v1/purchase-order');
-        setPurchaseOrder(purchaseOrdersData.data);
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
+          const sites = user?.site;
+          let PurchaseOrders;
+          for(let site of sites) {
+            PurchaseOrders = purchaseOrdersData.data?.filter((purchaseOrder) => purchaseOrder.site?._id.includes(site))
+          }
+          setPurchaseOrder(PurchaseOrders)
+        } else {
+          setPurchaseOrder(purchaseOrdersData.data);
+        }
         console.log(purchaseOrdersData.data)
       } catch (error) {
         toast.error(error.message)
@@ -59,7 +68,8 @@ const PurchaseOrders = () => {
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg ">
       <h1 className="text-2xl font-bold text-center mt-4">Purchase Orders</h1>
-      <div className=" mb-4 mr-20 text-right">
+      <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
+      <h2 className="text-xl text-green-600 ml-8">Total Purchase Orders: {purchaseOrders?.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
           Add Purchase-Order
         </button>
@@ -100,8 +110,8 @@ const PurchaseOrders = () => {
                     </tr>
                   </thead>
 
-                  {purchaseOrder?.requirement.map((requirement)=>(
-                  <tbody key={requirement._id}>
+                  {purchaseOrder?.requirement.map((requirement, index)=>(
+                  <tbody key={index}>
                       <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td className="px-6 py-4">
                           {requirement.material}
@@ -113,12 +123,12 @@ const PurchaseOrders = () => {
                         <td className="px-6 py-4">{requirement.status}</td>
                         <td className="px-6 py-4">
                           <button
-                            onClick={() => editRequirement()}
+                            onClick={() => editRequirement(purchaseOrder._id, index)}
                             className="bg-blue-500 text-white px-2 py-1 mr-2">
                             <GrEdit />
                           </button>
                           <button
-                            onClick={() => deleteRequirement()}
+                            onClick={() => deleteRequirement(purchaseOrder._id, index)}
                             className="bg-red-500 text-white px-2 py-1 mr-2">
                             <MdDelete />
                           </button>

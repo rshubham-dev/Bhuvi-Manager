@@ -6,17 +6,28 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 axios.defaults.withCredentials = true;
 
 const PaymentSchedules = () => {
   const navigate = useNavigate();
   const [paymentSchedules, setpaymentSchedules] = useState([]);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const getpaymentSchedules = async () => {
       try {
         const paymentSchedulesData = await axios.get('/api/v1/payment-schedule');
-        setpaymentSchedules(paymentSchedulesData.data);
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
+          const sites = user?.site;
+          let PaymentSchedules;
+          for(let site of sites) {
+            PaymentSchedules = paymentSchedulesData.data?.filter((paymentSchedule) => paymentSchedule?.site?._id.includes(site))
+          }
+          setpaymentSchedules(PaymentSchedules);
+        } else {
+          setpaymentSchedules(paymentSchedulesData.data);
+        }
       } catch (error) {
         toast.error(error.message)
       }
@@ -64,7 +75,8 @@ const PaymentSchedules = () => {
   return (
     <section className='bg-white px-12 py-6 mb-16 h-full w-full'>
       <h1 className="text-3xl font-semibold text-gray-800 text-center">Payment Schedules</h1>
-      <div className=" mb-2 mr-6 text-right">
+      <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
+      <h2 className="text-xl text-green-600 ml-8">Total Payment Schedules: {paymentSchedules?.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
           Add Payment Schedule
         </button>

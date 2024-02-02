@@ -6,6 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 axios.defaults.withCredentials = true;
 
@@ -13,13 +14,23 @@ const WorkOrders = () => {
   const navigate = useNavigate();
   const [workOrders, setWorkOrder] = useState([]);
   const [error, setError] = useState(null);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
 
   useEffect(() => {
 
     const fetchWorkorders = async () => {
       try {
         const workOrdersData = await axios.get('/api/v1/work-order');
-        setWorkOrder(workOrdersData.data);
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
+          const sites = user?.site;
+          let WorkOrders;
+          for(let site of sites) {
+            WorkOrders = workOrdersData.data?.filter((workOrder) => workOrder.site?._id.includes(site))
+          }
+          setWorkOrder(WorkOrders)
+        } else {
+          setWorkOrder(workOrdersData.data);
+        }
         console.log(workOrdersData.data)
       } catch (error) {
         toast.error(error.message)
@@ -55,7 +66,8 @@ const WorkOrders = () => {
   return (
     <div className="overflow-x-auto shadow-md sm:rounded-lg ">
       <h1 className="text-2xl font-bold text-center mt-4">Work Orders</h1>
-      <div className=" mb-4 mr-20 text-right">
+      <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
+      <h2 className="text-xl text-green-600 ml-8">Total Work Orders: {workOrders?.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
           Add Work-Order
         </button>

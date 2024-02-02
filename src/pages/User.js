@@ -25,14 +25,14 @@ const UserManagement = () => {
     getUsers();
   }, [])
 
-  const handleEdit = (userId) => {
-    navigate(`/edit-user?userId=${userId}`);
+  const handleEdit = (id) => {
+    navigate(`/edit-user/${id}`);
   };
 
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/v1/user/delete/${id}`);
+      await axios.delete(`/api/v1/user/${id}`);
       setUsers(users.filter((user) => user._id !== id));
     } catch (error) {
       toast.error(error.message)
@@ -44,7 +44,7 @@ const UserManagement = () => {
   };
 
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded-lg mb-20 mt-10">
+    <div className="overflow-x-auto shadow-md sm:rounded-lg mb-28 mt-10">
       <h1 className="text-3xl font-bold text-blue-500 text-center">User List</h1>
       <div className=" mb-4 mr-20 text-right flex justify-between align-center">
         <h2 className="text-xl text-green-600 ml-8">Total Users: {users.length}</h2>

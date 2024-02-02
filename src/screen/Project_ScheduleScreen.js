@@ -1,12 +1,18 @@
-import React from 'react';
-import { useLocation} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import moment from 'moment';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Project_ScheduleScreen = () => {
-  const location = useLocation();
-  console.log(location);
+  const { id } = useParams();
   return (
-    <div>Project_ScheduleScreen</div>
+    <div>
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
+    </div>
   )
 }
 

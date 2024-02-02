@@ -1,0 +1,278 @@
+/* Reset default styles */
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ font-size: 100%;
+ font: inherit;
+ vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+ display: block;
+}
+
+body {
+ line-height: 1;
+}
+
+ol,
+ul {
+ list-style: none;
+}
+
+blockquote,
+q {
+ quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+ content: '';
+ content: none;
+}
+
+table {
+ border-collapse: collapse;
+ border-spacing: 0;
+}
+
+.calendar {
+ display: inline-block;
+ font-family: Arial, sans-serif;
+ width: 300px;
+ padding: 20px;
+ border: 1px solid #e6e6e6;
+ box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+ background-color: #fff;
+}
+
+.calendar .header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 15px;
+}
+
+.calendar .header .arrow {
+ font-size: 20px;
+ cursor: pointer;
+}
+
+.calendar .days {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 2px;
+ margin-bottom: 10px;
+}
+
+.calendar .days div {
+ padding: 5px 0;
+ text-align: center;
+ color: #888;
+}
+
+.calendar .dates {
+ display: grid;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 2px;
+}
+
+.calendar .dates div {
+ padding: 10px 0;
+ text-align: center;
+ cursor: pointer;
+ border-radius: 50%;
+}
+
+.calendar .dates div:hover {
+ background-color: #f0f0f0;
+}
+
+/*
+*,
+*::before,
+*::after {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+.page__wrapper {
+	height: 20vh;
+	width: 100%;
+	font-family: "Syne Mono";
+}
+.heading {
+	color: #fff;
+	letter-spacing: 5px;
+	font-size: 2.6em;
+	margin-bottom: 30px;
+	padding: 0px 15px;
+}
+.accordion {
+	max-width: 500px;
+	width: calc(100% - 20px);
+}
+ details {
+	margin: 10px;
+}
+
+details>summary {
+	color: #f4de64;
+	padding: 5px 10px;
+	font-size: 1.3em;
+	cursor: pointer;
+}
+
+details>div {
+	display: flex;
+	flex-direction: row;
+}
+
+details>div dt {
+	padding: 5px 10px 10px 20px;
+	margin-right: 2rem;
+	color: #fff;
+	font-size: 1.1em;
+}
+
+details>div dd {
+	padding: 5px 10px 10px 20px;
+	color: #fff;
+	font-size: 1.1em;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+	--color-bg: #EEEDEB;
+	--color-title: #0E1C4E;
+	--color-summary-1: #FFF6EE;
+	--color-summary-1-highlight: #FFC48B;
+	--color-summary-2: #FAFAFF;
+	--color-summary-2-highlight: rgb(59 130 246);
+	--color-summary-3: #FFF0F3;
+	--color-summary-3-highlight: #FFB3C0;
+	--font-ibm-plex-sans: 'IBM Plex Sans', sans-serif;
+}
+
+.card {
+	height: auto;
+	padding: 28px 34px;
+	margin-bottom: 40px;
+	border-radius: 4px;
+	width: 50%;
+
+	h1 {
+		font-family: var(--font-ibm-plex-sans);
+		font-style: normal;
+		font-weight: bold;
+		font-size: 20px;
+		line-height: 1.2;
+		color: var(--color-title);
+		margin-bottom: 20px;
+	}
+
+	details {
+		border-left: 15px solid rgb(59 130 246);
+
+		&[open] {
+			summary {
+				font-weight: 700;
+			}
+		}
+	}
+}
