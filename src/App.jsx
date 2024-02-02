@@ -58,7 +58,7 @@ import ExtraWorkScreen from './screen/ExtraWorkScreen.jsx';
 import { logout } from './features/auth/authSlice.js';
 import QualitySchedules from './pages/QualitySchedules.jsx';
 import CreateQualitySchedule from './components/CreateQualitySchedule.jsx';
-
+import Layout from './pages/Layout.jsx';
 
 const App = () => {
 
@@ -68,19 +68,20 @@ const App = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
-    const isPageReloaded = performance.navigation.type === 1;
+    const isPageReloaded = performance.now.type === 1;
     if (isPageReloaded) {
       dispatch(logout());
       navigate('/login')
       console.log('Reloaded')
     } else {
-      console.log( "This page is not reloaded");
+      console.log("This page is not reloaded");
     }
   }, []);
 
 
   return (
     <>
+      <Layout />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />

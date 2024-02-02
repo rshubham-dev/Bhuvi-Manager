@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
-import Layout from './pages/Layout.jsx';
 import axios from 'axios';
 import { Provider } from 'react-redux';
 import { store } from './app/store.js';
@@ -16,7 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Provider store={store}>
         <React.Suspense fallback={<div>Loading...</div>}>
-          <Layout />
           <App />
         </React.Suspense>
       </Provider>
