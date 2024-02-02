@@ -66,7 +66,7 @@ const App = () => {
     return state.auth
   });
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
     const isPageReloaded = performance.navigation.type === 1;
     if (isPageReloaded) {
