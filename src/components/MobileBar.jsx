@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { MdAccountBalanceWallet, MdDashboard, MdSettings, MdMessage, MdLocationOn } from "react-icons/md";
-import { GoBackward, GoForward } from './Navigation.js';
+import { GoBackward, GoForward } from './Navigation.jsx';
 import { FaTasks } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 
