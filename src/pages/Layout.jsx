@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Navbar from '../components/Navbar.js';
-import MobileBar from '../components/MobileBar.js';
+import Navbar from '../components/Navbar.jsx';
+import MobileBar from '../components/MobileBar.jsx';
 
 const Layout = () => {
   return (
