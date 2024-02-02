@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CreateTask from '../components/CreateTask';
+import CreateTask from '../components/CreateTask.jsx';
 import toast, { Toaster } from 'react-hot-toast';
 // import io from 'socket.io-client';
 import axios from 'axios';
