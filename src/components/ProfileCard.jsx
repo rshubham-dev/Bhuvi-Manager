@@ -28,6 +28,7 @@ const UserProfile = () => {
       console.log(response.data);
       toast.success(response.data.message);
       setUser(response.data.existingUser)
+      setAvatar('')
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error(error.message)
