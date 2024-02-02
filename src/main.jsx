@@ -7,9 +7,9 @@ import axios from 'axios';
 import { Provider } from 'react-redux';
 import { store } from './app/store.js';
 
-axios.defaults.baseURL = 'https://bhuvi-management-server-7nf0.onrender.com';
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_URI;
 axios.defaults.withCredentials = true;
-
+console.log(import.meta.env.VITE_SERVER_URI)
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
