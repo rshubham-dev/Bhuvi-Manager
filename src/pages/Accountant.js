@@ -1,5 +1,5 @@
 import React from 'react'
-import UserProfile from '../components/ProfileCard.js';
+import UserProfile from '../components/ProfileCard.jsx';
 
 const Accountant = () => {
   return (

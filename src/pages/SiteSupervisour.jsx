@@ -1,5 +1,5 @@
 import React from 'react'
-import UserProfile from '../components/ProfileCard.js';
+import UserProfile from '../components/ProfileCard.jsx';
 import { NavLink } from 'react-router-dom';
 import { GrUserWorker } from "react-icons/gr";
 import { BiSolidPurchaseTag } from "react-icons/bi";
