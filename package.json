@@ -1,61 +1,40 @@
 {
-  "name": "client",
-  "version": "0.1.0",
+  "name": "frontend",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "@react-pdf/renderer": "^3.3.4",
-    "@reduxjs/toolkit": "^2.0.1",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "antd": "^5.13.1",
-    "axios": "^1.6.2",
-    "dotenv": "^16.4.1",
+    "@reduxjs/toolkit": "^2.1.0",
+    "antd": "^5.13.3",
+    "axios": "^1.6.7",
     "moment": "^2.30.1",
     "react": "^18.2.0",
-    "react-big-calendar": "^1.8.6",
+    "react-big-calendar": "^1.8.7",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
-    "react-icons": "^4.12.0",
-    "react-redux": "^9.0.4",
-    "react-router-dom": "^6.21.0",
-    "react-scripts": "5.0.1",
-    "react-toastify": "^10.0.4",
-    "socket.io-client": "^4.7.4",
-    "web-vitals": "^2.1.4"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "react-icons": "^5.0.1",
+    "react-redux": "^9.1.0",
+    "react-router-dom": "^6.22.0",
+    "socket.io-client": "^4.7.4"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.7"
-  },
-  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
-  "main": "postcss.config.js",
-  "author": "Shubham Kumar",
-  "license": "MIT"
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.17",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.4.33",
+    "postcss-nesting": "^12.0.2",
+    "tailwindcss": "^3.4.1",
+    "vite": "^5.0.8"
+  }
 }

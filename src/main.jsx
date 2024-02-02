@@ -11,7 +11,6 @@ import { store } from './app/store.js';
 axios.defaults.baseURL = 'https://bhuvi-management-server-7nf0.onrender.com';
 axios.defaults.withCredentials = true;
 
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -23,4 +22,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,
-);
+)
