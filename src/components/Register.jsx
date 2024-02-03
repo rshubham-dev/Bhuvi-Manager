@@ -85,8 +85,7 @@ const Register = () => {
     };
 
     return (
-        <main>
-            <section className='flex justify-center items-center mb-16'>
+            <section className='max-w-md mx-auto my-8 p-6'>
                 <form
                     className='bg-white shadow-md rounded px-8 pt-4 pb-6 mb-6 w-full max-w-md'
                     onSubmit={formSubmit}
@@ -211,7 +210,6 @@ const Register = () => {
                     reverseOrder={false}
                 />
             </section>
-        </main>
     )
 }
 

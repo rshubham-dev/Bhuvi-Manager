@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (max-width: 768px) {
+    .max-w-md {
+      max-width: 100%;
+    }
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+    .p-2 {
+      padding: 0.5rem;
+    }
+    .mt-5 {
+      margin-top: 1.25rem;
+    }
+  }

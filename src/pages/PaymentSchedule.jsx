@@ -21,7 +21,7 @@ const PaymentSchedules = () => {
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
           const sites = user?.site;
           let PaymentSchedules;
-          for(let site of sites) {
+          for (let site of sites) {
             PaymentSchedules = paymentSchedulesData.data?.filter((paymentSchedule) => paymentSchedule?.site?._id.includes(site))
           }
           setpaymentSchedules(PaymentSchedules);
@@ -73,28 +73,32 @@ const PaymentSchedules = () => {
 
 
   return (
-    <section className='bg-white px-12 py-6 mb-16 h-full w-full'>
-      <h1 className="text-3xl font-semibold text-gray-800 text-center">Payment Schedules</h1>
+    <section className='bg-white px-4 md:px-8 lg:px-12 py-6 mb-16 h-full w-full max-w-screen-xl mx-auto'>
+      {/* <h1 className="text-3xl font-semibold text-gray-800 text-center">Payment Schedules</h1> */}
       <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
-      <h2 className="text-xl text-green-600 ml-8">Total Payment Schedules: {paymentSchedules?.length}</h2>
-        <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
+        <h2 className="text-xl md:text-2xl lg:text-3xl text-green-600 ml-4">
+          Total Payment Schedules: {paymentSchedules?.length}
+        </h2>
+        <button onClick={handleAdd} className="bg-green-500 text-white px-3 py-2 md:px-4 md:py-2">
           Add Payment Schedule
         </button>
+
       </div>
 
       {paymentSchedules.map((paymentSchedule) => (
-        <div key={paymentSchedule._id} className="card mt-6">
+        <div key={paymentSchedule._id} className="card mt-4 md:mt-6">
           <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>
                 Payment Schedule of {paymentSchedule.site?.name}
               </NavLink>
               <div className='self-end'>
-                <button
-                  onClick={() => handleRedirect(paymentSchedule._id)}
-                  className="bg-green-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
+                <button 
+                onClick={() => handleRedirect(paymentSchedule._id)} 
+                className="bg-green-500 rounded-2xl text-white px-2 py-1 md:px-1.5 md:py-1.5 mr-2">
                   <FaExternalLinkAlt className="text-lg text-white" />
                 </button>
+
                 <button
                   onClick={() => addMore(paymentSchedule._id)}
                   className="bg-blue-500 rounded-2xl text-white px-1.5 py-1.5 mr-2">
@@ -108,7 +112,7 @@ const PaymentSchedules = () => {
               </div>
             </summary>
 
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
+            <table className="w-full text-sm md:text-base text-left rtl:text-right text-gray-500 overflow-x-auto">
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">Work</th>
