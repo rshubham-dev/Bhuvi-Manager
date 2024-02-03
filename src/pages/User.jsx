@@ -45,10 +45,9 @@ const UserManagement = () => {
 
   return (
 <section className="overflow-x-auto shadow-md sm:rounded-lg mb-10 mt-5">
-  {/* <h1 className="text-2xl sm:text-3xl text-center font-bold text-blue-500">User List</h1> */}
-  <div className="m-4 flex justify-between">
+  <div className="m-4 flex flex-row items-center justify-between">
     <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Users: {users.length}</h2>
-    <button onClick={handleAdd} className="bg-green-500 text-white px-3 py-2 sm:px-4 sm:py-2">
+    <button onClick={handleAdd} className="bg-green-500 text-white px-3 py-2 sm:px-4 sm:py-2 mt-2 sm:mt-0">
       Add User
     </button>
   </div>
@@ -68,22 +67,22 @@ const UserManagement = () => {
       <tbody>
         {users.map((user) => (
           <tr key={user._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td className="px-4 sm:px-6 py-4">
+            <td className="px-4 sm:px-6 py-2 sm:py-4">
                 {user.userName}
             </td>
-            <td className="px-4 sm:px-6 py-4">
+            <td className="px-4 sm:px-6 py-2 sm:py-4">
                 {user.userMail}
             </td>
-            <td className="px-4 sm:px-6 py-4">
+            <td className="px-4 sm:px-6 py-2 sm:py-4">
               {user.phone}
             </td>
-            <td className="px-4 sm:px-6 py-4">
+            <td className="px-4 sm:px-6 py-2 sm:py-4">
               {user.role}
             </td>
-            <td className="px-4 sm:px-6 py-4">
+            <td className="px-4 sm:px-6 py-2 sm:py-4">
               {user.department}
             </td>
-            <td className="px-4 sm:px-6 py-4">
+            <td className="px-4 sm:px-6 py-2 sm:py-4">
               <button
                 className="bg-blue-500 text-white px-2 py-1 mr-2"
                 onClick={() => handleEdit(user._id)}
@@ -92,7 +91,7 @@ const UserManagement = () => {
               </button>
               <button
                 onClick={() => handleDelete(user._id)}
-                className="bg-red-500 text-white px-2 py-1 mr-2"
+                className="bg-red-500 text-white px-2 py-1"
               >
                <MdDelete />
               </button>
@@ -102,12 +101,13 @@ const UserManagement = () => {
       </tbody>
     </table>
   </div>
-  {error && <p className="text-red-500">{error}</p>}
+  {error && <p className="text-red-500 mt-2">{error}</p>}
   <Toaster
     position="top-right"
     reverseOrder={false}
   />
 </section>
+
   );
 };
 
