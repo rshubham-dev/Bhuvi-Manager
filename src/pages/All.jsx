@@ -10,7 +10,7 @@ const All = () => {
         { to: '/sites', text: 'Sites', icon: <MdLocationOn /> },
         { to: '/project-schedules', text: 'Project Schedules', icon: <MdDateRange /> },
         { to: '/payment-schedules', text: 'Payment Schedules', icon: <MdPayment /> },
-        { to: '/quality-schedules', text: 'Quality Schedules', icon: <MdPlaylistAddCheck /> },
+        // { to: '/quality-schedules', text: 'Quality Schedules', icon: <MdPlaylistAddCheck /> },
         { to: '/bills', text: 'Bills', icon: <MdReceipt /> },
         { to: '/work-orders', text: 'Work-Orders', icon: <MdWork /> },
         { to: '/purchase-order', text: 'Purchase-Orders', icon: <BiSolidPurchaseTag />  },

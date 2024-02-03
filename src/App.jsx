@@ -71,7 +71,7 @@ const App = () => {
     const isPageReloaded = performance.navigation.type === 1;
     if (isPageReloaded) {
       dispatch(logout());
-      navigate('/login')
+      navigate('/')
       console.log('Reloaded')
     } else {
       console.log("This page is not reloaded");
