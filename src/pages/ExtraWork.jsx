@@ -80,8 +80,8 @@ const ExtraWork = () => {
     <section className='bg-white px-12 py-6 mb-16 h-full w-full'>
       <h1 className="text-3xl font-bold text-center">Extra Work</h1>
       <div className=" mb-4 mr-20 text-right">
-        <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
-          Add Extra Work
+        <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-">
+        <MdAdd className='text-xl' /> 
         </button>
       </div>
       <Tabs defaultActiveKey='client'>

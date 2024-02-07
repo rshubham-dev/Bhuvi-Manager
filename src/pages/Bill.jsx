@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
-import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { MdDelete, MdAdd } from "react-icons/md";
 import { Tabs } from 'antd';
 import moment from 'moment';
 
@@ -16,6 +16,7 @@ const Bills = () => {
   const [contractorBill, setContractorBill] = useState([]);
   const [supplierBill, setSupplierBill] = useState([]);
   const [materialBill, setMaterialBill] = useState([]);
+  const [error, setError] = useState(null);
   const { user, isLoggedIn } = useSelector((state) => state.auth)
 
   useEffect(() => {
@@ -30,12 +31,12 @@ const Bills = () => {
           let contractorBills;
           let supplierBills;
           // let materialBills;
-          for(let site of sites){
+          for (let site of sites) {
             contractorBills = bills.filter((bill) => bill.site?._id.includes(site) && bill.billFor === 'Contractor')
             supplierBills = bills.filter((bill) => bill.site?._id.includes(site) && bill.billFor === 'Supplier')
             // materialBills = bills.filter((bill) => bill.site?._id.includes(site) && bill.billFor === 'Material')
           }
-          console.log('contractorBillfirst',  contractorBills)
+          console.log('contractorBillfirst', contractorBills)
           setContractorBill(contractorBills);
           setSupplierBill(supplierBills);
           // setMaterialBill(materialBills);
@@ -74,234 +75,100 @@ const Bills = () => {
   };
 
   return (
-    <section className='bg-white px-14 py-7 mb-16 h-full w-full'>
-      <h1 className="text-3xl font-semibold text-gray-800 text-center">Bill List</h1>
-      <div className=" mb-4 mr-10 text-right">
-        <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
-          Add bill
+<section className="min-h-screen w-full py-6 mb-24 flex justify-center bg-white">
+  <div className='overflow-y-auto w-full max-w-screen-lg mx-auto'>
+    <div className="pt-3 px-4 mb-4">
+      <div className="text-sm w-full text-gray-700 py-1 flex flex-col sm:flex-row gap-4 justify-between items-center">
+        <h1 className="text-3xl sm:text-2xl font-bold text-center uppercase">Bill's</h1>
+        <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-0">
+          <MdAdd className='text-xl' />
         </button>
       </div>
-      <Tabs defaultActiveKey='contractor'>
+    </div>
 
-        <Tabs.TabPane tab='Contractor' key={'contractor'}>
-          {contractorBill?.map((bill) => (
-            <div key={bill._id} className="card ">
-              <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  {bill.contractor?.name} bill for {bill.site?.name}
-                  <div className="self-end text-lg">
-                    <button
-                      onClick={() => handleEdit(bill._id)}
-                      className="bg-blue-500 text-white px-2 py-1 mr-2"
-                    >
-                      <GrEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(bill._id)}
-                      className="bg-red-500 text-white px-2 py-1 mr-2"
-                    >
-                      <MdDelete />
-                    </button>
-                  </div>
-                </summary>
+    <Tabs defaultActiveKey='contractor' tabPosition='top' className="w-full">
+      <Tabs.TabPane tab='Contractor' key={'contractor'}>
+        <table className='mx-auto w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+          <thead className="bg-gray-800">
+            <tr className="text-white text-left">
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Bill For</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Description</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Amount</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Payment Status</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {contractorBill?.map((bill) => (
+              <tr key={bill._id} className='border-b border-blue-gray-200'>
+                <td className="px-6 py-4">
+                  <p className=""> {bill.site?.name}Site </p>
+                  <p className="text-gray-500 text-sm font-semibold tracking-wide"> {bill.contractor?.name}Cont </p>
+                </td>
+                <td className="px-6 py-4">
+                  <NavLink to={`/bill/${bill._id}`} className="hover:text-blue-800 text-md">
+                    {bill.billOf?.workDetail}
+                  </NavLink>
+                </td>
+                <td className="px-6 py-4 text-center">{bill.amount}</td>
+                <td className="px-6 py-4 text-center">{bill.paymentStatus}</td>
+                <td className="px-6 py-4">
+                  <button onClick={() => handleEdit(bill._id)} className="mr-2">
+                    <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                  </button>
+                  <button onClick={() => handleDelete(bill._id)} className="mx-2">
+                    <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Tabs.TabPane>
 
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.site?.name}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Contractor</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.contractor?.name}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Bill Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill ? moment(bill.dateOfBill).format('DD-MM-YYYY') : '-'}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Work</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf?.workDetail}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Amount</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.amount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Paid</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.paidAmount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Due</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dueAmount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Status</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.paymentStatus}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Payment Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment ? moment(bill.dateOfPayment).format('DD-MM-YYYY') : '-'}</dd>
-                </div>
-
-
-
-              </details>
-            </div>
-          ))}
-        </Tabs.TabPane>
-
-        <Tabs.TabPane tab='Supplier' key={'supplier'}>
-          {supplierBill?.map((bill) => (
-            <div key={bill._id} className="card ">
-              <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  {bill.supplier?.name} bill for {bill.site?.name}
-                  <div className="self-end text-lg">
-                    <button
-                      onClick={() => handleEdit(bill._id)}
-                      className="bg-blue-500 text-white px-2 py-1 mr-2"
-                    >
-                      <GrEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(bill._id)}
-                      className="bg-red-500 text-white px-2 py-1 mr-2"
-                    >
-                      <MdDelete />
-                    </button>
-                  </div>
-                </summary>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.site?.name}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Supplier</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.supplier?.name}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Bill Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill ? moment(bill.dateOfBill).format('DD-MM-YYYY') : '-'}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Material</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf?.material}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Amount</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.amount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Paid</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.paidAmount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Due</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dueAmount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Status</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.paymentStatus}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Payment Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment ? moment(bill.dateOfPayment).format('DD-MM-YYYY') : '-'}</dd>
-                </div>
-
-              </details>
-            </div>
-          ))}
-        </Tabs.TabPane>
-
-        {/* <Tabs.TabPane tab='Material' key={'material'}>
-          {materialBill?.map((bill) => (
-            <div key={bill._id} className="card ">
-              <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-                  {bill.supplier?.name} bill for {bill.site?.name}
-                  <div className="self-end text-lg">
-                    <button
-                      onClick={() => handleEdit(bill._id)}
-                      className="bg-blue-500 text-white px-2 py-1 mr-2"
-                    >
-                      <GrEdit />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(bill._id)}
-                      className="bg-red-500 text-white px-2 py-1 mr-2"
-                    >
-                      <MdDelete />
-                    </button>
-                  </div>
-                </summary>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Site</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.site?.name}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Bill Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfBill ? moment(bill.dateOfBill).format('DD-MM-YYYY') : '-'}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Material</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.billOf?.material}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Amount</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.amount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Paid</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.paidAmount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Due</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dueAmount}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Status</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.paymentStatus}</dd>
-                </div>
-
-                <div className='flex justify-between flex-row my-1.5'>
-                  <dt className='font-medium text-color-title mx-5 my-1.5'>Payment Date</dt>
-                  <dd className='text-color-title mx-5 my-1.5'>{bill.dateOfPayment ? moment(bill.dateOfPayment).format('DD-MM-YYYY') : '-'}</dd>
-                </div>
-
-              </details>
-            </div>
-          ))}
-        </Tabs.TabPane> */}
-
-      </Tabs>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
-    </section>
+      <Tabs.TabPane tab='Supplier' key={'supplier'}>
+        <table className='mx-auto w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+          <thead className="bg-gray-800">
+            <tr className="text-white text-left">
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Bill For</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Description</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Amount</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Payment Status</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200">
+            {supplierBill?.map((bill) => (
+              <tr key={bill._id} className='border-b border-blue-gray-200'>
+                <td className="px-6 py-4">
+                  <p className=""> {bill.site?.name}</p>
+                  <p className="text-gray-500 text-sm font-semibold tracking-wide"> {bill.supplier?.name} </p>
+                </td>
+                <td className="px-6 py-4">
+                  <NavLink to={`/bill/${bill?._id}`} className="hover:text-blue-800 text-md">
+                    {bill?.billOf.material}
+                  </NavLink>
+                </td>
+                <td className="px-6 py-4 text-center">{bill.amount}</td>
+                <td className="px-6 py-4 text-center">{bill.paymentStatus}</td>
+                <td className="px-6 py-4">
+                  <button onClick={() => handleEdit(bill._id)} className="mr-2">
+                    <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                  </button>
+                  <button onClick={() => handleDelete(bill._id)} className="mx-2">
+                    <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Tabs.TabPane>
+    </Tabs>
+    <Toaster position="top-right" reverseOrder={false} />
+    {error && <p className="text-red-500">{error}</p>}
+  </div>
+</section>
   );
 };
 

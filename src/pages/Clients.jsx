@@ -60,7 +60,7 @@ const Clients = () => {
   };
 
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded-lg">
+    <section className="overflow-x-auto shadow-md sm:rounded-lg">
       <h1 className="text-2xl font-bold text-center">Client List</h1>
       <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
       <h2 className="text-xl text-green-600 ml-8">Total Client: {clients?.length}</h2>
@@ -116,7 +116,7 @@ const Clients = () => {
         position="top-right"
         reverseOrder={false}
       />
-    </div>
+    </section>
   );
 }
 

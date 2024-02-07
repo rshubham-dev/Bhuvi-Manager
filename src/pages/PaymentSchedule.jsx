@@ -79,8 +79,8 @@ const PaymentSchedules = () => {
         <h2 className="text-xl md:text-2xl lg:text-3xl text-green-600 ml-4">
           Total Payment Schedules: {paymentSchedules?.length}
         </h2>
-        <button onClick={handleAdd} className="bg-green-500 text-white px-3 py-2 md:px-4 md:py-2">
-          Add Payment Schedule
+        <button onClick={handleAdd} className="bg-green-500 text-white rounded-full p-2">
+        <MdAdd className='text-xl' />
         </button>
 
       </div>

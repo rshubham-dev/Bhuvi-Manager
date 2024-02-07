@@ -31,8 +31,8 @@ const WorkDetails = () => {
     <div className="overflow-x-auto h-full">
       <h1 className="text-2xl font-bold text-center mt-5">Work Details</h1>
       <div className=" mb-4 mr-20 text-right">
-        <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
-          Add Work Details
+        <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-0">
+        <MdAdd className='text-xl' /> 
         </button>
       </div>
       

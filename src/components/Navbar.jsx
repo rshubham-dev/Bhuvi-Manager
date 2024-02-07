@@ -1,22 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { MdOutlineDarkMode, MdLogout, MdSearch, MdLogin, MdNotifications } from "react-icons/md";
+import image from '../asset/profile.png';
+import {
+  MdLogout,
+  MdLogin,
+  MdNotifications,
+} from 'react-icons/md';
 import logo from '../asset/logo.png';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice.js';
-import { Badge, Switch } from "antd";
+import { Badge, Button } from 'antd';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import MobileBar from './MobileBar.jsx';
 
 axios.defaults.withCredentials = true;
 
-const Navbar = () => {
+const Navbar = ({ collapsed, setCollapsed }) => {
   const navigate = useNavigate();
-  const { isLoggedIn } = useSelector((state) => {
-    return state.auth
+  const { isLoggedIn, user } = useSelector((state) => {
+    return state.auth;
   });
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const logOut = async () => {
     try {
@@ -30,55 +37,62 @@ const Navbar = () => {
     }
   };
 
-  return (
-<header>
-  <nav className="bg-gradient-to-r from-green-300 via-green-400 to-green-500 p-4 md:px-8 lg:px-12">
-    <div className="flex flex-col md:flex-row items-center justify-between">
-      <div className="flex items-center">
-        <img src={logo} alt="Bhuvi Consultants Logo" className="h-10 w-auto" />
-        <h2 className="font-extrabold text-white lg:text-2xl md:text-2xl text-2xl">Bhuvi Consultants</h2>
-      </div>
 
-      <div className="mt-4 md:mt-0 flex items-center space-x-4">
-        <div className="relative">
-          <MdSearch className="text-white absolute left-3 top-1/2 transform -translate-y-1/2 text-lg md:text-xl lg:text-2xl" />
-          <input
+  return (
+    <nav className="bg-gray-50 text-gray max-w-full border-b border-gray-200 py-3 px-1 md:px-6 lg:px-10 dark:fill-gray-400 dark:bg-gray-800">
+      <div className="flex flex-row items-center justify-between container mx-auto space-x-4">
+
+        <div className="flex items-center justify-between space-x-2">
+          <Button
             type="text"
-            placeholder="Search..."
-            className="bg-transparent border-none text-white placeholder:text-white pl-10 focus:outline-none text-sm md:text-base lg:text-lg"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+            style={{
+              fontSize: '18px',
+              width: 40,
+              height: 40,
+              display: isLoggedIn ? 'block' : 'none',
+            }}
           />
+
+          <div className="px-4">
+            <h2 className="font-bold text-gray text-md sm:text-md md:text-xl lg:text-2xl whitespace-nowrap">Bhuvi Consultants</h2>
+          </div>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <Switch />
-
+        <div className="flex items-center justify-end space-x-3 lg:space-x-6 md:space-x-4" >
           <Badge
             count="1"
             onClick={() => {
-              navigate("/message");
+              navigate('/message');
             }}
             size="small"
-            className="text-white flex flex-col items-center"
+            className="text-gray flex flex-col items-center dark:text-white"
           >
-            <MdNotifications className="text-xl lg:text-2xl" />
+            <MdNotifications className="text-lg text-gray dark:text-white lg:text-2xl" />
           </Badge>
 
           {isLoggedIn ? (
-            <NavLink onClick={logOut} className="text-white text-lg md:text-xl lg:text-2xl">
-              <MdLogout />
+            <NavLink onClick={logOut} className="text-lg md:text-xl lg:text-2xl">
+              <MdLogout className="text-gray" />
             </NavLink>
           ) : (
-            <NavLink to="/login" className="text-white text-lg md:text-xl lg:text-2xl">
+            <NavLink to="/login" className="text-gray dark:text-white text-lg md:text-xl lg:text-2xl">
               <MdLogin />
             </NavLink>
           )}
+          <div className="photo-wrapper">
+            <img
+              className="lg:w-12 lg:h-12 w-8 h-8 md:w-9 md:h-9 rounded-full mx-auto"
+              src={user?.avatar || image}
+              alt={user?.userName}
+            />
+          </div>
         </div>
       </div>
-    </div>
-  </nav>
+      <Toaster position="top-right" reverseOrder={false} />
+    </nav>
 
-  <Toaster position="top-right" reverseOrder={false} />
-</header>
   );
 };
 

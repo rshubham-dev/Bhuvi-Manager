@@ -34,7 +34,7 @@ const LoginForm = () => {
       } else {
         dispatch(login(response.data.user));
         sessionStorage.setItem("token", response.data.accessToken);
-        navigate('/dashboard');  // Redirect here
+        navigate('/');  // Redirect here
         console.log('first')
       }
       setFormData({
@@ -47,8 +47,6 @@ const LoginForm = () => {
       setError('Login failed. Please check your credentials.');
     }
   };
-
-
 
 
   return (
@@ -84,7 +82,7 @@ const LoginForm = () => {
         Login
       </button>
     </form>
-    <hr />
+    <hr className='border-b border-blue-gray-100' />
     <button
       onClick={() => navigate('/register')}
       type="button"

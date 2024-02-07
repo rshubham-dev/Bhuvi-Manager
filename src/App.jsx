@@ -25,7 +25,6 @@ import CheckList from './pages/CheckList.jsx';
 import Contractors from './pages/Contractors.jsx';
 import CreateContractor from './components/CreateContractor.jsx';
 import Admin from './pages/Admin.jsx';
-import Home from './pages/Home.jsx';
 import Accountant from './pages/Accountant.jsx';
 import Design_Head from './pages/Design_Head.jsx';
 import SiteIncharge from './pages/SiteIncharge.jsx';
@@ -35,7 +34,6 @@ import Design_Engineer from './pages/Design_Engineer.jsx';
 import Marketing from './pages/Marketing.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import Client from './pages/Client.jsx';
-import { ProtectedRoute } from './components/ProtectedPages.jsx';
 import SiteScreen from './screen/SiteScreen.jsx';
 import ClientScreen from './screen/ClientScreen.jsx';
 import WorkOrderScreen from './screen/WorkOrderScreen.jsx'
@@ -58,7 +56,9 @@ import ExtraWorkScreen from './screen/ExtraWorkScreen.jsx';
 import { logout } from './features/auth/authSlice.js';
 import QualitySchedules from './pages/QualitySchedules.jsx';
 import CreateQualitySchedule from './components/CreateQualitySchedule.jsx';
-import Layout from './pages/Layout.jsx';
+import Layout from './components/Layout.jsx';
+import './index.css';
+import UserProfile from './components/ProfileCard.jsx';
 
 const App = () => {
 
@@ -81,14 +81,13 @@ const App = () => {
 
   return (
     <>
-      <Layout />
+      <Layout>
       <Routes>
-        <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        {/* <ProtectedRoute LoggedIn={isLoggedIn}> */}
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
+        <Route path='/profile' element={<UserProfile />} />
         <Route path='/ceo' element={<Admin />} />
         <Route path='/client' element={<Client />} />
         <Route path='/design-head' element={<Design_Head />} />
@@ -162,8 +161,8 @@ const App = () => {
         <Route path='/purchase-order/:id' element={<PurchaseOrderScreen />} />
         <Route path='/message' element={<Message />} />
         <Route path='/tasks' element={<Task />} />
-        {/* </ProtectedRoute> */}
       </Routes>
+      </Layout>
     </>
   )
 }
