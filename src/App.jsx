@@ -83,9 +83,9 @@ const App = () => {
     <>
       <Layout>
       <Routes>
+        <Route path='/' element={<Dashboard />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
-        <Route path='/' element={<Dashboard />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/profile' element={<UserProfile />} />
         <Route path='/ceo' element={<Admin />} />
