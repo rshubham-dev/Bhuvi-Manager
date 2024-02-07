@@ -4,7 +4,6 @@ import MenuList from './MenuList.jsx';
 import Navbar from './Navbar.jsx';
 import logo from '../asset/logo.jpg';
 import { useSelector } from 'react-redux';
-import MobileBar from './MobileBar.jsx';
 const { Header, Sider, Content } = Layout;
 
 
