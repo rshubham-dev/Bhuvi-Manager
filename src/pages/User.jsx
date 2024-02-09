@@ -45,7 +45,7 @@ const UserManagement = () => {
   };
 
   return (
-<section className="min-h-full w-full mb-24 flex justify-center bg-white">
+<section className="max-h-full w-full mb-20 flex justify-center bg-white">
   <div className="overflow-x-auto w-full max-w-screen-lg mx-auto">
     <div className="pt-3 mx-auto mb-4 w-full sm:w-4/5">
       <div className="w-full mx-auto text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">

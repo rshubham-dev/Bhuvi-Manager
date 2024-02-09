@@ -8,7 +8,7 @@ const { Header, Sider, Content } = Layout;
 
 
 const AntDLayout = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -23,7 +23,6 @@ const AntDLayout = ({ children }) => {
       height: '100%',
       margin: '0px',
       padding: '0px',
-      background: colorBgContainer,
     }}>
     {isLoggedIn ?
       <Sider
@@ -57,11 +56,11 @@ const AntDLayout = ({ children }) => {
       </Header>
       <Content
         style={{
-          margin: '26px 10px',
           padding: '20px',
           Height: '100%',
-          maxWidth: '100vw',
+          maxWidth: '100%',
           borderRadius: borderRadiusLG,
+          background: colorBgContainer,
           overflow: "initial"
         }}
         >

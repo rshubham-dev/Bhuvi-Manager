@@ -14,7 +14,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice.js';
 import { Badge, Button } from 'antd';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
-import MobileBar from './MobileBar.jsx';
 
 axios.defaults.withCredentials = true;
 
