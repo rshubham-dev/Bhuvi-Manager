@@ -50,7 +50,7 @@ const LoginForm = () => {
 
 
   return (
-    <section className="max-w-md mx-auto mt-10 mb-8 px-5 py-10 bg-white rounded-lg shadow-lg">
+    <section className="max-w-md mx-auto my-8 px-5 py-10 bg-white rounded-lg shadow-lg">
     <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
     <form onSubmit={handleSubmit} className="mt-5 mb-2.5">
       <div className="mt-5 px-2">

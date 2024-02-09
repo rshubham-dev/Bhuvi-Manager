@@ -57,11 +57,10 @@ const AntDLayout = ({ children }) => {
       </Header>
       <Content
         style={{
-          margin: '26px 16px',
-          padding: '24px',
+          margin: '26px 10px',
+          padding: '20px',
           Height: '100%',
           maxWidth: '100vw',
-          background: colorBgContainer,
           borderRadius: borderRadiusLG,
           overflow: "initial"
         }}
