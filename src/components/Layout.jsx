@@ -19,7 +19,7 @@ const AntDLayout = ({ children }) => {
   return (
     <Layout
     style={{
-      width: '100%',
+      width: '100vw',
       height: '100%',
       margin: '0px',
       padding: '0px',
@@ -60,7 +60,7 @@ const AntDLayout = ({ children }) => {
           margin: '26px 16px',
           padding: '24px',
           Height: '100%',
-          maxWidth: '100%',
+          maxWidth: '100vw',
           background: colorBgContainer,
           borderRadius: borderRadiusLG,
           overflow: "initial"

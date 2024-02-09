@@ -15,11 +15,11 @@ const MenuList = () => {
           name: 'Dashboard', 
           icon: <AiFillPieChart style={{ width: '20px', height: '20px' }} /> 
         },
-        { 
-          to: '/profile', 
-          name: 'Profile', 
-          icon: <CgProfile style={{ width: '20px', height: '20px' }} /> 
-        },
+        // { 
+        //   to: '/profile', 
+        //   name: 'Profile', 
+        //   icon: <CgProfile style={{ width: '20px', height: '20px' }} /> 
+        // },
         { 
           to: '/user', 
           name: 'Users', 
@@ -84,11 +84,11 @@ const MenuList = () => {
           name: 'Employees', 
           icon: <GrUserWorker style={{ width: '20px', height: '20px' }} /> 
         },
-        { 
-          to: '/work-details', 
-          name: 'Work-Details', 
-          icon: <MdAssignment style={{ width: '20px', height: '20px' }} /> 
-        },
+        // { 
+        //   to: '/work-details', 
+        //   name: 'Work-Details', 
+        //   icon: <MdAssignment style={{ width: '20px', height: '20px' }} /> 
+        // },
         // { 
         //   to: '/design', 
         //   name: 'Design', 

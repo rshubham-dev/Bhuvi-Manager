@@ -82,8 +82,8 @@ const CreateBill = () => {
     const getWorkOrder = async () => {
       try {
         const response = await axios.get(`/api/v1/work-order/${bill.site}/${bill.contractor}`);
-        console.log(response.data)
-        setBillWork(...response.data.map((workOrder) => workOrder.work?.filter((work) => work?.due !== 0 && work?.status !== 'Pending')))
+        // console.log(response.data.map((workOrder) => workOrder.work?.filter((work) => work?.due !== 0 && work?.status !== 'Pending')))
+        setBillWork(...response.data.map((workOrder) => workOrder.work?.filter((work) => work?.due !== 0 && work?.status === 'Pending')))
       } catch (error) {
         console.error(error);
         toast.error(error.message);
@@ -97,8 +97,8 @@ const CreateBill = () => {
     const getMaterialOrder = async () => {
       try {
         const response = await axios.get(`/api/v1/purchase-order/${bill.site}/${bill.supplier}`);
-        console.log(response.data)
-        setMaterial(...response.data.map((purchase) => purchase?.requirement.filter((require) => require)))
+        console.log(response.data);
+        setBillWork(...response.data.map((purchase) => purchase?.requirement.filter((require) => require)))
       } catch (error) {
         console.error(error);
         toast.error(error.message);
@@ -106,14 +106,14 @@ const CreateBill = () => {
     };
     getMaterialOrder()
   }, [bill.supplier])
-  console.log(materials)
+  console.log('materials:', materials)
 
   useEffect(() => {
     if (bill.billFor === 'Contractor') {
       console.log(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
       setPaymentDetail(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
-    } else if (bill.billFor === 'Contractor') {
-      setPaymentDetail(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
+    } else if (bill.billFor === 'Supplier') {
+      setPaymentDetail(billWork.filter((work) => work?.material=== bill.billOf)[0])
     }
   }, [bill.billOf])
   // console.log(paymentDetail)
@@ -431,9 +431,9 @@ const CreateBill = () => {
           {billToEdit ? <Update /> : ''}
 
           <div className="mb-4">
-            <h2 className="block text-lg font-semibold text-gray-600 mb-4 mt-2">Work Detail</h2>
+            <h2 className="block text-lg font-semibold text-gray-600 mb-4 mt-2">Detail</h2>
             <p className="text-md font-medium text-gray-600 my-1">Rate: {paymentDetail?.rate}{'/' + paymentDetail?.unit}</p><hr />
-            <p className="text-md font-medium text-gray-600 my-1">Area: {paymentDetail?.area}</p><hr />
+            <p className="text-md font-medium text-gray-600 my-1">Quantity: {paymentDetail?.area}</p><hr />
             <p className="text-md font-medium text-gray-600 my-1">Total Amount: ₹ {paymentDetail?.amount}</p><hr />
             <p className="text-md font-medium text-gray-600 my-1">Work Status: {paymentDetail?.status}</p><hr />
             <p className="text-md font-medium text-gray-600 my-1">Amount Paid: {paymentDetail?.paid}</p><hr />
