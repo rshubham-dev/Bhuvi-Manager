@@ -45,10 +45,10 @@ const UserManagement = () => {
   };
 
   return (
-<section className="flex min-h-screen py-6 mb-24 justify-center bg-white">
-  <div className="overflow-x-auto w-full max-w-screen-lg">
-    <div className="pt-3 px-4 mx-auto mb-6">
-      <div className="text-sm text-gray-700 py-1 flex flex-col sm:flex-row items-center justify-between">
+<section className="min-h-full w-full mb-24 flex justify-center bg-white">
+  <div className="overflow-x-auto w-full max-w-screen-lg mx-auto">
+    <div className="pt-3 mx-auto mb-4 w-full sm:w-4/5">
+      <div className="w-full mx-auto text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
         <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Users: {users.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-0">
           <MdAdd className='text-xl' /> 
@@ -56,8 +56,8 @@ const UserManagement = () => {
       </div>
     </div>
     <div className="overflow-x-auto">
-      <table className="w-full bg-blue-gray-800">
-        <thead className='bg-blue-400 rounded-t-xl'>
+      <table className="w-full whitespace-nowrap bg-blue-gray-800 overflow-hidden">
+        <thead className='bg-blue-400'>
           <tr className="bg-blue-gray-100 text-white">
             <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">User</th>
             <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Phone</th>
