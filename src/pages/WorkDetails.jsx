@@ -16,7 +16,6 @@ const WorkDetails = () => {
       try {
         const response = await axios.get('/api/v1/work-details');
         setWorkDetail(response.data);
-        toast.success(response.data.message)
       } catch (error) {
         toast.error(error.message)
       }

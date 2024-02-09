@@ -23,6 +23,7 @@ const AntDLayout = ({ children }) => {
       height: '100%',
       margin: '0px',
       padding: '0px',
+      background: colorBgContainer,
     }}>
     {isLoggedIn ?
       <Sider
@@ -56,6 +57,7 @@ const AntDLayout = ({ children }) => {
       </Header>
       <Content
         style={{
+          margin: '24px 14px',
           padding: '20px',
           Height: '100%',
           maxWidth: '100%',

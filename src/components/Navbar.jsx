@@ -38,7 +38,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
 
 
   return (
-    <nav className="bg-gray-50 text-gray w-full border-b border-gray-200 py-3 px-1 md:px-6 lg:px-10 dark:fill-gray-400 dark:bg-gray-800">
+    <nav className="bg-gray-50 text-gray min-w-screen border-b border-gray-200 py-3 px-1 md:px-6 lg:px-10 dark:fill-gray-400 dark:bg-gray-800">
       <div className="flex flex-row items-center justify-between container mx-auto space-x-4">
 
         <div className="flex items-center justify-between space-x-2">
@@ -59,7 +59,7 @@ const Navbar = ({ collapsed, setCollapsed }) => {
           </div>
         </div>
 
-        <div className="flex items-center justify-end space-x-3 lg:space-x-6 md:space-x-4" >
+        <div className="flex items-center justify-end space-x-3 lg:space-x-6 md:space-x-4 sm:space-x-2" >
           <Badge
             count="1"
             onClick={() => {

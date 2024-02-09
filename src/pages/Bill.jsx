@@ -75,7 +75,7 @@ const Bills = () => {
   };
 
   return (
-<section className="min-h-full w-full mb-20 flex justify-center bg-white rounded-xl shadow-lg">
+<section className="min-h-full w-full mb-20 flex justify-center bg-white">
   <div className='overflow-x-auto w-full max-w-screen-lg mx-auto'>
     <h1 className="text-xl sm:text-lg lg:text-3xl my-4 font-bold text-center uppercase">Bill's</h1>
     <div className="pt-3 mx-auto mb-4 w-full sm:w-4/5">
