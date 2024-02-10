@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import Login from '../components/Login';
 
 const Dashboard = () => {
   const { user, isLoggedIn } = useSelector((state) => {
@@ -9,12 +10,9 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
 
     const handleNavigation = () => {
-
       if (isLoggedIn) {
-
         switch (user.department) {
           case 'Admin':
              navigate('/admin');
@@ -57,10 +55,13 @@ const Dashboard = () => {
       else {
         navigate('/login')
       }
-
     };
-    handleNavigation();
-  }, [isLoggedIn, navigate]);
+
+    return (
+      <div className='w-full h-full'>
+      {isLoggedIn ? <handleNavigation/> : <Login />}
+      </div>
+    )
 
 }
 

@@ -7,7 +7,7 @@ import { login, logout } from '../features/auth/authSlice.js';
 axios.defaults.withCredentials = true;
 
 
-const LoginForm = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
     userMail: '',
     password: '',
@@ -96,4 +96,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default Login;
