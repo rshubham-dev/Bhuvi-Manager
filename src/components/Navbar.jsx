@@ -54,12 +54,12 @@ const Navbar = ({ collapsed, setCollapsed }) => {
             }}
           />
 
-          <div className="px-4">
-            <h2 className="font-bold text-gray text-md sm:text-md md:text-xl lg:text-2xl whitespace-nowrap">Bhuvi Consultants</h2>
+          <div className="px-4 sm:hidden">
+            <h2 className=" font-bold text-gray text-sm sm:text-sm md:text-xl lg:text-2xl whitespace-nowrap">Bhuvi Consultants</h2>
           </div>
         </div>
 
-        <div className="flex items-center justify-end space-x-3 lg:space-x-6 md:space-x-4 sm:space-x-2" >
+        <div className="flex items-center space-x-3 lg:space-x-6 md:space-x-4 sm:space-x-2" >
           <Badge
             count="1"
             onClick={() => {
