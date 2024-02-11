@@ -6,6 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 
@@ -60,7 +61,9 @@ const Clients = () => {
   };
 
   return (
-    <section className="overflow-x-auto shadow-md sm:rounded-lg">
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
+    <section className="overflow-x-auto">
       <h1 className="text-2xl font-bold text-center">Client List</h1>
       <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
       <h2 className="text-xl text-green-600 ml-8">Total Client: {clients?.length}</h2>
@@ -117,6 +120,7 @@ const Clients = () => {
         reverseOrder={false}
       />
     </section>
+    </div>
   );
 }
 

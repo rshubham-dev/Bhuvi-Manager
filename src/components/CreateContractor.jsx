@@ -78,7 +78,9 @@ const fetchContractor = async(id)=>{
   };
 
   return (
-    <section className='container mx-auto mt-6 mb-24'>
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
+    <section className='container mx-auto mt-4 mb-16'>
       <form onSubmit={handleSubmit}
         className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-semibold mb-4 text-center">Create Contractor</h2>
@@ -224,6 +226,7 @@ const fetchContractor = async(id)=>{
         reverseOrder={false}
       />
     </section>
+    </div>
   )
 }
 

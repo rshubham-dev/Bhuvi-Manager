@@ -5,7 +5,6 @@
     @apply text-gray-800;
   } 
 }
-
 @tailwind components;
 @tailwind utilities;
 
@@ -29,10 +28,39 @@
 body {
     margin: 0;
     padding: 0;
-    width: 100vw;
-    height: 100vh;
     box-sizing: border-box;
     background-color: #ebeae7;
     color: #666666;
     font-family: 'Poppins', sans-serif;
+}
+
+/* .navbar {
+  box-shadow: rgba(121, 135, 151, 0.171) 1px 7px 30px 0px;
+} */
+.nav-item,
+.navbar {
+  z-index: 10000;
+}
+@media  screen and (max-width:800px) {
+  .sidebar{
+    z-index: 100;
+  }
+  .navbar {
+    z-index: 10000;
+  }
+}
+
+.e-dlg-center-center, .e-quick-popup-wrapper.e-device{
+  z-index: 1000000 !important;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(216, 216, 216);
+  border-radius: 40px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
 }

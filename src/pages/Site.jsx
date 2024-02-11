@@ -6,6 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import Header from '../components/Header';
 
 axios.defaults.withCredentials = true;
 
@@ -71,6 +72,8 @@ const Sites = () => {
 
 
   return (
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
     <section className="min-h-full w-full mb-24 flex justify-center bg-white">
       <div className='overflow-x-auto w-full max-w-screen-lg mx-auto'>
         <h1 className="text-xl sm:text-lg lg:text-3xl font-bold text-center uppercase">Site's</h1>
@@ -128,7 +131,7 @@ const Sites = () => {
         <Toaster position="top-right" reverseOrder={false} />
       </div>
     </section>
-
+</div>
   );
 }
 

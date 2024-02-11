@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import Header from '../components/Header';
 
 const TeamSection = () => {
   const [teams, setTeams] = useState([]);
@@ -19,6 +20,8 @@ const TeamSection = () => {
   }, []);
 
   return (
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
         <div className="flex flex-col text-center w-full mb-14">
@@ -41,6 +44,7 @@ const TeamSection = () => {
       </div>
       <Toaster position="top-right" reverseOrder={false} />
     </section>
+    </div>
   );
 };
 

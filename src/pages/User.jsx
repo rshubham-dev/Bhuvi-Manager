@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import image from '../asset/profile.png';
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const UserManagement = () => {
@@ -45,7 +46,9 @@ const UserManagement = () => {
   };
 
   return (
-<section className="max-h-full w-full mb-20 flex justify-center bg-white">
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
+<section className="h-full w-full flex justify-center bg-white">
   <div className="overflow-x-auto w-full max-w-screen-lg mx-auto">
     <div className="pt-3 mx-auto mb-4 w-full sm:w-4/5">
       <div className="w-full mx-auto text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
@@ -103,7 +106,7 @@ const UserManagement = () => {
   {error && <p className="text-red-500 mt-2">{error}</p>}
   <Toaster position="top-right" reverseOrder={false} />
 </section>
-
+</div>
   );
 };
 

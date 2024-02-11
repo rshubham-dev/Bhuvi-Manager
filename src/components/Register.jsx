@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import convertToBase64 from '../helper/converter';
+import Header from '../components/Header';
 // import Style from '../style/User.module.css'
 import './components.css'
 import image from '../asset/profile.png';
@@ -85,7 +86,9 @@ const Register = () => {
     };
 
     return (
-            <section className='max-w-md mx-auto my-8 p-6'>
+        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+            <Header category="Page" title="Dashboard" />
+            <section className='max-w-md mx-auto my-4 p-6'>
                 <form
                     className='bg-white shadow-md rounded px-8 pt-4 pb-6 mb-6 w-full max-w-md'
                     onSubmit={formSubmit}
@@ -210,6 +213,7 @@ const Register = () => {
                     reverseOrder={false}
                 />
             </section>
+        </div>
     )
 }
 

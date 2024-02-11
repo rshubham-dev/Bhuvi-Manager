@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const CreateEmployee = () => {
@@ -87,7 +87,8 @@ const CreateEmployee = () => {
 
 
     return (
-        <main>
+        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+        <Header category="Page" title="Dashboard" />
             <section className='flex justify-center items-center mb-12'>
                 <form
                     className='bg-white shadow-md rounded px-8 pt-4 pb-4 mb-12 w-full max-w-md'
@@ -321,7 +322,7 @@ const CreateEmployee = () => {
                     reverseOrder={false}
                 />
             </section>
-        </main>
+       </div>
     )
 }
 

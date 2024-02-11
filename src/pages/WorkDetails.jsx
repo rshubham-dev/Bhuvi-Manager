@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
-
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 const WorkDetails = () => {
   const [workDetails, setWorkDetail] = useState([]);
@@ -27,6 +27,8 @@ const WorkDetails = () => {
     navigate('/create-work-details');
   };
   return (
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
     <div className="overflow-x-auto h-full">
       <h1 className="text-2xl font-bold text-center mt-5">Work Details</h1>
       <div className=" mb-4 mr-20 text-right">
@@ -80,6 +82,7 @@ const WorkDetails = () => {
         position="top-right"
         reverseOrder={false}
       />
+    </div>
     </div>
   )
 }

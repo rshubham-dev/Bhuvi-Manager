@@ -6,7 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const WorkOrders = () => {
@@ -63,6 +63,8 @@ const WorkOrders = () => {
   };
 
   return (
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
 <section className="min-h-screen py-6 mb-24 flex justify-center bg-white">
   <div className='overflow-x-auto w-full max-w-screen-lg'>
     <h1 className="text-3xl sm:text-2xl font-bold text-center uppercase">Work Order's</h1>
@@ -115,6 +117,7 @@ const WorkOrders = () => {
     <Toaster position="top-right" reverseOrder={false} />
   </div>
 </section>
+</div>
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Tabs } from 'antd';
 import toast, { Toaster } from 'react-hot-toast';
+import Header from '../components/Header';
 // import io from 'socket.io-client';
 // const socket = io('http://localhost:8080');
 
@@ -31,7 +32,9 @@ const Message = () => {
     };
 
     return (
-        <>
+        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+            <Header category="Page" title="Dashboard" />
+
             <section className='bg-white px-12 py-6 mb-16 h-full w-full'>
                 {/* <form onSubmit={sendMessage} className="w-3/4 flex mx-auto px-8 pt-6 pb-8">
                         <input
@@ -74,7 +77,7 @@ const Message = () => {
                     reverseOrder={false}
                 />
             </section>
-        </>
+        </div>
     );
 };
 

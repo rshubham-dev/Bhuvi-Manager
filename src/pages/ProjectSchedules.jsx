@@ -7,6 +7,7 @@ import { MdAdd, MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import moment from 'moment';
 import { useSelector } from 'react-redux';
+import Header from '../components/Header';
 
 axios.defaults.withCredentials = true;
 
@@ -72,6 +73,8 @@ const ProjectSchedules = () => {
   };
 
   return (
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
 <section className="overflow-x-auto">
   <div className="m-6 flex flex-col sm:flex-row justify-between items-center">
     <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Project Schedules: {projectSchedules?.length}</h2>
@@ -154,8 +157,7 @@ const ProjectSchedules = () => {
     reverseOrder={false}
   />
 </section>
-
-
+</div>
   )
 }
 

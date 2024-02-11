@@ -56,7 +56,6 @@ import ExtraWorkScreen from './screen/ExtraWorkScreen.jsx';
 import { logout } from './features/auth/authSlice.js';
 import QualitySchedules from './pages/QualitySchedules.jsx';
 import CreateQualitySchedule from './components/CreateQualitySchedule.jsx';
-import Layout from './components/Layout.jsx';
 import './index.css';
 import UserProfile from './components/ProfileCard.jsx';
 
@@ -81,7 +80,6 @@ const App = () => {
 
   return (
     <>
-      <Layout>
       <Routes>
         <Route path='/' element={<Dashboard />} />
         <Route path='/login' element={<Login />} />
@@ -162,7 +160,6 @@ const App = () => {
         <Route path='/message' element={<Message />} />
         <Route path='/tasks' element={<Task />} />
       </Routes>
-      </Layout>
     </>
   )
 }

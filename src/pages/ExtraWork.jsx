@@ -6,7 +6,8 @@ import { Tabs } from 'antd';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import moment from 'moment';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const ExtraWork = () => {
@@ -77,6 +78,8 @@ const ExtraWork = () => {
     navigate('/create-extra-work');
   };
   return (
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
     <section className='bg-white px-12 py-6 mb-16 h-full w-full'>
       <h1 className="text-3xl font-bold text-center">Extra Work</h1>
       <div className=" mb-4 mr-20 text-right">
@@ -237,6 +240,7 @@ const ExtraWork = () => {
         reverseOrder={false}
       />
     </section>
+    </div>
   )
 }
 

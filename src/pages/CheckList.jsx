@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import Header from '../components/Header';
 
 const CheckList = () => {
   const navigate = useNavigate();
@@ -46,7 +47,9 @@ const CheckList = () => {
   };
 
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded-lg">
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
+    <div className="overflow-x-auto">
     <h1 className="text-2xl font-bold text-center">Site List</h1>
     <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
       <h2 className="text-xl text-green-600 ml-8">Total Purchase Orders: </h2>
@@ -101,6 +104,7 @@ const CheckList = () => {
       position="top-right"
       reverseOrder={false}
     />
+  </div>
   </div>
   )
 }

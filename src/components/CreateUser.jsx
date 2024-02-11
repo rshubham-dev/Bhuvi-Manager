@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams} from 'react-router-dom';
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const CreateUser = () => {
@@ -76,8 +77,9 @@ const CreateUser = () => {
 
 
   return (
-    <main>
-      <section className="flex items-center justify-center max-h-screen mb-24 mt-10">
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Dashboard" />
+      <section className="flex items-center justify-center h-full mb-16 mt-4">
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
@@ -189,7 +191,7 @@ const CreateUser = () => {
         reverseOrder={false}
       />
       </section>
-    </main>
+    </div>
   );
 };
 

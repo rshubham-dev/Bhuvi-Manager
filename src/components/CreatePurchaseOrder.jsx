@@ -3,7 +3,7 @@ import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const CreatePurchaseOrder = () => {
@@ -213,8 +213,9 @@ const CreatePurchaseOrder = () => {
 
   if (requirementToEdit.id && requirementToEdit.index) {
     return (
-      <main>
-        <section className="flex items-center justify-center max-h-screen mb-24 mt-10">
+      <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+      <Header category="Page" title="Dashboard" />
+        <section className="flex items-center justify-center max-h-screen mb-16 mt-4">
           <form
             onSubmit={handleSubmit}
             className="bg-white shadow-md rounded px-8 pt-6 pb-6 mb-2 w-full max-w-md">
@@ -325,11 +326,13 @@ const CreatePurchaseOrder = () => {
 
           </form>
         </section>
-      </main>
+      </div>
     )
   } else {
     return (
-      <div className="container mx-auto mt-6 mb-24">
+      <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+      <Header category="Page" title="Dashboard" />
+      <div className="container mx-auto mt-4 mb-16">
         <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
           <h2 className="text-2xl font-semibold mb-4 text-center">Create Purchase Order</h2>
 
@@ -470,6 +473,7 @@ const CreatePurchaseOrder = () => {
           </button>
         </form>
         <Toaster position="top-right" reverseOrder={false} />
+      </div>
       </div>
     );
   }
