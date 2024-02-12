@@ -63,8 +63,8 @@ const QualitySchedules = () => {
 
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 shadow-md bg-white rounded-2xl'>
-    <Header category="Page" title="Quality Check Schedule's" />
     <div className="overflow-x-auto">
+    <Header category="Page" title="Quality Check Schedule's" />
       <div className=" mb-4 text-right flex justify-between align-center">
       <h2 className="text-xl text-green-600 ml-8">Total Quality Schedules: {projectSchedules?.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0">

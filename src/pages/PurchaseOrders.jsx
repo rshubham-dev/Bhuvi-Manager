@@ -67,20 +67,20 @@ const PurchaseOrders = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 shadow-lg bg-white rounded-2xl'>
-      <Header category="Page" title="Purchase Order's" />
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-6 shadow-lg bg-white rounded-3xl'>
       <section className="overflow-x-auto">
-        <div className="m-6 flex flex-col sm:flex-row justify-between items-center">
-          <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">
+      <Header category="Page" title="Purchase Order's" />
+        <div className="m-2 mx-6 flex flex-row justify-between items-center">
+          <h2 className="text-lg sm:text-xl text-green-600">
             Total Purchase Orders: {purchaseOrders?.length}
           </h2>
-          <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0">
+          <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
             <MdAdd className='text-xl' />
           </button>
         </div>
 
         <section className="bg-white px-4 sm:px-8 py-6 sm:py-8 mb-12 sm:mb-16">
-          <div className="mt-6 w-full">
+          <div className="w-full">
             {purchaseOrders.map((purchaseOrder) => (
               <div key={purchaseOrder._id} className="card mb-4">
                 <details className="rounded-lg bg-white overflow-x-auto shadow-lg p-3">

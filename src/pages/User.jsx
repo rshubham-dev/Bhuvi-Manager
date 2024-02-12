@@ -49,10 +49,9 @@ const UserManagement = () => {
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
     <Header category="Page" title="User" />
 <section className="h-full w-full flex justify-center bg-white">
-  <div className="overflow-x-auto w-full max-w-screen-lg mx-auto">
-  <h1 className="text-3xl font-bold text-center">User's</h1>
-    <div className="pt-3 mx-auto mb-4 w-full sm:w-4/5">
-      <div className="w-full mx-auto text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
+  <div className="overflow-x-auto w-full max-w-screen-xl mx-auto">
+    <div className="mx-auto mb-6 w-full sm:w-4/5 ">
+      <div className="w-full mx-auto text-gray-700 flex flex-row sm:flex-row justify-between items-center">
         <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Users: {users.length}</h2>
         <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-0">
           <MdAdd className='text-xl' /> 

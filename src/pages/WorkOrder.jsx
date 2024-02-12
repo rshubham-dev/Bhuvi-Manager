@@ -67,7 +67,6 @@ const WorkOrders = () => {
     <Header category="Page" title="Work-Orders" />
 <section className="min-h-screen mb-16 flex justify-center">
   <div className='overflow-x-auto w-full px-4'>
-    <h1 className="text-3xl sm:text-2xl font-bold text-center uppercase">Work Order's</h1>
     <div className="pt-3 px-4 mx-auto mb-6">
       <div className="text-sm text-gray-700 py-1 flex flex-col sm:flex-row items-center justify-between">
         <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Work Orders: {workOrders?.length}</h2>

@@ -45,8 +45,8 @@ const Suppliers = () => {
     };
     return (
         <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 shadow-lg bg-white rounded-2xl'>
-        <Header category="Page" title="Suppliers" />
         <section className="overflow-x-auto">
+        <Header category="Page" title="Suppliers" />
             <div className=" mb-4 text-right flex justify-between align-center">
                 <h2 className="text-xl text-green-600 ml-8">Total Suppliers: {suppliers?.length}</h2>
                 <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0 mr-4">

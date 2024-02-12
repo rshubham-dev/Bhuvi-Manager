@@ -74,22 +74,22 @@ const PaymentSchedules = () => {
 
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
     <Header category="Page" title="Payment Schedules" />
-    <section className='bg-white px-4 md:px-8 lg:px-12 py-6 mb-16 h-full w-full max-w-screen-xl mx-auto'>
+    <section className='bg-white px-4 md:px-8 lg:px-12 h-full w-full max-w-screen-xl mx-auto'>
       {/* <h1 className="text-3xl font-semibold text-gray-800 text-center">Payment Schedules</h1> */}
-      <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
-        <h2 className="text-xl md:text-2xl lg:text-3xl text-green-600 ml-4">
+      <div className=" w-full mx-auto mb-6 text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
+        <h2 className="text-lg sm:text-md md:text-lg lg:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">
           Total Payment Schedules: {paymentSchedules?.length}
         </h2>
-        <button onClick={handleAdd} className="bg-green-500 text-white rounded-full p-2">
+        <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 ">
         <MdAdd className='text-xl' />
         </button>
 
       </div>
 
       {paymentSchedules.map((paymentSchedule) => (
-        <div key={paymentSchedule._id} className="card mt-4 md:mt-6">
+        <div key={paymentSchedule._id} className="card mt-6 md:mt-8">
           <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               <NavLink to={`/payment-schedule/${paymentSchedule._id}`}>

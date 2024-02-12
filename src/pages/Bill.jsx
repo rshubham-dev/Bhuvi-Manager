@@ -76,18 +76,14 @@ const Bills = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-xl'>
-      <Header category="Page" title="Bill" />
-      <section className="h-full w-full flex justify-center bg-white">
-        <div className='overflow-x-auto w-full max-w-screen-lg mx-auto'>
-          <h1 className="text-xl sm:text-lg lg:text-3xl my-4 font-bold text-center uppercase">Bill's</h1>
-          <div className="pt-3 mx-auto mb-4 w-full sm:w-4/5">
-            <div className="w-full mx-auto text-gray-700 flex flex-row justify-end items-center">
-              <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0">
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-xl'>
+      <Header category="Page" title="Bill's" />
+      <section className="h-full w-full bg-white overflow-x-auto ">
+            <div className="w-full mx-auto text-gray-700 flex justify-end items-center">
+              <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
                 <MdAdd className='text-xl' />
               </button>
             </div>
-          </div>
 
           <Tabs defaultActiveKey='contractor' tabPosition='top' className="w-full">
             <Tabs.TabPane tab='Contractor' key={'contractor'}>
@@ -178,7 +174,6 @@ const Bills = () => {
           </Tabs>
           <Toaster position="top-right" reverseOrder={false} />
           {error && <p className="text-red-500">{error}</p>}
-        </div>
       </section>
     </div>
   );
