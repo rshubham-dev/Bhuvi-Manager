@@ -4,6 +4,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 // import 'react-big-calendar/lib/addons/dragAndDrop/styles';
 const localizer = momentLocalizer(moment)
+import Header from '../components/Header';
 
 const Profile = (props) => {
   navigator.geolocation.getCurrentPosition(
@@ -15,6 +16,8 @@ const Profile = (props) => {
     }
   )
   return (
+    <div className='m-1.5 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Profile" />
     <form>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
@@ -343,6 +346,7 @@ const Profile = (props) => {
         </button>
       </div>
     </form>
+    </div>
   );
 }
 

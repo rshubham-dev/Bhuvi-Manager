@@ -64,8 +64,8 @@ const Clients = () => {
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
       <section className="overflow-x-auto">
         <Header category="Page" title="Client's" />
-        <div className=" mb-4 mr-20 text-right flex justify-between align-center">
-          <h2 className="text-xl text-green-600 ml-8">Total Client: {clients?.length}</h2>
+        <div className=" mb-4 text-right flex justify-between align-center">
+          <h2 className="text-xl text-green-600">Total Client: {clients?.length}</h2>
           <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
             <MdAdd className='text-xl' />
           </button>
