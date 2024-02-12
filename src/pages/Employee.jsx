@@ -3,7 +3,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { GrEdit } from "react-icons/gr";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdAdd } from "react-icons/md";
 import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
@@ -39,28 +39,30 @@ const Employee = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Dashboard" />
-      <section className="overflow-x-auto shadow-md sm:rounded-lg mb-20 mt-10">
-        <h1 className="text-3xl font-bold text-blue-500 text-center">Our Team</h1>
-        <div className=" mb-4 mr-20 text-right flex justify-between align-center">
-          <h2 className="text-xl text-green-600 ml-8">Total Employee: {employees.length}</h2>
-          <button onClick={() => navigate('/create-employee')} className="bg-green-500 text-white px-4 py-2">
-            Add More
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen shadow-lg md:p-8 bg-white rounded-3xl'>
+      <Header category="Page" title="Employees" />
+      <section className="h-full w-full mb-16 flex justify-center">
+      <div className='overflow-x-auto w-full max-w-screen-lg mx-auto'>
+        <div className="w-full mx-auto mb-6 text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
+          <h2 className="text-lg sm:text-md md:text-lg lg:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Employee: {employees.length}</h2>
+          <button onClick={() => navigate('/create-employee')} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0">
+          <MdAdd className='text-xl' />
           </button>
         </div>
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">User Name</th>
-              <th scope="col" className="px-6 py-3">Email</th>
-              <th scope="col" className="px-6 py-3">Contact No</th>
-              <th scope="col" className="px-6 py-3">Employee Id</th>
-              <th scope="col" className="px-6 py-3">Department</th>
-              <th scope="col" className="px-6 py-3">Actions</th>
+
+        <div className="overflow-x-auto">
+          <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+          <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+          <tr className="text-gray-800  text-left">
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">User Name</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">Email</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">Contact No</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">Employee Id</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">Department</th>
+              <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="divide-y divide-gray-200">
             {employees.map((employee) => (
               <tr key={employee._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td className="px-6 py-4">
@@ -96,7 +98,9 @@ const Employee = () => {
             ))}
           </tbody>
         </table>
+        </div>
         <Toaster position="top-right" reverseOrder={false} />
+        </div>
       </section>
     </div>
   );

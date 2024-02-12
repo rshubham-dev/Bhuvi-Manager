@@ -67,14 +67,14 @@ const PurchaseOrders = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Dashboard" />
-      <section className="">
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 shadow-lg bg-white rounded-2xl'>
+      <Header category="Page" title="Purchase Order's" />
+      <section className="overflow-x-auto">
         <div className="m-6 flex flex-col sm:flex-row justify-between items-center">
           <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">
             Total Purchase Orders: {purchaseOrders?.length}
           </h2>
-          <button onClick={handleAdd} className="bg-green-500 text-white rounded-full p-2">
+          <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0">
             <MdAdd className='text-xl' />
           </button>
         </div>
@@ -83,8 +83,8 @@ const PurchaseOrders = () => {
           <div className="mt-6 w-full">
             {purchaseOrders.map((purchaseOrder) => (
               <div key={purchaseOrder._id} className="card mb-4">
-                <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                  <summary className="flex justify-between flex-row text-xl font-large text-color-title cursor-pointer" style={{ padding: '1rem' }}>
+                <details className="rounded-lg bg-white overflow-x-auto shadow-lg p-3">
+                  <summary className="tracking-tight flex justify-between flex-row text-xl font-large text-color-title cursor-pointer" style={{ padding: '1rem' }}>
                     Purchase Order of {purchaseOrder.supplier?.name} for {purchaseOrder.site?.name}
                     <div className="self-end">
                       <button

@@ -79,8 +79,8 @@ const ExtraWork = () => {
   };
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
-    <section className='bg-white px-12 py-6 mb-16 h-full w-full'>
+    <Header category="Page" title="Extra Work" />
+    <section className=' mb-10 h-full w-full'>
       <h1 className="text-3xl font-bold text-center">Extra Work</h1>
       <div className=" mb-4 mr-20 text-right">
         <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-">

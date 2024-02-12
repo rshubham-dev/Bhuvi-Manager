@@ -74,7 +74,7 @@ const ProjectSchedules = () => {
 
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
+    <Header category="Page" title="Project Schedule's" />
 <section className="overflow-x-auto">
   <div className="m-6 flex flex-col sm:flex-row justify-between items-center">
     <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Project Schedules: {projectSchedules?.length}</h2>

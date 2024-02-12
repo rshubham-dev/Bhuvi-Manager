@@ -75,7 +75,7 @@ const PaymentSchedules = () => {
 
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
+    <Header category="Page" title="Payment Schedules" />
     <section className='bg-white px-4 md:px-8 lg:px-12 py-6 mb-16 h-full w-full max-w-screen-xl mx-auto'>
       {/* <h1 className="text-3xl font-semibold text-gray-800 text-center">Payment Schedules</h1> */}
       <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">

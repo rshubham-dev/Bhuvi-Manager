@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import Header from '../components/Header';
 
@@ -44,14 +44,13 @@ const Suppliers = () => {
         navigate('/create-supplier');
     };
     return (
-        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-        <Header category="Page" title="Dashboard" />
-        <section className="overflow-x-auto shadow-md sm:rounded-lg">
-            <h1 className="text-2xl font-bold text-center">Suppliers</h1>
-            <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
+        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 shadow-lg bg-white rounded-2xl'>
+        <Header category="Page" title="Suppliers" />
+        <section className="overflow-x-auto">
+            <div className=" mb-4 text-right flex justify-between align-center">
                 <h2 className="text-xl text-green-600 ml-8">Total Suppliers: {suppliers?.length}</h2>
-                <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
-                    Add Supplier
+                <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0 mr-4">
+                <MdAdd className='text-xl' />
                 </button>
             </div>
             <table className="w-full text-sm text-left rtl:text-right text-gray-500">

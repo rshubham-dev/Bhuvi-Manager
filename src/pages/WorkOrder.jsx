@@ -64,8 +64,8 @@ const WorkOrders = () => {
 
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
-<section className="min-h-screen py-6 mb-24 flex justify-center bg-white">
+    <Header category="Page" title="Work-Orders" />
+<section className="min-h-screen mb-16 flex justify-center">
   <div className='overflow-x-auto w-full max-w-screen-lg'>
     <h1 className="text-3xl sm:text-2xl font-bold text-center uppercase">Work Order's</h1>
     <div className="pt-3 px-4 mx-auto mb-6">

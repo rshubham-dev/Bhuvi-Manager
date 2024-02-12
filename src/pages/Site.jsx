@@ -73,12 +73,10 @@ const Sites = () => {
 
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
-    <section className="min-h-full w-full mb-24 flex justify-center bg-white">
+    <Header category="Page" title="Site's" />
+    <section className="h-full w-full mb-16 flex justify-center">
       <div className='overflow-x-auto w-full max-w-screen-lg mx-auto'>
-        <h1 className="text-xl sm:text-lg lg:text-3xl font-bold text-center uppercase">Site's</h1>
-        <div className="pt-3 mx-auto mb-4 w-full sm:w-4/5">
-          <div className="w-full mx-auto text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
+          <div className="w-full mx-auto mb-6 text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
             <h2 className="text-lg sm:text-md md:text-lg lg:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Sites: {sites?.length}</h2>
             {user.role === 'Admin' && (
               <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0">
@@ -86,7 +84,7 @@ const Sites = () => {
               </button>
             )}
           </div>
-        </div>
+
 
         <div className="overflow-x-auto">
           <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>

@@ -62,14 +62,13 @@ const QualitySchedules = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 shadow-md bg-white rounded-2xl'>
+    <Header category="Page" title="Quality Check Schedule's" />
     <div className="overflow-x-auto">
-      <h1 className="text-2xl font-bold text-center my-4">Quality Check Schedule</h1>
-      <div className=" mb-4 mr-20 mt-6 text-right flex justify-between align-center">
+      <div className=" mb-4 text-right flex justify-between align-center">
       <h2 className="text-xl text-green-600 ml-8">Total Quality Schedules: {projectSchedules?.length}</h2>
-        <button onClick={handleAdd} className="bg-green-500 text-white px-4 py-2">
-          Add Quality Schedule
+        <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2 sm:mt-0">
+        <MdAdd className='text-xl' />
         </button>
       </div>
 
@@ -77,9 +76,8 @@ const QualitySchedules = () => {
         <div className="mt-6">
           {projectSchedules?.map((projectSchedule) => (
             <div key={projectSchedule._id} className="card">
-              <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
-                
-                <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+              <details className="rounded-lg bg-white overflow-x-auto shadow-lg p-3">
+                <summary className='tracking-tight flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
                   Project Schedule of {projectSchedule.site?.name}
                   <div className='self-end'>
                     <button

@@ -28,7 +28,7 @@ const WorkDetails = () => {
   };
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
+    <Header category="Page" title="Work Details" />
     <div className="overflow-x-auto h-full">
       <h1 className="text-2xl font-bold text-center mt-5">Work Details</h1>
       <div className=" mb-4 mr-20 text-right">
