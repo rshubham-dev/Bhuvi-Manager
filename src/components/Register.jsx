@@ -86,11 +86,10 @@ const Register = () => {
     };
 
     return (
-        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-            <Header category="Page" title="Dashboard" />
-            <section className='max-w-md mx-auto my-4 p-6'>
+        <div className='m-1 md:m-6 p-3 min-w-screen min-h-screen md:p-8'>
+            {/* <Header category="Page" title="Register" /> */}
+            <section className='mx-auto w-full md:w-3/4 lg:w-2/5 h-fit bg-white px-6 py-10 rounded-2xl shadow-xl'>
                 <form
-                    className='bg-white shadow-md rounded px-8 pt-4 pb-6 mb-6 w-full max-w-md'
                     onSubmit={formSubmit}
                 >
                     <h2 className='text-2xl font-bold mb-6 text-center'>Register</h2>

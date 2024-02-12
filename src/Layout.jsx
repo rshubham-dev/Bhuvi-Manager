@@ -4,10 +4,13 @@ import Sidebar from './components/Sidebar.jsx'
 import Navbar from './components/Navbar.jsx';
 import { BrowserRouter, Outlet } from 'react-router-dom';
 import { useStateContext } from './contexts/ContextProvider.jsx';
-
+import { useSelector } from 'react-redux';
 
 const Layout = ({children}) => {
   const { activeMenu } = useStateContext();
+  const { isLoggedIn } = useSelector((state) => {
+    return state.auth;
+  });
   return (
     <div>
       <BrowserRouter>
@@ -22,12 +25,12 @@ const Layout = ({children}) => {
           </div>
 
           {/* Sidebar */}
-          <div className={`${activeMenu ? 'w-72' : 'w-16'} pt-16 fixed sidebar border-r-1 dark:bg-secondary-dark-bg bg-white transition-all delay-100 ease-in duration-200`}>
+          <div className={`${activeMenu ? 'w-72' : 'w-16'} ${isLoggedIn ? 'inline' : 'hidden'} pt-16 fixed sidebar border-r-1 dark:bg-secondary-dark-bg bg-white transition-all delay-100 ease-in duration-200`}>
             <Sidebar />
           </div>
 
           {/* Main */}
-          <div className='ml-16 mt-16 min-w-screen min-h-screen p-2 '>
+          <div className={`${isLoggedIn ? 'ml-16' : 'ml-0'} mt-16 min-w-screen min-h-screen p-3`}>
             {children}
           </div>
         </div>
