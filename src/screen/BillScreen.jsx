@@ -5,6 +5,7 @@ import moment from 'moment';
 import axios from 'axios';
 import { GrEdit } from "react-icons/gr";
 import toast, { Toaster } from 'react-hot-toast';
+import Header from '../components/Header';
 
 const BillScreen = () => {
   const { id } = useParams();
@@ -53,9 +54,11 @@ const BillScreen = () => {
   }
 
   return (
-    <div className="bg-white px-6 py-12 max-w-2xl mt-4 mb-32 mx-auto">
-      <div className="flex items-center justify-center flex-col mb-8">
-          <img className="h-14 w-24 mb-2" src={logo}
+    <div className='m-1.5 md:m-6 p-4 min-w-screen min-h-screen md:p-6 rounded-3xl'>
+    <Header category="Page" title="Bill" />
+    <div className="px-6 bg-white p-10 max-w-2xl mx-auto rounded-2xl">
+      <div className="flex items-center justify-center flex-col mb-4">
+          <img className="h-24 w-fit mb-1" src={logo}
             alt="Logo" />
           <div className="text-blue-950 font-bold text-3xl">Bhuvi Consultants</div>
       </div>
@@ -138,6 +141,7 @@ const BillScreen = () => {
         position="top-right"
         reverseOrder={false}
       />
+    </div>
     </div>
   )
 }

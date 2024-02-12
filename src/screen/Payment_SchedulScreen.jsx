@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import moment from 'moment';
+import Header from '../components/Header';
 
 const Payment_SchedulScreen = () => {
   const [paymentSchedule, setpaymentSchedules] = useState({});
@@ -42,7 +43,9 @@ const Payment_SchedulScreen = () => {
   };
 
   return (
-    <section className='bg-white py-6 mb-16 h-full w-full'>
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Work-Orders" />
+    <section className='py-6 mb-16 h-full w-full'>
       <h1 className="text-2xl font-bold text-center">Payment Schedule Details</h1>
       <div className=" mb-4 mr-10 text-right">
         <button onClick={() => navigate(`/edit-paymentSchedule/${paymentSchedule._id}`)} className="bg-green-500 text-white px-2 py-2 rounded-3xl">
@@ -94,6 +97,7 @@ const Payment_SchedulScreen = () => {
         reverseOrder={false}
       />
     </section>
+    </div>
   )
 }
 

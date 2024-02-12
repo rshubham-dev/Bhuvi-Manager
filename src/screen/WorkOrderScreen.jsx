@@ -7,7 +7,7 @@ import { MdAdd } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import toast, { Toaster } from 'react-hot-toast';
 import moment from 'moment';
-
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const WorkOrderScreen = () => {
@@ -53,7 +53,9 @@ const WorkOrderScreen = () => {
   };
 
   return (
-    <section className='bg-white py-6 mb-16 h-full w-full'>
+    <div className='m-1.5 md:m-6 p-4 min-w-screen min-h-screen md:p-6 rounded-3xl bg-white'>
+    <Header category="Page" title="Bill" />
+    <section className=' p-4 mb-12 h-full w-full'>
       <h1 className="text-2xl font-bold text-center">Work Detail</h1>
       <div className=" mb-4 mr-10 text-right">
         <button onClick={() => handleEdit(id)} className="bg-green-500 text-white px-2 py-1.5 rounded-2xl">
@@ -107,6 +109,7 @@ const WorkOrderScreen = () => {
         reverseOrder={false}
       />
     </section>
+    </div>
   )
 }
 

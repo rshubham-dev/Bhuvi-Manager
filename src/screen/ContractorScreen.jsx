@@ -6,7 +6,7 @@ import { GrEdit } from "react-icons/gr";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { MdAdd, MdDownload, MdDelete } from "react-icons/md";
 import moment from 'moment';
-
+import Header from '../components/Header';
 
 axios.defaults.withCredentials = true;
 
@@ -97,7 +97,9 @@ const ContractorScreen = () => {
 
 
     return (
-        <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
+        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+        <Header category="Page" title="Work-Orders" />
+        <section className=' px-12 py-8 mb-16 h-full w-full'>
             <h1 className="text-3xl font-semibold text-gray-800 mt-4"> Contractor Details</h1>
             <div className="mt-6 w-full">
 
@@ -374,6 +376,7 @@ const ContractorScreen = () => {
 
             </div>
         </section>
+        </div>
     )
 }
 

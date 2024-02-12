@@ -8,6 +8,7 @@ import { MdAdd, MdDownload, MdDelete } from "react-icons/md";
 import toast, { Toaster } from 'react-hot-toast';
 import { Tabs } from 'antd';
 import moment from 'moment';
+import Header from '../components/Header';
 
 axios.defaults.withCredentials = true;
 
@@ -164,7 +165,9 @@ const SiteScreen = () => {
 
 
   return (
-    <section className='bg-white px-12 py-8 mb-16 h-full w-full'>
+    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Work-Orders" />
+    <section className='px-12 py-8 mb-16 h-full w-full'>
       <h1 className="text-3xl font-semibold text-gray-800"> Site Details</h1>
       <div className="mt-6 w-full">
 
@@ -748,6 +751,7 @@ const SiteScreen = () => {
         reverseOrder={false}
       />
     </section>
+    </div>
   )
 }
 
