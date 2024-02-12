@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../features/auth/authSlice.js';
-import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 
@@ -52,7 +51,6 @@ const Login = () => {
 
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      {/* <Header category="Page" title="Dashboard" /> */}
       <section className="mx-auto w-2/4 h-screen my-4 px-5 py-10 bg-white rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
         <form onSubmit={handleSubmit} className="mt-5 mb-2.5">

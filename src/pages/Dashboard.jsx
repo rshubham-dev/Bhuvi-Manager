@@ -11,15 +11,15 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
-
+  useEffect(() => {
     const handleNavigation = () => {
       if (isLoggedIn) {
         switch (user.department) {
           case 'Admin':
-             navigate('/admin');
+            navigate('/admin');
             break;
           case 'Company':
-             navigate('/admin');
+            navigate('/admin');
             break;
           case 'Client':
             navigate('/client');
@@ -52,11 +52,13 @@ const Dashboard = () => {
             console.log("Not exists");
             break;
         }
-      } 
+      }
       else {
         navigate('/login')
       }
     };
+    handleNavigation();
+  }, [isLoggedIn, user])
 
 }
 

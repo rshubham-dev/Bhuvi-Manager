@@ -15,8 +15,8 @@ const Layout = ({children}) => {
           
             {/* Header */}
           <div
-            className='dark:bg-secondary-dark-bg shadow-sm navbar fixed z-10 border-b-1 bg-white h-16 w-full transition-all delay-150 duration-200 ease-in'>
-            <div className="fixed md:static bg-white w-full">
+            className='dark:bg-secondary-dark-bg navbar fixed m-0 bg-white h-16 w-full transition-all delay-150 duration-200 ease-in'>
+            <div className="fixed md:static  w-full m-0">
               <Navbar />
             </div>
           </div>
@@ -27,7 +27,7 @@ const Layout = ({children}) => {
           </div>
 
           {/* Main */}
-          <div className='ml-16 mt-16 bg-black min-w-screen min-h-screen p-2 '>
+          <div className='ml-16 mt-16 min-w-screen min-h-screen p-2 '>
             {children}
           </div>
         </div>

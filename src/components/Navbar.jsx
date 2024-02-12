@@ -11,7 +11,7 @@ import { useStateContext } from '../contexts/ContextProvider.jsx';
 import { useNavigate } from 'react-router-dom';
 // import logo from '../asset/logo.png';
 
-const NavbarButton = ({ title, customFunc, icon, color, dotColor }) => (
+const NavbarButton = ({ customFunc, icon, color, dotColor }) => (
     <button type='button' onClick={customFunc} style={{ color }}
       className='relative text-xl rounded-full p-3 hover:bg-light-gray'>
       <span style={{ background: dotColor }}
@@ -36,7 +36,7 @@ const Navbar = () => {
 
   const navigate = useNavigate();
   return (
-    <div className='flex justify-between align-center py-2 px-5 relative '>
+    <div className='flex justify-between align-center py-2 px-6 relative w-full'>
       <div className='flex gap-4'>
         <button
           type='button'
@@ -51,12 +51,10 @@ const Navbar = () => {
       </div>
       <div className="flex">
         <NavbarButton
-          title="Notification"
           customFunc={() => navigate('/notification')}
           color='blue'
           icon={<RiNotification3Line />} />
         <NavbarButton
-          title="LogOut"
           customFunc={() => navigate('/logout')}
           color='blue'
           dotColor=''

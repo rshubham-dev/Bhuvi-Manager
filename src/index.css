@@ -34,9 +34,9 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-/* .navbar {
+.navbar {
   box-shadow: rgba(121, 135, 151, 0.171) 1px 7px 30px 0px;
-} */
+}
 .nav-item,
 .navbar {
   z-index: 10000;
