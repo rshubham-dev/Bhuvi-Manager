@@ -14,11 +14,11 @@ const Project_ScheduleScreen = () => {
 
   useEffect(() => {
     if (id) {
-      getpaymentSchedules(id);
+      getprojectSchedule(id);
     }
   }, [])
 
-  const getpaymentSchedules = async (id) => {
+  const getprojectSchedule = async (id) => {
     try {
       const projectScheduleData = await axios.get(`/api/v1/project-schedule/${id}`);
       console.log(projectScheduleData.data)
@@ -88,12 +88,12 @@ const Project_ScheduleScreen = () => {
       <section className='mb-10 h-full w-full'>
       <Header category="Page" title={`${projectSchedule.site?.name} Project Schedule`} />
         <div className=" mb-4 text-right">
-          <button onClick={() => navigate(`/edit-paymentSchedule/${projectSchedule._id}`)} className="bg-green-500 text-white px-2 py-2 rounded-3xl">
+          <button onClick={() => navigate(`/edit-projectSchedule/${projectSchedule._id}`)} className="bg-green-500 text-white px-2 py-2 rounded-3xl">
             <MdAdd className='text-lg md:text-xl' />
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-2 xl:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-3 gap-4">
           {projectSchedule.projectDetail?.map((work, index) => (
             <div key={index} className='bg-white shadow-lg rounded-xl'>
               <ProjectScheduleCard

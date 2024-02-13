@@ -25,7 +25,7 @@ const Layout = ({children}) => {
           </div>
 
           {/* Sidebar */}
-          <div className={` ${activeMenu ? 'w-72' : 'w-16'} ${isLoggedIn ? 'inline' : 'hidden'} pt-16 fixed sidebar border-r-1 dark:bg-secondary-dark-bg bg-white transition-all delay-100 ease-in duration-200`}>
+          <div className={` ${activeMenu ? 'w-72' : 'w-16'} ${isLoggedIn ? 'inline' : 'hidden'} pt-16 px-2 fixed sidebar border-r-1 dark:bg-secondary-dark-bg bg-white transition-all delay-100 ease-in duration-200`}>
             <Sidebar />
           </div>
 

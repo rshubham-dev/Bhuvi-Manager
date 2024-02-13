@@ -3,6 +3,7 @@ import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const CreateBill = () => {
@@ -371,7 +372,7 @@ const CreateBill = () => {
 
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Dashboard" />
+      <Header category="Page" title="Create Bill" />
       <section className='container mx-auto mt-4 mb-16'>
         <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
           <h1 className="text-2xl font-semibold mb-4 text-center">Bill</h1>

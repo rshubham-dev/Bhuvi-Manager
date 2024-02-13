@@ -12,8 +12,8 @@ import { AiOutlineMenu } from 'react-icons/ai';
 
 const Sidebar = () => {
   const { activeMenu, setActiveMenu } = useStateContext();
-  const activeLink = 'flex item-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md m-1.5 text-gray-900'
-  const normalLink = 'flex item-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-gray-600 dark:text-gray-200 text-md dark:hover:text-black hover:bg-light-gray m-1.5'
+  const activeLink = 'flex item-center gap-5 pl-2 pt-3 pb-2.5 rounded-lg text-md m-1.5 text-gray-900'
+  const normalLink = 'flex item-center gap-5 pl-2 pt-3 pb-2.5 rounded-lg text-gray-600 dark:text-gray-200 text-md dark:hover:text-black hover:bg-light-gray m-1.5'
   const Menus = [
     {
       to: '/',
@@ -107,13 +107,13 @@ const Sidebar = () => {
     // },
   ]
   return (
-    <div className='h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10'
+    <div className='h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-16 pt-4'
       style={{
         scrollbarWidth: 'none',
         '-ms-overflow-style': 'none',
       }}>
-      <div className="flex justify-center gap-1 items-center my-2">
-        <img src={logo} alt="logo" className='rounded-full w-14 h-14' />
+      <div className="flex justify-center gap-2 items-center my-2 ml-0">
+        <img src={logo} alt="logo" className='rounded-full w-12 h-14' />
           <span className={`uppercase transition-all text-sm delay-100 duration-300 ease-in ${activeMenu ? 'inline text-lg ' : 'hidden'} items-center flex font-extrabold ml-1 dark:text-white text-slate-900`}>
             Bhuvi Consultants
           </span>
@@ -132,9 +132,8 @@ const Sidebar = () => {
 
       <div className="mb-10 mt-4">
         {Menus.map((menu, index) => (
-          <div key={index} className='hover:bg-gray-200 rounded-lg'>
+          <div key={index} className='hover:bg-gray-200 rounded-xl'>
             <NavLink to={menu.to}
-              onClick={() => { }}
               className={({ isActive }) => isActive ? activeLink : normalLink}>
               <span className='text-xl'>
                 {menu.icon}
