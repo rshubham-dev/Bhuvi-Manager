@@ -7,18 +7,18 @@ const localizer = momentLocalizer(moment)
 import Header from '../components/Header';
 
 const Profile = (props) => {
-  navigator.geolocation.getCurrentPosition(
-    (position) => {
-      console.log(position)
-    },
-    (error) => {
-      console.log(error.message)
-    }
-  )
+  // navigator.geolocation.getCurrentPosition(
+  //   (position) => {
+  //     console.log(position)
+  //   },
+  //   (error) => {
+  //     console.log(error.message)
+  //   }
+  // )
   return (
-    <div className='m-1.5 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl overflow-hidden'>
     <Header category="Page" title="Profile" />
-    <form>
+    <form className='w-full'>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
@@ -33,7 +33,7 @@ const Profile = (props) => {
               </label>
               <div className="mt-2">
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span>
+                  {/* <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span> */}
                   <input
                     type="text"
                     name="username"
