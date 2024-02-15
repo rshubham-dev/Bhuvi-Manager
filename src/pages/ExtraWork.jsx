@@ -37,7 +37,7 @@ const ExtraWork = () => {
           setContractorExtraWork(extraWorkData.data.filter((extra) => extra.extraFor === 'Contractor'));
         }
       } catch (error) {
-        toast.error(error.message)
+        toast.error('No Extra Work Found')
       }
     }
 
@@ -83,10 +83,14 @@ const ExtraWork = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <section className="overflow-x-auto">
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+      <section className="overflow-x-auto"
+        style={{
+          scrollbarWidth: 'none',
+          '-ms-overflow-style': 'none',
+        }}>
         <Header category="Page" title="Extra Work's" />
-        <div className="w-full mx-auto mb-6 text-gray-700 p-1 flex flex-row justify-between items-center">
+        <div className="w-full mx-auto text-gray-700 px-2 flex justify-end items-center">
           {/* <h2 className="text-lg text-wrap sm:text-md md:text-lg lg:text-xl text-green-600 mr-4 pr-4">
           Total Extra Work
         </h2> */}
@@ -99,7 +103,11 @@ const ExtraWork = () => {
 
           <Tabs.TabPane tab='Client' key={'client'}>
 
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto"
+              style={{
+                scrollbarWidth: 'none',
+                '-ms-overflow-style': 'none',
+              }}>
               <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
                 <thead className="bg-gray-800">
                   <tr className="text-white text-left">

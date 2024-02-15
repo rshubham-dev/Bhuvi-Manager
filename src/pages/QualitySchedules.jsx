@@ -63,46 +63,50 @@ const QualitySchedules = () => {
           </button>
         </div>
 
-              <div className="overflow-x-auto">
-                <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
-                  <thead className="bg-gray-800">
-                    <tr className="text-white text-left">
-                      <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Site</th>
-                      {/* <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Starting Date</th>
+        <div className="overflow-x-auto"
+          style={{
+            scrollbarWidth: 'none',
+            '-ms-overflow-style': 'none',
+          }}>
+          <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+            <thead className="bg-gray-800">
+              <tr className="text-white text-left">
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Site</th>
+                {/* <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Starting Date</th>
                       <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Status</th>
                       <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Actual Date</th> */}
-                      <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
-                    </tr>
-                  </thead>
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+              </tr>
+            </thead>
 
-                  <tbody>
-                    {qualitySchedules.map((qualitySchedule) => (
-                      <tr key={qualitySchedule._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-                          {qualitySchedule.site?.name}
-                        </td>
-                        {/* <td className="px-6 py-4">{moment(work.toStart).format('DD-MM-YYYY')}</td>
+            <tbody>
+              {qualitySchedules.map((qualitySchedule) => (
+                <tr key={qualitySchedule._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td className="px-6 py-4">
+                    {qualitySchedule.site?.name}
+                  </td>
+                  {/* <td className="px-6 py-4">{moment(work.toStart).format('DD-MM-YYYY')}</td>
                         <td className="px-6 py-4">{work.status}</td>
                         <td className="px-6 py-4 text-center">{work.startedAt ? moment(work.startedAt).format('DD-MM-YYYY') : '-'}</td> */}
-                        <td className="px-6 py-4">
-                        <button onClick={() => handleRedirect(qualitySchedule._id)} className="mr-2">
+                  <td className="px-6 py-4">
+                    <button onClick={() => handleRedirect(qualitySchedule._id)} className="mr-2">
                       <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
                     </button>
-                          <button
-                            onClick={() => handleEdit(qualitySchedule._id)}
-                            className="mr-2">
-                            <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(qualitySchedule._id)}>
-                            <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    <button
+                      onClick={() => handleEdit(qualitySchedule._id)}
+                      className="mr-2">
+                      <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(qualitySchedule._id)}>
+                      <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
 
         <Toaster

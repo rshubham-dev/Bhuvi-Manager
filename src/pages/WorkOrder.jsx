@@ -65,7 +65,7 @@ const WorkOrders = () => {
 
   return (
     <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Work-Orders" />
+      <Header category="Page" title="Work-Order's" />
       <section className="min-h-screen mb-16 flex justify-center">
         <div className='overflow-x-auto w-full'>
           <div className=" mx-auto mb-6">
@@ -77,7 +77,11 @@ const WorkOrders = () => {
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto"
+            style={{
+              scrollbarWidth: 'none',
+              '-ms-overflow-style': 'none',
+            }}>
             <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
               <thead className="bg-gray-800">
                 <tr className="text-white text-left">

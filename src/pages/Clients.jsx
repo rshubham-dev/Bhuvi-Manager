@@ -73,7 +73,11 @@ const Clients = () => {
           </button>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto"
+          style={{
+            scrollbarWidth: 'none',
+            '-ms-overflow-style': 'none',
+          }}>
           <table className='w-full whitespace-nowrap divide-y divide-gray-300 overflow-hidden'>
             <thead className="bg-gray-800">
               <tr className="text-white text-left">
@@ -118,7 +122,7 @@ const Clients = () => {
         <Toaster
           position="top-right"
           reverseOrder={false}
-          />
+        />
       </section>
     </div>
   );

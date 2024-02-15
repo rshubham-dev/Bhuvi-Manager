@@ -61,8 +61,11 @@ const WorkOrderScreen = () => {
             <MdAdd className='text-xl' />
           </button>
         </div>
-        <div className="overflow-x-auto mt-8">
-          <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+        <div className="overflow-x-auto"
+          style={{
+            scrollbarWidth: 'none',
+            '-ms-overflow-style': 'none',
+          }}>          <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
             <thead className="bg-gray-800">
               <tr className="text-white text-left">
                 <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Work</th>
@@ -70,7 +73,7 @@ const WorkOrderScreen = () => {
                 <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Area</th>
                 <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Amount</th>
                 <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Status</th>
-                <th scope="col"className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">

@@ -83,7 +83,11 @@ const PurchaseOrders = () => {
           </button>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto"
+          style={{
+            scrollbarWidth: 'none',
+            '-ms-overflow-style': 'none',
+          }}>
           <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
             <thead className="bg-gray-800">
               <tr className="text-white text-left">
@@ -102,8 +106,8 @@ const PurchaseOrders = () => {
                     <p className=""> {purchaseOrder.site?.name} </p>
                     <p className="text-gray-500 text-sm font-semibold tracking-wide"> {purchaseOrder.supplier?.name} </p>
                   </td>
-                    <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
-                    <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
+                  <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
+                  <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
                   <td className="px-6 py-4 text-center">{purchaseOrder?.status}</td>
                   <td className="px-6 py-4 text-center">
                     <button onClick={() => handleRedirect(purchaseOrder._id)} className="mr-2">

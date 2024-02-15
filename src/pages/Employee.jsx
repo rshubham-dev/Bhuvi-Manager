@@ -32,7 +32,7 @@ const Employee = () => {
 
   const handleRedirect = (id) => {
     navigate(`/employee/${id}`);
-}
+  }
 
   const handleDelete = async (id) => {
     try {
@@ -56,7 +56,11 @@ const Employee = () => {
           </button>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto"
+          style={{
+            scrollbarWidth: 'none',
+            '-ms-overflow-style': 'none',
+          }}>
           <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
             <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
               <tr className="text-gray-800  text-left">
@@ -93,12 +97,12 @@ const Employee = () => {
                     <button
                       className=" mr-2"
                       onClick={() => handleEdit(employee._id)}>
-                     <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                      <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
                     </button>
                     <button
                       onClick={() => handleDelete(employee._id)}
                       className="mr-2">
-                     <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                      <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
                     </button>
                   </td>
                 </tr>
