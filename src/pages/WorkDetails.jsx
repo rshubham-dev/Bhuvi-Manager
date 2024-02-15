@@ -29,7 +29,7 @@ const WorkDetails = () => {
   return (
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
     <div className="overflow-x-auto h-full">
-    <Header category="Page" title="Work Details" />
+    <Header category="Page" title="Work Detail's" />
       <div className=" mb-4 mr-20 text-right">
         <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-0">
         <MdAdd className='text-xl' /> 

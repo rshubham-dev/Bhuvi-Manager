@@ -279,11 +279,11 @@ const CreateExtraWork = () => {
   if (detailToEdit.id !== '' && detailToEdit.index !== '') {
     return (
       <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Dashboard" />
+      <Header category="Page" title="Update Extra Work Details" />
         <section className="flex items-center justify-center h-full mb-16 mt-4">
           <form
             onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-full max-w-md">
+            className="px-8 pt-6 pb-8 mb-4 w-full max-w-md">
 
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
@@ -311,7 +311,7 @@ const CreateExtraWork = () => {
 
             <div className="mb-4">
               <label htmlFor="rate" className="block text-gray-700 text-sm font-bold mb-2">
-                Rate:
+                Quantity:
               </label>
               <input
                 type="number"
@@ -370,7 +370,7 @@ const CreateExtraWork = () => {
   } else {
     return (
       <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Dashboard" />
+      <Header category="Page" title="Create Extra Work" />
       <div className="container mx-auto mt-4 mb-16">
         <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
           <h2 className="text-2xl font-semibold mb-4 text-center">Create Extra Work</h2>
@@ -452,7 +452,7 @@ const CreateExtraWork = () => {
 
                   <div>
                     <label htmlFor={`work[${index}].area`} className="block text-sm font-semibold text-gray-600">
-                      Area
+                      Quantity
                     </label>
                     <input
                       type="number"

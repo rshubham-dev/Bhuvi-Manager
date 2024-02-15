@@ -81,7 +81,9 @@ const ProjectSchedules = () => {
       <section className="overflow-x-auto">
         <Header category="Page" title="Project Schedule's" />
         <div className="w-full mx-auto mb-6 text-gray-700 p-1 flex flex-row justify-between items-center">
-          <h2 className="text-lg text-wrap sm:text-md md:text-lg lg:text-xl text-green-600 mr-4 pr-4">Total Project Schedules: {projectSchedules?.length}</h2>
+          <h2 className="text-lg text-wrap sm:text-md md:text-lg lg:text-xl text-green-600 mr-4 pr-4">
+            Total Project Schedules: {projectSchedules?.length}
+            </h2>
           <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
             <MdAdd className='text-xl' />
           </button>

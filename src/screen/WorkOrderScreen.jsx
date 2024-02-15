@@ -54,61 +54,59 @@ const WorkOrderScreen = () => {
 
   return (
     <div className='m-1.5 md:m-6 p-4 min-w-screen min-h-screen md:p-6 rounded-3xl bg-white'>
-    <Header category="Page" title="Bill" />
-    <section className=' p-4 mb-12 h-full w-full'>
-      <h1 className="text-2xl font-bold text-center">Work Detail</h1>
-      <div className=" mb-4 mr-10 text-right">
-        <button onClick={() => handleEdit(id)} className="bg-green-500 text-white px-2 py-1.5 rounded-2xl">
-          <MdAdd className='text-xl' />
-        </button>
-      </div>
-
-      <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-          <tr>
-            <th scope="col" className="px-6 py-4">Work</th>
-            <th scope="col" className="px-6 py-4">Unit</th>
-            <th scope="col" className="px-6 py-4">Rate</th>
-            <th scope="col" className="px-6 py-4">Area</th>
-            <th scope="col" className="px-6 py-4">Amount</th>
-            <th scope="col" className="px-6 py-4">Status</th>
-            <th scope="col" className="px-6 py-4">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {workDetail.map((work, index) => (
-            <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td className="px-6 py-4">
-                {work.workDetail}
-              </td>
-              <td className="px-6 py-4">{work.unit}</td>
-              <td className="px-6 py-4">{work.rate}</td>
-              <td className="px-6 py-4">{work.area}</td>
-              <td className="px-6 py-4">{work.amount}</td>
-              <td className="px-6 py-4">{work.status}</td>
-              <td className="px-6 py-4">
-                <button
-                  onClick={() => editWork(id, index)}
-                  className="bg-blue-500 text-white px-2 py-1 mr-2"
-                >
-                  <GrEdit />
-                </button>
-                <button
-                  onClick={() => deleteWork(id, index)}
-                  className="bg-red-500 text-white px-2 py-1 mr-2"
-                >
-                  <MdDelete />
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
-    </section>
+      <Header category="Page" title="Work Order Work Detail" />
+      <section className='mb-12 h-full w-full'>
+        <div className=" w-full">
+          <button onClick={() => handleEdit(id)} className="bg-green-500 text-white px-2 py-2 rounded-full">
+            <MdAdd className='text-xl' />
+          </button>
+        </div>
+        <div className="overflow-x-auto mt-8">
+          <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+            <thead className="bg-gray-800">
+              <tr className="text-white text-left">
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Work</th>
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Rate</th>
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Area</th>
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Amount</th>
+                <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Status</th>
+                <th scope="col"className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {workDetail.map((work, index) => (
+                <tr key={index} className='border-b border-blue-gray-200'>
+                  <td className="px-6 py-4">
+                    {work.workDetail}
+                  </td>
+                  <td className="px-6 py-4 text-center">{work.rate}</td>
+                  <td className="px-6 py-4 text-center">{work.area}</td>
+                  <td className="px-6 py-4 text-center">{work.amount}</td>
+                  <td className="px-6 py-4 text-center">{work.status}</td>
+                  <td className="px-6 py-4 text-center">
+                    <button
+                      onClick={() => editWork(id, index)}
+                      className="bg-blue-500 text-white px-2 py-1 mr-2"
+                    >
+                      <GrEdit />
+                    </button>
+                    <button
+                      onClick={() => deleteWork(id, index)}
+                      className="bg-red-500 text-white px-2 py-1 mr-2"
+                    >
+                      <MdDelete />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
+      </section>
     </div>
   )
 }

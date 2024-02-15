@@ -330,11 +330,10 @@ const CreatePurchaseOrder = () => {
     )
   } else {
     return (
-      <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Dashboard" />
+      <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+      <Header category="Page" title="Create Purchase Order" />
       <div className="container mx-auto mt-4 mb-16">
-        <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
-          <h2 className="text-2xl font-semibold mb-4 text-center">Create Purchase Order</h2>
+        <form className="max-w-xl mx-auto " onSubmit={handleSubmit}>
 
           <div className="mb-4">
             <label htmlFor="site" className="block text-sm font-semibold text-gray-600">

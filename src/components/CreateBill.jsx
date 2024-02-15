@@ -374,7 +374,7 @@ const CreateBill = () => {
     <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
       <Header category="Page" title="Create Bill" />
       <section className='container mx-auto mt-4 mb-16'>
-        <form className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
+        <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
           <h1 className="text-2xl font-semibold mb-4 text-center">Bill</h1>
 
           <div className="mb-4">

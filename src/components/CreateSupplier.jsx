@@ -93,12 +93,11 @@ const CreateSupplier = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Dashboard" />
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <Header category="Page" title="Create Supplier" />
     <section className='container mx-auto mt-4 mb-16'>
       <form onSubmit={handleSubmit}
-        className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
-        <h2 className="text-2xl font-semibold mb-4 text-center">Create Supplier</h2>
+        className="max-w-md mx-auto">
 
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-600">

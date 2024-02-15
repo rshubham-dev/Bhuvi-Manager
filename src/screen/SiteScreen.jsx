@@ -24,14 +24,14 @@ const SiteScreen = () => {
   const [contractorExtra, setContractorExtra] = useState([]);
   const [clientExtra, setClientExtra] = useState({});
   const [purchaseOrders, setPurchaseOrder] = useState([])
-  console.log(id)
+  // console.log(id)
   useEffect(() => {
     if (id) {
       const fetchSiteDetails = async () => {
         try {
           const response = await axios.get(`/api/v1/site/${id}`);
           const site = response.data
-          console.log(site)
+          // console.log(site)
           setSiteData(site);
           setProjectDetail(site.projectSchedule?.projectDetail)
         } catch (error) {
@@ -59,7 +59,7 @@ const SiteScreen = () => {
   const getpaymentSchedules = async (id) => {
     try {
       const paymentSchedulesData = await axios.get(`/api/v1/payment-schedule/site/${id}`);
-      console.log(paymentSchedulesData.data)
+      // console.log(paymentSchedulesData.data)
       setpaymentSchedules(paymentSchedulesData.data);
     } catch (error) {
       console.log('Error fetching payment schedule:', error);
@@ -70,7 +70,7 @@ const SiteScreen = () => {
   const fetchBill = async (id) => {
     try {
       const billData = await axios.get(`/api/v1/bill/site/${id}`);
-      console.log(billData.data)
+      // console.log(billData.data)
       const contractorBill = billData.data?.filter((bill) => bill.billFor === 'Contractor') || [];
       const supplierBill = billData.data?.filter((bill) => bill.billFor === 'Supplier') || [];
       setContractorBill([...contractorBill]);
@@ -84,7 +84,7 @@ const SiteScreen = () => {
     try {
       const purchaseOrdersData = await axios.get(`/api/v1/purchase-order/site/${id}`);
       setPurchaseOrder(purchaseOrdersData.data);
-      console.log(purchaseOrdersData.data)
+      // console.log(purchaseOrdersData.data)
     } catch (error) {
       toast.error(error.message)
     }
@@ -101,7 +101,7 @@ const SiteScreen = () => {
     }
   }
 
-  console.log(clientExtra);
+  // console.log(clientExtra);
   // console.log(contractorExtra);
 
   const deletePaymentDetail = async (id, index) => {
@@ -129,7 +129,9 @@ const SiteScreen = () => {
 
   const deletePurchaseOrder = async (id) => {
     try {
-
+      const response = await axios.delete(`/api/v1/purchase-order/${id}`);
+      setPurchaseOrder(purchaseOrders.filter((purchaseOrder) => purchaseOrder._id !== id));
+      toast.success(response.data)
     } catch (error) {
       toast.error(error.message)
     }
@@ -163,212 +165,198 @@ const SiteScreen = () => {
     }
   };
 
+  const SiteDetailCard = ({ name, siteId, client, projectType, floors, incharge, supervisor, address, handleEdit }) => {
+    return (
+      <div className=" px-2 py-4">
+        <h2 className="text-xl font-semibold mb-4">{name}</h2>
+        <div className='flex flex-col gap-2 text-md'>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Site Id:</div>
+            <div className="text-gray-800">{siteId}</div>
+          </div>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Client:</div>
+            <div className="text-gray-800">{client}</div>
+          </div>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Project Type:</div>
+            <div className="text-gray-800">{projectType}</div>
+          </div>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Total Floors:</div>
+            <div className="text-gray-800">{floors}</div>
+          </div>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Incharge:</div>
+            <div className="text-gray-800">{incharge}</div>
+          </div>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Supervisor:</div>
+            <div className="text-gray-800">{supervisor}</div>
+          </div>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Address:</div>
+            <div className="text-gray-800">{address}</div>
+          </div>
+          <div className="mt-2">
+            <button onClick={handleEdit} className="text-blue-500">
+              <GrEdit className="inline-block mr-2" />
+              Edit
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Work-Orders" />
-    <section className='px-12 py-8 mb-16 h-full w-full'>
-      <h1 className="text-3xl font-semibold text-gray-800"> Site Details</h1>
-      <div className="mt-6 w-full">
+    <div className='m-1 md:m-6 p-6 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+      <Header category="Page" title="Site Detail's" />
+      <section className='py-6 mb-16 h-full w-full'>
+        <div className="w-full">
 
-        {/* Site Info */}
-        <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Site Info
-            </summary>
+          {/* Site Info */}
+          <div className="grid grid-cols-1 md:grid-cols-1 w-full lg:grid-cols-1 xl:grid-cols-2 gap-6">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-md px-2 py-3 w-full mb-8 ">
+              <summary className='flex text-xl font-large text-color-title cursor-pointer' style={{ padding: '0.5rem' }}>
+                Site Details
+              </summary>
+              <SiteDetailCard
+                name={site.name}
+                siteId={site.siteId}
+                client={site.client?.name}
+                projectType={site.projectType}
+                floors={site.floors}
+                incharge={site.incharge?.userName}
+                supervisor={site.supervisor?.userName}
+                address={site?.address}
+                handleEdit={() => handleEdit(site._id)}
+              />
+            </details>
 
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Name</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{site.name}</dd>
-            </div>
+            {/* Agreement */}
+            {/* <div className='border-l-8 border-blue-500 info rounded-lg bg-red-400 overflow-hidden shadow-lg px-2 py-3 flex justify-between flex-row'>
+                <dt className='font-medium text-color-title mx-5'>{site.agreement}</dt>
+                <dd className='text-color-title mx-5 self-end bg-green-500 p-1 rounded-2xl'>
+                  <Link>
+                    <MdDownload className="text-xl text-white" />
+                  </Link>
+                </dd>
+              </div> */}
+          </div>
 
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Site Id</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{site.siteId}</dd>
-            </div>
-
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Client</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{site.client?.name}</dd>
-            </div>
-
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Project Type</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{site.projectType}</dd>
-            </div>
-
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Total Floor</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{site.floors}</dd>
-            </div>
-
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Site Incharge</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{site.incharge?.userName}</dd>
-            </div>
-
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Site Supervisor</dt>
-              <dd className='text-color-title mx-5 my-1.5'>{site.supervisor?.userName}</dd>
-            </div>
-
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>Address</dt>
-              <dd className='text-color-title mx-5 my-1.5'>
-                {site?.address}
-              </dd>
-            </div>
-
-          </details>
-        </div>
-
-        {/* Agreement */}
-        <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Agreement
-            </summary>
-            <div className='flex justify-between flex-row my-1.5'>
-              <dt className='font-medium text-color-title mx-5 my-1.5'>{site.agreement}</dt>
-              <dd className='text-color-title mx-5 my-1.5 self-end bg-green-500 p-1 rounded-2xl'>
-                <Link>
-                  <MdDownload className="text-xl text-white" />
-                </Link>
-              </dd>
-            </div>
-          </details>
-        </div>
-
-        {/* Payment Schedules */}
-        <div className="card">
-          <details className="rounded-lg bg-white overflow-hidden shadow-lg p-3">
-
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Payment Schedule
-              <button onClick={() => { navigate('/create-payment-schedule') }}
-                className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
-                <MdAdd className="text-xl text-white" />
-              </button>
-            </summary>
-
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">Work</th>
-                  <th scope="col" className="px-6 py-3">Amount</th>
-                  <th scope="col" className="px-6 py-3">Payment Date</th>
-                  <th scope="col" className="px-6 py-3">Status</th>
-                  <th scope="col" className="px-6 py-3">Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {paymentSchedules.paymentDetails?.map((paymentDetail, index) => (
-                  <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="px-6 py-4">
-                      {paymentDetail?.workDescription}
-                    </td>
-                    <td className="px-6 py-4">{paymentDetail?.amount}</td>
-                    <td className="px-6 py-4">{paymentDetail?.paymentDate ? moment(paymentDetail?.paymentDate).format('DD-MM-YYYY') : '-'}</td>
-                    <td className="px-6 py-4">{paymentDetail?.status}</td>
-                    <td className="px-6 py-4">
-                      <button onClick={() => {
-                        navigate(`/edit-paymentSchedule/${paymentSchedules._id}/${index}`)
-                      }}
-                        className="bg-blue-500 text-white px-2 py-1 mr-2 text-md">
-                        <GrEdit />
-                      </button>
-                      <button
-                        onClick={() => deletePaymentDetail(paymentSchedules._id, index)}
-                        className="bg-red-500 text-white px-2 py-1 text-md"
-                      >
-                        <MdDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <div className='text-right mt-4 ml-2 flex gap-1'>
-                <button
-                  onClick={() => navigate(`/edit-paymentSchedule/${paymentSchedules?._id}`)}
-                  className="bg-green-500 rounded-2xl text-white flex px-2 py-1.5 mr-2">
-                  <MdAdd className="text-xl text-white" /> More
+          {/* Payment Schedules */}
+          <div className="card">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-lg px-2 py-3 w-full mb-8 ">
+              <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                  Payment Schedule
+                <button onClick={() => { navigate(`/edit-paymentSchedule/${paymentSchedules?._id}`) }}
+                  className="bg-green-500 rounded-full text-white shadow self-end p-1">
+                  <MdAdd className="text-xl text-white" />
                 </button>
-                <button
-                  onClick={() => navigate(`/payment-schedule/${paymentSchedules._id}`)}
-                  className="bg-blue-500 rounded-2xl text-white flex px-2 py-1.5 ml-2">
-                  <FaExternalLinkAlt className="text-lg text-white" />
-                </button>
+              </summary>
+              <div className="overflow-x-auto"
+                style={{
+                  scrollbarWidth: 'none',
+                  '-ms-overflow-style': 'none',
+                }}>
+                <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                  <thead className="bg-gray-800">
+                    <tr className="text-white text-left">
+                      <th className="font-semibold text-sm uppercase px-6 py-4">Work</th>
+                      <th className="font-semibold text-sm uppercase px-6 py-4 text-center">Amount</th>
+                      <th className="font-semibold text-sm uppercase px-6 py-4 text-center">Payment Date</th>
+                      <th className="font-semibold text-sm uppercase px-6 py-4 text-center">Status</th>
+                      <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="divide-y divide-gray-200">
+                    {paymentSchedules.paymentDetails?.map((paymentDetail, index) => (
+                      <tr key={index} className='border-b border-blue-gray-200'>
+                        <td className="px-6 py-4">
+                          {paymentDetail?.workDescription}
+                        </td>
+                        <td className="px-6 py-4 text-center">{paymentDetail?.amount}</td>
+                        <td className="px-6 py-4 text-center">{paymentDetail?.paymentDate ? moment(paymentDetail?.paymentDate).format('DD-MM-YYYY') : '-'}</td>
+                        <td className="px-6 py-4 text-center">{paymentDetail?.status}</td>
+                        <td className="px-6 py-4 text-center">
+                          <button onClick={() => {
+                            navigate(`/edit-paymentSchedule/${paymentSchedules._id}/${index}`)
+                          }}
+                            className="mr-2">
+                            <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                          </button>
+                          <button
+                            onClick={() => deletePaymentDetail(paymentSchedules._id, index)}>
+                            <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            </table>
+            </details>
+          </div>
 
-          </details>
-        </div>
-
-        {/* Project Schedules */}
-        <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Project Schedule
-              <button onClick={() => { navigate('/create-project-schedule') }}
-                className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
-                <MdAdd className="text-xl text-white" />
-              </button>
-            </summary>
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">Work</th>
-                  <th scope="col" className="px-6 py-3">Starting Date</th>
-                  <th scope="col" className="px-6 py-3">Status</th>
-                  <th scope="col" className="px-6 py-3">Actual Date</th>
-                  <th scope="col" className="px-6 py-3">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {projectDetail?.map((work, index) => (
-                  <tr key={work._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="px-6 py-4">{work.workDetail}</td>
-                    <td className="px-6 py-4">{work.toStart ? moment(work.toStart).format('DD-MM-YYYY') : '-'}</td>
-                    <td className="px-6 py-4">{work.status}</td>
-                    <td className="px-6 py-4 text-center">{work.startedAt ? moment(work.startedAt).format('DD-MM-YYYY') : '-'}</td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => navigate(`/edit-projectSchedule/${site?.projectSchedule._id}/${index}`)}
-                        className="bg-blue-500 text-white px-2 py-1 mr-2"
-                      >
-                        <GrEdit />
-                      </button>
-                      <button
-                        onClick={() => deleteProjectDetail(site?.projectSchedule._id, index)}
-                        className="bg-red-500 text-white px-2 py-1 mr-2"
-                      >
-                        <MdDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-              <div className='text-right mt-4 ml-2 flex gap-1'>
-                <button
-                  onClick={() => navigate(`/edit-projectSchedule/${site?.projectSchedule._id}`)}
-                  className="bg-green-500 rounded-2xl text-white flex px-2 py-1.5 mr-2">
-                  <MdAdd className="text-xl text-white" /> More
+          {/* Project Schedules */}
+          <div className="card ">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-lg px-2 py-3 w-full mb-8 ">
+              <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                  Project Schedule
+                <button onClick={() => { navigate(`/edit-projectSchedule/${site?.projectSchedule._id}`) }}
+                  className="bg-green-500 rounded-full text-white shadow self-end p-1">
+                  <MdAdd className="text-xl text-white" />
                 </button>
-                <button
-                  onClick={() => navigate(`/project-schedule/${site?.projectSchedule._id}`)}
-                  className="bg-blue-500 rounded-2xl text-white flex px-2 py-1.5 ml-2">
-                  <FaExternalLinkAlt className="text-lg text-white" />
-                </button>
+              </summary>
+              <div className="overflow-x-auto"
+                style={{
+                  scrollbarWidth: 'none',
+                  '-ms-overflow-style': 'none',
+                }}>
+                <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                  <thead className="bg-gray-800">
+                    <tr className="text-white text-left">
+                      <th className='font-semibold text-sm uppercase px-6 py-4'>Work</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Starting Date</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Status</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Actual Date</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'></th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200">
+                    {projectDetail?.map((work, index) => (
+                      <tr key={index} className='border-b border-blue-gray-200'>
+                        <td className="px-6 py-4">{work.workDetail}</td>
+                        <td className="px-6 py-4 text-center">{work.toStart ? moment(work.toStart).format('DD-MM-YYYY') : '-'}</td>
+                        <td className="px-6 py-4 text-center">{work.status}</td>
+                        <td className="px-6 py-4 text-center">{work.startedAt ? moment(work.startedAt).format('DD-MM-YYYY') : '-'}</td>
+                        <td className="px-6 py-4">
+                          <button
+                            onClick={() => navigate(`/edit-projectSchedule/${site?.projectSchedule._id}/${index}`)}
+                            className="mr-2"
+                          >
+                            <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                          </button>
+                          <button
+                            onClick={() => deleteProjectDetail(site?.projectSchedule._id, index)}
+                            className="mr-2"
+                          >
+                            <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            </table>
-          </details>
-        </div>
+            </details>
+          </div>
 
-        {/* Quality Check Schedule */}
-        {/* <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
+          {/* Quality Check Schedule */}
+          {/* <div className="card ">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-md px-2 py-3 w-full mb-8 ">
             <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
               Quality Check Schedule
               <div className='self-end'>
@@ -391,366 +379,398 @@ const SiteScreen = () => {
           </details>
         </div> */}
 
-        {/* Work Order */}
-        <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Work Order
-              <button onClick={() => { navigate('/create-work-order') }}
-                className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
-                <MdAdd className="text-xl text-white" />
-              </button>
-            </summary>
+          {/* Work Order */}
+          <div className="card ">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-md px-2 py-3 w-full mb-8 ">
+              <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                Work Order
+                <button onClick={() => { navigate('/create-work-order') }}
+                  className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+                  <MdAdd className="text-xl text-white" />
+                </button>
+              </summary>
 
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">Name</th>
-                  <th scope="col" className="px-6 py-3">Contractor</th>
-                  <th scope="col" className="px-6 py-3">Duration</th>
-                  <th scope="col" className="px-6 py-3">Total Value</th>
-                  <th scope="col" className="px-6 py-3">Total Paid</th>
-                  <th scope="col" className="px-6 py-3">Total Due</th>
-                  <th scope="col" className="px-6 py-3">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {workOrders?.map((workorder) => (
-                  <tr key={workorder._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="px-6 py-4">
-                      {workorder.workOrderName}
-                    </td>
-                    <td className="px-6 py-4">{workorder.contractor?.name}</td>
-                    <td className="px-6 py-4">{workorder.duration ? moment(workorder.duration).format('DD-MM-YYYY') : '-'}</td>
-                    <td className="px-6 py-4">{workorder.workOrderValue}</td>
-                    <td className="px-6 py-4">{workorder.totalPaid}</td>
-                    <td className="px-6 py-4">{workorder.totalDue}</td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => navigate(`/work-order/${workorder._id}`)}
-                        className="bg-blue-500 text-white px-2 py-1 mr-2"
-                      >
-                        <FaExternalLinkAlt />
-                      </button>
-                      <button
-                        onClick={() => navigate(`/edit-workOrder/${workorder._id}`)}
-                        className="bg-green-500 text-white px-2 py-1 mr-2"
-                      >
-                        <GrEdit />
-                      </button>
-                      <button
-                        onClick={() => deleteWorkOrder(workorder._id)}
-                        className="bg-red-500 text-white px-2 py-1 mr-2"
-                      >
-                        <MdDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-          </details>
-        </div>
-
-        {/* Bills */}
-        <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Bills
-              <button onClick={() => { navigate('/create-bill') }}
-                className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
-                <MdAdd className="text-xl text-white" />
-              </button>
-            </summary>
-            <Tabs defaultActiveKey='client'>
-
-              <Tabs.TabPane tab='Contractor' key={'contractor'}>
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Contractor</th>
-                      <th scope="col" className="px-6 py-3">Work</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Paid</th>
-                      <th scope="col" className="px-6 py-3">Due</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
-                      <th scope="col" className="px-3 py-3">Actions</th>
+              <div className="overflow-x-auto"
+                style={{
+                  scrollbarWidth: 'none',
+                  '-ms-overflow-style': 'none',
+                }}>
+                <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                  <thead className="bg-gray-800">
+                    <tr className="text-white text-left">
+                      <th className='font-semibold text-sm uppercase px-6 py-4'>Name</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Contractor</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Duration</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Total Value</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Total Paid</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Total Due</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'></th>
                     </tr>
                   </thead>
-
-                  <tbody>
-                    {contractorBills.map((bill) => (
-                      <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tbody className="divide-y divide-gray-200">
+                    {workOrders?.map((workorder) => (
+                      <tr key={workorder._id} className='border-b border-blue-gray-200'>
                         <td className="px-6 py-4">
-                          {bill?.contractor?.name}
+                          {workorder.workOrderName}
                         </td>
-                        <td className="px-6 py-4">
-                          {bill?.billOf.workDescription}
-                        </td>
-                        <td className="px-6 py-4">{bill?.billOf.amount}</td>
-                        <td className="px-6 py-4">{bill?.dateOfPayment ? moment(bill?.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
-                        <td className="px-6 py-4">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
-                        <td className="px-6 py-4">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
-                        <td className="px-6 py-4">{bill?.paymentStatus}</td>
-                        <td className="px-3 py-4">
+                        <td className="px-6 py-4 text-center">{workorder.contractor?.name}</td>
+                        <td className="px-6 py-4 text-center ">{workorder.duration ? moment(workorder.duration).format('DD-MM-YYYY') : '-'}</td>
+                        <td className="px-6 py-4 text-center">{workorder.workOrderValue}</td>
+                        <td className="px-6 py-4 text-center">{workorder.totalPaid}</td>
+                        <td className="px-6 py-4 text-center">{workorder.totalDue}</td>
+                        <td className="px-6 py-4 text-center">
                           <button
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
+                            onClick={() => navigate(`/work-order/${workorder._id}`)}
+                            className="mr-2"
+                          >
+                            <FaExternalLinkAlt className='text-green-500 hover:text-green-600 text-lg' />
                           </button>
                           <button
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
+                            onClick={() => navigate(`/edit-workOrder/${workorder._id}`)}
+                            className="mr-2">
+                            <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                          </button>
+                          <button
+                            onClick={() => deleteWorkOrder(workorder._id)} >
+                            <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
                           </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </Tabs.TabPane>
+              </div>
+            </details>
+          </div>
 
-              <Tabs.TabPane tab='Supplier' key={'supplier'}>
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Supplier</th>
-                      <th scope="col" className="px-6 py-3">Material</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Payment Date</th>
-                      <th scope="col" className="px-6 py-3">Paid</th>
-                      <th scope="col" className="px-6 py-3">Due</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
-                      <th scope="col" className="px-3 py-3">Actions</th>
-                    </tr>
-                  </thead>
+          {/* Bills */}
+          <div className="card ">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-md px-2 py-3 w-full mb-8 ">
+              <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                Bills
+                <button onClick={() => { navigate('/create-bill') }}
+                  className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+                  <MdAdd className="text-xl text-white" />
+                </button>
+              </summary>
+              <Tabs defaultActiveKey='client'>
 
-                  <tbody>
-                    {supplierBills.map((bill) => (
-                      <tr key={bill._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-                          {bill?.supplier?.name}
-                        </td>
-                        <td className="px-6 py-4">
-                          {bill?.billOf.material}
-                        </td>
-                        <td className="px-6 py-4"></td>
-                        <td className="px-6 py-4">{bill?.dateOfPayment ? moment(bill?.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
-                        <td className="px-6 py-4">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
-                        <td className="px-6 py-4">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
-                        <td className="px-6 py-4">{bill?.paymentStatus}</td>
-                        <td className="px-3 py-4">
-                          <button
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
-                          </button>
-                          <button
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </Tabs.TabPane>
+                <Tabs.TabPane tab='Contractor' key={'contractor'}>
+                  <div className="overflow-x-auto"
+                    style={{
+                      scrollbarWidth: 'none',
+                      '-ms-overflow-style': 'none',
+                    }}>
+                    <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                      <thead className="bg-gray-800">
+                        <tr className="text-white text-left">
+                          <th className='font-semibold text-sm uppercase px-6 py-4'>Contractor</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Work</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Amount</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Payment Date</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Paid</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Due</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Status</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'></th>
+                        </tr>
+                      </thead>
 
-            </Tabs>
-          </details>
-        </div>
-
-        {/* Purchase Order */}
-        <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Purchase Order
-              <button onClick={() => { navigate('/create-purchase-order') }}
-                className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
-                <MdAdd className="text-xl text-white" />
-              </button>
-            </summary>
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">Supplier</th>
-                  <th scope="col" className="px-6 py-3">Total Amount</th>
-                  <th scope="col" className="px-6 py-3">Total Paid</th>
-                  <th scope="col" className="px-6 py-3">Total Due</th>
-                  <th scope="col" className="px-6 py-3">Requirements</th>
-                  <th scope="col" className="px-6 py-3">Approval</th>
-                  <th scope="col" className="px-6 py-3">Actions</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {purchaseOrders?.map((purchaseOrder) => (
-                  <tr key={purchaseOrder._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <td className="px-6 py-4">
-                      {purchaseOrder.supplier?.name}
-                    </td>
-                    <td className="px-6 py-4">{purchaseOrder.totalAmount}</td>
-                    <td className="px-6 py-4">{purchaseOrder.paidAmount}</td>
-                    <td className="px-6 py-4">{purchaseOrder.dueAmount}</td>
-                    <td className="px-6 py-4">
-                      <NavLink to={`/purchase-order/${purchaseOrder?._id}`}>
-                        {purchaseOrder.requirement?.length}
-                      </NavLink>
-                    </td>
-                    <td className="px-6 py-4">{purchaseOrder.approvalStatus}</td>
-                    <td className="px-6 py-4">
-                      <button
-                        onClick={() => navigate(`/purchase-order/${purchaseOrder?._id}`)}
-                        className="bg-blue-500 text-white px-2 py-1 mr-2">
-                        <FaExternalLinkAlt />
-                      </button>
-                      <button
-                        onClick={() => navigate(`/edit-purchaseOrder/${purchaseOrder?._id}`)}
-                        className="bg-green-500 text-white px-2 py-1 mr-2">
-                        <GrEdit />
-                      </button>
-                      <button
-                        onClick={() => deletePurchaseOrder(purchaseOrder?._id)}
-                        className="bg-red-500 text-white px-2 py-1 mr-2">
-                        <MdDelete />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </details>
-        </div>
-
-        {/* Extra Work */}
-        <div className="card ">
-          <details className="info rounded-lg bg-white overflow-hidden shadow-lg p-3">
-            
-            <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
-              Extra Work
-              <button onClick={() => { navigate('/create-extra-work') }}
-                className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
-                <MdAdd className="text-xl text-white" />
-              </button>
-            </summary>
-            <Tabs defaultActiveKey='client'>
-
-              <Tabs.TabPane tab='Client' key={'client'}>
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Work</th>
-                      <th scope="col" className="px-6 py-3">Rate</th>
-                      <th scope="col" className="px-6 py-3">Area</th>
-                      <th scope="col" className="px-6 py-3">Unit</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Status</th>
-                      <th scope="col" className="px-3 py-3">Actions</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {clientExtra?.WorkDetail?.map((workDetail, index) => (
-                      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td className="px-6 py-4">
-                          {workDetail?.work}
-                        </td>
-                        <td className="px-6 py-4">{workDetail?.rate}</td>
-                        <td className="px-6 py-4">{workDetail?.area}</td>
-                        <td className="px-6 py-4">{workDetail?.amount}</td>
-                        <td className="px-6 py-4">{workDetail?.paymentStatus}</td>
-                        <td className="px-6 py-4">{workDetail?.work}</td>
-                        <td className="px-6 py-4">{workDetail?.work}</td>
-                        <td className="px-3 py-4">
-                          <button
-                            onClick={() => navigate(`/edit-extra-work/${clientExtra._id}/work/${index}`)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
-                          </button>
-                          <button
-                          onClick={()=> deleteExtraWorkDetail(clientExtra._id, index)}
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-
-                  <div className='text-right mt-4 ml-2 flex gap-1'>
-                    <button
-                      onClick={() => navigate(`/edit-extra-work/${clientExtra._id}`)}
-                      className="bg-green-500 rounded-2xl text-white flex px-2 py-1.5 mr-2">
-                      <MdAdd className="text-xl text-white" /> More
-                    </button>
-                    <button
-                      onClick={() => navigate(`/extra-work/${clientExtra._id}`)}
-                      className="bg-blue-500 rounded-2xl text-white flex px-2 py-1.5 ml-2">
-                      <FaExternalLinkAlt className="text-lg text-white" />
-                    </button>
+                      <tbody className="divide-y divide-gray-200">
+                        {contractorBills.map((bill) => (
+                          <tr key={bill._id} className='border-b border-blue-gray-200'>
+                            <td className="px-6 py-4">
+                              {bill?.contractor?.name}
+                            </td>
+                            <td className="px-6 py-4">
+                              {bill?.billOf.workDescription}
+                            </td>
+                            <td className="px-6 py-4 text-center">{bill?.billOf.amount}</td>
+                            <td className="px-6 py-4 text-center">{bill?.dateOfPayment ? moment(bill?.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
+                            <td className="px-6 py-4 text-center">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
+                            <td className="px-6 py-4 text-center">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
+                            <td className="px-6 py-4 text-center">{bill?.paymentStatus}</td>
+                            <td className="px-3 py-4 text-center">
+                              <button
+                                onClick={() => navigate(`/bill/${bill._id}`)}
+                                className="mr-2"
+                              >
+                                <FaExternalLinkAlt className='text-green-500 hover:text-green-600 text-lg' />
+                              </button>
+                              {/* <button
+                                onClick={() => { }}
+                                className=" mr-2">
+                                <GrEdit className='bg-blue-500 hover:text-blue-600 text-xl' />
+                              </button>
+                              <button
+                              onClick={() => {}}>
+                                <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                              </button> */}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
+                </Tabs.TabPane>
 
-                </table>
-              </Tabs.TabPane>
+                <Tabs.TabPane tab='Supplier' key={'supplier'}>
+                  <div className="overflow-x-auto"
+                    style={{
+                      scrollbarWidth: 'none',
+                      '-ms-overflow-style': 'none',
+                    }}>
+                    <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                      <thead className="bg-gray-800">
+                        <tr className="text-white text-left">
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Supplier</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Material</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Amount</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Payment Date</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Paid</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Due</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Status</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'></th>
+                        </tr>
+                      </thead>
 
-              <Tabs.TabPane tab='Contractor' key={'contractor'}>
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500">
-                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                      <th scope="col" className="px-6 py-3">Contractor</th>
-                      <th scope="col" className="px-6 py-3">Amount</th>
-                      <th scope="col" className="px-6 py-3">Paid</th>
-                      <th scope="col" className="px-6 py-3">Due</th>
-                      <th scope="col" className="px-6 py-3">Total Work</th>
-                      <th scope="col" className="px-3 py-3">Actions</th>
+                      <tbody className="divide-y divide-gray-200">
+                        {supplierBills.map((bill) => (
+                          <tr key={bill._id} className='border-b border-blue-gray-200'>
+                            <td className="px-6 py-4">
+                              {bill?.supplier?.name}
+                            </td>
+                            <td className="px-6 py-4">
+                              {bill?.billOf.material}
+                            </td>
+                            <td className="px-6 py-4 text-center"></td>
+                            <td className="px-6 py-4 text-center">{bill?.dateOfPayment ? moment(bill?.dateOfPayment).format('DD-MM-YYYY') : '-'}</td>
+                            <td className="px-6 py-4 text-center">{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
+                            <td className="px-6 py-4 text-center">{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
+                            <td className="px-6 py-4 text-center">{bill?.paymentStatus}</td>
+                            <td className="px-3 py-4 text-center">
+                              <button
+                                onClick={() => navigate(`/bill/${bill._id}`)}
+                                className="mr-2"
+                              >
+                                <FaExternalLinkAlt className='text-green-500 hover:text-green-600 text-lg' />
+                              </button>
+                              {/* <button
+                              onClick={()=>{}}
+                                className="mr-2">
+                                <GrEdit className='bg-blue-500 hover:text-blue-600 text-xl' />
+                              </button>
+                              <button
+                              >
+                                <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                              </button> */}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </Tabs.TabPane>
+
+              </Tabs>
+            </details>
+          </div>
+
+          {/* Purchase Order */}
+          <div className="card ">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-md px-2 py-3 w-full mb-8 ">
+              <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                Purchase Order
+                <button onClick={() => { navigate('/create-purchaseOrder') }}
+                  className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+                  <MdAdd className="text-xl text-white" />
+                </button>
+              </summary>
+              <div className="overflow-x-auto"
+                style={{
+                  scrollbarWidth: 'none',
+                  '-ms-overflow-style': 'none',
+                }}>
+                <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                  <thead className="bg-gray-800">
+                    <tr className="text-white text-left">
+                      <th className='font-semibold text-sm uppercase px-6 py-4'>Supplier</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Total Amount</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Total Paid</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Total Due</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Approval</th>
+                      <th className='font-semibold text-sm uppercase px-6 py-4 text-center'></th>
                     </tr>
                   </thead>
 
-                  <tbody>
-                    {contractorExtra.map((extraWork) => (
-                      <tr key={extraWork._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tbody className="divide-y divide-gray-200">
+                    {purchaseOrders?.map((purchaseOrder) => (
+                      <tr key={purchaseOrder._id} className='border-b border-blue-gray-200'>
                         <td className="px-6 py-4">
-                          {extraWork?.contractor?.name}
+                          {purchaseOrder.supplier?.name}
                         </td>
-                        <td className="px-6 py-4">{extraWork?.totalAmount}</td>
-                        <td className="px-6 py-4">{extraWork?.paid}</td>
-                        <td className="px-6 py-4">{extraWork?.due}</td>
-                        <td className="px-6 py-4">
-                          {extraWork?.WorkDetail.length}
-                        </td>
-                        <td className="px-3 py-4">
+                        <td className="px-6 py-4 text-center">{purchaseOrder.totalAmount}</td>
+                        <td className="px-6 py-4 text-center">{purchaseOrder.paidAmount}</td>
+                        <td className="px-6 py-4 text-center">{purchaseOrder.dueAmount}</td>
+                        <td className="px-6 py-4 text-center">{purchaseOrder.approvalStatus}</td>
+                        <td className="px-6 py-4 text-center">
                           <button
-                            onClick={() => navigate(`/extra-work/${extraWork._id}`)}
-                            className="bg-blue-500 text-white px-2 py-1 mr-2">
-                            <FaExternalLinkAlt />
+                            onClick={() => navigate(`/purchase-order/${purchaseOrder?._id}`)}
+                            className="mr-2">
+                            <FaExternalLinkAlt className='text-green-500 hover:text-green-600 text-lg' />
                           </button>
                           <button
-                            onClick={() => navigate(`/edit-extra-work/${extraWork._id}`)}
-                            className="bg-green-500 text-white px-2 py-1 mr-2">
-                            <GrEdit />
+                            onClick={() => navigate(`/edit-purchaseOrder/${purchaseOrder?._id}`)}
+                            className="mr-2">
+                            <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
                           </button>
                           <button
-                            onClick={() => deleteExtraWork(extraWork._id)}
-                            className="bg-red-500 text-white px-2 py-1 mr-2">
-                            <MdDelete />
+                            onClick={() => deletePurchaseOrder(purchaseOrder?._id)}>
+                            <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
                           </button>
                         </td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
-              </Tabs.TabPane>
+              </div>
+            </details>
+          </div>
 
-            </Tabs>
-          </details>
+          {/* Extra Work */}
+          <div className="card ">
+            <details className=" border-l-8 border-blue-500 info bg-white shadow-lg rounded-md px-2 py-3 w-full mb-8 ">
+              <summary className='flex justify-between flex-row text-xl font-large text-color-title cursor-pointer' style={{ padding: '1rem' }}>
+                Extra Work
+                <button onClick={() => { navigate('/create-extra-work') }}
+                  className="bg-green-500 rounded-2xl text-white shadow self-end p-1">
+                  <MdAdd className="text-xl text-white" />
+                </button>
+              </summary>
+              <Tabs defaultActiveKey='client'>
+
+                <Tabs.TabPane tab='Client' key={'client'}>
+                  <div className="overflow-x-auto"
+                    style={{
+                      scrollbarWidth: 'none',
+                      '-ms-overflow-style': 'none',
+                    }}>
+                    <table className='w-full whitespace-nowrap bg-white overflow-x-auto'>
+                      <thead className="bg-gray-800">
+                        <tr className="text-white text-left">
+                          <th className='font-semibold text-sm uppercase px-6 py-4'>Work</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Rate</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Area</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Amount</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Status</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'></th>
+                        </tr>
+                      </thead>
+
+                      <tbody className="divide-y divide-gray-200">
+                        {clientExtra?.WorkDetail?.map((workDetail, index) => (
+                          <tr key={index} className='border-b border-blue-gray-200'>
+                            <td className="px-6 py-4">
+                              {workDetail?.work}
+                            </td>
+                            <td className="px-6 py-4 text-center">{workDetail?.rate}</td>
+                            <td className="px-6 py-4 text-center">{workDetail?.area}</td>
+                            <td className="px-6 py-4 text-center">{workDetail?.amount}</td>
+                            <td className="px-6 py-4 text-center">{workDetail?.paymentStatus}</td>
+                            <td className="px-3 py-4 text-center">
+                              <button
+                                onClick={() => navigate(`/edit-extra-work/${clientExtra._id}/work/${index}`)}
+                                className=" mr-2">
+                                <GrEdit className='text-blue-500 hover:text-blue-600 text-xl' />
+                              </button>
+                              <button
+                                onClick={() => deleteExtraWorkDetail(clientExtra._id, index)}>
+                                <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+
+                    <div className='text-right mt-8 ml-2 flex gap-2'>
+                      <button
+                        onClick={() => navigate(`/edit-extra-work/${clientExtra._id}`)}
+                        className="text-green-500 hover:text-green-600 text-lg flex items-center gap-1 mr-2">
+                        <MdAdd className='text-2xl' /> More
+                      </button>
+                      <button
+                        onClick={() => navigate(`/extra-work/${clientExtra._id}`)}
+                        className="ml-2">
+                        <FaExternalLinkAlt className="text-lg text-blue-500 hover:text-blue-600" />
+                      </button>
+                    </div>
+
+                  </div>
+                </Tabs.TabPane>
+
+                <Tabs.TabPane tab='Contractor' key={'contractor'}>
+                  <div className="overflow-x-auto"
+                    style={{
+                      scrollbarWidth: 'none',
+                      '-ms-overflow-style': 'none',
+                    }}>
+                    <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                      <thead className="bg-gray-800">
+                        <tr className="text-white text-left">
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Contractor</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4'>Work</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Amount</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Paid</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'>Due</th>
+                          <th className='font-semibold text-sm uppercase px-6 py-4 text-center'></th>
+                        </tr>
+                      </thead>
+
+                      <tbody className="divide-y divide-gray-200">
+                        {contractorExtra.map((extraWork) => (
+                          <tr key={extraWork._id} className='border-b border-blue-gray-200'>
+                            <td className="px-6 py-4">
+                              {extraWork?.contractor?.name}
+                            </td>
+                            <td className="px-6 py-4 text-center">
+                              {extraWork?.WorkDetail.length}
+                            </td>
+                            <td className="px-6 py-4 text-center">{extraWork?.totalAmount}</td>
+                            <td className="px-6 py-4 text-center">{extraWork?.paid}</td>
+                            <td className="px-6 py-4 text-center">{extraWork?.due}</td>
+                            <td className="px-3 py-4">
+                              <button
+                                onClick={() => navigate(`/extra-work/${extraWork._id}`)}
+                                className="mr-2">
+                                <FaExternalLinkAlt className='text-green-500 hover:text-green-600 text-xl' />
+                              </button>
+                              <button
+                                onClick={() => navigate(`/edit-extra-work/${extraWork._id}`)}
+                                className="mr-2">
+                                <GrEdit className='text-blue-500 hover:text-blue-600 text-xl' />
+                              </button>
+                              <button
+                                onClick={() => deleteExtraWork(extraWork._id)}>
+                                <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </Tabs.TabPane>
+
+              </Tabs>
+            </details>
+          </div>
+
         </div>
-
-      </div>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-      />
-    </section>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
+      </section>
     </div>
   )
 }

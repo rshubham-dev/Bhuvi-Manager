@@ -402,11 +402,9 @@ const WorkOrderForm = () => {
   } else {
     return (
       <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Dashboard" />
+      <Header category="Page" title="Create Work Order" />
       <div className="container mx-auto mt-4 mb-16">
-        <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
-          <h2 className="text-2xl font-semibold mb-4 text-center">Create Work Order</h2>
-
+        <form className="max-w-xl mx-auto" onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="workOrderName" className="block text-sm font-semibold text-gray-600">
               Work Order Name

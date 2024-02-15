@@ -58,6 +58,8 @@ import QualitySchedules from './pages/QualitySchedules.jsx';
 import CreateQualitySchedule from './components/CreateQualitySchedule.jsx';
 import './index.css';
 import UserProfile from './components/ProfileCard.jsx';
+import SupplierScreen from './screen/SupplierScreen.jsx';
+import QualityScheduleScreen from './screen/QualityScheduleScreen.jsx';
 
 const App = () => {
 
@@ -126,7 +128,7 @@ const App = () => {
         <Route path='/project-schedules' element={<ProjectSchedules />} />
         <Route path='/quality-schedules' element={<QualitySchedules />} />
         <Route path='/project-schedule/:id' element={<Project_ScheduleScreen />} />
-        <Route path='/quality-schedule/:id' element={<Project_ScheduleScreen />} />
+        <Route path='/quality-schedule/:id' element={<QualityScheduleScreen />} />
         <Route path='/edit-projectSchedule/:id/:index' element={<CreateProjectSchedule />} />
         <Route path='/edit-qualitySchedule/:id/:index' element={<CreateQualitySchedule />} />
         <Route path='/edit-projectSchedule/:id' element={<CreateProjectSchedule />} />
@@ -139,7 +141,7 @@ const App = () => {
         <Route path='/edit-paymentSchedule/:id/:index' element={<CreatePaymentSchedule />} />
         <Route path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
         <Route path='/bills' element={<Bills />} />
-        <Route path='/bill' element={<BillScreen />} />
+        <Route path='/bill/:id' element={<BillScreen />} />
         <Route path='/edit-bill/:id' element={<CreateBill />} />
         <Route path='/create-bill' element={<CreateBill />} />
         <Route path='/extra-work' element={<ExtraWork />} />
@@ -152,6 +154,7 @@ const App = () => {
         <Route path='/create-supplier' element={<CreateSupplier />} />
         <Route path='/edit-supplier/:id' element={<CreateSupplier />} />
         <Route path='/suppliers' element={<Suppliers />} />
+        <Route path='/supplier/id' element={<SupplierScreen />} />
         <Route path='/create-purchaseOrder' element={<CreatePurchaseOrder />} />
         <Route path='/edit-purchaseOrder/:id' element={<CreatePurchaseOrder />} />
         <Route path='/edit-purchaseOrder/:id/material/:index' element={<CreatePurchaseOrder />} />

@@ -67,9 +67,9 @@ const WorkOrders = () => {
     <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
       <Header category="Page" title="Work-Orders" />
       <section className="min-h-screen mb-16 flex justify-center">
-        <div className='overflow-x-auto w-full px-4'>
-          <div className="pt-3 px-4 mx-auto mb-6">
-            <div className="text-sm text-gray-700 py-1 flex flex-col sm:flex-row items-center justify-between">
+        <div className='overflow-x-auto w-full'>
+          <div className=" mx-auto mb-6">
+            <div className="text-sm text-gray-700 py-1 flex flex-row sm:flex-row items-center justify-between">
               <h2 className="text-lg sm:text-xl text-green-600 mb-2 sm:mb-0 sm:mr-4">Total Work Orders: {workOrders?.length}</h2>
               <button onClick={handleAdd} className="bg-green-500 rounded-full text-white p-2 mt-2 sm:mt-0">
                 <MdAdd className='text-xl' />
@@ -85,9 +85,9 @@ const WorkOrders = () => {
                   <th scope="col" className="font-semibold text-sm uppercase px-6 py-4">Site</th>
                   <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Total Value</th>
                   <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Paid Amount</th>
-                  <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Duration</th>
                   <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Due Amount </th>
-                  <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Actions</th>
+                  <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center">Duration</th>
+                  <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
                 </tr>
               </thead>
 

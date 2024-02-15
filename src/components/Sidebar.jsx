@@ -20,11 +20,11 @@ const Sidebar = () => {
       name: 'Dashboard',
       icon: <AiFillPieChart />
     },
-    {
-      to: '/profile',
-      name: 'Profile',
-      icon: <CgProfile />
-    },
+    // {
+    //   to: '/profile',
+    //   name: 'Profile',
+    //   icon: <CgProfile />
+    // },
     {
       to: '/user',
       name: 'Users',
@@ -45,11 +45,11 @@ const Sidebar = () => {
       name: 'Payment Schedules',
       icon: <MdPayment />
     },
-    // { 
-    //   to: '/quality-schedules', 
-    //   name: 'Quality Schedules', 
-    //   icon: <MdPlaylistAddCheck /> 
-    // },
+    { 
+      to: '/quality-schedules', 
+      name: 'Quality Schedules', 
+      icon: <MdPlaylistAddCheck /> 
+    },
     {
       to: '/bills',
       name: 'Bills',

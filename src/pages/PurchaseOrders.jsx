@@ -40,18 +40,22 @@ const PurchaseOrders = () => {
     navigate(`/edit-purchaseOrder/${id}`);
   };
 
-  const editRequirement = (id, index) => {
-    navigate(`/edit-purchaseOrder/${id}/material/${index}`);
-  };
+  const handleRedirect = (id) => {
+    navigate(`/purchase-order/${id}`);
+  }
 
-  const deleteRequirement = async (id, index) => {
-    try {
-      await axios.delete(`/api/v1/purchase-order/${id}/requirement/${index}`);
-      setPurchaseOrder();
-    } catch (error) {
-      toast.error(error.message)
-    }
-  };
+  // const editRequirement = (id, index) => {
+  //   navigate(`/edit-purchaseOrder/${id}/material/${index}`);
+  // };
+
+  // const deleteRequirement = async (id, index) => {
+  //   try {
+  //     await axios.delete(`/api/v1/purchase-order/${id}/requirement/${index}`);
+  //     setPurchaseOrder();
+  //   } catch (error) {
+  //     toast.error(error.message)
+  //   }
+  // };
 
   const handleDelete = async (id) => {
     try {
@@ -69,9 +73,9 @@ const PurchaseOrders = () => {
   return (
     <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-6 shadow-lg bg-white rounded-3xl'>
       <section className="overflow-x-auto">
-      <Header category="Page" title="Purchase Order's" />
-        <div className="m-2 mx-6 flex flex-row justify-between items-center">
-          <h2 className="text-lg sm:text-xl text-green-600">
+        <Header category="Page" title="Purchase Order's" />
+        <div className="w-full mx-auto mb-6 text-gray-700 p-1 flex flex-row justify-between items-center">
+          <h2 className="text-lg text-wrap sm:text-md md:text-lg lg:text-xl text-green-600 mr-4 pr-4">
             Total Purchase Orders: {purchaseOrders?.length}
           </h2>
           <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
@@ -79,7 +83,46 @@ const PurchaseOrders = () => {
           </button>
         </div>
 
-        <section className="bg-white px-4 sm:px-8 py-6 sm:py-8 mb-12 sm:mb-16">
+        <div className="overflow-x-auto">
+          <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+            <thead className="bg-gray-800">
+              <tr className="text-white text-left">
+                <th className="font-semibold text-sm uppercase px-6 py-4 "> Name </th>
+                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Admin Approve </th>
+                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th>
+                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Delivery Status </th>
+                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+              </tr>
+            </thead>
+
+            <tbody className="divide-y divide-gray-200">
+              {purchaseOrders?.map((purchaseOrder) => (
+                <tr key={purchaseOrder._id} className='border-b border-blue-gray-200'>
+                  <td className="px-6 py-4">
+                    <p className=""> {purchaseOrder.site?.name} </p>
+                    <p className="text-gray-500 text-sm font-semibold tracking-wide"> {purchaseOrder.supplier?.name} </p>
+                  </td>
+                    <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
+                    <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
+                  <td className="px-6 py-4 text-center">{purchaseOrder?.status}</td>
+                  <td className="px-6 py-4 text-center">
+                    <button onClick={() => handleRedirect(purchaseOrder._id)} className="mr-2">
+                      <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
+                    </button>
+                    <button onClick={() => handleEdit(purchaseOrder._id)} className="mr-2">
+                      <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                    </button>
+                    <button onClick={() => handleDelete(purchaseOrder._id)} className="mr-2">
+                      <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* <section className="bg-white px-4 sm:px-8 py-6 sm:py-8 mb-12 sm:mb-16">
           <div className="w-full">
             {purchaseOrders.map((purchaseOrder) => (
               <div key={purchaseOrder._id} className="card mb-4">
@@ -142,7 +185,7 @@ const PurchaseOrders = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
         <Toaster
           position="top-right"
