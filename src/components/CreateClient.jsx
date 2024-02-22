@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
-
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const CreateClient = () => {

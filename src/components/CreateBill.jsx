@@ -191,7 +191,7 @@ const CreateBill = () => {
           billFor: bill.billFor,
           contractor: bill.contractor,
           supplier: bill.supplier,
-          // createdBy: user._id,
+          createdBy: user._id,
           billNo: bill.billNo,
           billOf: bill.billOf,
           toPay: bill.toPay,
@@ -406,7 +406,7 @@ const CreateBill = () => {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option>{billToEdit ? data.site : 'Site'}</option>
-              {sites.map((site) => (
+              {sites?.map((site) => (
                 <option key={site._id} value={site._id}>
                   {site.name}
                 </option>

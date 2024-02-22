@@ -15,6 +15,7 @@ const CreateSite = () => {
     area: '',
     incharge: '',
     supervisor: '',
+    qualityEngineer: '',
     projectType: '',
     agreement: '',
     address: '',
@@ -23,9 +24,11 @@ const CreateSite = () => {
     client: '',
     incharge: '',
     supervisor: '',
+    qualityEngineer:'',
   })
   const [incharges, setIncharge] = useState([]);
   const [supervisors, setSupervisor] = useState([]);
+  const [qualityEngineers, setQualityEngineer] = useState([]);
   const [clients, setClient] = useState([]);
   const projectType = ['Residential', 'Commercial', 'Instutional', 'Government'];
   const floors = ['Ground', 'G+1', 'G+2', 'G+3', 'G+4', 'G+5', 'G+6', 'First', 'Second'];
@@ -49,6 +52,7 @@ const CreateSite = () => {
         client: site.client?.name,
         incharge: site.incharge?.userName,
         supervisor: site.supervisor?.userName,
+        qualityEngineer: site.qualityEngineer?.userName,
       })
       setSite({
         name: site.name,
@@ -57,7 +61,8 @@ const CreateSite = () => {
         floors: site.floors,
         area: site.area,
         incharge: site.incharge?._id,
-        supervisor: site.supervisor._id,
+        supervisor: site.supervisor?._id,
+        qualityEngineer: site.qualityEngineer?._id,
         projectType: site.projectType,
         agreement: site.agreement,
         address: site.address,
@@ -91,6 +96,7 @@ const CreateSite = () => {
         if (userData) {
           setIncharge(users.filter((user) => user.department === 'Site Incharge'));
           setSupervisor(users.filter((user) => user.department === 'Site Supervisor'));
+          setQualityEngineer(users.filter((user) => user.department === 'Quality Engineer'));
         }
       } catch (error) {
         toast.error(error.message);
@@ -245,6 +251,25 @@ const CreateSite = () => {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Quality Engineer */}
+        <div className="mb-4">
+          <label htmlFor="qualityEngineer" className="block text-sm font-medium text-gray-600">
+          Quality Engineer
+          </label> 
+            <select
+              name="qualityEngineer"
+              onChange={handleChange}
+              disabled={siteIdToEdit && user.role !== 'Admin'}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+              <option>{data.qualityEngineer !== '' ? data.qualityEngineer : 'Assign an incharge'}</option>
+              {qualityEngineers.map((qualityEngineer) => (
+                <option key={qualityEngineer._id} value={qualityEngineer._id}>
+                  {qualityEngineer.userName}
+                </option>
+              ))}
+            </select>
         </div>
 
         {/* Site Incharge */}

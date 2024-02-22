@@ -13,24 +13,50 @@ const BillScreen = () => {
   const [contractorBill, setContractorBill] = useState({});
   const [supplierBill, setSupplierBill] = useState({});
   const navigate = useNavigate();
+  const {data} = useParams();
   useEffect(() => {
-    if (id) {
+    if (id && !data) {
       getbills(id);
+    }else if(data){
+      fetchApproval(data)
     }
   }, []);
 
   const getbills = async (id) => {
     try {
-      const billData = await axios.get(`/api/v1/bill/${id}`);
-      console.log(billData.data);
-      setBill(billData.data);
-      setContractorBill(billData.data);
-      setSupplierBill(billData.data);
-      // setMaterialBill(bills.filter((bill) => bill.billFor === 'Material'));
+      if(id){
+        const billData = await axios.get(`/api/v1/bill/${id}`);
+        console.log(billData.data);
+        setBill(billData.data);
+        setContractorBill(billData.data);
+        setSupplierBill(billData.data);
+        // setMaterialBill(bills.filter((bill) => bill.billFor === 'Material'));
+      }
     } catch (error) {
       toast.error(error.message)
     }
   };
+
+  const fetchApproval = async (id) => {
+    try {
+        console.log(id)
+        const response = await axios.get(`/api/v1/approval/pending/${id}`);
+        const data = response.data?.data
+        const siteData = await axios.get(`/api/v1/site/${data.site}`);
+        if(data.supplier){
+          const supplierData = await axios.get(`/api/v1/supplier/${data.supplier}`);
+          data.supplier = supplierData.data;
+        }else if(data.contractor){
+          const contractorData = await axios.get(`/api/v1/contractor/${data.contractor}`);
+          data.contractor = contractorData.data;
+        }
+        data.site = siteData.data;
+        setBill(data)
+        console.log(data)
+    } catch (error) {
+        console.error(error)
+    }
+}
 
   const BillFor = (bill) => {
     if (bill?.billFor === 'Contractor') {
@@ -122,7 +148,7 @@ const BillScreen = () => {
                 <td className="px-6 py-4 text-gray-700">₹{bill?.amount}</td>
                 <td className="px-6 py-4 text-gray-700">₹{bill?.toPay}</td>
                 <td className="px-6 py-4 text-gray-700">₹{bill?.paidAmount ? bill?.paidAmount : '0'}</td>
-                <td className="px-6 py-4 text-gray-700">₹{bill?.dueAmount}</td>
+                <td className="px-6 py-4 text-gray-700">₹{bill?.dueAmount ? bill?.dueAmount : '0'}</td>
                 <td className="px-6 py-4 text-gray-700">
                   <button onClick={() => navigate(`/edit-bill/${bill._id}`)}>
                     <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />

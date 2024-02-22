@@ -14,15 +14,16 @@ import { useNavigate } from 'react-router-dom';
 // import io from 'socket.io-client';
 // const socket = io('http://localhost:8080');
 axios.defaults.withCredentials = true;
-const Message = () => {
-    const [allMessages, setAllMessages] = useState([]);
+
+const Approval = () => {
     const [allApprovals, setAllApprovals] = useState([]);
+    const [pendingApprovals, setPendingApproval] = useState([]);
+    const [approved, setApproved] = useState([]);
+    const [rejected, setRejected] = useState([]);
     const { user } = useSelector((state) => {
         return state.auth
     });
     const navigate = useNavigate();
-    const inputRef = useRef();
-
     useEffect(() => {
         // socket.on('message', (incomingData) => {
         //     console.log('Received message:', incomingData);
@@ -36,7 +37,6 @@ const Message = () => {
             fetchApproval(user._id);
         }
     }, []);
-
     const fetchApproval = async (id) => {
         try {
             console.log(id)
@@ -53,6 +53,7 @@ const Message = () => {
             //   approvalData?.data.contractor = contractorData.data;
             // }
             setAllApprovals(approvalData)
+            setPendingApproval(approvalData)
             console.log(approvalData)
         } catch (error) {
             console.error(error)
@@ -63,21 +64,13 @@ const Message = () => {
             console.log(id)
             const response = await axios.put(`/api/v1/approval/${id}`);
             console.log(response.data)
+            setPendingApproval(pendingApprovals.filter((pendingApproval) => pendingApproval._id !== id))
         } catch (error) {
             console.error(error)
         }
      };
     const handleReject = () => { };
     const handleView = () => { };
-    // const sendMessage = (e) => {
-    //     e.preventDefault();
-    //     const userMessage = inputRef.current.value.trim();
-    //     if (userMessage !== '') {
-    //         // socket.emit('message', userMessage);
-    //         setAllMessages((prevMessages) => [...prevMessages, { content: userMessage, isUser: true }]);
-    //         inputRef.current.value = '';
-    //     }
-    // };
 
     const ApprovalCard = ({ workDescription, site, by, date, view, approve, reject }) => {
         return (
@@ -111,44 +104,32 @@ const Message = () => {
         );
     };
 
-    return (
-        <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+  return (
+            <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
             <Header category="Page" title="Message" />
             <section className='h-full w-full overflow-x-auto'>
-                {/* <form onSubmit={sendMessage} className="w-3/4 flex mx-auto px-8 pt-6 pb-8">
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        placeholder="Write Your Message"
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    />
-                    <button
-                        type="submit"
-                        className="bg-blue-500 ml-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                    >
-                        Send
-                    </button>
-                </form> */}
 
-                <Tabs defaultActiveKey='approval' className='p-2'>
-                    {/* <Tabs.TabPane tab='Notification' key={'notification'}>
+                <Tabs defaultActiveKey='pending' className='p-2'>
+
+                    <Tabs.TabPane tab='Pending' key={'pending'} className='p-1 h-full'>
                         <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            <div className='bg-white shadow-lg rounded-xl'>
-                                <ApprovalCard
-                                    workDescription=''
-                                    paid=''
-                                    due=''
-                                    amount=''
-                                    dateOfPayment=''
-                                    status=''
-                                    handleEdit={() => handleEdit()}
-                                    handleDelete={() => deleteDetail()}
-                                />
-                            </div>
+                            {pendingApprovals.map((approval) => (
+                                <div key={approval._id} className='bg-gray-50 shadow-lg rounded-2xl'>
+                                    <ApprovalCard
+                                        workDescription={approval.approvalOf}
+                                        site=''
+                                        date={approval.date}
+                                        by={approval.by?.userName}
+                                        view={() => navigate(`/bill-data/${approval?._id}`)}
+                                        approve={() => handleApprove(approval?._id)}
+                                        reject={() => handleReject(approval?._id)}
+                                    />
+                                </div>
+                            ))}
                         </div>
-                    </Tabs.TabPane> */}
+                    </Tabs.TabPane>
 
-                    <Tabs.TabPane tab='Pending' key={'approval'} className='p-1 h-full'>
+                    <Tabs.TabPane tab='Approved' key={'approved'} className='p-1 h-full'>
                         <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4 gap-4">
                             {allApprovals.map((approval) => (
                                 <div key={approval._id} className='bg-gray-50 shadow-lg rounded-2xl'>
@@ -166,7 +147,23 @@ const Message = () => {
                         </div>
                     </Tabs.TabPane>
 
-
+                    <Tabs.TabPane tab='Rejected' key={'rejected'} className='p-1 h-full'>
+                        <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                            {allApprovals.map((approval) => (
+                                <div key={approval._id} className='bg-gray-50 shadow-lg rounded-2xl'>
+                                    <ApprovalCard
+                                        workDescription={approval.approvalOf}
+                                        site=''
+                                        date={approval.date}
+                                        by={approval.by?.userName}
+                                        view={() => navigate(`/bill-data/${approval?._id}`)}
+                                        approve={() => handleApprove(approval?._id)}
+                                        reject={() => handleReject(approval?._id)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </Tabs.TabPane>
 
                 </Tabs>
 
@@ -176,7 +173,7 @@ const Message = () => {
                 />
             </section>
         </div>
-    );
-};
+  )
+}
 
-export default Message;
+export default Approval

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-
+import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 const CreateContractor = () => {
   const [contractor, setContractor] = useState({

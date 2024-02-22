@@ -60,6 +60,7 @@ import './index.css';
 import UserProfile from './components/ProfileCard.jsx';
 import SupplierScreen from './screen/SupplierScreen.jsx';
 import QualityScheduleScreen from './screen/QualityScheduleScreen.jsx';
+import Approval from './pages/Approval.jsx';
 
 const App = () => {
 
@@ -142,6 +143,7 @@ const App = () => {
         <Route path='/create-payment-schedule' element={<CreatePaymentSchedule />} />
         <Route path='/bills' element={<Bills />} />
         <Route path='/bill/:id' element={<BillScreen />} />
+        <Route path='/bill-data/:data' element={<BillScreen />} />
         <Route path='/edit-bill/:id' element={<CreateBill />} />
         <Route path='/create-bill' element={<CreateBill />} />
         <Route path='/extra-work' element={<ExtraWork />} />
@@ -161,6 +163,7 @@ const App = () => {
         <Route path='/purchase-order' element={<PurchaseOrders />} />
         <Route path='/purchase-order/:id' element={<PurchaseOrderScreen />} />
         <Route path='/message' element={<Message />} />
+        <Route path='/approval' element={<Approval />} />
         <Route path='/tasks' element={<Task />} />
       </Routes>
     </>
