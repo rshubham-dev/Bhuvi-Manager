@@ -5,6 +5,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
+import { Tabs } from 'antd';
+import { FcApproval } from "react-icons/fc";
 import Header from '../components/Header';
 
 const CheckList = () => {

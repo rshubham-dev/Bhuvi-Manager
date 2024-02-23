@@ -107,7 +107,7 @@ const Bills = () => {
   return (
     <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-xl'>
       <Header category="Page" title="Bill's" />
-      <section className="h-full w-full bg-white overflow-x-auto ">
+      <section className="h-full w-full overflow-x-auto ">
         <div className="w-full mx-auto text-gray-700 flex justify-end items-center">
           <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
             <MdAdd className='text-xl' />

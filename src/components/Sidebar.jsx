@@ -1,12 +1,15 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { MdPerson, MdDateRange, MdMessage, MdOutlineCancel, MdPayment, MdLocationOn, MdBusiness, MdPeople, MdReceipt, MdPlaylistAddCheck, MdConstruction, MdBuild, MdMoney, MdAssignment, MdWork } from "react-icons/md";
+import { MdPerson, MdDateRange, MdWarehouse, MdTrolley, MdMessage, MdOutlineCancel, MdPayment, MdLocationOn, MdBusiness, MdPeople, MdReceipt, MdConstruction, MdBuild, MdMoney, MdAssignment, MdWork } from "react-icons/md";
 import { GrUserWorker } from "react-icons/gr";
+import { FaFileInvoiceDollar } from "react-icons/fa";
 import { BiSolidPurchaseTag } from "react-icons/bi";
-import { AiFillPieChart } from 'react-icons/ai'
+import { AiFillPieChart } from 'react-icons/ai';
+import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { CgProfile } from 'react-icons/cg'
 import { useSelector } from 'react-redux';
 import logo from '../asset/logo.png';
+import { LuCalendarCheck2, LuClipboardCheck } from "react-icons/lu";
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import { AiOutlineMenu } from 'react-icons/ai';
 // import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -60,13 +63,13 @@ const Sidebar = () => {
     {
       to: '/quality-schedules',
       name: 'Quality Schedules',
-      icon: <MdPlaylistAddCheck />,
+      icon: <LuCalendarCheck2 />,
       role: ['Company', 'Ceo', 'Quality Engineer', 'Site Incharge', 'Site Supervisor', 'Accountant']
     },
     {
       to: '/bills',
       name: 'Bills',
-      icon: <MdReceipt />,
+      icon: <LiaFileInvoiceDollarSolid />,
       role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
     },
     {
@@ -96,13 +99,13 @@ const Sidebar = () => {
     {
       to: '/contractors',
       name: 'Contractors',
-      icon: <MdConstruction />,
+      icon: <GrUserWorker />,
       role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
     },
     {
       to: '/suppliers',
       name: 'Suppliers',
-      icon: '',
+      icon: <MdTrolley />,
       role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
     },
     {
@@ -117,6 +120,12 @@ const Sidebar = () => {
       icon: <MdMessage />,
       role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
     },
+    // { 
+    //   to: '/checklist', 
+    //   name: 'Check-List ', 
+    //   icon: <LuClipboardCheck />,
+    // role: ['Company', 'Ceo'] 
+    // },
     // { 
     //   to: '/work-details', 
     //   name: 'Work-Details', 

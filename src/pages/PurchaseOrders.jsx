@@ -6,12 +6,15 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import { Tabs } from 'antd';
+import { FcApproval } from "react-icons/fc";
 import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
 const PurchaseOrders = () => {
   const navigate = useNavigate();
   const [purchaseOrders, setPurchaseOrder] = useState([]);
+  const [draftOrder, setDraftOrder] = useState([]);
   const { user, isLoggedIn } = useSelector((state) => state.auth);
   useEffect(() => {
 
@@ -32,8 +35,28 @@ const PurchaseOrders = () => {
       } catch (error) {
         toast.error(error.message)
       }
-    }
+    };
+    const getDraftOrders = async () => {
+      try {
+        const billData = await axios.get(`/api/v1/bill/draft/${user?._id}`);
+        const bills = billData.data;
+        if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
+          const sites = user?.site;
+          // console.log('user', user);
+          // console.log('sites', sites);
+          let draftBills;
+          for (let site of sites) {
+            draftBills = bills?.filter((bill) => bill.site?._id.includes(site))
+          }
+          setDraftOrder(draftBills);
+          console.log(draftBills)
+        }
+      } catch (error) {
+        toast.error(error.message)
+      }
+    };
     fetchPurchaseOrders();
+    getDraftOrders();
   }, [])
 
   const handleEdit = (id) => {
@@ -61,7 +84,19 @@ const PurchaseOrders = () => {
     try {
       await axios.delete(`/api/v1/purchase-order/${id}`);
       setPurchaseOrder(purchaseOrders.filter((purchaseOrder) => purchaseOrder._id !== id));
+      setDraftOrder(draftOrder.filter((order) => order._id !== id));
     } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
+  const handleSave = async (id) => {
+    try {
+      const response = await axios.put(`/api/v1/bill/save/${id}`);
+      setDraftOrder(draftBill.filter((bill) => bill._id !== id));
+      toast.success(response.data?.message);
+    } catch (error) {
+      console.log(error)
       toast.error(error.message)
     }
   };
@@ -82,49 +117,100 @@ const PurchaseOrders = () => {
             <MdAdd className='text-xl' />
           </button>
         </div>
+        <Tabs defaultActiveKey='ordered' tabPosition='top' className="w-full">
 
-        <div className="overflow-x-auto"
-          style={{
-            scrollbarWidth: 'none',
-            '-ms-overflow-style': 'none',
-          }}>
-          <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
-            <thead className="bg-gray-800">
-              <tr className="text-white text-left">
-                <th className="font-semibold text-sm uppercase px-6 py-4 "> Name </th>
-                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Admin Approve </th>
-                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th>
-                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Delivery Status </th>
-                <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
-              </tr>
-            </thead>
+          <Tabs.TabPane tab='Ordered' key={'ordered'}>
+            <div className="overflow-x-auto"
+              style={{
+                scrollbarWidth: 'none',
+                '-ms-overflow-style': 'none',
+              }}>
+              <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                <thead className="bg-gray-800">
+                  <tr className="text-white text-left">
+                    <th className="font-semibold text-sm uppercase px-6 py-4 "> Name </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Admin Approve </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Delivery Status </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+                  </tr>
+                </thead>
 
-            <tbody className="divide-y divide-gray-200">
-              {purchaseOrders?.map((purchaseOrder) => (
-                <tr key={purchaseOrder._id} className='border-b border-blue-gray-200'>
-                  <td className="px-6 py-4">
-                    <p className=""> {purchaseOrder.site?.name} </p>
-                    <p className="text-gray-500 text-sm font-semibold tracking-wide"> {purchaseOrder.supplier?.name} </p>
-                  </td>
-                  <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
-                  <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
-                  <td className="px-6 py-4 text-center">{purchaseOrder?.status}</td>
-                  <td className="px-6 py-4 text-center">
-                    <button onClick={() => handleRedirect(purchaseOrder._id)} className="mr-2">
-                      <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
-                    </button>
-                    <button onClick={() => handleEdit(purchaseOrder._id)} className="mr-2">
-                      <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
-                    </button>
-                    <button onClick={() => handleDelete(purchaseOrder._id)} className="mr-2">
-                      <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                <tbody className="divide-y divide-gray-200">
+                  {purchaseOrders?.map((purchaseOrder) => (
+                    <tr key={purchaseOrder._id} className='border-b border-blue-gray-200'>
+                      <td className="px-6 py-4">
+                        <p className=""> {purchaseOrder.site?.name} </p>
+                        <p className="text-gray-500 text-sm font-semibold tracking-wide"> {purchaseOrder.supplier?.name} </p>
+                      </td>
+                      <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
+                      <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
+                      <td className="px-6 py-4 text-center">{purchaseOrder?.status}</td>
+                      <td className="px-6 py-4 text-center">
+                        <button onClick={() => handleRedirect(purchaseOrder._id)} className="mr-2">
+                          <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
+                        </button>
+                        <button onClick={() => handleEdit(purchaseOrder._id)} className="mr-2">
+                          <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                        </button>
+                        <button onClick={() => handleDelete(purchaseOrder._id)} className="mr-2">
+                          <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Tabs.TabPane>
+
+          <Tabs.TabPane tab='Draft' key={'draft'}>
+
+            <div className="overflow-x-auto"
+              style={{
+                scrollbarWidth: 'none',
+                '-ms-overflow-style': 'none',
+              }}>
+              <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                <thead className="bg-gray-800">
+                  <tr className="text-white text-left">
+                    <th className="font-semibold text-sm uppercase px-6 py-4 "> Name </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Admin Approve </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Delivery Status </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-gray-200">
+                  {purchaseOrders?.map((purchaseOrder) => (
+                    <tr key={purchaseOrder._id} className='border-b border-blue-gray-200'>
+                      <td className="px-6 py-4">
+                        <p className=""> {purchaseOrder.site?.name} </p>
+                        <p className="text-gray-500 text-sm font-semibold tracking-wide"> {purchaseOrder.supplier?.name} </p>
+                      </td>
+                      <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
+                      <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
+                      <td className="px-6 py-4 text-center">{purchaseOrder?.status}</td>
+                      <td className="px-6 py-4 text-center">
+                        <button onClick={() => handleRedirect(purchaseOrder._id)} className="mr-2">
+                          <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
+                        </button>
+                        <button onClick={() => handleEdit(purchaseOrder._id)} className="mr-2">
+                          <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                        </button>
+                        <button onClick={() => handleDelete(purchaseOrder._id)} className="mr-2">
+                          <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Tabs.TabPane>
+
+        </Tabs>
 
         {/* <section className="bg-white px-4 sm:px-8 py-6 sm:py-8 mb-12 sm:mb-16">
           <div className="w-full">

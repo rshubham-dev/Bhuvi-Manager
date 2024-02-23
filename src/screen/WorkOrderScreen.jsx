@@ -53,14 +53,15 @@ const WorkOrderScreen = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-6 p-4 min-w-screen min-h-screen md:p-6 rounded-3xl bg-white'>
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-6 rounded-3xl bg-white'>
       <Header category="Page" title="Work Order Work Detail" />
       <section className='mb-12 h-full w-full'>
-        <div className=" w-full">
+        <div className=" w-full flex flex-row justify-end items-end mb-6">
           <button onClick={() => handleEdit(id)} className="bg-green-500 text-white px-2 py-2 rounded-full">
             <MdAdd className='text-xl' />
           </button>
         </div>
+
         <div className="overflow-x-auto"
           style={{
             scrollbarWidth: 'none',

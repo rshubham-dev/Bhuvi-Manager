@@ -8,6 +8,8 @@ import moment from 'moment';
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
+import { Tabs } from 'antd';
+import { FcApproval } from "react-icons/fc";
 axios.defaults.withCredentials = true;
 
 const WorkOrders = () => {

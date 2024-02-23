@@ -6,6 +6,8 @@ import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import { Tabs } from 'antd';
+import { FcApproval } from "react-icons/fc";
 import Header from '../components/Header';
 
 axios.defaults.withCredentials = true;

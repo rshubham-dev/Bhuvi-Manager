@@ -9,6 +9,7 @@ import { FaExternalLinkAlt } from "react-icons/fa";
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import Header from '../components/Header';
+import { FcApproval } from "react-icons/fc";
 axios.defaults.withCredentials = true;
 
 const ExtraWork = () => {
@@ -24,6 +25,7 @@ const ExtraWork = () => {
         const extraWorkData = await axios.get('/api/v1/extra-work');
         let clientExtraWork;
         let contractorExtraWork;
+        console.log(extraWorkData.data)
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
           const sites = user?.site;
           for (let site of sites) {
@@ -132,9 +134,9 @@ const ExtraWork = () => {
                     <td className="px-6 py-4 text-center">{site.incharge?.userName}</td>
                     <td className="px-6 py-4 text-center">{site.projectType}</td> */}
                       <td className="px-6 py-4 text-center">
-                        {/* <button onClick={() => handleRedirect(extraWork._id)} className="mr-2">
+                        <button onClick={() => handleRedirect(extraWork._id)} className="mr-2">
                           <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
-                        </button> */}
+                        </button>
                         <button onClick={() => handleEdit(extraWork._id)} className="mr-2">
                           <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
                         </button>
@@ -246,9 +248,9 @@ const ExtraWork = () => {
                     <td className="px-6 py-4 text-center">{site.incharge?.userName}</td>
                     <td className="px-6 py-4 text-center">{site.projectType}</td> */}
                       <td className="px-6 py-4 text-center">
-                        {/* <button onClick={() => handleRedirect(extraWork?._id)} className="mr-2">
+                        <button onClick={() => handleRedirect(extraWork?._id)} className="mr-2">
                           <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
-                        </button> */}
+                        </button>
                         <button onClick={() => handleEdit(extraWork?._id)} className="mr-2">
                           <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
                         </button>
@@ -331,6 +333,51 @@ const ExtraWork = () => {
                 </details>
               </div>
             ))} */}
+
+          </Tabs.TabPane>
+
+          <Tabs.TabPane tab='Draft' key={'draft'}>
+
+            <div className="overflow-x-auto">
+              <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
+                <thead className="bg-gray-800">
+                  <tr className="text-white text-left">
+                    <th className="font-semibold text-sm uppercase px-6 py-4 "> Name </th>
+                    {/* <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Total Floor </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Incharge </th>
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Project Type </th> */}
+                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
+                  </tr>
+                </thead>
+
+                <tbody className="divide-y divide-gray-200">
+                  {contractorExtraWorks?.map((extraWork) => (
+                    <tr key={extraWork._id} className='border-b border-blue-gray-200'>
+                      <td className="px-6 py-4">
+                        <p className=""> {extraWork.site?.name} </p>
+                        <p className="text-gray-500 text-sm font-semibold tracking-wide"> {extraWork.contractor?.name} </p>
+                      </td>
+                      {/* <td className="px-6 py-4 text-center">
+                      {site.floors}
+                    </td>
+                    <td className="px-6 py-4 text-center">{site.incharge?.userName}</td>
+                    <td className="px-6 py-4 text-center">{site.projectType}</td> */}
+                      <td className="px-6 py-4 text-center">
+                        {/* <button onClick={() => handleRedirect(extraWork?._id)} className="mr-2">
+                          <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
+                        </button> */}
+                        <button onClick={() => handleEdit(extraWork?._id)} className="mr-2">
+                          <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                        </button>
+                        <button onClick={() => handleDelete(extraWork?._id)} className="mr-2">
+                          <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
           </Tabs.TabPane>
 
