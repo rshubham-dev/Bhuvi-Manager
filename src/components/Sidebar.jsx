@@ -111,7 +111,7 @@ const Sidebar = () => {
     {
       to: '/employee',
       name: 'Employees',
-      icon: <GrUserWorker />,
+      icon: <MdPeople />,
       role: ['Company', 'Ceo']
     },
     {
@@ -126,12 +126,12 @@ const Sidebar = () => {
     //   icon: <LuClipboardCheck />,
     // role: ['Company', 'Ceo'] 
     // },
-    // { 
-    //   to: '/work-details', 
-    //   name: 'Work-Details', 
-    //   icon: <MdAssignment />,
-    // role: ['Company', 'Ceo'] 
-    // },
+    { 
+      to: '/work-details', 
+      name: 'Work-Details', 
+      icon: <MdAssignment />,
+    role: ['Company', 'Ceo', 'Admin'] 
+    },
     // { 
     //   to: '/design', 
     //   name: 'Design', 

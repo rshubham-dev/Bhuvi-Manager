@@ -10,6 +10,7 @@ axios.defaults.withCredentials = true;
 const Login = () => {
   const [formData, setFormData] = useState({
     userMail: '',
+    phone: '',
     password: '',
   });
   const [error, setError] = useState(null);
@@ -39,6 +40,7 @@ const Login = () => {
       }
       setFormData({
         userMail: '',
+        phone: '',
         password: '',
       });
     } catch (error) {
@@ -54,15 +56,25 @@ const Login = () => {
       <section className="mx-auto w-full md:w-3/4 lg:w-2/5 h-fit px-6 py-10 bg-white rounded-2xl shadow-xl">
         <h1 className="text-3xl font-bold mb-4">Welcome Back!</h1>
         <form onSubmit={handleSubmit} className="mt-5 mb-2.5">
-          <div className="mt-5 px-2">
-            <label htmlFor="userMail" className="block text-gray-700 text-sm font-bold mb-1">Email:</label>
+          <div className="my-5 px-2">
+            <label htmlFor="userMail" className="block text-gray-700 text-sm font-bold mb-2">Login With Email / Phone no.:</label>
             <input
-              type="email"
+              type="text"
               name="userMail"
               value={formData.userMail}
               onChange={handleChange}
               className="w-full p-2 border rounded-md"
-              required
+              placeholder='Enter Your Email'
+            />
+          </div>
+          <div className="px-2">
+            <input
+              type="number"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              className="w-full p-2 border rounded-md"
+              placeholder='Enter Your Phone No'
             />
           </div>
           <div className="mt-5 px-2">
@@ -73,6 +85,7 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               className="w-full p-2 border rounded-md"
+              placeholder='Enter Your Password'
               required
             />
           </div>

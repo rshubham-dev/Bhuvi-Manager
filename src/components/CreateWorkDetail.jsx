@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import Header from '../components/Header';
@@ -13,8 +13,45 @@ function WorkDetailsForm() {
       work: '',
     }]
   });
+  const {id, index} = useParams();
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if(id && !index){
+      fetchWorkDetail(id)
+    }else if(id && index){
+      fetchDescription(id, index)
+    }
+  }, [])
+
+  const fetchWorkDetail = async (id) => {
+    try {
+      const response = await axios.get(`/api/v1/work-details/${id}`);
+      setWorkDetail({
+        title: response.data?.title,
+        description: [{
+          work: '',
+        }]
+      });
+    } catch (error) {
+      toast.error(error.message)
+    }
+  };
+
+  const fetchDescription = async (id, index) => {
+  try {
+    const response = await axios.get(`/api/v1/work-details/${id}`);
+    setWorkDetail({
+      title: response.data?.title,
+      description: [{
+        work: response.data?.description[index].work,
+      }]
+    });
+    console.log(response.data?.description[index])
+  } catch (error) {
+    toast.error(error.message)
+  }
+};
 
   const handelChange = (e, index) => {
     const { name, value } = e.target;
@@ -65,9 +102,19 @@ function WorkDetailsForm() {
   const createWorkDetails = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/v1/work-details/create', workDetail);
-      toast.success(response.data.message)
-      navigate(-1);
+      if(id !== '' && index === ''){
+        const response = await axios.put(`/api/v1/work-details/${id}`, workDetail);
+        toast.success(response.data.message)
+        navigate(-1);
+      } else if(id !== '' && index !== ''){
+        const response = await axios.put(`/api/v1/work-details/${id}/${index}`, workDetail);
+        toast.success(response.data.message)
+        navigate(-1);
+      } else {
+        const response = await axios.post('/api/v1/work-details/create', workDetail);
+        toast.success(response.data.message)
+        navigate(-1);
+      }
     } catch (error) {
       toast.error(error.message)
     }
@@ -75,7 +122,7 @@ function WorkDetailsForm() {
   
   return (
     <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-    <Header category="Page" title="Create Work Details" />
+    <Header category="Page" title={`${id ? 'Update' : 'Create'} Work Details`} />
     <section className="container mx-auto mt-4 mb-16">
       <form className='max-w-md mx-auto ' onSubmit={createWorkDetails}>
 
@@ -95,7 +142,7 @@ function WorkDetailsForm() {
 
         <div className="mt-4">
           <h2 className="text-lg font-semibold mb-2">Work Description</h2>
-          {workDetail.description.map((works, index) => (
+          {workDetail?.description?.map((works, index) => (
             <div className="mb-4" key={index}>
               <label htmlFor='description' className="block text-sm font-semibold text-gray-600">
                 Work
@@ -122,16 +169,16 @@ function WorkDetailsForm() {
 
               </div>
             </div>
-
           ))}
-
+          {id ? '' :
           <button
-            type="button"
-            onClick={moreWork}
-            className="bg-blue-500 text-white p-2 rounded mt-4"
+          type="button"
+          onClick={moreWork}
+          className="bg-blue-500 text-white p-2 rounded mt-4"
           >
             Add More
           </button>
+          }
         </div>
 
         <button
@@ -139,7 +186,7 @@ function WorkDetailsForm() {
           onClick={createWorkDetails}
           className="bg-green-500 text-white p-2 rounded mt-4"
         >
-          Create Work Detail
+          {id ? 'Update' : 'Create'} Work Detail
         </button>
 
       </form>

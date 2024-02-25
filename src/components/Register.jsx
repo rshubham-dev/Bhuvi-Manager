@@ -15,14 +15,15 @@ const Register = () => {
         userName: '',
         userMail: '',
         password: '',
-        confirmPassword: '',
+        newPassword: '',
+        phone: '',
         whatsapp: '',
         avatar: '',
     })
     const userName = useRef();
     const userMail = useRef();
     const password = useRef();
-    const confirmPassword = useRef();
+    const newPassword = useRef();
     const whatsapp = useRef();
     const [avatar, setAvatar] = useState('');
     console.log(avatar)
@@ -59,13 +60,7 @@ const Register = () => {
                 formData.append(key, value);
             }
         });
-        // formData.append('avatar', avatar);
-        // formData.append('userName', userName.current.value);
-        // formData.append('userMail', userMail.current.value);
-        // formData.append('password', password.current.value);
-        // formData.append('whatsapp', whatsapp.current.value);
 
-        // if (password.current.value === confirmPassword.current.value) {
         try {
             const response = await axios.post('/api/v1/user/register', formData, {
                 headers: {
@@ -76,13 +71,10 @@ const Register = () => {
             toast.success('Registration successful!');
             navigate('/login');
         } catch (error) {
-            console.error('Error submitting form:', error);
+            console.log('Error submitting form:', error);
             toast.error(error.message)
             toast.error('An error occurred while registering. Please try again.');
         }
-        // } else {
-        //     toast.error('Please Confirm your password');
-        // }
     };
 
     return (
@@ -160,13 +152,26 @@ const Register = () => {
                         <label htmlFor='whatsapp' className='block text-gray-900 text-sm font-bold mb-2'>Contact Number</label>
                         <input
                             className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            type='text'
+                            type='number'
                             name='whatsapp'
                             placeholder='Enter Your Whatsapp Number'
                             autoComplete='off'
                             ref={whatsapp}
                             // required
                             value={user.whatsapp}
+                            onChange={inputData}
+                        />
+                    </div>
+
+                    <div className='mb-4'>
+                        <input
+                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                            type='number'
+                            name='phone'
+                            placeholder='Enter Your Phone Number'
+                            autoComplete='off'
+                            // required
+                            value={user.phone}
                             onChange={inputData}
                         />
                     </div>
@@ -187,16 +192,16 @@ const Register = () => {
                     </div>
 
                     <div className='mb-4'>
-                        <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Confirm Password</label>
+                        <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Change Password</label>
                         <input
                             className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                             type='password'
-                            name='confirmPassword'
-                            placeholder='Confirm Your Password'
+                            name='newPassword'
+                            placeholder='Change Password'
                             autoComplete='off'
-                            ref={confirmPassword}
+                            ref={newPassword}
                             // required
-                            value={user.confirmPassword}
+                            value={user.newPassword}
                             onChange={inputData}
                         />
                     </div>

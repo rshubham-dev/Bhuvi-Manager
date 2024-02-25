@@ -324,7 +324,7 @@ const CreateSite = () => {
         </div>
 
         {/* Agreement */}
-        <div className="mb-4">
+        {/* <div className="mb-4">
           <label htmlFor="agreement" className="block text-sm font-medium text-gray-600">
             Agreement
           </label>
@@ -333,7 +333,7 @@ const CreateSite = () => {
             name="agreement"
             onChange={(e) => handleChange(e, 'agreement')}
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
-        </div>
+        </div> */}
 
         {/* Submit Button */}
         <div className="text-center">

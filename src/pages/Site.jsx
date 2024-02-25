@@ -106,22 +106,22 @@ const Sites = () => {
                 {sites?.map((site) => (
                   <tr key={site._id} className='border-b border-blue-gray-200'>
                     <td className="px-6 py-4">
-                      <p className=""> {site.name} </p>
-                      <p className="text-gray-500 text-sm font-semibold tracking-wide"> {site.client.name} </p>
+                      <p className=""> {site?.name} </p>
+                      <p className="text-gray-500 text-sm font-semibold tracking-wide"> {site?.client?.name} </p>
                     </td>
                     <td className="px-6 py-4 text-center">
-                      {site.floors}
+                      {site?.floors}
                     </td>
-                    <td className="px-6 py-4 text-center">{site.incharge?.userName}</td>
-                    <td className="px-6 py-4 text-center">{site.projectType}</td>
+                    <td className="px-6 py-4 text-center">{site?.incharge?.userName}</td>
+                    <td className="px-6 py-4 text-center">{site?.projectType}</td>
                     <td className="px-6 py-4 text-center">
-                      <button onClick={() => handleRedirect(site._id)} className="mr-2">
+                      <button onClick={() => handleRedirect(site?._id)} className="mr-2">
                         <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
                       </button>
-                      <button onClick={() => handleEdit(site._id)} className="mr-2">
+                      <button onClick={() => handleEdit(site?._id)} className="mr-2">
                         <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
                       </button>
-                      <button onClick={() => handleDelete(site._id)} className="mr-2">
+                      <button onClick={() => handleDelete(site?._id)} className="mr-2">
                         <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
                       </button>
                     </td>

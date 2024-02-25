@@ -42,10 +42,10 @@ const ExtraWorkScreen = () => {
     }
   };
 
-  const ExtraWorkCard = ({ material, rate, unit, paid, due, amount, status, quantity, handleEdit, handleDelete }) => {
+  const ExtraWorkCard = ({ work, rate, unit, paid, due, amount, status, paymentStatus, quantity, handleEdit, handleDelete }) => {
     return (
       <div className=" px-4 py-6">
-        <h2 className="text-xl font-semibold mb-4">{material}</h2>
+        <h2 className="text-xl font-semibold mb-4">{work}</h2>
         <div className='flex flex-col gap-2 text-md'>
           <div className="flex justify-between gap-4 tracking-tight">
             <div className="text-gray-600">Rate:</div>
@@ -62,6 +62,10 @@ const ExtraWorkScreen = () => {
           <div className="flex justify-between gap-4 tracking-tight">
             <div className="text-gray-600">Status:</div>
             <div className={`${status === 'paid' ? 'text-green-800' : 'text-red-800'} ${status === 'paid' ? 'bg-green-200' : 'bg-red-200'} py-0.5 px-2.5 rounded-md font-semibold text-sm`}>{status}</div>
+          </div>
+          <div className="flex justify-between gap-4 tracking-tight">
+            <div className="text-gray-600">Payment Status:</div>
+            <div className={`${paymentStatus === 'paid' ? 'text-green-800' : 'text-red-800'} ${paymentStatus === 'paid' ? 'bg-green-200' : 'bg-red-200'} py-0.5 px-2.5 rounded-md font-semibold text-sm`}>{status}</div>
           </div>
           <div className="flex justify-between gap-4 tracking-tight">
             <div className="text-gray-600">Paid Amount:</div>
@@ -90,17 +94,18 @@ const ExtraWorkScreen = () => {
     <div className='m-1 md:m-6 p-3 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
     <Header category="Page" title="Work-Orders" />
     <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {extraWork.requirement?.map((order, index) => (
+        {extraWork.WorkDetail?.map((detail, index) => (
           <div key={index} className='bg-white shadow-lg rounded-xl'>
             <ExtraWorkCard
-              material=''
-              rate=''
-              unit=''
-              quantity=''
-              amount=''
-              status=''
-              paid=''
-              due=''
+              work={detail.work}
+              rate={detail.rate}
+              unit={detail.unit}
+              quantity={detail.area}
+              amount={detail.amount}
+              status={detail.status}
+              paid={detail.paid}
+              due={detail.due}
+              paymentStatus={detail.paymentStatus}
               handleEdit={() => handleEdit(extraWork._id, index)}
               handleDelete={() => deleteDetail(extraWork._id, index)}
             />
