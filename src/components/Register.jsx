@@ -5,7 +5,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import convertToBase64 from '../helper/converter';
 import Header from '../components/Header';
 // import Style from '../style/User.module.css'
-import './components.css'
+import './components.css';
+import { IoEyeOff, IoEye } from "react-icons/io5";
 import image from '../asset/profile.png';
 axios.defaults.withCredentials = true;
 
@@ -20,6 +21,8 @@ const Register = () => {
         whatsapp: '',
         avatar: '',
     })
+    const [showPassword, setShowPassword] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
     const userName = useRef();
     const userMail = useRef();
     const password = useRef();
@@ -102,18 +105,6 @@ const Register = () => {
                             accept='.png, .jpg, .jpeg' />
                     </div>
 
-                    {/* <div className="mb-4">
-                        <label htmlFor="avatar" className="block text-sm font-medium text-gray-600">
-                            Avatar
-                        </label>
-                        <input
-                            type="file"
-                            name="avatar"
-                            // onChange={(e) => setAvatar(e.target.files[0])}
-                            onChange={(e) => inputData(e, 'avatar')}
-                            className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
-                    </div> */}
-
                     <div className='mb-4'>
                         <label className='block text-gray-700 text-sm font-bold mb-2' htmlFor='name'>
                             Full Name
@@ -177,33 +168,45 @@ const Register = () => {
                     </div>
 
                     <div className='mb-4'>
-                        <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Password</label>
-                        <input
-                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            type='password'
-                            name='password'
-                            placeholder='Enter Your Password here'
-                            autoComplete='off'
-                            ref={password}
-                            // required
-                            value={user.password}
-                            onChange={inputData}
-                        />
+                        <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-1">Password:</label>
+                        <div className='flex flex-row border rounded-md justify-between items-center '>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                className="w-full border-none outline-none p-2"
+                                placeholder='Enter Your Password'
+                                autoComplete='off'
+                                value={user.password}
+                                onChange={inputData}
+                            />
+                            <span
+                                className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
+                                onClick={() => setShowPassword(!showPassword)}>
+                                {showPassword ? <IoEyeOff /> : <IoEye />}
+                            </span>
+                        </div>
                     </div>
 
                     <div className='mb-4'>
                         <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Change Password</label>
-                        <input
-                            className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            type='password'
-                            name='newPassword'
-                            placeholder='Change Password'
-                            autoComplete='off'
-                            ref={newPassword}
-                            // required
-                            value={user.newPassword}
-                            onChange={inputData}
-                        />
+                        <div className='flex flex-row border rounded-md justify-between items-center '>
+                            <input
+                                type={showNewPassword ? "text" : "password"}
+                                className="w-full border-none outline-none p-2"
+                                placeholder='Enter Your Password'
+                                name='newPassword'
+                                autoComplete='off'
+                                ref={newPassword}
+                                // required
+                                value={user.newPassword}
+                                onChange={inputData}
+                            />
+                            <span
+                                className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
+                                onClick={() => setShowNewPassword(!showNewPassword)}>
+                                {showNewPassword ? <IoEyeOff /> : <IoEye />}
+                            </span>
+                        </div>
                     </div>
 
                     <button
@@ -217,7 +220,7 @@ const Register = () => {
                     reverseOrder={false}
                 />
             </section>
-        </div>
+        </div >
     )
 }
 

@@ -78,7 +78,7 @@ const Navbar = () => {
       </div>
       <div className="flex">
         <NavbarButton
-          customFunc={() => navigate('/message')}
+          customFunc={() => navigate(`${isLoggedIn ? '/message' : ''}`)}
           color='blue'
           icon={<RiNotification3Line />} />
         {isLoggedIn ? (

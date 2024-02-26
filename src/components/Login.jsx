@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../features/auth/authSlice.js';
+import { IoEyeOff, IoEye } from "react-icons/io5";
 axios.defaults.withCredentials = true;
 
 
@@ -14,6 +15,7 @@ const Login = () => {
     password: '',
   });
   const [error, setError] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -63,7 +65,7 @@ const Login = () => {
               name="userMail"
               value={formData.userMail}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 border rounded-md outline-none"
               placeholder='Enter Your Email'
             />
           </div>
@@ -73,21 +75,28 @@ const Login = () => {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className="w-full p-2 border rounded-md"
+              className="w-full p-2 border rounded-md outline-none"
               placeholder='Enter Your Phone No'
             />
           </div>
           <div className="mt-5 px-2">
             <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-1">Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border rounded-md"
-              placeholder='Enter Your Password'
-              required
-            />
+            <div className='flex flex-row border rounded-md justify-between items-center '>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full border-none outline-none p-2"
+                placeholder='Enter Your Password'
+                required
+              />
+              <span
+                className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
+                onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <IoEyeOff /> : <IoEye />}
+              </span>
+            </div>
           </div>
           <button
             type="submit"
