@@ -58,19 +58,35 @@ const fetchContractor = async(id)=>{
     e.preventDefault();
     console.log(contractor)
     try {
-      const response = await axios.post('/api/v1/contractor', {
-        name: contractor.name,
-        contactNo: contractor.contactNo,
-        whatsapp: contractor.whatsapp,
-        address: contractor.address,
-        addhar: contractor.addhar,
-        pan: contractor.pan,
-        bank: contractor.bank,
-        jobWork: contractor.jobWork,
-      });
-      toast.success(response.data.message);
-      console.log('Form data submitted:', contractor);
-      navigate(-1);
+      if(contractorToEdit){
+        const response = await axios.put(`/api/v1/contractor/${contractorToEdit}`, {
+          name: contractor.name,
+          contactNo: contractor.contactNo,
+          whatsapp: contractor.whatsapp,
+          address: contractor.address,
+          addhar: contractor.addhar,
+          pan: contractor.pan,
+          bank: contractor.bank,
+          jobWork: contractor.jobWork,
+        });
+        toast.success(response.data.message);
+        console.log('Form data submitted:', contractor);
+        navigate(-1);
+      } else {
+        const response = await axios.post('/api/v1/contractor', {
+          name: contractor.name,
+          contactNo: contractor.contactNo,
+          whatsapp: contractor.whatsapp,
+          address: contractor.address,
+          addhar: contractor.addhar,
+          pan: contractor.pan,
+          bank: contractor.bank,
+          jobWork: contractor.jobWork,
+        });
+        toast.success(response.data.message);
+        console.log('Form data submitted:', contractor);
+        navigate(-1);
+      }
     } catch (error) {
       console.error('Error creating contractor:', error);
       toast.error('Failed Creating Contractor. Please check your credentials.');
@@ -160,7 +176,7 @@ const fetchContractor = async(id)=>{
             name="jobWork"
             value={contractor.jobWork}
             onChange={handleChange}
-            placeholder="Address"
+            placeholder="Job Work"
             className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
           />
         </div>
