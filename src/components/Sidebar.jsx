@@ -8,7 +8,7 @@ import { AiFillPieChart } from 'react-icons/ai';
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { CgProfile } from 'react-icons/cg'
 import { useSelector } from 'react-redux';
-import logo from '../asset/logo.png';
+import logo from '../asset/logo.webp';
 import { LuCalendarCheck2, LuClipboardCheck } from "react-icons/lu";
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import { AiOutlineMenu } from 'react-icons/ai';
@@ -115,10 +115,10 @@ const Sidebar = () => {
       role: ['Company', 'Ceo']
     },
     {
-      to: '/message',
-      name: 'Message',
+      to: '/approval',
+      name: 'Approval',
       icon: <MdMessage />,
-      role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
+      role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Ceo', 'Site Incharge', 'Quality Head', 'Quality Engineer']
     },
     // { 
     //   to: '/checklist', 

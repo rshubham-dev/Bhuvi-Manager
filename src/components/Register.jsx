@@ -7,7 +7,7 @@ import Header from '../components/Header';
 // import Style from '../style/User.module.css'
 import './components.css';
 import { IoEyeOff, IoEye } from "react-icons/io5";
-import image from '../asset/profile.png';
+import image from '../asset/profile.webp';
 axios.defaults.withCredentials = true;
 
 const Register = () => {

@@ -263,7 +263,7 @@ const CreateSite = () => {
               onChange={handleChange}
               disabled={siteIdToEdit && user.role !== 'Admin'}
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-              <option>{data.qualityEngineer !== '' ? data.qualityEngineer : 'Assign an incharge'}</option>
+              <option>{data.qualityEngineer !== '' ? data.qualityEngineer : 'Assign an Quality incharge'}</option>
               {qualityEngineers.map((qualityEngineer) => (
                 <option key={qualityEngineer._id} value={qualityEngineer._id}>
                   {qualityEngineer.userName}

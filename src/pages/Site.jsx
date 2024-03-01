@@ -9,14 +9,26 @@ import { useSelector } from 'react-redux';
 import { Tabs } from 'antd';
 import { FcApproval } from "react-icons/fc";
 import Header from '../components/Header';
+// import io from 'socket.io-client';
 
 axios.defaults.withCredentials = true;
 
 const Sites = () => {
+  // const socket = io('http://localhost:8080');
   const navigate = useNavigate();
   const [sites, setSite] = useState([]);
   const [error, setError] = useState(null);
-  const { user } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
+
+  // useEffect(() => {
+  //   socket.on('Sites', (message) => {
+  //     console.log('Received message:', message);
+  //     toast(message);
+  //   });
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (user && user.department === 'Site Incharge') {
@@ -121,9 +133,10 @@ const Sites = () => {
                       <button onClick={() => handleEdit(site?._id)} className="mr-2">
                         <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
                       </button>
-                      <button onClick={() => handleDelete(site?._id)} className="mr-2">
-                        <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
-                      </button>
+                      {user.role === 'Admin' && (
+                        <button onClick={() => handleDelete(site?._id)} className="mr-2">
+                          <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
+                        </button>)}
                     </td>
                   </tr>
                 ))}

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import toast, { Toaster } from 'react-hot-toast';
 import { GrEdit } from "react-icons/gr";
 import { MdDelete, MdAdd } from "react-icons/md";
-import image from '../asset/profile.png';
+import image from '../asset/profile.webp';
 import Header from '../components/Header';
 axios.defaults.withCredentials = true;
 
@@ -107,9 +107,9 @@ const UserManagement = () => {
             </table>
           </div>
         </div>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
         <Toaster position="top-right" reverseOrder={false} />
       </section>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 };

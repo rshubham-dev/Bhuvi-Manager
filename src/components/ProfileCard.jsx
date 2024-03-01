@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 // import styles from '../style/User.module.css';
 import { useSelector } from 'react-redux';
-import image from '../asset/profile.png';
+import image from '../asset/profile.webp';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdCheck } from "react-icons/md";

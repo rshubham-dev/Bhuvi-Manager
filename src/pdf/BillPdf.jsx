@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logo from '../asset/logo.png';
+import logo from '../asset/logo.webp';
 import moment from 'moment';
 import axios from 'axios';
 import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';

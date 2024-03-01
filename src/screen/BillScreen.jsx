@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import logo from '../asset/logo.png';
+import logo from '../asset/logo.webp';
 import moment from 'moment';
 import axios from 'axios';
 import { GrEdit } from "react-icons/gr";

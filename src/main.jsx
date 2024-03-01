@@ -12,7 +12,7 @@ axios.defaults.baseURL = import.meta.env.VITE_SERVER_URI;
 axios.defaults.withCredentials = true;
 console.log(import.meta.env.VITE_SERVER_URI)
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
       <Provider store={store}>
         <ContextProvider>
         <React.Suspense fallback={<div>Loading...</div>}>
@@ -22,5 +22,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </React.Suspense>
         </ContextProvider>
       </Provider>
-  </React.StrictMode>,
+  </>,
 );

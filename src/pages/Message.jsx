@@ -11,64 +11,25 @@ import Header from '../components/Header';
 import { useSelector } from 'react-redux';
 import { LuShieldClose } from "react-icons/lu";
 import { useNavigate } from 'react-router-dom';
-// import io from 'socket.io-client';
-// const socket = io('http://localhost:8080');
+import io from 'socket.io-client';
 axios.defaults.withCredentials = true;
+
 const Message = () => {
-    const [allMessages, setAllMessages] = useState([]);
-    const [allApprovals, setAllApprovals] = useState([]);
-    const { user } = useSelector((state) => {
-        return state.auth
-    });
+    const socket = io('http://localhost:8080');
+    const [messages, setMessage] = useState([]);
+    const { user } = useSelector((state) => { return state.auth });
     const navigate = useNavigate();
-    const inputRef = useRef();
 
     useEffect(() => {
-        // socket.on('message', (incomingData) => {
-        //     console.log('Received message:', incomingData);
-        //     setAllMessages((prevMessages) => [...prevMessages, { content: incomingData, isUser: false }]);
-        // });
-
-        // return () => {
-        //     socket.disconnect();
-        // };
-        if (user) {
-            fetchApproval(user._id);
-        }
+        socket.on('notification', (message) => {
+            console.log('Received message:', message);
+            setMessage(message);
+        });
+        return () => {
+            socket.disconnect();
+        };
     }, []);
 
-    const fetchApproval = async (id) => {
-        try {
-            console.log(id)
-            const response = await axios.get(`/api/v1/approval/pending/user/${id}`);
-            const approvalData = response.data;
-            // const siteData = await axios.get(`/api/v1/site/${response.data?.data.site}`);
-            // console.log(siteData.data)
-            // approvalData.data.site = siteData.data;
-            // if(approvalData?.data.supplier){
-            //   const supplierData = await axios.get(`/api/v1/supplier/${approvalData?.data.supplier}`);
-            //   approvalData?.data.supplier = supplierData.data;
-            // }else if(approvalData?.data.contractor){
-            //   const contractorData = await axios.get(`/api/v1/contractor/${approvalData?.data.contractor}`);
-            //   approvalData?.data.contractor = contractorData.data;
-            // }
-            setAllApprovals(approvalData)
-            console.log(approvalData)
-        } catch (error) {
-            console.error(error)
-        }
-    }
-    const handleApprove = async (id) => {
-        try {
-            console.log(id)
-            const response = await axios.put(`/api/v1/approval/${id}`);
-            console.log(response.data)
-        } catch (error) {
-            console.error(error)
-        }
-     };
-    const handleReject = () => { };
-    const handleView = () => { };
     // const sendMessage = (e) => {
     //     e.preventDefault();
     //     const userMessage = inputRef.current.value.trim();
@@ -130,27 +91,20 @@ const Message = () => {
                     </button>
                 </form> */}
 
-                <Tabs defaultActiveKey='approval' className='p-2'>
-                    {/* <Tabs.TabPane tab='Notification' key={'notification'}>
-                        <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            <div className='bg-white shadow-lg rounded-xl'>
-                                <ApprovalCard
-                                    workDescription=''
-                                    paid=''
-                                    due=''
-                                    amount=''
-                                    dateOfPayment=''
-                                    status=''
-                                    handleEdit={() => handleEdit()}
-                                    handleDelete={() => deleteDetail()}
-                                />
-                            </div>
+                {/* <Tabs defaultActiveKey='approval' className='p-2'>
+                    <Tabs.TabPane tab='Notification' key={'notification'}> */}
+                <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {messages.map((message, index) => (
+                        <div key={index} className='bg-gray-50 shadow-lg rounded-2xl'>
+                            {message}
                         </div>
-                    </Tabs.TabPane> */}
+                    ))}
+                </div>
+                {/* </Tabs.TabPane> */}
 
-                    <Tabs.TabPane tab='Pending' key={'approval'} className='p-1 h-full'>
+                {/* <Tabs.TabPane tab='Pending' key={'approval'} className='p-1 h-full'>
                         <div className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                            {allApprovals.map((approval) => (
+                            {allMessages.map((approval) => (
                                 <div key={approval._id} className='bg-gray-50 shadow-lg rounded-2xl'>
                                     <ApprovalCard
                                         workDescription={approval.approvalOf}
@@ -164,11 +118,9 @@ const Message = () => {
                                 </div>
                             ))}
                         </div>
-                    </Tabs.TabPane>
+                    </Tabs.TabPane> */}
 
-
-
-                </Tabs>
+                {/* </Tabs> */}
 
                 <Toaster
                     position="top-right"

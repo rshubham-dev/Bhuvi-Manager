@@ -38,18 +38,18 @@ const PurchaseOrders = () => {
     };
     const getDraftOrders = async () => {
       try {
-        const billData = await axios.get(`/api/v1/bill/draft/${user?._id}`);
-        const bills = billData.data;
+        const orderData = await axios.get('/api/v1/purchase-order/draft');
+        const orders = orderData.data;
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
           const sites = user?.site;
           // console.log('user', user);
           // console.log('sites', sites);
-          let draftBills;
+          let draftOrders;
           for (let site of sites) {
-            draftBills = bills?.filter((bill) => bill.site?._id.includes(site))
+            draftOrders = orders?.filter((bill) => bill.site?._id.includes(site))
           }
-          setDraftOrder(draftBills);
-          console.log(draftBills)
+          setDraftOrder(draftOrders);
+          console.log(draftOrders);
         }
       } catch (error) {
         toast.error(error.message)
@@ -92,7 +92,7 @@ const PurchaseOrders = () => {
 
   const handleSave = async (id) => {
     try {
-      const response = await axios.put(`/api/v1/bill/save/${id}`);
+      const response = await axios.post(`/api/v1/purchase-order/save/${id}`);
       setDraftOrder(draftBill.filter((bill) => bill._id !== id));
       toast.success(response.data?.message);
     } catch (error) {
@@ -130,7 +130,7 @@ const PurchaseOrders = () => {
                   <tr className="text-white text-left">
                     <th className="font-semibold text-sm uppercase px-6 py-4 "> Name </th>
                     <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Admin Approve </th>
-                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th>
+                    {/* <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th> */}
                     <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Delivery Status </th>
                     <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
                   </tr>
@@ -144,7 +144,7 @@ const PurchaseOrders = () => {
                         <p className="text-gray-500 text-sm font-semibold tracking-wide"> {purchaseOrder.supplier?.name} </p>
                       </td>
                       <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
-                      <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
+                      {/* <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td> */}
                       <td className="px-6 py-4 text-center">{purchaseOrder?.status}</td>
                       <td className="px-6 py-4 text-center">
                         <button onClick={() => handleRedirect(purchaseOrder._id)} className="mr-2">
@@ -176,30 +176,33 @@ const PurchaseOrders = () => {
                   <tr className="text-white text-left">
                     <th className="font-semibold text-sm uppercase px-6 py-4 "> Name </th>
                     <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Admin Approve </th>
-                    <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th>
+                    {/* <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Supplier Approve</th> */}
                     <th className="font-semibold text-sm uppercase px-6 py-4 text-center"> Delivery Status </th>
                     <th className="font-semibold text-sm uppercase px-6 py-4 text-center"></th>
                   </tr>
                 </thead>
 
                 <tbody className="divide-y divide-gray-200">
-                  {purchaseOrders?.map((purchaseOrder) => (
+                  {draftOrder?.map((purchaseOrder) => (
                     <tr key={purchaseOrder._id} className='border-b border-blue-gray-200'>
                       <td className="px-6 py-4">
                         <p className=""> {purchaseOrder.site?.name} </p>
                         <p className="text-gray-500 text-sm font-semibold tracking-wide"> {purchaseOrder.supplier?.name} </p>
                       </td>
                       <td className="px-6 py-4 text-center">{purchaseOrder?.adminApprove}</td>
-                      <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td>
+                      {/* <td className="px-6 py-4 text-center">{purchaseOrder?.supplierApprove}</td> */}
                       <td className="px-6 py-4 text-center">{purchaseOrder?.status}</td>
                       <td className="px-6 py-4 text-center">
+                        <button onClick={() => handleSave(purchaseOrder._id)} className=" mr-2">
+                          <FcApproval className="text-green-500 hover:text-green-700 text-xl" />
+                        </button>
                         <button onClick={() => handleRedirect(purchaseOrder._id)} className="mr-2">
                           <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
                         </button>
                         <button onClick={() => handleEdit(purchaseOrder._id)} className="mr-2">
                           <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
                         </button>
-                        <button onClick={() => handleDelete(purchaseOrder._id)} className="mr-2">
+                        <button onClick={() => handleDelete(purchaseOrder._id)}>
                           <MdDelete className='text-red-500 hover:text-red-600 text-xl' />
                         </button>
                       </td>
