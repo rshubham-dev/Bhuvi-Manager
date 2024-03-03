@@ -37,36 +37,6 @@ const UserProfile = () => {
 
   return (
     <div className='flex justify-center mx-auto mt-8 mb-4 sm:mx-8'>
-      {/* <div className="container mx-auto py-8">
-        <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto">
-          <form onSubmit={formSubmit} className='profile flex justify-center'>
-            <label htmlFor="avatar">
-              <img
-                src={user?.avatar || image}
-                className='border-2 border-gray-100 w-36 h-36 rounded-full shadow-xl cursor-pointer object-cover object-center'
-                alt="avatar"
-              />
-            </label>
-            <input
-              type="file"
-              id='avatar'
-              name='avatar'
-              onChange={(e) => setAvatar(e.target.files[0])}
-              accept='.png, .jpg, .jpeg' />
-          <h2 className="text-2xl font-semibold text-center mt-2"></h2>
-          <p className="text-center mt-2">{user?.userMail}</p>
-          <p className="text-center mt-2"></p>
-          <p className="text-center mt-2">{user?.role}</p>
-          <p className="text-center mt-2"></p>
-          <button
-              type='submit'
-              className="bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600">
-              <MdCheck className='text-lg' />
-            </button>
-      </form>
-        </div>
-      </div> */}
-
 
       <form onSubmit={formSubmit} className="p-3 bg-white shadow-lg rounded-2xl w-90 dark:bg-gray-800">
         <div className="flex flex-row items-start gap-5">

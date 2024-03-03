@@ -71,7 +71,7 @@ const Login = () => {
           </div>
           <div className="px-2">
             <input
-              type="number"
+              type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}

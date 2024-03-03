@@ -54,10 +54,6 @@ const ExtraWork = () => {
     navigate(`/extra-work/${id}`);
   };
 
-  // const addMore = (id) => {
-  //   navigate(`/edit-extra-work/${id}`);
-  // };
-
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/v1/extra-work/${id}`);
@@ -67,18 +63,6 @@ const ExtraWork = () => {
       toast.error(error.message)
     }
   };
-
-  // const deleteDetail = async (id, index) => {
-  //   try {
-  //     const response = await axios.delete(`/api/v1/extra-work/${id}/work/${index}`);
-  //     const deletedWork = response.data.existingExtraWork;
-  //     setClientExtraWork(deletedWork?.filter((extra) => extra.extraFor === 'Client'));
-  //     setContractorExtraWork(deletedWork?.filter((extra) => extra.extraFor === 'Contractor'));
-  //     // const deletedWork = clientExtraWorks.filter((extraWork) => extraWork._id === id)[0].WorkDetail[index];
-  //   } catch (error) {
-  //     toast.error(error.message)
-  //   }
-  // };
 
   const handleAdd = () => {
     navigate('/create-extra-work');
@@ -93,9 +77,6 @@ const ExtraWork = () => {
         }}>
         <Header category="Page" title="Extra Work's" />
         <div className="w-full mx-auto text-gray-700 px-2 flex justify-end items-center">
-          {/* <h2 className="text-lg text-wrap sm:text-md md:text-lg lg:text-xl text-green-600 mr-4 pr-4">
-          Total Extra Work
-        </h2> */}
           <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
             <MdAdd className='text-xl' />
           </button>

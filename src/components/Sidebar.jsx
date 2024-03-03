@@ -4,6 +4,7 @@ import { MdPerson, MdDateRange, MdWarehouse, MdTrolley, MdMessage, MdOutlineCanc
 import { GrUserWorker } from "react-icons/gr";
 import { FaFileInvoiceDollar } from "react-icons/fa";
 import { BiSolidPurchaseTag } from "react-icons/bi";
+import { AiFillNotification } from "react-icons/ai";
 import { AiFillPieChart } from 'react-icons/ai';
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { CgProfile } from 'react-icons/cg'
@@ -30,12 +31,12 @@ const Sidebar = () => {
       icon: <AiFillPieChart />,
       role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
     },
-    // {
-    //   to: '/profile',
-    //   name: 'Profile',
-    //   icon: <CgProfile />,
-    // role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
-    // },
+    {
+      to: '/profile',
+      name: 'Profile',
+      icon: <CgProfile />,
+    role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
+    },
     {
       to: '/user',
       name: 'Users',
@@ -46,7 +47,7 @@ const Sidebar = () => {
       to: '/sites',
       name: 'Sites',
       icon: <MdLocationOn />,
-      role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
+      role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant', 'Client']
     },
     {
       to: '/project-schedules',
@@ -94,19 +95,19 @@ const Sidebar = () => {
       to: '/clients',
       name: 'Clients',
       icon: <MdBusiness />,
-      role: ['Company', 'Ceo', 'Accountant']
+      role: ['Company', 'Ceo']
     },
     {
       to: '/contractors',
       name: 'Contractors',
       icon: <GrUserWorker />,
-      role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
+      role: ['Company', 'Ceo', 'Site Incharge', 'Accountant']
     },
     {
       to: '/suppliers',
       name: 'Suppliers',
       icon: <MdTrolley />,
-      role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
+      role: ['Company', 'Ceo', 'Site Incharge', 'Accountant']
     },
     {
       to: '/employee',
@@ -117,7 +118,7 @@ const Sidebar = () => {
     {
       to: '/approval',
       name: 'Approval',
-      icon: <MdMessage />,
+      icon: <AiFillNotification />,
       role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Ceo', 'Site Incharge', 'Quality Head', 'Quality Engineer']
     },
     // { 
@@ -126,11 +127,11 @@ const Sidebar = () => {
     //   icon: <LuClipboardCheck />,
     // role: ['Company', 'Ceo'] 
     // },
-    { 
-      to: '/work-details', 
-      name: 'Work-Details', 
+    {
+      to: '/work-details',
+      name: 'Work-Details',
       icon: <MdAssignment />,
-    role: ['Company', 'Ceo', 'Admin'] 
+      role: ['Company', 'Ceo', 'Admin']
     },
     // { 
     //   to: '/design', 
@@ -168,7 +169,7 @@ const Sidebar = () => {
 
   return (
     <div className='h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-16 pt-4'
-      style={{scrollbarWidth: 'none', '-ms-overflow-style': 'none',}}>
+      style={{ scrollbarWidth: 'none', '-ms-overflow-style': 'none', }}>
       <div className="flex justify-center gap-2 items-center my-2 ml-0">
         <img src={logo} alt="logo" className={`rounded-full w-fit ${activeMenu ? 'h-16' : 'h-12'}`} />
         <span className={`uppercase transition-all text-sm delay-100 duration-300 ease-in ${activeMenu ? 'inline text-lg ' : 'hidden'} items-center flex font-extrabold ml-1 dark:text-white text-slate-900`}>

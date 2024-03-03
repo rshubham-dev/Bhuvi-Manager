@@ -46,7 +46,7 @@ const UserManagement = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
       <Header category="Page" title="User's" />
       <section className="h-full w-full flex justify-center ">
         <div className="overflow-x-auto w-full max-w-screen-xl mx-auto">

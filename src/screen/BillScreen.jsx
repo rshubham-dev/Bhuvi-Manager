@@ -178,7 +178,7 @@ const BillScreen = () => {
           <div className="text-gray-700">123 Main St., Anytown, USA 12345</div> */}
             </div>
 
-            <div className='mt-2 flex justify-between '>
+            {/* <div className='mt-2 flex justify-between '>
               <button
                 type='button'
                 className='bg-blue-500 text-white px-4 py-2 rounded-md'
@@ -191,7 +191,7 @@ const BillScreen = () => {
                 onClick={handleDownload}>
                 Download
               </button>
-            </div>
+            </div> */}
           <Toaster
             position="top-right"
             reverseOrder={false}

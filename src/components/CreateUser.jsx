@@ -131,7 +131,7 @@ const CreateUser = () => {
             Phone
           </label>
           <input
-            type="text"
+            type="tel"
             name="phone"
             placeholder="Phone"
             value={userData.phone}

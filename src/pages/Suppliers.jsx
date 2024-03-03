@@ -44,7 +44,7 @@ const Suppliers = () => {
         navigate('/create-supplier');
     };
     return (
-        <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 shadow-lg bg-white rounded-2xl'>
+        <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 shadow-lg bg-white rounded-2xl'>
             <section className="overflow-x-auto">
                 <Header category="Page" title="Supplier's" />
                 <div className="w-full mx-auto mb-6 text-gray-700 p-1 flex flex-row justify-between items-center">

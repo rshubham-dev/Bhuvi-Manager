@@ -59,7 +59,7 @@ const WorkDetails = () => {
   };
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
       <div className="overflow-x-auto h-full">
         <Header category="Page" title="Work Detail's" />
         <div className="text-sm text-gray-700 py-1 flex flex-row items-center justify-end">

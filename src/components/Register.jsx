@@ -143,7 +143,7 @@ const Register = () => {
                         <label htmlFor='whatsapp' className='block text-gray-900 text-sm font-bold mb-2'>Contact Number</label>
                         <input
                             className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            type='number'
+                            type='tel'
                             name='whatsapp'
                             placeholder='Enter Your Whatsapp Number'
                             autoComplete='off'
@@ -157,7 +157,7 @@ const Register = () => {
                     <div className='mb-4'>
                         <input
                             className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                            type='number'
+                            type='tel'
                             name='phone'
                             placeholder='Enter Your Phone Number'
                             autoComplete='off'

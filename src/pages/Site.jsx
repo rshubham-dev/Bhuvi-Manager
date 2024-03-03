@@ -37,6 +37,9 @@ const Sites = () => {
     } else if (user && user.department === 'Site Supervisor') {
       console.log(user)
       getUserSites(user._id);
+    } else if (user && user.department === 'Client') {
+      console.log(user)
+      getUserSites(user._id);
     } else {
       const getSites = async () => {
         try {
@@ -55,6 +58,7 @@ const Sites = () => {
   const getUserSites = async (id) => {
     try {
       const siteData = await axios.get(`/api/v1/site/user/${id}`);
+      console.log(siteData.data)
       setSite(siteData.data);
     } catch (error) {
       toast.error(error.message)
@@ -86,8 +90,8 @@ const Sites = () => {
 
 
   return (
-    <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Site's" />
+    <div className='m-1.5 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
+      <Header category="Page" title="Site" />
       <section className="h-full w-full mb-16 flex justify-center">
         <div className='overflow-x-auto w-full max-w-screen-xl mx-auto'>
           <div className="w-full mx-auto mb-6 text-gray-700 py-1 flex flex-row sm:flex-row justify-between items-center">
@@ -130,9 +134,10 @@ const Sites = () => {
                       <button onClick={() => handleRedirect(site?._id)} className="mr-2">
                         <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
                       </button>
+                      {user.role !== 'Client' && (
                       <button onClick={() => handleEdit(site?._id)} className="mr-2">
                         <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
-                      </button>
+                      </button>)}
                       {user.role === 'Admin' && (
                         <button onClick={() => handleDelete(site?._id)} className="mr-2">
                           <MdDelete className='text-red-500 hover:text-red-600 text-xl' />

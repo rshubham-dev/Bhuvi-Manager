@@ -1,363 +1,256 @@
-import React from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-// import 'react-big-calendar/lib/addons/dragAndDrop/styles';
-const localizer = momentLocalizer(moment)
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import toast, { Toaster } from 'react-hot-toast';
+import convertToBase64 from '../helper/converter';
 import Header from '../components/Header';
+import { GrEdit } from "react-icons/gr";
+import './components.css';
+import { IoEyeOff, IoEye } from "react-icons/io5";
+import image from '../asset/profile.webp';
+axios.defaults.withCredentials = true;
 
-const Profile = (props) => {
-  // navigator.geolocation.getCurrentPosition(
-  //   (position) => {
-  //     console.log(position)
-  //   },
-  //   (error) => {
-  //     console.log(error.message)
-  //   }
-  // )
+const Profile = () => {
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  const [User, setUser] = useState({
+    userName: '',
+    userMail: '',
+    phone: '',
+    whatsapp: '',
+    avatar: '',
+  })
+  const [toUpdate, setToUpdate] = useState(false);
+  const [profileUpdate, setProfileUpdate] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
+  // const [showNewPassword, setShowNewPassword] = useState(false);
+  const [avatar, setAvatar] = useState('');
+
+  const inputData = (data, field) => {
+    const { name, value, type } = data.target;
+    if (type === 'file') {
+      setUser((prevUser) => ({
+        ...prevUser,
+        [field]: data.target.files[0],
+      }));
+    } else {
+      setUser((prevUser) => ({ ...prevUser, [name]: value }));
+    }
+  };
+
+  useEffect(() => {
+    onUpload();
+  }, [User?.avatar]);
+
+  useEffect(() => {
+    if (user) {
+      fetchUser(user?._id)
+    };
+  }, []);
+
+  const fetchUser = async (id) => {
+    try {
+      const response = await axios.get(`/api/v1/user/${id}`);
+      console.log(response.data.avatar)
+      setUser({
+        userName: response.data?.userName,
+        userMail: response.data?.userMail,
+        phone: response.data?.phone,
+        whatsapp: response.data?.whatsapp,
+        avatar: response.data?.avatar,
+      })
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message)
+    }
+  };
+
+  const onUpload = async () => {
+    const base64 = await convertToBase64(User?.avatar);
+    setAvatar(base64);
+  };
+
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    Object.entries(User).forEach(([key, value]) => {
+      if (value instanceof File) {
+        formData.append(key, value);
+      } else {
+        formData.append(key, value);
+      }
+    });
+    try {
+      if (profileUpdate === true) {
+        const response = await axios.put(`/api/v1/User/${user?._id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        // if (response.status === 201) {
+        console.log(response.data);
+        toast.success('Updation successful!');
+        setProfileUpdate(false)
+        // }
+      }
+    } catch (error) {
+      console.log('Error submitting form:', error);
+      toast.error(error.message)
+      toast.error('An error occurred while updating. Please try again.');
+    }
+  };
+
   return (
-    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl overflow-hidden'>
-    <Header category="Page" title="Profile" />
-    <form className='w-full'>
-      <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Profile</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            This information will be displayed publicly so be careful what you share.
-          </p>
-
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-4">
-              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                Username
-              </label>
-              <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                  {/* <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">workcation.com/</span> */}
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    autoComplete="username"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                    placeholder="janesmith"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="col-span-full">
-              <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
-                About
-              </label>
-              <div className="mt-2">
-                <textarea
-                  id="about"
-                  name="about"
-                  rows={3}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={''}
-                />
-              </div>
-              <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
-            </div>
-
-            <div className="col-span-full">
-              <label htmlFor="photo" className="block text-sm font-medium leading-6 text-gray-900">
-                Photo
-              </label>
-              <div className="mt-2 flex items-center gap-x-3">
-                {/* <UserCircleIcon className="h-12 w-12 text-gray-300" aria-hidden="true" /> */}
-                <button
-                  type="button"
-                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                >
-                  Change
-                </button>
-              </div>
-            </div>
-
-            <div className="col-span-full">
-              <label htmlFor="cover-photo" className="block text-sm font-medium leading-6 text-gray-900">
-                Cover photo
-              </label>
-              <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                <div className="text-center">
-                  {/* <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" /> */}
-                  <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                    <label
-                      htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                    >
-                      <span>Upload a file</span>
-                      <input id="file-upload" name="file-upload" type="file" className="sr-only" />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
-                  <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Personal Information</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">Use a permanent address where you can receive mail.</p>
-
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-3">
-              <label htmlFor="first-name" className="block text-sm font-medium leading-6 text-gray-900">
-                First name
-              </label>
-              <div className="mt-2">
+    <div className='m-1 md:m-6 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl shadow-xl'>
+      <Header category="Page" title="Profile" />
+      <div className='grid grid-cols-1 lg:grid-cols-2 pb-6'>
+        <section className='w-full lg:w-3/5 h-fit mb-10 px-4 lg:mb-0'>
+          <form
+            onSubmit={formSubmit}
+          >
+            {profileUpdate === false ?
+              <div className='profile flex justify-center mb-8'>
+                <img
+                  src={User?.avatar ? User?.avatar : image}
+                  className='border-4 border-gray-100 w-28 h-28 rounded-full shadow-lg cursor-pointer object-cover object-center' alt="avatar" />
+              </div> :
+              <div className='profile flex justify-center mb-8'>
+                <label htmlFor="avatar">
+                  <img
+                    src={avatar || image}
+                    className='border-4 border-gray-100 w-28 h-28 rounded-full shadow-lg cursor-pointer object-cover object-center' alt="avatar" />
+                </label>
                 <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
+                  type="file"
+                  id='avatar'
+                  name='avatar'
+                  onChange={(e) => inputData(e, 'avatar')}
+                  accept='.png, .jpg, .jpeg' />
               </div>
+            }
+
+            <div className='mb-4'>
+              <label className='block text-gray-700 text-sm font-bold mb-1' htmlFor='name'>
+                Full Name
+              </label>
+              <input
+                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='text'
+                name='userName'
+                placeholder='Enter Your Name here'
+                autoComplete='off'
+                disabled={profileUpdate}
+                value={User.userName}
+                onChange={inputData}
+              />
             </div>
 
-            <div className="sm:col-span-3">
-              <label htmlFor="last-name" className="block text-sm font-medium leading-6 text-gray-900">
-                Last name
+            <div className='mb-4'>
+              <label className='block text-gray-700 text-sm font-bold mb-1' htmlFor='email'>
+                Email
               </label>
-              <div className="mt-2">
+              <input
+                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='email'
+                name='userMail'
+                placeholder='Enter Your Email here'
+                autoComplete='off'
+                disabled={profileUpdate}
+                value={User.userMail}
+                onChange={inputData}
+              />
+            </div>
+
+            <div className='mb-4'>
+              <label htmlFor='whatsapp' className='block text-gray-900 text-sm font-bold mb-1'>Contact Number</label>
+              <input
+                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='tel'
+                name='whatsapp'
+                placeholder='Enter Your Whatsapp Number'
+                autoComplete='off'
+                disabled={profileUpdate}
+                value={User.whatsapp}
+                onChange={inputData}
+              />
+            </div>
+
+            <div className='mb-4'>
+              <input
+                className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
+                type='tel'
+                name='phone'
+                placeholder='Enter Your Phone Number'
+                autoComplete='off'
+                disabled={profileUpdate}
+                value={User.phone}
+                onChange={inputData}
+              />
+            </div>
+
+            {/* <div className='mb-4'>
+              <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-1">Password:</label>
+              <div className='flex flex-row border rounded-md justify-between items-center '>
                 <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  className="w-full border-none outline-none p-2"
+                  placeholder='Enter Your Password'
+                  autoComplete='off'
+                  value={User.password}
+                  onChange={inputData}
                 />
+                <span
+                  className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
+                  onClick={() => setShowPassword(!showPassword)}>
+                  {showPassword ? <IoEyeOff /> : <IoEye />}
+                </span>
               </div>
             </div>
-
-            <div className="sm:col-span-4">
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                Email address
-              </label>
-              <div className="mt-2">
+            <div className='mb-4'>
+              <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Change Password</label>
+              <div className='flex flex-row border rounded-md justify-between items-center '>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  type={showNewPassword ? "text" : "password"}
+                  className="w-full border-none outline-none p-2"
+                  placeholder='Enter Your Password'
+                  name='newPassword'
+                  autoComplete='off'
+                  ref={newPassword}
+                  // required
+                  value={User.newPassword}
+                  onChange={inputData}
                 />
+                <span
+                  className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
+                  onClick={() => setShowNewPassword(!showNewPassword)}>
+                  {showNewPassword ? <IoEyeOff /> : <IoEye />}
+                </span>
               </div>
-            </div>
+            </div> */}
 
-            <div className="sm:col-span-3">
-              <label htmlFor="country" className="block text-sm font-medium leading-6 text-gray-900">
-                Country
-              </label>
-              <div className="mt-2">
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="col-span-full">
-              <label htmlFor="street-address" className="block text-sm font-medium leading-6 text-gray-900">
-                Street address
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="street-address"
-                  id="street-address"
-                  autoComplete="street-address"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-2 sm:col-start-1">
-              <label htmlFor="city" className="block text-sm font-medium leading-6 text-gray-900">
-                City
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  autoComplete="address-level2"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-2">
-              <label htmlFor="region" className="block text-sm font-medium leading-6 text-gray-900">
-                State / Province
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="region"
-                  id="region"
-                  autoComplete="address-level1"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div className="sm:col-span-2">
-              <label htmlFor="postal-code" className="block text-sm font-medium leading-6 text-gray-900">
-                ZIP / Postal code
-              </label>
-              <div className="mt-2">
-                <input
-                  type="text"
-                  name="postal-code"
-                  id="postal-code"
-                  autoComplete="postal-code"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Notifications</h2>
-          <p className="mt-1 text-sm leading-6 text-gray-600">
-            We'll always let you know about important changes, but you pick what else you want to hear about.
-          </p>
-
-          <div className="mt-10 space-y-10">
-            <fieldset>
-              <legend className="text-sm font-semibold leading-6 text-gray-900">By Email</legend>
-              <div className="mt-6 space-y-6">
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="comments"
-                      name="comments"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="comments" className="font-medium text-gray-900">
-                      Comments
-                    </label>
-                    <p className="text-gray-500">Get notified when someones posts a comment on a posting.</p>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="candidates"
-                      name="candidates"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="candidates" className="font-medium text-gray-900">
-                      Candidates
-                    </label>
-                    <p className="text-gray-500">Get notified when a candidate applies for a job.</p>
-                  </div>
-                </div>
-                <div className="relative flex gap-x-3">
-                  <div className="flex h-6 items-center">
-                    <input
-                      id="offers"
-                      name="offers"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                    />
-                  </div>
-                  <div className="text-sm leading-6">
-                    <label htmlFor="offers" className="font-medium text-gray-900">
-                      Offers
-                    </label>
-                    <p className="text-gray-500">Get notified when a candidate accepts or rejects an offer.</p>
-                  </div>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset>
-              <legend className="text-sm font-semibold leading-6 text-gray-900">Push Notifications</legend>
-              <p className="mt-1 text-sm leading-6 text-gray-600">These are delivered via SMS to your mobile phone.</p>
-              <div className="mt-6 space-y-6">
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-everything"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label htmlFor="push-everything" className="block text-sm font-medium leading-6 text-gray-900">
-                    Everything
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-email"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label htmlFor="push-email" className="block text-sm font-medium leading-6 text-gray-900">
-                    Same as email
-                  </label>
-                </div>
-                <div className="flex items-center gap-x-3">
-                  <input
-                    id="push-nothing"
-                    name="push-notifications"
-                    type="radio"
-                    className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                  />
-                  <label htmlFor="push-nothing" className="block text-sm font-medium leading-6 text-gray-900">
-                    No push notifications
-                  </label>
-                </div>
-              </div>
-            </fieldset>
-          </div>
-        </div>
+            {profileUpdate === true && (
+              <button
+                type='submit'
+                className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600">
+                Update
+              </button>
+            )}
+          </form>
+          {profileUpdate === false && (
+              <button onClick={() => setProfileUpdate(true)} type='button' className='w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 flex flex-row gap-3 items-center justify-center'>
+                <GrEdit /> Edit
+              </button>
+          )}
+        </section>
       </div>
-
-      <div className="mt-6 flex items-center justify-end gap-x-6">
-        <button type="button" className="text-sm font-semibold leading-6 text-gray-900">
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
-          Save
-        </button>
-      </div>
-    </form>
-    </div>
-  );
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+      />
+    </div >
+  )
 }
 
 export default Profile;
-
-
-//   <div className='h-full p-14 mb-14 z-0'>
-//   <Calendar
-//     localizer={localizer}
-//     startAccessor="start"
-//     endAccessor="end"
-//     style={{ height: 500 }}
-//   />
-// </div>

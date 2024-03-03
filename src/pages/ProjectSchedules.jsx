@@ -62,16 +62,6 @@ const ProjectSchedules = () => {
     navigate(`/project-schedule/${id}`);
   }
 
-  const deleteDetail = async (id, index) => {
-    try {
-      const response = await axios.delete(`/api/v1/project-schedule/${id}/projectDetails/${index}`);
-      setProjectSchedule(response.data);
-      console.table(response.data)
-    } catch (error) {
-      toast.error(error.message)
-    }
-  };
-
   const handleAdd = () => {
     navigate('/create-project-schedule');
   };

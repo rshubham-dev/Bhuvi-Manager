@@ -57,17 +57,6 @@ const PaymentSchedules = () => {
     }
   };
 
-  // const deleteDetail = async (id, index) => {
-  //   try {
-  //     const response = await axios.delete(`/api/v1/payment-schedule/${id}/paymentDetails/${index}`);
-  //     console.log(response.data)
-  //     setpaymentSchedules(response.data.paymentSchedules);
-  //     toast.success(response.data.message);
-  //   } catch (error) {
-  //     toast.error(error.message)
-  //   }
-  // };
-
   const handleAdd = () => {
     navigate('/create-payment-schedule');
   };
