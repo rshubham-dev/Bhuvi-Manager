@@ -4,6 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineRemoveCircle, MdOutlineAddCircle } from "react-icons/md";
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../components/Header';
+import { IoEyeOff, IoEye } from "react-icons/io5";
 axios.defaults.withCredentials = true;
 
 const CreateClient = () => {
@@ -23,9 +24,10 @@ const CreateClient = () => {
   const [users, setUsers] = useState([]);
   const [clientId, setClientId] = useState({});
   const { id } = useParams();
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [data, setData] = useState({
-    name:''
+    name: ''
   })
   useEffect(() => {
     const getUsers = async () => {
@@ -91,7 +93,7 @@ const CreateClient = () => {
     e.preventDefault();
     console.log('Before data submitted:', client);
     try {
-      if(clientId){
+      if (clientId) {
         const response = await axios.put(`/api/v1/client/${clientId}`, client);
         if (response.data) {
           toast.success(response.data.message)
@@ -170,14 +172,21 @@ const CreateClient = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              name="password"
-              value={client.password}
-              onChange={handleChange}
-              minLength={8}
-              className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
-            />
+            <div className='flex flex-row border rounded-md justify-between items-center '>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={client.password}
+                onChange={handleChange}
+                minLength={8}
+                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+              />
+              <span
+                className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
+                onClick={() => setShowPassword(!showPassword)}>
+                {showPassword ? <IoEyeOff /> : <IoEye />}
+              </span>
+            </div>
           </div>
 
           <div className='mb-4'>
@@ -287,7 +296,7 @@ const CreateClient = () => {
             type="submit"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800"
           >
-            {clientId ? 'Update' : 'Create' } Client
+            {clientId ? 'Update' : 'Create'} Client
           </button>
         </form>
         <Toaster
