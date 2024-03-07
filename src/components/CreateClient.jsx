@@ -159,7 +159,6 @@ const CreateClient = () => {
               name="email"
               value={client.email}
               onChange={handleChange}
-              required
               placeholder="Email"
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500" />
           </div>
@@ -176,7 +175,6 @@ const CreateClient = () => {
               name="password"
               value={client.password}
               onChange={handleChange}
-              required
               minLength={8}
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
             />
@@ -193,7 +191,6 @@ const CreateClient = () => {
               name='contactNo'
               id='contactNo'
               placeholder='Enter Your Contact Number'
-              required
               value={client.contactNo}
               onChange={handleChange}
             />
@@ -211,7 +208,6 @@ const CreateClient = () => {
               name='whatsapp'
               id='whatsapp'
               placeholder='Enter Your Whatsapp Number'
-              required
               autoComplete='off'
               value={client.whatsapp}
               onChange={handleChange}
