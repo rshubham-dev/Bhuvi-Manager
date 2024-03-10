@@ -33,7 +33,7 @@ const PurchaseOrders = () => {
         }
         console.log(purchaseOrdersData.data)
       } catch (error) {
-        toast.error(error.message)
+        console.error(error)
       }
     };
     const getDraftOrders = async () => {

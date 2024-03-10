@@ -35,7 +35,7 @@ const WorkOrders = () => {
         }
         console.log(workOrdersData.data)
       } catch (error) {
-        toast.error(error.message)
+        console.error(error)
         setError('No Work Order Found');
       }
     }

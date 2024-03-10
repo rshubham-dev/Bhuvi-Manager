@@ -32,7 +32,7 @@ const ProjectSchedules = () => {
         }
         console.log(projectScheduleData.data)
       } catch (error) {
-        toast.error(error.message);
+        console.error(error);
       }
     }
     getprojectSchedules();

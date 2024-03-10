@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
 import convertToBase64 from '../helper/converter';
@@ -7,6 +7,7 @@ import Header from '../components/Header';
 // import Style from '../style/User.module.css'
 import './components.css';
 import { IoEyeOff, IoEye } from "react-icons/io5";
+import { MdKeyboardBackspace } from "react-icons/md";
 import image from '../asset/profile.webp';
 axios.defaults.withCredentials = true;
 
@@ -84,6 +85,12 @@ const Register = () => {
         <div className='m-1 md:m-6 p-3 min-w-screen min-h-screen md:p-8'>
             {/* <Header category="Page" title="Register" /> */}
             <section className='mx-auto w-full md:w-3/4 lg:w-2/5 h-fit bg-white px-6 py-10 rounded-2xl shadow-xl'>
+                <div className='mb-2 py-2'>
+                    <Link to={-1}
+                        className="text-2xl font-semibold text-gray-900 hover:text-blue-600 dark:text-white">
+                        <MdKeyboardBackspace />
+                    </Link>
+                </div>
                 <form
                     onSubmit={formSubmit}
                 >

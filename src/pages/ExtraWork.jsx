@@ -39,7 +39,7 @@ const ExtraWork = () => {
           setContractorExtraWork(extraWorkData.data.filter((extra) => extra.extraFor === 'Contractor'));
         }
       } catch (error) {
-        toast.error('No Extra Work Found')
+        console.error(error)
       }
     }
 

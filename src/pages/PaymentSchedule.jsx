@@ -30,7 +30,7 @@ const PaymentSchedules = () => {
           setpaymentSchedules(paymentSchedulesData.data);
         }
       } catch (error) {
-        toast.error(error.message)
+        console.error(error)
       }
     }
     getpaymentSchedules();

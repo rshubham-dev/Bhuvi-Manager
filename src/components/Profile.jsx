@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import toast, { Toaster } from 'react-hot-toast';
@@ -118,7 +118,7 @@ const Profile = () => {
               <div className='profile flex justify-center mb-8'>
                 <label htmlFor="avatar">
                   <img
-                    src={avatar || image}
+                    src={avatar || User?.avatar || image}
                     className='border-4 border-gray-100 w-28 h-28 rounded-full shadow-lg cursor-pointer object-cover object-center' alt="avatar" />
                 </label>
                 <input
@@ -176,7 +176,7 @@ const Profile = () => {
               />
             </div>
 
-            <div className='mb-4'>
+            <div className='mb-2'>
               <input
                 className='appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                 type='tel'
@@ -230,6 +230,14 @@ const Profile = () => {
               </div>
             </div> */}
 
+            <div className="mb-4">
+              <NavLink
+                className='text-blue-600 font-medium hover:text-blue-700 text-sm hover:bg-blue-50 px-2'
+                to={'/resetpasswd'}>
+                Change Password?
+              </NavLink>
+            </div>
+
             {profileUpdate === true && (
               <button
                 type='submit'
@@ -239,9 +247,9 @@ const Profile = () => {
             )}
           </form>
           {profileUpdate === false && (
-              <button onClick={() => setProfileUpdate(true)} type='button' className='w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 flex flex-row gap-3 items-center justify-center'>
-                <GrEdit /> Edit
-              </button>
+            <button onClick={() => setProfileUpdate(true)} type='button' className='w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 flex flex-row gap-3 items-center justify-center'>
+              <GrEdit /> Edit
+            </button>
           )}
         </section>
       </div>

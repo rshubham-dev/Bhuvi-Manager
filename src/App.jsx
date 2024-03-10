@@ -61,6 +61,7 @@ import UserProfile from './components/ProfileCard.jsx';
 import SupplierScreen from './screen/SupplierScreen.jsx';
 import QualityScheduleScreen from './screen/QualityScheduleScreen.jsx';
 import Approval from './pages/Approval.jsx';
+import ResetPasswd from './components/ResetPasswd.jsx';
 
 const App = () => {
 
@@ -87,6 +88,7 @@ const App = () => {
         <Route path='/' element={<Dashboard />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/resetpasswd' element={<ResetPasswd />} />
         <Route path='/admin' element={<Admin />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/ceo' element={<Admin />} />

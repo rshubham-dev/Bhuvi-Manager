@@ -18,7 +18,7 @@ const WorkDetails = () => {
         console.log(response.data)
         setWorkDetail(response.data);
       } catch (error) {
-        toast.error(error.message)
+        console.error(error)
       }
     };
     fetchWorkDetails();

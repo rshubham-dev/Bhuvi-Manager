@@ -47,7 +47,7 @@ const Sites = () => {
           setSite(siteData.data);
           console.log(siteData.data)
         } catch (error) {
-          toast.error(error.message)
+          console.error(error)
           setError(error.message);
         }
       }
@@ -61,7 +61,7 @@ const Sites = () => {
       console.log(siteData.data)
       setSite(siteData.data);
     } catch (error) {
-      toast.error(error.message)
+      console.error(error)
       setError(error.message);
     }
   }
@@ -135,9 +135,9 @@ const Sites = () => {
                         <FaExternalLinkAlt className='text-blue-500 hover:text-blue-800 text-lg' />
                       </button>
                       {user.role !== 'Client' && (
-                      <button onClick={() => handleEdit(site?._id)} className="mr-2">
-                        <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
-                      </button>)}
+                        <button onClick={() => handleEdit(site?._id)} className="mr-2">
+                          <GrEdit className="text-blue-500 hover:text-blue-800 text-lg" />
+                        </button>)}
                       {user.role === 'Admin' && (
                         <button onClick={() => handleDelete(site?._id)} className="mr-2">
                           <MdDelete className='text-red-500 hover:text-red-600 text-xl' />

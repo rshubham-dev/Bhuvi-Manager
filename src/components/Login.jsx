@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavLink } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../features/auth/authSlice.js';
@@ -98,9 +98,16 @@ const Login = () => {
               </span>
             </div>
           </div>
+          <div className="mt-2.5">
+            <NavLink
+              className='text-blue-600 font-medium hover:text-blue-700 text-sm hover:bg-blue-50 py-1 px-2'
+              to={'/resetpasswd'}>
+              Forgot Password?
+            </NavLink>
+          </div>
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-8"
+            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 mt-4"
           >
             Login
           </button>
@@ -113,6 +120,10 @@ const Login = () => {
         >
           Register
         </button>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+        />
         {error && <p className="text-red-500">{error}</p>}
       </section>
     </div>

@@ -32,7 +32,7 @@ const Clients = () => {
         }
         console.log(clients)
       } catch (error) {
-        toast.error(error.message)
+        console.error(error)
         setError(error.message);
       }
     }

@@ -22,7 +22,7 @@ const Contractors = () => {
             console.log(contractorData.data)
             setContractor(contractorData.data);
         } catch (error) {
-            toast.error(error.message)
+            console.error(error)
         }
     }
 

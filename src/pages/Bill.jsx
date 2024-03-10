@@ -27,8 +27,6 @@ const Bills = () => {
         const bills = billData.data;
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
           const sites = user?.site;
-          // console.log('user', user);
-          // console.log('sites', sites);
           let contractorBills;
           let supplierBills;
           for (let site of sites) {
@@ -44,7 +42,7 @@ const Bills = () => {
           setSupplierBill(bills.filter((bill) => bill.billFor === 'Supplier'));
         }
       } catch (error) {
-        toast.error(error.message)
+        console.error(error)
       }
     }
     const getDraftBills = async () => {
@@ -53,8 +51,6 @@ const Bills = () => {
         const bills = billData.data;
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge' && isLoggedIn) {
           const sites = user?.site;
-          // console.log('user', user);
-          // console.log('sites', sites);
           let draftBills;
           for (let site of sites) {
             draftBills = bills?.filter((bill) => bill.site?._id.includes(site))
@@ -63,7 +59,7 @@ const Bills = () => {
           console.log(draftBills)
         }
       } catch (error) {
-        toast.error(error.message)
+        console.error(error)
       }
     };
     getbills();

@@ -21,7 +21,7 @@ const QualitySchedules = () => {
         setQualitySchedule(qualitySchedulesData.data);
         console.log(projectScheduleData.data)
       } catch (error) {
-        toast.error(error.message);
+        console.error(error);
       }
     }
     getprojectSchedules();

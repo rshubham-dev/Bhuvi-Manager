@@ -18,7 +18,7 @@ const Employee = () => {
         setEmployee(employeesData.data);
         console.log(employeesData.data);
       } catch (error) {
-        toast.error(error.error);
+        console.error(error);
       }
     };
     getEmployees();

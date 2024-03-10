@@ -20,7 +20,7 @@ const UserManagement = () => {
         setUsers(userData.data);
         console.log(userData.data)
       } catch (error) {
-        toast.error(error.message);
+        console.error(error);
         setError(error.message);
       }
     }

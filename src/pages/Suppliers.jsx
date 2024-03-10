@@ -17,7 +17,7 @@ const Suppliers = () => {
                 const supplierData = await axios.get('/api/v1/supplier');
                 setSuppliers(supplierData.data);
             } catch (error) {
-                toast.error(error.message)
+                console.error(error)
             }
         }
         getSuppliers();
