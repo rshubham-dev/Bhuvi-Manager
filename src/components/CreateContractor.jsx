@@ -144,7 +144,6 @@ const fetchContractor = async(id)=>{
             name='whatsapp'
             id='whatsapp'
             placeholder='Enter Your Whatsapp Number'
-            required
             autoComplete='off'
             value={contractor.whatsapp}
             onChange={handleChange}
@@ -181,16 +180,16 @@ const fetchContractor = async(id)=>{
           />
         </div>
 
-        <div className="mb-5">
+        {/* <div className="mb-5">
           <h4 className="text-lg font-semibold mb-2">Documents</h4>
           <div className="grid grid-cols-2 gap-4">
 
             <div>
               <label htmlFor="addhar" className="block text-sm font-medium text-gray-600">
-                Addhar Card:
+                Addhar No:
               </label>
               <input
-                type="file"
+                type="text"
                 id="addhar"
                 name="addhar"
                 value={contractor.addhar}
@@ -201,10 +200,10 @@ const fetchContractor = async(id)=>{
 
             <div>
               <label htmlFor="pan" className="block text-sm font-medium text-gray-600">
-                Pan Card:
+                Pan No:
               </label>
               <input
-                type="file"
+                type="text"
                 id="pan"
                 name="pan"
                 value={contractor.pan}
@@ -228,7 +227,7 @@ const fetchContractor = async(id)=>{
             </div>
 
           </div>
-        </div>
+        </div> */}
 
         <button
           type="submit"

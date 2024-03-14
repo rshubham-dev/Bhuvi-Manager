@@ -49,16 +49,19 @@ const CreateBill = () => {
         const sitesData = await axios.get('/api/v1/site');
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
           const existingSites = user?.site;
-          let Sites;
-          for(let existSite of existingSites) {
-            Sites = sitesData.data?.filter((site) => site?._id.includes(existSite))
+          let Sites = [];
+          for (let site of response.data) {
+            if (existingSites.includes(site._id)) {
+              Sites.push(site);
+            }
           }
           setSite(Sites)
         } else {
           setSite(sitesData.data)
         }
       } catch (error) {
-        toast.error(error.message)
+        console.error(error);
+        // toast.error(error.message)
       }
     };
     getsites();
@@ -87,12 +90,12 @@ const CreateBill = () => {
         setBillWork(...response.data.map((workOrder) => workOrder.work?.filter((work) => work?.due !== 0 && work?.status === 'Pending')))
       } catch (error) {
         console.error(error);
-        toast.error(error.message);
+        // toast.error(error.message);
       }
     }
     getWorkOrder();
   }, [bill.contractor])
-   console.log('work:', billWork)
+  console.log('work:', billWork)
 
   useEffect(() => {
     const getMaterialOrder = async () => {
@@ -102,7 +105,7 @@ const CreateBill = () => {
         setBillWork(...response.data.map((purchase) => purchase?.requirement.filter((require) => require)))
       } catch (error) {
         console.error(error);
-        toast.error(error.message);
+        // toast.error(error.message);
       }
     };
     getMaterialOrder()
@@ -114,7 +117,7 @@ const CreateBill = () => {
       console.log(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
       setPaymentDetail(billWork.filter((work) => work?.workDetail === bill.billOf)[0])
     } else if (bill.billFor === 'Supplier') {
-      setPaymentDetail(billWork.filter((work) => work?.material=== bill.billOf)[0])
+      setPaymentDetail(billWork.filter((work) => work?.material === bill.billOf)[0])
     }
   }, [bill.billOf])
   // console.log(paymentDetail)
@@ -421,7 +424,7 @@ const CreateBill = () => {
           <div className="mb-4">
             <label htmlFor='toPay' className="block text-sm font-medium text-gray-600 mb-2">To Pay</label>
             <input
-            type='text'
+              type='text'
               name='toPay'
               id='toPay'
               value={bill.toPay}

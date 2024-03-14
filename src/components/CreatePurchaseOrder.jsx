@@ -65,9 +65,11 @@ const CreatePurchaseOrder = () => {
         const response = await axios.get('/api/v1/site');
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
           const existingSites = user?.site;
-          let Sites;
-          for (let existSite of existingSites) {
-            Sites = response.data?.filter((site) => site?._id.includes(existSite))
+          let Sites = [];
+          for (let site of response.data) {
+            if (existingSites.includes(site._id)) {
+              Sites.push(site);
+            }
           }
           setSite(Sites)
         } else {

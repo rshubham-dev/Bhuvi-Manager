@@ -54,9 +54,11 @@ const CreateExtraWork = () => {
         const siteData = await axios.get('/api/v1/site');
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
           const existingSites = user?.site;
-          let Sites;
-          for(let existSite of existingSites) {
-            Sites = siteData.data?.filter((site) => site?._id.includes(existSite))
+          let Sites = [];
+          for (let site of response.data) {
+            if (existingSites.includes(site._id)) {
+              Sites.push(site);
+            }
           }
           setSite(Sites)
         } else {
@@ -118,7 +120,7 @@ const CreateExtraWork = () => {
       toast.error(error.message)
     }
   }
-  
+
   const fetchWorkDetail = async (id, index) => {
     try {
       const response = await axios.get(`/api/v1/extra-work/${id}/work`);
@@ -279,7 +281,7 @@ const CreateExtraWork = () => {
   if (detailToEdit.id !== '' && detailToEdit.index !== '') {
     return (
       <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Update Extra Work Details" />
+        <Header category="Page" title="Update Extra Work Details" />
         <section className="flex items-center justify-center h-full mb-16 mt-4">
           <form
             onSubmit={handleSubmit}
@@ -370,151 +372,151 @@ const CreateExtraWork = () => {
   } else {
     return (
       <div className='m-1.5 md:m-8 p-4 min-w-screen min-h-screen md:p-8 bg-white rounded-3xl'>
-      <Header category="Page" title="Create Extra Work" />
-      <div className="container mx-auto mt-4 mb-16">
-        <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
-          <h2 className="text-2xl font-semibold mb-4 text-center">Create Extra Work</h2>
+        <Header category="Page" title="Create Extra Work" />
+        <div className="container mx-auto mt-4 mb-16">
+          <form className="max-w-xl mx-auto bg-white p-6 rounded-md shadow-md" onSubmit={handleSubmit}>
+            <h2 className="text-2xl font-semibold mb-4 text-center">Create Extra Work</h2>
 
-          <div className="mb-4">
-            <label htmlFor="extraFor" className="block text-sm font-medium text-gray-600 mb-2">
-              Extra Work for
-            </label>
-            <select
-              name="extraFor"
-              value={formData.extraFor}
-              onChange={(e) => handleChange('extraFor', e.target.value)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option>{workToEdit ? formData.extraFor : 'Extra Work for'}</option>
-              {extraFor.map((extra, index) => (
-                <option key={index} value={extra}>
-                  {extra}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
-              Site
-            </label>
-            <select
-              name="site"
-              value={formData.site}
-              className="mt-1 p-2 w-full border rounded-md"
-              onChange={(e) => handleChange('site', e.target.value)}
-            >
-              <option>{workToEdit ? data.site : 'Site'}</option>
-              {sites.map((site) => (
-                <option key={site._id} value={site._id}>
-                  {site.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="mb-4">
-            {ExtraWorkFor(formData.extraFor)}
-          </div>
-
-          <div className="mt-4">
-            <h2 className="text-lg font-semibold mb-2">Work Details</h2>
-
-            {formData.WorkDetail.map((workItem, index) => (
-              <div key={index} className="mb-4 p-4 border rounded">
-                <div className="grid grid-cols-2 gap-4">
-
-                  <div>
-                    <label
-                      htmlFor={`work[${index}].workDetail`}
-                      className="block text-sm font-semibold text-gray-600">
-                      Work Detail
-                    </label>
-                    <input
-                      value={workItem.work}
-                      placeholder='Enter Work'
-                      onChange={(e) => handleWorkChange(index, 'work', e.target.value)}
-                      className="border p-2 rounded w-full" />
-                  </div>
-
-                  <div>
-                    <label htmlFor={`work[${index}].rate`} className="block text-sm font-semibold text-gray-600">
-                      Rate
-                    </label>
-                    <input
-                      type="number"
-                      value={workItem.rate}
-                      onChange={(e) => handleWorkChange(index, 'rate', e.target.value)}
-                      placeholder="Rate"
-                      className="border p-2 rounded w-full"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor={`work[${index}].area`} className="block text-sm font-semibold text-gray-600">
-                      Quantity
-                    </label>
-                    <input
-                      type="number"
-                      value={workItem.area}
-                      onChange={(e) => handleWorkChange(index, 'area', e.target.value)}
-                      placeholder="Area"
-                      className="border p-2 rounded w-full"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor={`work[${index}].unit`} className="block text-sm font-semibold text-gray-600">
-                      Unit
-                    </label>
-                    <select
-                      value={workItem.unit}
-                      onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
-                      className="border p-2 rounded w-full">
-
-                      <option>Select a Unit</option>
-                      {units.map((unit, index) => (
-                        <option key={index} value={unit}>
-                          {unit}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {formData.WorkDetail.length > 1 && (
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveWork(index)}
-                        className="bg-red-500 text-white p-2 rounded"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-
-            {workToEdit ? '' :
-              <button
-                type="button"
-                onClick={handleAddWork}
-                className="bg-blue-500 text-white p-2 rounded"
+            <div className="mb-4">
+              <label htmlFor="extraFor" className="block text-sm font-medium text-gray-600 mb-2">
+                Extra Work for
+              </label>
+              <select
+                name="extraFor"
+                value={formData.extraFor}
+                onChange={(e) => handleChange('extraFor', e.target.value)}
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               >
-                More Work
-              </button>
-            }
-          </div>
+                <option>{workToEdit ? formData.extraFor : 'Extra Work for'}</option>
+                {extraFor.map((extra, index) => (
+                  <option key={index} value={extra}>
+                    {extra}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          <div className='text-center'>
-            <button type="submit" className="bg-green-500 text-white p-2 rounded mt-4">
-              Create Extra Work
-            </button>
-          </div>
-        </form>
-        <Toaster position="top-right" reverseOrder={false} />
-      </div>
+            <div className="mb-4">
+              <label htmlFor="site" className="block text-sm font-semibold text-gray-600">
+                Site
+              </label>
+              <select
+                name="site"
+                value={formData.site}
+                className="mt-1 p-2 w-full border rounded-md"
+                onChange={(e) => handleChange('site', e.target.value)}
+              >
+                <option>{workToEdit ? data.site : 'Site'}</option>
+                {sites.map((site) => (
+                  <option key={site._id} value={site._id}>
+                    {site.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mb-4">
+              {ExtraWorkFor(formData.extraFor)}
+            </div>
+
+            <div className="mt-4">
+              <h2 className="text-lg font-semibold mb-2">Work Details</h2>
+
+              {formData.WorkDetail.map((workItem, index) => (
+                <div key={index} className="mb-4 p-4 border rounded">
+                  <div className="grid grid-cols-2 gap-4">
+
+                    <div>
+                      <label
+                        htmlFor={`work[${index}].workDetail`}
+                        className="block text-sm font-semibold text-gray-600">
+                        Work Detail
+                      </label>
+                      <input
+                        value={workItem.work}
+                        placeholder='Enter Work'
+                        onChange={(e) => handleWorkChange(index, 'work', e.target.value)}
+                        className="border p-2 rounded w-full" />
+                    </div>
+
+                    <div>
+                      <label htmlFor={`work[${index}].rate`} className="block text-sm font-semibold text-gray-600">
+                        Rate
+                      </label>
+                      <input
+                        type="number"
+                        value={workItem.rate}
+                        onChange={(e) => handleWorkChange(index, 'rate', e.target.value)}
+                        placeholder="Rate"
+                        className="border p-2 rounded w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor={`work[${index}].area`} className="block text-sm font-semibold text-gray-600">
+                        Quantity
+                      </label>
+                      <input
+                        type="number"
+                        value={workItem.area}
+                        onChange={(e) => handleWorkChange(index, 'area', e.target.value)}
+                        placeholder="Area"
+                        className="border p-2 rounded w-full"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor={`work[${index}].unit`} className="block text-sm font-semibold text-gray-600">
+                        Unit
+                      </label>
+                      <select
+                        value={workItem.unit}
+                        onChange={(e) => handleWorkChange(index, 'unit', e.target.value)}
+                        className="border p-2 rounded w-full">
+
+                        <option>Select a Unit</option>
+                        {units.map((unit, index) => (
+                          <option key={index} value={unit}>
+                            {unit}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {formData.WorkDetail.length > 1 && (
+                      <div>
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveWork(index)}
+                          className="bg-red-500 text-white p-2 rounded"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {workToEdit ? '' :
+                <button
+                  type="button"
+                  onClick={handleAddWork}
+                  className="bg-blue-500 text-white p-2 rounded"
+                >
+                  More Work
+                </button>
+              }
+            </div>
+
+            <div className='text-center'>
+              <button type="submit" className="bg-green-500 text-white p-2 rounded mt-4">
+                Create Extra Work
+              </button>
+            </div>
+          </form>
+          <Toaster position="top-right" reverseOrder={false} />
+        </div>
       </div>
     );
   }
