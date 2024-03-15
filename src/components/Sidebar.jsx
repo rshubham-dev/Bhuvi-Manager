@@ -35,7 +35,7 @@ const Sidebar = () => {
       to: '/profile',
       name: 'Profile',
       icon: <CgProfile />,
-    role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
+      role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
     },
     {
       to: '/user',
@@ -137,8 +137,14 @@ const Sidebar = () => {
     //   to: '/design', 
     //   name: 'Design', 
     //   icon: <MdDesignServices />,
-    // role: ['Company', 'Ceo'] 
+    // role: ['Company', 'Ceo', 'Design Head', 'Design Engineer'] 
     // },
+    {
+      to: '/attendance',
+      name: 'Attendance',
+      icon: <MdDesignServices />,
+      role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
+    },
     // { 
     //   to: '/expenses', 
     //   name: 'Expenses', 

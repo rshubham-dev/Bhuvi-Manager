@@ -62,6 +62,7 @@ import SupplierScreen from './screen/SupplierScreen.jsx';
 import QualityScheduleScreen from './screen/QualityScheduleScreen.jsx';
 import Approval from './pages/Approval.jsx';
 import ResetPasswd from './components/ResetPasswd.jsx';
+import Attendance from './pages/Attendance.jsx';
 
 const App = () => {
 
@@ -99,6 +100,7 @@ const App = () => {
         <Route path='/marketing' element={<Marketing />} />
         <Route path='/quality-engineer' element={<Quality_Engineer />} />
         <Route path='/design-engineer' element={<Design_Engineer />} />
+        <Route path='/attendance' element={<Attendance />} />
         <Route path='/accountant' element={<Accountant />} />
         <Route path='/employee' element={<Employee />} />
         <Route path='/create-employee' element={<CreateEmployee />} />
