@@ -22,7 +22,7 @@ const CreateClient = () => {
     },
   });
   const [users, setUsers] = useState([]);
-  const [clientId, setClientId] = useState({});
+  const [clientId, setClientId] = useState('');
   const { id } = useParams();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -130,7 +130,7 @@ const CreateClient = () => {
               onChange={handleChange}
               required
               className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
-              <option>{clientId ? data.name : 'Client'}</option>
+              <option>{clientId !== '' ? data.name : 'Client'}</option>
               {users.map((user) => (
                 <option key={user._id} value={user._id}>
                   {user.userName}
@@ -179,7 +179,7 @@ const CreateClient = () => {
                 value={client.password}
                 onChange={handleChange}
                 minLength={8}
-                className="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
+                className="my-0.5 p-1.5 w-full border-none focus:outline-none"
               />
               <span
                 className="block text-gray-700 text-xl font-bold cursor-pointer p-2"

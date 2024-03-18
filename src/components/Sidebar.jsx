@@ -1,18 +1,19 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { MdPerson, MdDateRange, MdWarehouse, MdTrolley, MdMessage, MdOutlineCancel, MdPayment, MdLocationOn, MdBusiness, MdPeople, MdReceipt, MdConstruction, MdBuild, MdMoney, MdAssignment, MdWork } from "react-icons/md";
-import { GrUserWorker } from "react-icons/gr";
-import { FaFileInvoiceDollar } from "react-icons/fa";
+import { MdPerson, MdDateRange, MdWarehouse, MdWorkHistory, MdTrolley, MdMessage, MdOutlineCancel, MdLocationOn, MdBusiness, MdPeople, MdReceipt, MdConstruction, MdBuild, MdMoney, MdAssignment, MdWork } from "react-icons/md";
+import { GrUserWorker, GrSchedulePlay } from "react-icons/gr";
+import { FaFileInvoiceDollar, FaBusinessTime } from "react-icons/fa";
 import { BiSolidPurchaseTag } from "react-icons/bi";
 import { AiFillNotification } from "react-icons/ai";
 import { AiFillPieChart } from 'react-icons/ai';
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { CgProfile } from 'react-icons/cg'
 import { useSelector } from 'react-redux';
+import { TbCalendarDollar } from "react-icons/tb";
 import logo from '../asset/logo.webp';
 import { LuCalendarCheck2, LuClipboardCheck } from "react-icons/lu";
 import { useStateContext } from '../contexts/ContextProvider.jsx';
-import { AiOutlineMenu } from 'react-icons/ai';
+import { AiOutlineMenu, } from 'react-icons/ai';
 // import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 const Sidebar = () => {
@@ -29,6 +30,12 @@ const Sidebar = () => {
       to: '/',
       name: 'Dashboard',
       icon: <AiFillPieChart />,
+      role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
+    },
+    {
+      to: '/attendance',
+      name: 'Attendance',
+      icon: <FaBusinessTime />,
       role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
     },
     {
@@ -52,13 +59,13 @@ const Sidebar = () => {
     {
       to: '/project-schedules',
       name: 'Project Schedules',
-      icon: <MdDateRange />,
+      icon: <GrSchedulePlay />,
       role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
     },
     {
       to: '/payment-schedules',
       name: 'Payment Schedules',
-      icon: <MdPayment />,
+      icon: <TbCalendarDollar />,
       role: ['Company', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Accountant']
     },
     {
@@ -139,12 +146,7 @@ const Sidebar = () => {
     //   icon: <MdDesignServices />,
     // role: ['Company', 'Ceo', 'Design Head', 'Design Engineer'] 
     // },
-    {
-      to: '/attendance',
-      name: 'Attendance',
-      icon: <MdDesignServices />,
-      role: ['Admin', 'Company', 'Client', 'Supplier', 'Contractor', 'Accountant', 'Marketing', 'Ceo', 'Site Incharge', 'Site Supervisor', 'Design Head', 'Design Engineer', 'Quality Head', 'Quality Engineer']
-    },
+
     // { 
     //   to: '/expenses', 
     //   name: 'Expenses', 
