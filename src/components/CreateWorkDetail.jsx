@@ -18,13 +18,14 @@ function WorkDetailsForm() {
     id: '',
     index: '',
   });
-  const [workDetailsToEdit, setWorkDetailsToEdit] = useState(null);
+  const [workDetailsToEdit, setWorkDetailsToEdit] = useState();
 
   const navigate = useNavigate();
   useEffect(() => {
     if (id && !index) {
       fetchWorkDetail(id);
-      setWorkDetailsToEdit(id)
+      setWorkDetailsToEdit(id);
+      console.log(id)
     } else if (id && index) {
       setWorkToEdit({ id, index })
       fetchDescription(id, index)
@@ -110,11 +111,13 @@ function WorkDetailsForm() {
     e.preventDefault();
     try {
       if (workDetailsToEdit) {
-        const response = await axios.put(`/api/v1/work-details/${id}`, workDetail);
+        console.log(workDetailsToEdit)
+        console.log(workDetail)
+        const response = await axios.put(`/api/v1/work-details/${workDetailsToEdit}`, workDetail);
         toast.success(response.data.message)
         navigate(-1);
       } else if (workToEdit.id !== '' && workToEdit.index !== '') {
-        const response = await axios.put(`/api/v1/work-details/${id}/${index}`, workDetail);
+        const response = await axios.put(`/api/v1/work-details/${workToEdit.id}/${workToEdit.index}`, workDetail);
         toast.success(response.data.message)
         navigate(-1);
       } else {

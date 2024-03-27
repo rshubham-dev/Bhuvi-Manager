@@ -94,7 +94,7 @@ const WorkDetails = () => {
 
                 {workDetail?.description?.map((description, index) => (
                   <ul key={index} className='flex justify-between flex-row my-1.5'>
-                    <li className='font-medium text-color-title mx-5 py-2 list-disc'>{description.work}</li>
+                    <li className='font-medium text-color-title mx-5 py-2 list-disc'>{description?.work}</li>
                     <div className="px-6 py-2">
                       <button
                         onClick={() => editDetails(workDetail._id, index)}

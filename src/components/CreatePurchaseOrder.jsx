@@ -34,6 +34,7 @@ const CreatePurchaseOrder = () => {
     site: '',
     createdBy: '',
   });
+  const [materials, setMaterial] = useState([]);
   const [sites, setSite] = useState([]);
   const [suppliers, setSupplier] = useState([]);
   const status = ['Delivered', 'Pending', 'Returned'];
@@ -76,7 +77,7 @@ const CreatePurchaseOrder = () => {
           setSite(response.data)
         }
       } catch (error) {
-        toast.error(error.message)
+        console.error(error.message)
       }
     };
 
@@ -85,12 +86,31 @@ const CreatePurchaseOrder = () => {
         const supplierData = await axios.get('/api/v1/Supplier');
         setSupplier(supplierData.data);
       } catch (error) {
-        toast.error(error.message)
+        console.error(error.message)
+      }
+    }
+
+    const fetchMaterial = async () => {
+      try {
+        const title = 'Purchase Order';
+        const data = await axios.post('/api/v1/work-details/name', {
+          title
+        });
+        // console.log(data.data)
+        let material = [];
+        for (let i = 0; i < data.data.description.length; i++) {
+          material = material.concat(data.data.description[i]);
+        }
+        console.log(material)
+        setMaterial(material)
+      } catch (error) {
+        console.error(error.message)
       }
     }
 
     fetchSite();
     fetchSupplier();
+    fetchMaterial();
   }, []);
 
   const fetchPurchaseOrder = async (id, index) => {
@@ -375,6 +395,7 @@ const CreatePurchaseOrder = () => {
                 ))}
               </select>
             </div>
+
             {purchaseOrderToEdit ? '' :
               <div className="mt-4">
                 <h2 className="text-lg font-semibold mb-2">Work Details</h2>
@@ -389,13 +410,15 @@ const CreatePurchaseOrder = () => {
                           className="block text-sm font-semibold text-gray-600">
                           Material
                         </label>
-                        <input
-                          type="text"
+                        <select
                           value={item.material}
                           onChange={(e) => handleWorkChange(index, 'material', e.target.value)}
-                          placeholder="Material"
-                          className="border p-2 rounded w-full"
-                        />
+                          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                          <option value="">Material</option>
+                          {materials.map((material, index) => (
+                            <option key={index} value={material.work}>{material.work}</option>
+                          ))}
+                        </select>
                       </div>
 
                       <div>

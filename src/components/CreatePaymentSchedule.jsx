@@ -59,7 +59,7 @@ const CreatePaymentSchedule = () => {
           setSite(response.data)
         }
       } catch (error) {
-        toast.error(error.message)
+        console.error(error.message)
       }
     };
 
@@ -76,7 +76,7 @@ const CreatePaymentSchedule = () => {
         setWorkDetails(works);
       } catch (error) {
         console.log('Error fetching work details:', error.message);
-        toast.error(error.message);
+        // toast.error(error.message);
       }
     };
 
