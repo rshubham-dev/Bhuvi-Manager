@@ -51,7 +51,7 @@ const CreateExtraWork = () => {
   useEffect(() => {
     const fetchSite = async () => {
       try {
-        const siteData = await axios.get('/api/v1/site');
+        const response = await axios.get('/api/v1/site');
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
           const existingSites = user?.site;
           let Sites = [];
@@ -62,12 +62,12 @@ const CreateExtraWork = () => {
           }
           setSite(Sites)
         } else {
-          setSite(siteData.data)
+          setSite(response.data)
         }
       } catch (error) {
-        toast.error(error.message)
+        console.error(error.message)
       }
-    }
+    };
     fetchSite();
 
     if (id && index) {
@@ -424,7 +424,7 @@ const CreateExtraWork = () => {
 
               {formData.WorkDetail.map((workItem, index) => (
                 <div key={index} className="mb-4 p-4 border rounded">
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <div>
                       <label

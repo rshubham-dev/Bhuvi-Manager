@@ -362,8 +362,6 @@ const CreatePaymentSchedule = () => {
         <Header category="Page" title="Create Payment Schedule" />
         <section className="container mx-auto mt-4 mb-16">
           <form className="max-w-md mx-auto " onSubmit={handleSubmit}>
-            <h2 className="text-2xl font-semibold mb-4 text-center">Create Payment Schedule</h2>
-
             <div className="mb-4">
               <label htmlFor="name" className="block text-sm font-medium text-gray-600">
                 Select a Site
@@ -400,7 +398,7 @@ const CreatePaymentSchedule = () => {
               <h2 className="text-lg font-semibold mb-2">Work Details</h2>
               {formData.paymentDetails.map((work, index) => (
                 <div key={index} className="mb-4 p-3 border rounded">
-                  <div className="grid grid-cols-2 grid-flow-row-dense gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-row-dense gap-4">
 
                     <div className='col-span-2'>
                       <label

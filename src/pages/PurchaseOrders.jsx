@@ -36,6 +36,7 @@ const PurchaseOrders = () => {
         console.error(error)
       }
     };
+    
     const getDraftOrders = async () => {
       try {
         const orderData = await axios.get('/api/v1/purchase-order/draft');

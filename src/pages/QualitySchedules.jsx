@@ -7,15 +7,16 @@ import { MdAdd, MdDelete } from "react-icons/md";
 import { FaExternalLinkAlt } from "react-icons/fa";
 import moment from 'moment';
 import Header from '../components/Header';
-
+import { useSelector } from 'react-redux';
 axios.defaults.withCredentials = true;
 
 const QualitySchedules = () => {
   const navigate = useNavigate();
   const [qualitySchedules, setQualitySchedule] = useState([]);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    const getprojectSchedules = async () => {
+    const getqualitySchedules = async () => {
       try {
         const qualitySchedulesData = await axios.get('/api/v1/quality-schedule');
         setQualitySchedule(qualitySchedulesData.data);
@@ -24,7 +25,7 @@ const QualitySchedules = () => {
         console.error(error);
       }
     }
-    getprojectSchedules();
+    getqualitySchedules();
   }, []);
 
 
@@ -58,9 +59,10 @@ const QualitySchedules = () => {
           <h2 className="text-lg text-wrap sm:text-md md:text-lg lg:text-xl text-green-600 mr-4 pr-4">
             Total Quality Schedules: {qualitySchedules?.length}
           </h2>
+          {user.role === 'Quality Engineer' && (
           <button onClick={handleAdd} className="bg-green-500 rounded-full text-white px-2 py-2">
             <MdAdd className='text-xl' />
-          </button>
+          </button>)}
         </div>
 
         <div className="overflow-x-auto"
@@ -81,7 +83,7 @@ const QualitySchedules = () => {
 
             <tbody>
               {qualitySchedules.map((qualitySchedule) => (
-                <tr key={qualitySchedule._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr key={qualitySchedule._id} className="bg-white border-b hover:bg-gray-50 ">
                   <td className="px-6 py-4">
                     {qualitySchedule.site?.name}
                   </td>
@@ -107,7 +109,6 @@ const QualitySchedules = () => {
             </tbody>
           </table>
         </div>
-
 
         <Toaster
           position="top-right"

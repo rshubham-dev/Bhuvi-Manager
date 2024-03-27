@@ -44,9 +44,9 @@ const CreateBill = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getsites = async () => {
+    const fetchSite = async () => {
       try {
-        const sitesData = await axios.get('/api/v1/site');
+        const response = await axios.get('/api/v1/site');
         if (user.department === 'Site Supervisor' || user.department === 'Site Incharge') {
           const existingSites = user?.site;
           let Sites = [];
@@ -57,14 +57,13 @@ const CreateBill = () => {
           }
           setSite(Sites)
         } else {
-          setSite(sitesData.data)
+          setSite(response.data)
         }
       } catch (error) {
-        console.error(error);
-        // toast.error(error.message)
+        console.error(error.message)
       }
     };
-    getsites();
+    fetchSite();
     if (id) {
       setBillToEdit(id)
       fetchBill(id)

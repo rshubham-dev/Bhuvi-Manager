@@ -402,7 +402,7 @@ const CreatePurchaseOrder = () => {
 
                 {formData.requirement.map((item, index) => (
                   <div key={index} className="mb-4 p-4 border rounded">
-                    <div className="grid grid-cols-2 grid-flow-row-dense gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 grid-flow-row-dense gap-4">
 
                       <div className='col-span-2'>
                         <label

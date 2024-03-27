@@ -68,7 +68,7 @@ const WorkDetails = () => {
           </button>
         </div>
 
-        <div className="overflow-x-auto grid grid-cols-1 lg:grid-cols-2"
+        <div className="overflow-x-auto grid grid-cols-1 lg:grid-cols-2 gap-1"
           style={{
             scrollbarWidth: 'none',
             '-ms-overflow-style': 'none',
