@@ -43,26 +43,26 @@ const ResetPasswd = () => {
             <section className="mx-auto w-full md:w-3/4 lg:w-2/5 h-fit px-6 py-4 pb-8 bg-white rounded-2xl shadow-xl">
                 <div className='mb-2 py-2'>
                     <Link to={-1}
-                        className="text-2xl font-semibold text-gray-900 hover:text-blue-600 dark:text-white">
+                        className="text-2xl font-semibold text-gray-900 hover:text-blue-600 ">
                         <MdKeyboardBackspace />
                     </Link>
                 </div>
                 <h2
-                    className="my-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    className="my-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                     Change Password
                 </h2>
                 <form
                     onSubmit={handleSubmit}
                     className="mt-4 space-y-4 lg:mt-5 md:space-y-5">
                     <div>
-                        <label htmlFor="userMail" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        <label htmlFor="userMail" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
                         <input
                             type="email"
                             id="email"
                             name="userMail"
                             value={formData.userMail}
                             onChange={handleChange}
-                            className="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                            className="bg-gray-50 border outline-none border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                             placeholder="name@company.com"
                             required="" />
                     </div>

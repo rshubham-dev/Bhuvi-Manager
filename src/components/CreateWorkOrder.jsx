@@ -347,13 +347,6 @@ const WorkOrderForm = () => {
                   </option>
                 ))}
               </select>
-              {/* <input
-                type="text"
-                name="unit"
-                value={workData.unit}
-                onChange={(e) => handleUpdate('unit', e.target.value)}
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              /> */}
             </div>
 
             <div className="mb-4">

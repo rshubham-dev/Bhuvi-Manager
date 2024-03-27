@@ -7,7 +7,6 @@ import convertToBase64 from '../helper/converter';
 import Header from '../components/Header';
 import { GrEdit } from "react-icons/gr";
 import './components.css';
-import { IoEyeOff, IoEye } from "react-icons/io5";
 import image from '../asset/profile.webp';
 axios.defaults.withCredentials = true;
 
@@ -23,8 +22,6 @@ const Profile = () => {
   })
   const [toUpdate, setToUpdate] = useState(false);
   const [profileUpdate, setProfileUpdate] = useState(false);
-  // const [showPassword, setShowPassword] = useState(false);
-  // const [showNewPassword, setShowNewPassword] = useState(false);
   const [avatar, setAvatar] = useState('');
 
   const inputData = (data, field) => {
@@ -188,47 +185,6 @@ const Profile = () => {
                 onChange={inputData}
               />
             </div>
-
-            {/* <div className='mb-4'>
-              <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-1">Password:</label>
-              <div className='flex flex-row border rounded-md justify-between items-center '>
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  className="w-full border-none outline-none p-2"
-                  placeholder='Enter Your Password'
-                  autoComplete='off'
-                  value={User.password}
-                  onChange={inputData}
-                />
-                <span
-                  className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
-                  onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <IoEyeOff /> : <IoEye />}
-                </span>
-              </div>
-            </div>
-            <div className='mb-4'>
-              <label htmlFor='Password' className='block text-gray-700 text-sm font-bold mb-2'>Change Password</label>
-              <div className='flex flex-row border rounded-md justify-between items-center '>
-                <input
-                  type={showNewPassword ? "text" : "password"}
-                  className="w-full border-none outline-none p-2"
-                  placeholder='Enter Your Password'
-                  name='newPassword'
-                  autoComplete='off'
-                  ref={newPassword}
-                  // required
-                  value={User.newPassword}
-                  onChange={inputData}
-                />
-                <span
-                  className="block text-gray-700 text-xl font-bold cursor-pointer p-2"
-                  onClick={() => setShowNewPassword(!showNewPassword)}>
-                  {showNewPassword ? <IoEyeOff /> : <IoEye />}
-                </span>
-              </div>
-            </div> */}
 
             <div className="mb-4">
               <NavLink

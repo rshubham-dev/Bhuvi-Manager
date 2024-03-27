@@ -38,7 +38,7 @@ const UserProfile = () => {
   return (
     <div className='flex justify-center mx-auto mt-8 mb-4 sm:mx-8'>
 
-      <form onSubmit={formSubmit} className="p-3 bg-white shadow-lg rounded-2xl w-90 dark:bg-gray-800">
+      <form onSubmit={formSubmit} className="p-3 bg-white shadow-lg rounded-2xl w-90 ">
         <div className="flex flex-row items-start gap-5">
 
           <div className='profile flex justify-center bg-red mx-2'>
@@ -57,24 +57,24 @@ const UserProfile = () => {
 
           <div className="flex flex-col gap-4 justify-between w-full h-28 mx-2">
             <div>
-              <p className="text-xl font-medium text-gray-800 dark:text-white">
+              <p className="text-xl font-medium text-gray-800 ">
                 {User?.userName}
               </p>
               <p className="text-md text-gray-400">
                 {User?.department}
               </p>
             </div>
-            <div className="w-full p-1.5 bg-blue-100 rounded-lg dark:bg-white">
-              <div className="flex items-start flex-col justify-center gap-2 text-xs text-gray-400 dark:text-black">
+            <div className="w-full p-1.5 bg-blue-100 rounded-lg ">
+              <div className="flex items-start flex-col justify-center gap-2 text-xs text-gray-400 ">
                 <p className="flex flex-row">
                   Email:
-                  <span className="font-bold text-black dark:text-indigo-500 ml-2">
+                  <span className="font-bold text-black  ml-2">
                     {User?.userMail}
                   </span>
                 </p>
                 <p className="flex flex-row">
                   Contact No:
-                  <span className="font-bold text-black dark:text-indigo-500 ml-2">
+                  <span className="font-bold text-black  ml-2">
                     {User?.phone}
                   </span>
                 </p>

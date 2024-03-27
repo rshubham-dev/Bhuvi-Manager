@@ -62,7 +62,7 @@ const Employee = () => {
             '-ms-overflow-style': 'none',
           }}>
           <table className='w-full whitespace-nowrap bg-white divide-y divide-gray-300 overflow-hidden'>
-            <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+            <thead className="text-sm uppercase bg-gray-200 ">
               <tr className="text-gray-800  text-left">
                 <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">User Name</th>
                 <th scope="col" className="font-semibold text-sm uppercase px-6 py-4 ">Email</th>
@@ -74,7 +74,7 @@ const Employee = () => {
             </thead>
             <tbody className="divide-y divide-gray-200">
               {employees.map((employee) => (
-                <tr key={employee._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr key={employee._id} className="bg-white border-b hover:bg-gray-50">
                   <td className="px-6 py-4">
                     {employee.name}
                   </td>

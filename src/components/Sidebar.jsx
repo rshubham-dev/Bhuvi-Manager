@@ -164,10 +164,10 @@ const Sidebar = () => {
             <div key={index} className='hover:bg-gray-200 rounded-xl'>
               <NavLink to={item.to}
                 className={({ isActive }) => isActive ? activeLink : normalLink}>
-                <span className='text-xl'>
+                <span className='text-xl text-slate-700 hover:text-slate-900'>
                   {item.icon}
                 </span>
-                <span className={`capitalize ${activeMenu ? 'inline' : 'hidden'}`}> {item.name} </span>
+                <span className={`capitalize ${activeMenu ? 'inline' : 'hidden'} text-slate-700 hover:text-slate-900`}> {item.name} </span>
               </NavLink>
             </div>
           ))}
@@ -180,7 +180,7 @@ const Sidebar = () => {
       style={{ scrollbarWidth: 'none', '-ms-overflow-style': 'none', }}>
       <div className="flex justify-center gap-2 items-center my-2 ml-0">
         <img src={logo} alt="logo" className={`rounded-full w-fit ${activeMenu ? 'h-16' : 'h-12'}`} />
-        <span className={`uppercase transition-all text-sm delay-100 duration-300 ease-in ${activeMenu ? 'inline text-lg ' : 'hidden'} items-center flex font-extrabold ml-1 dark:text-white text-slate-900`}>
+        <span className={`text-slate-800 uppercase transition-all text-sm delay-100 duration-300 ease-in ${activeMenu ? 'inline text-lg ' : 'hidden'} items-center flex font-extrabold ml-1 `}>
           Bhuvi Consultants
         </span>
       </div>

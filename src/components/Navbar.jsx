@@ -11,6 +11,7 @@ import { MdOutlineLogout, MdLogin, } from "react-icons/md";
 import profile from '../asset/profile.webp';
 import { useStateContext } from '../contexts/ContextProvider.jsx';
 import { useNavigate } from 'react-router-dom';
+import { Badge } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../features/auth/authSlice.js';
 // import logo from '../asset/logo.png';
@@ -72,15 +73,25 @@ const Navbar = () => {
             {activeMenu ? <AiOutlineClose /> : <AiOutlineMenu />}
           </button>
         }
-        <span className='text-sm md:text-lg lg:text-xl uppercase transition-all delay-100 duration-300 ease-in items-center flex font-extrabold ml-1 dark:text-white text-slate-900'>
+        <span className='text-sm md:text-lg lg:text-xl uppercase transition-all delay-100 duration-300 ease-in items-center flex font-extrabold ml-1 text-slate-900'>
           Bhuvi Manager
         </span>
       </div>
-      <div className="flex">
-        <NavbarButton
-          customFunc={() => navigate(`${isLoggedIn ? '/message' : ''}`)}
-          color='blue'
-          icon={<RiNotification3Line />} />
+      <div className="flex items-center space-x-2 md:space-x-3">
+        <div className='flex'>
+          <Badge
+            count="1"
+            onClick={() => {navigate('/message');}}
+            size="small"
+            className="text-gray">
+            <button type='button'
+              onClick={() => navigate(`${isLoggedIn ? '/message' : ''}`)}
+              style={{ color: 'blue' }}
+              className='text-xl rounded-full hover:bg-light-gray p-1'>
+              <RiNotification3Line className="text-lg lg:text-xl" />
+            </button>
+          </Badge>
+        </div>
         {isLoggedIn ? (
           <NavbarButton
             customFunc={logOut}

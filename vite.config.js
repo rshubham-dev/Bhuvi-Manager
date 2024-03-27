@@ -13,7 +13,7 @@ export default defineConfig({
       manifest: {
         name: 'Bhuvi Consultants',
         short_name: 'Bhuvi Manager',
-        theme_color: '#ebeae7',
+        theme_color: '#373636',
         background_color: '#ebeae7',
         display: "standalone",
         orientation:'portrait',

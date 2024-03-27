@@ -36,9 +36,9 @@ const Contractors = () => {
 
     const handleDelete = async (id) => {
         try {
-            const contractorData = await axios.get(`/api/v1/contractor/${id}`);
-            toast.success(contractorData.data.message);
+            const contractorData = await axios.delete(`/api/v1/contractor/${id}`);
             setContractor(contractors.filter((contractor) => contractor._id !== id));
+            toast.success(contractorData.data.message);
         } catch (error) {
             console.error(error)
         }

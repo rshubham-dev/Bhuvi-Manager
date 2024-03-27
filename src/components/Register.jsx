@@ -87,7 +87,7 @@ const Register = () => {
             <section className='mx-auto w-full md:w-3/4 lg:w-2/5 h-fit bg-white px-6 py-10 rounded-2xl shadow-xl'>
                 <div className='mb-2 py-2'>
                     <Link to={-1}
-                        className="text-2xl font-semibold text-gray-900 hover:text-blue-600 dark:text-white">
+                        className="text-2xl font-semibold text-gray-900 hover:text-blue-600">
                         <MdKeyboardBackspace />
                     </Link>
                 </div>
